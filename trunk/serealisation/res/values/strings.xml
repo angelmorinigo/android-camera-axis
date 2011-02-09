@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, record!</string>
+    <string name="app_name">list</string>
+    <string name="about">Version 1.0 \nDéveloppé par :\n NAHELOU Jérôme \npour Samsung Galaxy S sous android 2.1.\n</string>
+</resources>

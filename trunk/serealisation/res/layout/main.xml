@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:stretchColumns="1"
+	android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="fill">
+		<TextView android:hint="Ajouter une caméra :" android:textSize="12pt"/>
+	<TableRow>
+		<TextView android:text="Identifiant :" android:id="@+id/tid" />
+		<EditText android:hint="Entrez un id" android:id="@+id/eid"
+			android:gravity="center" />
+	</TableRow>
+	<TableRow>
+		<TextView android:text="Login :" android:id="@+id/tlogin" />
+		<EditText android:hint="Entrez un login" android:id="@+id/elogin"
+			android:gravity="center" />
+	</TableRow>
+	<TableRow>
+		<TextView android:text="Password :" android:id="@+id/tpass" />
+		<EditText android:hint="Entrez un pass" android:id="@+id/epass"
+			android:gravity="center" />
+	</TableRow>
+	<TableRow>
+		<TextView android:text="Ip :" android:id="@+id/tip" />
+		<EditText android:hint="Entrez une ip" android:id="@+id/eip"
+			android:gravity="center" />
+	</TableRow>
+
+	<TableRow>
+		<TextView android:text="Port :" android:id="@+id/tport" />
+		<EditText android:hint="Entrez un port" android:id="@+id/eport"
+			android:gravity="center" android:numeric="decimal" />
+	</TableRow>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content" android:layout_weight="1">
+    <Button android:text="Ajouter" android:id="@+id/add" android:layout_height="wrap_content" android:gravity="center" android:layout_width="fill_parent" android:layout_weight="1"/>
+    <Button android:text="Retour" android:id="@+id/ret" android:layout_height="wrap_content" android:gravity="center" android:layout_width="fill_parent" android:layout_weight="1"/>
+</LinearLayout>
+</TableLayout>
+	

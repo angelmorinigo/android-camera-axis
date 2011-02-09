@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/menu_ajouter" android:title="Ajouter une Caméra"
+	android:icon="@drawable/ic_menu_refresh"/>
+	<item android:id="@+id/menu_option_about" android:title="A Propos" android:icon="@drawable/ic_menu_preferences" />
+	<item android:id="@+id/menu_quitter" android:title="Quitter" android:icon="@drawable/ic_menu_logout"/>
+</menu> 
