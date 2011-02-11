@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class list extends Activity {
+public class Home extends Activity {
 	private static Dialog dialog_about;
 	private static Activity activity;
 	private ListView L;
@@ -39,7 +39,7 @@ public class list extends Activity {
 		try {
 			FileInputStream fichier =  activity.getApplication().openFileInput(FILE);
 			ObjectInputStream ois = new ObjectInputStream(fichier);
-			Log.i("mylog", "lecture cameras effectuee");
+			Log.i("AppLog", "lecture cameras effectuee");
 
 			camList = (ArrayList<Camera>) ois.readObject();
 			String[] s = new String[camList.size()];
@@ -52,7 +52,7 @@ public class list extends Activity {
 			L.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, s));
 			L.setTextFilterEnabled(true);
 		} catch (java.io.IOException e) {
-			Log.i("mylog", "file not found");
+			Log.i("AppLog", "file not found");
 			camList = new ArrayList<Camera>();
 			String[] s = new String[camList.size()];
 			for (int i = 0; i < camList.size(); i++) {
@@ -86,9 +86,9 @@ public class list extends Activity {
 			oos.flush();
 			oos.close();
 			fichier.close();
-			Log.i("myadd", "camera save");
+			Log.i("AppLog", "camera save");
 		} catch (java.io.IOException e) {
-			Log.i("myadd", "file not save");
+			Log.i("AppLog", "file not save");
 			e.printStackTrace();
 		}
 		super.onDestroy();
@@ -101,17 +101,17 @@ public class list extends Activity {
 		super.onActivityResult(requestCode, resultCode, intent);
 		Bundle extras = intent.getExtras();
 		Camera tmp = (Camera) extras.getSerializable("camera");
-		Log.i("mylog", "camera " + tmp.id + " recuperer");
+		Log.i("AppLog", "camera " + tmp.id + " recuperer");
 
 		camList.add(tmp);
-		Log.i("myadd", "camera ajouter");
+		Log.i("AppLog", "camera ajouter");
 
 		int nb = camList.size();
 		String[] s = new String[nb];
 		for (int i = 0; i < nb; i++) {
 			s[i] = camList.get(i).toString();
 		}
-		Log.i("myadd", "cam list :" + s);
+		Log.i("AppLog", "cam list :" + s);
 		L.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, s));
 	}
 
@@ -147,11 +147,11 @@ public class list extends Activity {
 			dialog_about.show();
 			return true;
 		case R.id.menu_quitter:
-			Log.i("myadd", "Exit");
+			Log.i("AppLog", "Exit");
 			activity.finish();
 			return true;
 		case R.id.menu_ajouter:
-			Intent intent = new Intent(this, record.class);
+			Intent intent = new Intent(this, AddCam.class);
 			startActivityForResult(intent, 1);
 			return true;
 		}

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class record extends Activity {
+public class AddCam extends Activity {
 	/** Called when the activity is first created. */
 	public EditText id;
 	public EditText login;
