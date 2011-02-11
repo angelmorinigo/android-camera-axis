@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,7 +39,8 @@ public class Home extends Activity {
 		activity = this;
 
 		try {
-			FileInputStream fichier =  activity.getApplication().openFileInput(FILE);
+			FileInputStream fichier = activity.getApplication().openFileInput(
+					FILE);
 			ObjectInputStream ois = new ObjectInputStream(fichier);
 			Log.i("AppLog", "lecture cameras effectuee");
 
@@ -68,19 +71,22 @@ public class Home extends Activity {
 			e.printStackTrace();
 		}
 
-		/*
-		 * L.setOnItemClickListener(new OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(AdapterView<?> arg0, View arg1, int
-		 * position, long arg3) { String tmp = s[position]; if (tmp == null) tmp
-		 * = "Oups!"; Toast.makeText(getApplicationContext(), tmp,
-		 * Toast.LENGTH_SHORT) .show(); } });
-		 */
+		L.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+
+				Intent intent = new Intent(activity.getApplicationContext(), Video.class);
+				startActivity(intent);
+			}
+		});
+
 	}
 
-	protected void onDestroy(){
+	protected void onDestroy() {
 		try {
-			FileOutputStream fichier = activity.getApplicationContext().openFileOutput(FILE, Context.MODE_APPEND);
+			FileOutputStream fichier = activity.getApplicationContext()
+					.openFileOutput(FILE, Context.MODE_APPEND);
 			ObjectOutputStream oos = new ObjectOutputStream(fichier);
 			oos.writeObject(camList);
 			oos.flush();
@@ -93,8 +99,7 @@ public class Home extends Activity {
 		}
 		super.onDestroy();
 	}
-	
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {

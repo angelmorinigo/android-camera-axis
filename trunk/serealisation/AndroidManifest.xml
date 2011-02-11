@@ -11,6 +11,6 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="AddCam" android:label="record" />
-
+		<activity android:name="Video" android:label="Viewer" />
 	</application>
 </manifest>
