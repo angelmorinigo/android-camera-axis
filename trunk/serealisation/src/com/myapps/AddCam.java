@@ -14,6 +14,8 @@ public class AddCam extends Activity {
 	public EditText pass;
 	public EditText ip;
 	public EditText port;
+	private String logTag = "AppLog";
+
 
 	/* Definition de la camera */
 

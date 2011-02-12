@@ -33,7 +33,11 @@ public class Home extends Activity {
 	private ListView L;
 	private ArrayList<Camera> camList;
 	private String FILE = "camera.ser";
-
+	private String logTag = "AppLog";
+	private String messageRemove = "Etes vous sur de vouloir supprimer cette caméra ?";
+	
+	
+	
 	private void updateListView(boolean init) {
 		String[] s = new String[camList.size()];
 		for (int i = 0; i < camList.size(); i++) {
@@ -41,7 +45,7 @@ public class Home extends Activity {
 				s[i] = "";
 			else
 				s[i] = camList.get(i).toString();
-			Log.i("AppLog", "Ajout " + s[i]);
+			Log.i(logTag, "Ajout " + s[i]);
 		}
 
 		/* Affichage de la liste */
@@ -62,12 +66,12 @@ public class Home extends Activity {
 			FileInputStream fichier = activity.getApplication().openFileInput(
 					FILE);
 			ObjectInputStream ois = new ObjectInputStream(fichier);
-			Log.i("AppLog", "lecture cameras effectuee");
+			Log.i(logTag, "lecture cameras effectuee");
 
 			camList = (ArrayList<Camera>) ois.readObject();
 			updateListView(false);
 		} catch (java.io.IOException e) {
-			Log.i("AppLog", "file not found");
+			Log.i(logTag, "file not found");
 			camList = new ArrayList<Camera>();
 			updateListView(true);
 			e.printStackTrace();
@@ -83,7 +87,7 @@ public class Home extends Activity {
 				AlertDialog alert_reset;
 				AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 				builder.setMessage(
-						"Etes vous sur de vouloir supprimer cette caméra ?")
+						messageRemove)
 						.setCancelable(false)
 						.setPositiveButton("Oui",
 								new DialogInterface.OnClickListener() {
@@ -134,9 +138,9 @@ public class Home extends Activity {
 			oos.flush();
 			oos.close();
 			fichier.close();
-			Log.i("AppLog", "camera save");
+			Log.i(logTag, "camera save");
 		} catch (java.io.IOException e) {
-			Log.i("AppLog", "file not save");
+			Log.i(logTag, "file not save");
 			e.printStackTrace();
 		}
 		super.onDestroy();
@@ -149,10 +153,10 @@ public class Home extends Activity {
 		if (resultCode == Activity.RESULT_OK) {
 			Bundle extras = intent.getExtras();
 			Camera tmp = (Camera) extras.getSerializable("camera");
-			Log.i("AppLog", "camera " + tmp.id + " recuperer");
+			Log.i(logTag, "camera " + tmp.id + " recuperer");
 
 			camList.add(tmp);
-			Log.i("AppLog", "camera ajouter");
+			Log.i(logTag, "camera ajouter");
 
 			updateListView(false);
 		}
@@ -190,7 +194,7 @@ public class Home extends Activity {
 			dialog_about.show();
 			return true;
 		case R.id.menu_quitter:
-			Log.i("AppLog", "Exit");
+			Log.i(logTag, "Exit");
 			activity.finish();
 			return true;
 		case R.id.menu_ajouter:
