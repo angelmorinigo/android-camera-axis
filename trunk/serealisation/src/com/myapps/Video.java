@@ -15,14 +15,15 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.video);
-
 		mediaPlayer=new MediaPlayer();
+
 		SurfaceView surface = (SurfaceView) findViewById(R.id.surfaceView1);
 		SurfaceHolder holder = surface.getHolder();
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		holder.setFixedSize(400, 300);
-		
+
+
 	}
 
 	@Override
@@ -33,16 +34,23 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
+
 		try {
+			Log.i("AppLog", "demarrage video");
 			mediaPlayer.setDisplay(holder);
-			mediaPlayer.setDataSource("/sdcard/ironman.mp4");
+			mediaPlayer.setDataSource("/sdcard/Smart_Life.MP4");
 			mediaPlayer.prepare();
 			mediaPlayer.start();
-		} catch (IllegalArgumentException e) {
-		} catch (IllegalStateException e) {
+			Log.i("AppLog", "video en cours de lecture");
+
+		} catch (IllegalArgumentException e) {			e.printStackTrace();
+
+		} catch (IllegalStateException e) {			e.printStackTrace();
+
 		} catch (IOException e) {
 			Log.i("AppLog", "No video found");
 			e.printStackTrace();
+
 		}
 	}
 

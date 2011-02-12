@@ -48,6 +48,7 @@ public class Home extends Activity {
 			String[] s = new String[camList.size()];
 			for (int i = 0; i < camList.size(); i++) {
 				s[i] = camList.get(i).toString();
+				Log.i("AppLog", "Ajout " + s[i]);	
 			}
 
 			/* Affichage de la liste */
@@ -86,7 +87,7 @@ public class Home extends Activity {
 	protected void onDestroy() {
 		try {
 			FileOutputStream fichier = activity.getApplicationContext()
-					.openFileOutput(FILE, Context.MODE_APPEND);
+					.openFileOutput(FILE, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fichier);
 			oos.writeObject(camList);
 			oos.flush();
