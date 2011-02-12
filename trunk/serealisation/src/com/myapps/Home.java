@@ -5,6 +5,10 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class Home extends Activity {
@@ -35,24 +40,31 @@ public class Home extends Activity {
 	private String FILE = "camera.ser";
 	private String logTag = "AppLog";
 	private String messageRemove = "Etes vous sur de vouloir supprimer cette caméra ?";
-	
-	
-	
-	private void updateListView(boolean init) {
-		String[] s = new String[camList.size()];
-		for (int i = 0; i < camList.size(); i++) {
-			if (init == true)
-				s[i] = "";
-			else
-				s[i] = camList.get(i).toString();
-			Log.i(logTag, "Ajout " + s[i]);
-		}
 
+	public final static String ITEM_TITLE = "title";
+	public final static String ITEM_CAPTION = "caption";
+
+	public Map<String, ?> createItem(String title, String caption) {
+		Map<String, String> item = new HashMap<String, String>();
+		item.put(ITEM_TITLE, title);
+		item.put(ITEM_CAPTION, caption);
+		return item;
+	}
+
+	private void updateListView(boolean init) {
+
+		List<Map<String, ?>> printCamList = new LinkedList<Map<String, ?>>();
+		for (int i = 0; i < camList.size(); i++) {
+			printCamList.add(createItem(camList.get(i).id, camList.get(i).ip));
+		}
+		
 		/* Affichage de la liste */
 		L = (ListView) findViewById(R.id.lv);
-		L.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, s));
+		L.setAdapter(new SimpleAdapter(this, printCamList, R.layout.list_item,  new String[] { ITEM_TITLE, ITEM_CAPTION }, new int[] { R.id.list_complex_title, R.id.list_complex_caption }));  
+		L = (ListView) findViewById(R.id.lv);
 		if (init = true)
 			L.setTextFilterEnabled(true);
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -86,8 +98,7 @@ public class Home extends Activity {
 
 				AlertDialog alert_reset;
 				AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-				builder.setMessage(
-						messageRemove)
+				builder.setMessage(messageRemove)
 						.setCancelable(false)
 						.setPositiveButton("Oui",
 								new DialogInterface.OnClickListener() {

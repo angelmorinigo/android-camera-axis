@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class Video extends Activity implements SurfaceHolder.Callback {
@@ -51,13 +52,14 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 		buttonPlay.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mediaPlayer.isPlaying()){
+				if (mediaPlayer.isPlaying()) {
 					mediaPlayer.pause();
 					Log.i(logTag, "video en pause");
-				}else{
+				} else {
 					mediaPlayer.start();
 					Log.i(logTag, "video en cours de lecture");
-			}}
+				}
+			}
 		});
 	}
 
@@ -78,9 +80,10 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			Toast.makeText(this, "No video found", Toast.LENGTH_LONG).show();
 			Log.i(logTag, "No video found");
 			e.printStackTrace();
-
+			this.finish();
 		}
 	}
 
