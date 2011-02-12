@@ -22,8 +22,23 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		holder.setFixedSize(400, 300);
+		Log.i("AppLog", "Surface View Initialisé");
+		
+		Bundle extras = getIntent().getExtras();
+		String uri = extras.getString("uri");
+		Log.i("AppLog", "Demande lecture "+uri);
+		try {
+			Log.i("AppLog", "demarrage video");
+			mediaPlayer.setDisplay(holder);
+			mediaPlayer.setDataSource(uri);
+			mediaPlayer.prepare();
+		} catch (IllegalArgumentException e) {			e.printStackTrace();
+		} catch (IllegalStateException e) {			e.printStackTrace();
+		} catch (IOException e) {
+			Log.i("AppLog", "No video found");
+			e.printStackTrace();
 
-
+		}
 	}
 
 	@Override
@@ -34,24 +49,8 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-
-		try {
-			Log.i("AppLog", "demarrage video");
-			mediaPlayer.setDisplay(holder);
-			mediaPlayer.setDataSource("/sdcard/Smart_Life.MP4");
-			mediaPlayer.prepare();
-			mediaPlayer.start();
-			Log.i("AppLog", "video en cours de lecture");
-
-		} catch (IllegalArgumentException e) {			e.printStackTrace();
-
-		} catch (IllegalStateException e) {			e.printStackTrace();
-
-		} catch (IOException e) {
-			Log.i("AppLog", "No video found");
-			e.printStackTrace();
-
-		}
+		mediaPlayer.start();
+		Log.i("AppLog", "video en cours de lecture");
 	}
 
 	@Override

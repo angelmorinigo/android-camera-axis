@@ -7,8 +7,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +33,23 @@ public class Home extends Activity {
 	private ListView L;
 	private ArrayList<Camera> camList;
 	private String FILE = "camera.ser";
+
+	private void updateListView(boolean init) {
+		String[] s = new String[camList.size()];
+		for (int i = 0; i < camList.size(); i++) {
+			if (init == true)
+				s[i] = "";
+			else
+				s[i] = camList.get(i).toString();
+			Log.i("AppLog", "Ajout " + s[i]);
+		}
+
+		/* Affichage de la liste */
+		L = (ListView) findViewById(R.id.lv);
+		L.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, s));
+		if (init = true)
+			L.setTextFilterEnabled(true);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -45,39 +65,60 @@ public class Home extends Activity {
 			Log.i("AppLog", "lecture cameras effectuee");
 
 			camList = (ArrayList<Camera>) ois.readObject();
-			String[] s = new String[camList.size()];
-			for (int i = 0; i < camList.size(); i++) {
-				s[i] = camList.get(i).toString();
-				Log.i("AppLog", "Ajout " + s[i]);	
-			}
-
-			/* Affichage de la liste */
-			L = (ListView) findViewById(R.id.lv);
-			L.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, s));
-			L.setTextFilterEnabled(true);
+			updateListView(false);
 		} catch (java.io.IOException e) {
 			Log.i("AppLog", "file not found");
 			camList = new ArrayList<Camera>();
-			String[] s = new String[camList.size()];
-			for (int i = 0; i < camList.size(); i++) {
-				s[i] = "";
-			}
-
-			/* Affichage de la liste */
-			L = (ListView) findViewById(R.id.lv);
-			L.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, s));
-			L.setTextFilterEnabled(true);
+			updateListView(true);
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		L.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					final int position, long arg3) {
+
+				AlertDialog alert_reset;
+				AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+				builder.setMessage(
+						"Etes vous sur de vouloir supprimer cette caméra ?")
+						.setCancelable(false)
+						.setPositiveButton("Oui",
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+
+										camList.remove(position);
+										updateListView(false);
+
+									}
+								})
+						.setNegativeButton("Non",
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+										dialog.cancel();
+									}
+								});
+				alert_reset = builder.create();
+				alert_reset.show();
+
+				return true;
+			}
+		});
 
 		L.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 
-				Intent intent = new Intent(activity.getApplicationContext(), Video.class);
+				Intent intent = new Intent(activity.getApplicationContext(),
+						Video.class);
+				intent.putExtra("uri", camList.get(position).ip);
 				startActivity(intent);
 			}
 		});
@@ -105,20 +146,16 @@ public class Home extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		Bundle extras = intent.getExtras();
-		Camera tmp = (Camera) extras.getSerializable("camera");
-		Log.i("AppLog", "camera " + tmp.id + " recuperer");
+		if (resultCode == Activity.RESULT_OK) {
+			Bundle extras = intent.getExtras();
+			Camera tmp = (Camera) extras.getSerializable("camera");
+			Log.i("AppLog", "camera " + tmp.id + " recuperer");
 
-		camList.add(tmp);
-		Log.i("AppLog", "camera ajouter");
+			camList.add(tmp);
+			Log.i("AppLog", "camera ajouter");
 
-		int nb = camList.size();
-		String[] s = new String[nb];
-		for (int i = 0; i < nb; i++) {
-			s[i] = camList.get(i).toString();
+			updateListView(false);
 		}
-		Log.i("AppLog", "cam list :" + s);
-		L.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item, s));
 	}
 
 	/* Affichage du menu */
