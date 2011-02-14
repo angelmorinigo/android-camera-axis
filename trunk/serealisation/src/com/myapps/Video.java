@@ -20,34 +20,28 @@ import android.widget.AdapterView.OnItemClickListener;
 public class Video extends Activity implements SurfaceHolder.Callback {
 	private MediaPlayer mediaPlayer;
 	private String uri;
-	private PowerManager.WakeLock wakeLock;
-	private String wakeLockTag = "video";
 	private String logTag = "AppLog";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.video);
 		setRequestedOrientation(0);
-		/*
-		 * PowerManager pm = (PowerManager) getApplicationContext()
-		 * .getSystemService(Context.POWER_SERVICE); wakeLock = pm.newWakeLock(
-		 * PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
-		 * wakeLockTag); wakeLock.acquire();
-		 */
 		mediaPlayer = new MediaPlayer();
-
+		
+		
 		SurfaceView surface = (SurfaceView) findViewById(R.id.surfaceView1);
 		SurfaceHolder holder = surface.getHolder();
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		holder.setFixedSize(400, 300);
-		Log.i(logTag, "Surface View Initialisé");
+		holder.setFixedSize(400,300);
+		Log.i(logTag, "Surface View Initialise");
 
 		Bundle extras = getIntent().getExtras();
 		uri = extras.getString("uri");
 		Log.i(logTag, "Demande lecture " + uri);
 		mediaPlayer.setDisplay(holder);
 
+		
 		Button buttonPlay = (Button) findViewById(R.id.Play);
 		buttonPlay.setOnClickListener(new OnClickListener() {
 			@Override
@@ -90,6 +84,5 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		mediaPlayer.release();
-		// wakeLock.release();
 	}
 }

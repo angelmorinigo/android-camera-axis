@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_height="fill_parent" android:layout_width="fill_parent"> -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<SurfaceView android:id="@+id/surfaceView1"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:layout_gravity="center" />
-	<Button android:layout_height="wrap_content" android:text="Play" android:layout_width="wrap_content" android:id="@+id/Play" android:layout_alignParentLeft="true"/>
-		
-		
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:layout_weight="1">
+	<SurfaceView android:layout_height="wrap_content"
+		android:id="@+id/surfaceView1" android:layout_width="wrap_content"></SurfaceView>
+	<LinearLayout android:id="@+id/linearLayout1" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/Play" android:text="Play"></Button>
+		<Button android:text="droite" android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+		<Button android:text="gauche" android:id="@+id/button2" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+		<Button android:text="monter" android:id="@+id/button3" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+		<Button android:text="descendre" android:id="@+id/button4" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+		<Button android:text="Zoom+" android:id="@+id/button5" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+		<Button android:text="Zoom-" android:id="@+id/button6" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+
+	</LinearLayout>
+
 </RelativeLayout>
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	android:layout_weight="1"> <SurfaceView android:layout_height="wrap_content" 
+	android:id="@+id/surfaceView2" android:layout_width="wrap_content" android:layout_alignParentLeft="true"></SurfaceView> 
+	</RelativeLayout> </LinearLayout> -->
