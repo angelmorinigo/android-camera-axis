@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,13 +36,19 @@ public class Home extends Activity {
 	private static Activity activity;
 	private ListView L;
 	private ArrayList<Camera> camList;
+	
+	
 	private String FILE = "camera.ser";
 	private String logTag = "AppLog";
-	private String messageRemove = "Etes vous sur de vouloir supprimer cette caméra ?";
+	private String messageRemove = "Etes vous sur de vouloir supprimer cette camera ?";
+	private String IpTag = "ip";
+	private String PortTag = "port";
 
+	private String ProtocolTag = "protocol";
 	public final static String ITEM_TITLE = "title";
 	public final static String ITEM_CAPTION = "caption";
 
+	
 	public Map<String, ?> createItem(String title, String caption) {
 		Map<String, String> item = new HashMap<String, String>();
 		item.put(ITEM_TITLE, title);
@@ -79,7 +84,6 @@ public class Home extends Activity {
 					FILE);
 			ObjectInputStream ois = new ObjectInputStream(fichier);
 			Log.i(logTag, "lecture cameras effectuee");
-
 			camList = (ArrayList<Camera>) ois.readObject();
 			updateListView(false);
 		} catch (java.io.IOException e) {
@@ -91,7 +95,6 @@ public class Home extends Activity {
 			e.printStackTrace();
 		}
 		L.setOnItemLongClickListener(new OnItemLongClickListener() {
-
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					final int position, long arg3) {
@@ -105,10 +108,8 @@ public class Home extends Activity {
 									@Override
 									public void onClick(DialogInterface dialog,
 											int id) {
-
 										camList.remove(position);
 										updateListView(false);
-
 									}
 								})
 						.setNegativeButton("Non",
@@ -121,7 +122,6 @@ public class Home extends Activity {
 								});
 				alert_reset = builder.create();
 				alert_reset.show();
-
 				return true;
 			}
 		});
@@ -133,7 +133,9 @@ public class Home extends Activity {
 
 				Intent intent = new Intent(activity.getApplicationContext(),
 						Video.class);
-				intent.putExtra("uri", camList.get(position).ip);
+				intent.putExtra(IpTag, camList.get(position).ip);
+				intent.putExtra(PortTag, ""+camList.get(position).port);
+				intent.putExtra(ProtocolTag, camList.get(position).protocol);
 				startActivity(intent);
 			}
 		});

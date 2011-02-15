@@ -19,29 +19,43 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class Video extends Activity implements SurfaceHolder.Callback {
 	private MediaPlayer mediaPlayer;
-	private String uri;
+	private String ip, port, protocol, uri;
 	private String logTag = "AppLog";
+	private String IpTag = "ip";
+	private String PortTag = "port";
+
+	private String ProtocolTag = "protocol";
+	private String UrlSuffixeAxProtocol = "/mpeg4/1/media.amp";
+	private String UrlSuffixeHTTPProtocol = "/axis-cgi/mjpg/video.cgi";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.video);
 		setRequestedOrientation(0);
 		mediaPlayer = new MediaPlayer();
-		
-		
+
+		/* Initialisation de la surface video */
 		SurfaceView surface = (SurfaceView) findViewById(R.id.surfaceView1);
 		SurfaceHolder holder = surface.getHolder();
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-		holder.setFixedSize(400,300);
+		// holder.setFixedSize(400, 300);
+		mediaPlayer.setDisplay(holder);
 		Log.i(logTag, "Surface View Initialise");
 
+		/* Recuperation des arguments */
 		Bundle extras = getIntent().getExtras();
-		uri = extras.getString("uri");
-		Log.i(logTag, "Demande lecture " + uri);
-		mediaPlayer.setDisplay(holder);
-
+		ip = extras.getString(IpTag);
+		port = extras.getString(PortTag);
+		protocol = extras.getString(ProtocolTag);
 		
+		if (protocol.equalsIgnoreCase("http"))
+			uri = protocol + "://" + ip + ":" + port + UrlSuffixeHTTPProtocol;
+		else
+			uri = protocol + "://" + ip + ":" + port + UrlSuffixeAxProtocol;
+		Log.i(logTag, "Demande lecture " + uri);
+
+		uri = "/sdcard/Smart_Life.MP4";
 		Button buttonPlay = (Button) findViewById(R.id.Play);
 		buttonPlay.setOnClickListener(new OnClickListener() {
 			@Override
