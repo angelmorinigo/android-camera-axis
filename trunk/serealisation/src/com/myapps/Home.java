@@ -41,10 +41,8 @@ public class Home extends Activity {
 	private String FILE = "camera.ser";
 	private String logTag = "AppLog";
 	private String messageRemove = "Etes vous sur de vouloir supprimer cette camera ?";
-	private String IpTag = "ip";
-	private String PortTag = "port";
+	private String camTag = "camera";
 
-	private String ProtocolTag = "protocol";
 	public final static String ITEM_TITLE = "title";
 	public final static String ITEM_CAPTION = "caption";
 
@@ -71,6 +69,7 @@ public class Home extends Activity {
 			L.setTextFilterEnabled(true);
 
 	}
+
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -133,9 +132,9 @@ public class Home extends Activity {
 
 				Intent intent = new Intent(activity.getApplicationContext(),
 						Video.class);
-				intent.putExtra(IpTag, camList.get(position).ip);
-				intent.putExtra(PortTag, ""+camList.get(position).port);
-				intent.putExtra(ProtocolTag, camList.get(position).protocol);
+				Bundle objetbunble = new Bundle();
+				objetbunble.putSerializable(camTag, camList.get(position));
+				intent.putExtras(objetbunble);
 				startActivity(intent);
 			}
 		});
@@ -165,7 +164,7 @@ public class Home extends Activity {
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (resultCode == Activity.RESULT_OK) {
 			Bundle extras = intent.getExtras();
-			Camera tmp = (Camera) extras.getSerializable("camera");
+			Camera tmp = (Camera) extras.getSerializable(camTag);
 			Log.i(logTag, "camera " + tmp.id + " recuperer");
 
 			camList.add(tmp);

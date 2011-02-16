@@ -2,7 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="horizontal" android:stretchColumns="1"
 	android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="fill">
-		<TextView android:hint="Ajouter une caméra :" android:textSize="12pt"/>
+		<TextView android:hint="Ajouter une caméra :" android:textSize="12pt" android:gravity="center"/>
 	<TableRow>
 		<TextView android:text="Identifiant :" android:id="@+id/tid" />
 		<EditText android:hint="Entrez un id" android:id="@+id/eid"
@@ -27,6 +27,11 @@
 	<TableRow>
 		<TextView android:text="Port :" android:id="@+id/tport" />
 		<EditText android:hint="Entrez un port" android:id="@+id/eport"
+			android:gravity="center" android:numeric="decimal" />
+	</TableRow>
+	<TableRow>
+		<TextView android:text="Channel :" android:id="@+id/tchan" />
+		<EditText android:hint="Entrez un Canal" android:id="@+id/echan"
 			android:gravity="center" android:numeric="decimal" />
 	</TableRow>
 	<TableRow>

@@ -15,14 +15,9 @@ import android.widget.Toast;
 
 public class Video extends Activity implements SurfaceHolder.Callback {
 	private MediaPlayer mediaPlayer;
-	private String ip, port, protocol, uri;
-	private String logTag = "AppLog";
-	private String IpTag = "ip";
-	private String PortTag = "port";
-
-	private String ProtocolTag = "protocol";
-	private String UrlSuffixeAxProtocol = "/mpeg4/1/media.amp";
-	private String UrlSuffixeHTTPProtocol = "/axis-cgi/mjpg/video.cgi";
+	private String uri;
+	private String camTag = "camera";
+	private Camera cam;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,31 +32,28 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		// holder.setFixedSize(400, 300);
 		mediaPlayer.setDisplay(holder);
-		Log.i(logTag, "Surface View Initialise");
+		Log.i(getString(R.string.logTag), "Surface View Initialise");
 
-		/* Recuperation des arguments */
+		/* Récupération des arguments */
 		Bundle extras = getIntent().getExtras();
-		ip = extras.getString(IpTag);
-		port = extras.getString(PortTag);
-		protocol = extras.getString(ProtocolTag);
-		
-		if (protocol.equalsIgnoreCase("http"))
-			uri = protocol + "://" + ip + ":" + port + UrlSuffixeHTTPProtocol;
-		else
-			uri = protocol + "://" + ip + ":" + port + UrlSuffixeAxProtocol;
-		Log.i(logTag, "Demande lecture " + uri);
+		cam = (Camera) extras.getSerializable(camTag);
 
-		uri = "/sdcard/Smart_Life.MP4";
+		uri = cam.getUrl();
+		Log.i(getString(R.string.logTag), "Demande lecture " + uri);
+
+		/* Button Listener */
+		/* test */
+		//uri = "/sdcard/Smart_Life.MP4";
 		Button buttonPlay = (Button) findViewById(R.id.Play);
 		buttonPlay.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (mediaPlayer.isPlaying()) {
 					mediaPlayer.pause();
-					Log.i(logTag, "video en pause");
+					Log.i(getString(R.string.logTag), "video en pause");
 				} else {
 					mediaPlayer.start();
-					Log.i(logTag, "video en cours de lecture");
+					Log.i(getString(R.string.logTag), "video en cours de lecture");
 				}
 			}
 		});
@@ -75,7 +67,7 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		try {
-			Log.i(logTag, "demarrage video");
+			Log.i(getString(R.string.logTag), "demarrage video");
 			mediaPlayer.setDataSource(uri);
 			mediaPlayer.setScreenOnWhilePlaying(true);
 			mediaPlayer.prepare();
@@ -85,7 +77,7 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 			e.printStackTrace();
 		} catch (IOException e) {
 			Toast.makeText(this, "No video found", Toast.LENGTH_LONG).show();
-			Log.i(logTag, "No video found");
+			Log.i(getString(R.string.logTag), "No video found");
 			e.printStackTrace();
 			this.finish();
 		}

@@ -15,13 +15,12 @@ import android.widget.Toast;
 
 public class AddCam extends Activity {
 	/** Called when the activity is first created. */
-	public EditText id, login, pass, ip, port;
-	//private String protocol;
+	public EditText id, login, pass, ip, port, channel;
 	private String logTag = "AppLog";
+	private String camTag = "camera";
+
 	private Context context;
 	public Spinner s;
-
-	/* Definition de la camera */
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +33,7 @@ public class AddCam extends Activity {
 		pass = (EditText) findViewById(R.id.epass);
 		ip = (EditText) findViewById(R.id.eip);
 		port = (EditText) findViewById(R.id.eport);
+		channel = (EditText) findViewById(R.id.echan);
 
 		/* Spinner listener (ComboBox) */
 		s = (Spinner) findViewById(R.id.spinner);
@@ -42,18 +42,7 @@ public class AddCam extends Activity {
 				android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		s.setAdapter(adapter);
-	/*	s.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// protocol = arg0.getItemAtPosition(arg2).toString();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// protocol = "";
-			}
-		});
+	
 
 		/* Buttons listener */
 		Button bAdd = (Button) findViewById(R.id.add);
@@ -65,18 +54,20 @@ public class AddCam extends Activity {
 				String vIp = ip.getText().toString();
 				String vPort = port.getText().toString();
 				String vProtocol = s.getSelectedItem().toString();
+				String vChan = channel.getText().toString();
 
 				if (vId.equalsIgnoreCase("") | vLogin.equalsIgnoreCase("")
 						| vPass.equalsIgnoreCase("") | vIp.equalsIgnoreCase("")
-						| vPort.equalsIgnoreCase(""))
+						| vPort.equalsIgnoreCase("") | vChan.equalsIgnoreCase(""))
 					return;
 
 				Camera tmp = new Camera(vId, vLogin, vPass, vIp, Integer
-						.parseInt(vPort), vProtocol);
+						.parseInt(vPort), vProtocol, Integer
+						.parseInt(vChan));
 
 				Intent outData = new Intent();
 				Bundle objetbunble = new Bundle();
-				objetbunble.putSerializable("camera", tmp);
+				objetbunble.putSerializable(camTag, tmp);
 				outData.putExtras(objetbunble);
 				setResult(RESULT_OK, outData);
 				finish();
@@ -88,7 +79,7 @@ public class AddCam extends Activity {
 			public void onClick(View v) {
 				Intent outData = new Intent();
 				Bundle objetbunble = new Bundle();
-				objetbunble.putSerializable("camera", null);
+				objetbunble.putSerializable(camTag, null);
 				outData.putExtras(objetbunble);
 				setResult(RESULT_CANCELED, outData);
 				finish();
