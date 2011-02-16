@@ -1,6 +1,9 @@
 package com.myapps;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -17,6 +20,9 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 	private MediaPlayer mediaPlayer;
 	private String uri;
 	private Camera cam;
+	private boolean connected = false;
+
+	private URLConnection con;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,9 +46,25 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 		uri = cam.getUrl();
 		Log.i(getString(R.string.logTag), "Demande lecture " + uri);
 
+		/* Authentification */
+		try {
+			URL url = new URL(cam.protocol + "://" + cam.ip + "/");
+			con = url.openConnection();
+			con.setRequestProperty("Authorization",
+					base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
+			con.connect();
+			
+			connected = true;
+			Log.i(getString(R.string.logTag), "con connect");
+		} catch (MalformedURLException e) {
+			Log.i(getString(R.string.logTag), "con fail MalformedURLException");
+			e.printStackTrace();
+		} catch (IOException e) {
+			Log.i(getString(R.string.logTag), "con fail");
+			e.printStackTrace();
+		}
+
 		/* Button Listener */
-		/* test */
-		//uri = "/sdcard/Smart_Life.MP4";
 		Button buttonPlay = (Button) findViewById(R.id.Play);
 		buttonPlay.setOnClickListener(new OnClickListener() {
 			@Override
@@ -51,8 +73,7 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 					mediaPlayer.pause();
 					Log.i(getString(R.string.logTag), "video en pause");
 				} else {
-					mediaPlayer.start();
-					Log.i(getString(R.string.logTag), "video en cours de lecture");
+
 				}
 			}
 		});
@@ -70,6 +91,9 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 			mediaPlayer.setDataSource(uri);
 			mediaPlayer.setScreenOnWhilePlaying(true);
 			mediaPlayer.prepare();
+			mediaPlayer.start();
+			Log.i(getString(R.string.logTag),
+					"video en cours de lecture");
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
