@@ -16,7 +16,6 @@ import android.widget.Toast;
 public class Video extends Activity implements SurfaceHolder.Callback {
 	private MediaPlayer mediaPlayer;
 	private String uri;
-	private String camTag = "camera";
 	private Camera cam;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class Video extends Activity implements SurfaceHolder.Callback {
 
 		/* Récupération des arguments */
 		Bundle extras = getIntent().getExtras();
-		cam = (Camera) extras.getSerializable(camTag);
+		cam = (Camera) extras.getSerializable(getString(R.string.camTag));
 
 		uri = cam.getUrl();
 		Log.i(getString(R.string.logTag), "Demande lecture " + uri);

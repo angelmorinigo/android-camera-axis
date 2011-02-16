@@ -39,9 +39,7 @@ public class Home extends Activity {
 	
 	
 	private String FILE = "camera.ser";
-	private String logTag = "AppLog";
 	private String messageRemove = "Etes vous sur de vouloir supprimer cette camera ?";
-	private String camTag = "camera";
 
 	public final static String ITEM_TITLE = "title";
 	public final static String ITEM_CAPTION = "caption";
@@ -82,11 +80,11 @@ public class Home extends Activity {
 			FileInputStream fichier = activity.getApplication().openFileInput(
 					FILE);
 			ObjectInputStream ois = new ObjectInputStream(fichier);
-			Log.i(logTag, "lecture cameras effectuee");
+			Log.i(getString(R.string.logTag), "lecture cameras effectuee");
 			camList = (ArrayList<Camera>) ois.readObject();
 			updateListView(false);
 		} catch (java.io.IOException e) {
-			Log.i(logTag, "file not found");
+			Log.i(getString(R.string.logTag), "file not found");
 			camList = new ArrayList<Camera>();
 			updateListView(true);
 			e.printStackTrace();
@@ -133,7 +131,7 @@ public class Home extends Activity {
 				Intent intent = new Intent(activity.getApplicationContext(),
 						Video.class);
 				Bundle objetbunble = new Bundle();
-				objetbunble.putSerializable(camTag, camList.get(position));
+				objetbunble.putSerializable(getString(R.string.camTag), camList.get(position));
 				intent.putExtras(objetbunble);
 				startActivity(intent);
 			}
@@ -150,9 +148,9 @@ public class Home extends Activity {
 			oos.flush();
 			oos.close();
 			fichier.close();
-			Log.i(logTag, "camera save");
+			Log.i(getString(R.string.logTag), "camera save");
 		} catch (java.io.IOException e) {
-			Log.i(logTag, "file not save");
+			Log.i(getString(R.string.logTag), "file not save");
 			e.printStackTrace();
 		}
 		super.onDestroy();
@@ -164,11 +162,11 @@ public class Home extends Activity {
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (resultCode == Activity.RESULT_OK) {
 			Bundle extras = intent.getExtras();
-			Camera tmp = (Camera) extras.getSerializable(camTag);
-			Log.i(logTag, "camera " + tmp.id + " recuperer");
+			Camera tmp = (Camera) extras.getSerializable(getString(R.string.camTag));
+			Log.i(getString(R.string.logTag), "camera " + tmp.id + " recuperer");
 
 			camList.add(tmp);
-			Log.i(logTag, "camera ajouter");
+			Log.i(getString(R.string.logTag), "camera ajouter");
 
 			updateListView(false);
 		}
@@ -206,7 +204,7 @@ public class Home extends Activity {
 			dialog_about.show();
 			return true;
 		case R.id.menu_quitter:
-			Log.i(logTag, "Exit");
+			Log.i(getString(R.string.logTag), "Exit");
 			activity.finish();
 			return true;
 		case R.id.menu_ajouter:

@@ -16,8 +16,6 @@ import android.widget.Toast;
 public class AddCam extends Activity {
 	/** Called when the activity is first created. */
 	public EditText id, login, pass, ip, port, channel;
-	private String logTag = "AppLog";
-	private String camTag = "camera";
 
 	private Context context;
 	public Spinner s;
@@ -67,7 +65,7 @@ public class AddCam extends Activity {
 
 				Intent outData = new Intent();
 				Bundle objetbunble = new Bundle();
-				objetbunble.putSerializable(camTag, tmp);
+				objetbunble.putSerializable(getString(R.string.camTag), tmp);
 				outData.putExtras(objetbunble);
 				setResult(RESULT_OK, outData);
 				finish();
@@ -79,7 +77,7 @@ public class AddCam extends Activity {
 			public void onClick(View v) {
 				Intent outData = new Intent();
 				Bundle objetbunble = new Bundle();
-				objetbunble.putSerializable(camTag, null);
+				objetbunble.putSerializable(getString(R.string.camTag), null);
 				outData.putExtras(objetbunble);
 				setResult(RESULT_CANCELED, outData);
 				finish();
