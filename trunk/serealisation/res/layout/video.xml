@@ -12,8 +12,9 @@
 			<LinearLayout android:id="@+id/linearLayout4"
 				android:layout_height="fill_parent" android:layout_width="fill_parent"
 				android:layout_weight="1">
-				<Button android:gravity="fill_horizontal|right"
-					android:layout_width="wrap_content" android:text="Play" android:id="@+id/Play"
+				<Button android:layout_width="wrap_content" android:text="Play" android:id="@+id/Play"
+					android:layout_height="wrap_content" />
+					<Button android:layout_width="wrap_content" android:text="Snap" android:id="@+id/Snap"
 					android:layout_height="wrap_content" />
 			</LinearLayout>
 			<LinearLayout android:id="@+id/linearLayout3"

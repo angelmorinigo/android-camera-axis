@@ -62,7 +62,6 @@ public class Home extends Activity {
 		/* Affichage de la liste */
 		L = (ListView) findViewById(R.id.lv);
 		L.setAdapter(new SimpleAdapter(this, printCamList, R.layout.list_item,  new String[] { ITEM_TITLE, ITEM_CAPTION }, new int[] { R.id.list_complex_title, R.id.list_complex_caption }));  
-		L = (ListView) findViewById(R.id.lv);
 		if (init = true)
 			L.setTextFilterEnabled(true);
 

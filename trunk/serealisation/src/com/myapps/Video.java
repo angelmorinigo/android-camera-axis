@@ -1,5 +1,8 @@
 package com.myapps;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Authenticator;
@@ -12,129 +15,178 @@ import java.net.URLStreamHandler;
 import java.sql.Time;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.net.Uri.Builder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Video extends Activity {
-	private MediaPlayer mediaPlayer;
 	private String uri;
 	private Camera cam;
+	private CameraControl camC;
 	private boolean connected = false;
-
-	private ImageView img;
+	public Activity activity;
+	private static ImageView img;
 	private URLConnection con;
 
+	private Thread p;
+	private boolean start = false;
+	protected static final int GUIUPDATEIDENTIFIER = 0x101;
+	static final String[] SIZE = new String[] { "1280x1024", "1280x960",
+			"1280x720", "768x576", "4CIF", "704x576", "704x480", "VGA",
+			"640x480", "640x360", "2CIFEXP", "2CIF", "704x288", "704x240",
+			"480x360", "CIF", "384x288", "352x288", "352x240", "320x240",
+			"240x180", "QCIF", "192x144", "176x144", "176x120", "160x120" };
+	static Bitmap newBMP;
+
+	static Handler myViewUpdateHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			if (msg.what == GUIUPDATEIDENTIFIER) {
+				img.setImageBitmap(newBMP);
+				img.invalidate();
+				Log.i("AppLog", "handleMessage");
+			}
+			super.handleMessage(msg);
+		}
+	};
+
+	
+	
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.video);
 		setRequestedOrientation(0);
-		mediaPlayer = new MediaPlayer();
-
+		activity = this;
+		
+		img = (ImageView) findViewById(R.id.imageView1);
+		Button buttonPlay = (Button) findViewById(R.id.Play);
+		Button buttonSnap = (Button) findViewById(R.id.Snap);
+		newBMP = null;
+		
+		
 		/* Récupération des arguments */
 		Bundle extras = getIntent().getExtras();
 		cam = (Camera) extras.getSerializable(getString(R.string.camTag));
-
+		camC = new CameraControl(cam);
 		uri = cam.getUrl();
 		Log.i(getString(R.string.logTag), "Demande lecture " + uri);
 
-		/* Authentification */
-	/*	try {
-			URL url = new URL("http://192.168.1.20:80");
-			con = url.openConnection();
-			con.setRequestProperty("Authorization",
-					base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
-			con.connect();
-			connected = true;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 		
-		// try {
-		// String UrlIndex = cam.protocol + "://" + cam.ip;
-		// uri = "rtsp://root:root@192.168.1.20:554/mpeg4/1/media.amp";
-		// URI t = new URI("rtsp", "root:root"
-		/*
-		 * base64Encoder. userNamePasswordBase64 (cam.login, cam.pass)
-		 */
-		/*
-		 * , "192.168.1.20", 554, null, null, null); // URL url = new
-		 * URL(UrlIndex);
-		 * 
-		 * Log.i(getString(R.string.logTag), "URI : " + t.toString()); /* final
-		 * URL UrlIndex = new URL("rtsp", "192.168.1.20", 554, "", new
-		 * URLStreamHandler() {
-		 * 
-		 * @Override protected URLConnection openConnection(URL u) throws
-		 * IOException { URLConnection con = new
-		 * con.setRequestProperty("Authorization",
-		 * base64Encoder.userNamePasswordBase64( cam.login, cam.pass));
-		 * 
-		 * return con; } });// .toURL();
-		 */
-		// URL urlIndex = new URL("rtsp", "192.168.1.20", 554, "/");
-		/*
-		 * URL urlIndex = new URL("rtsp://192.168.1.20");
-		 * Log.i(getString(R.string.logTag), "URL : " + urlIndex.toString());
-		 * urlIndex.openConnection(); con.setRequestProperty("Authorization",
-		 * base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
-		 * con.connect(); connected = true;
-		 * 
-		 * Log.i(getString(R.string.logTag), "con connect" + con.getURL()); }
-		 * catch (MalformedURLException e) { Log.i(getString(R.string.logTag),
-		 * "con fail MalformedURLException"); e.printStackTrace(); } catch
-		 * (IOException e) { Log.i(getString(R.string.logTag),
-		 * "con fail IOException"); e.printStackTrace(); }
-		 */
-
-		img = (ImageView) findViewById(R.id.imageView1);
-
+		
 		/* Button Listener */
-		Button buttonPlay = (Button) findViewById(R.id.Play);
+		
 		buttonPlay.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*
-				 * PlayerThread p = new PlayerThread(); p.start();
-				 * while(p.isAlive()){ img.setImageBitmap(p.getBMP());
-				 * img.invalidate(); Log.i(getString(R.string.logTag), "-"); }
-				 * p.destroy();
-				 */
-				try {
-					/* Prends juste un screenshot */
-					long t1 = System.currentTimeMillis();
-					URL url = new URL("http://192.168.1.20/axis-cgi/jpg/image.cgi");
-					con = url.openConnection();
-					con.setRequestProperty("Authorization",
-							base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
-					con.connect();
-					connected = true;
-					Bitmap bmp = null;			
-					InputStream stream = con.getInputStream();
-					bmp = BitmapFactory.decodeStream(stream);
-					stream.close();
-					img.setImageBitmap(bmp);
-					long t2 = System.currentTimeMillis();
-					long t3 = t2-t1;
-					Log.i(getString(R.string.logTag), "ms : " + t3);
-				} catch (MalformedURLException e) {
-				} catch (IOException e) {
+				if (!start) {
+					start = true;
+					p = new Thread(new PlayerThread());
+					p.start();
+				} else {
+					Log.i(getString(R.string.logTag), "Interupt !!!");
+					p.interrupt();
+					start = false;
 				}
 			}
 		});
+		
+		
+		buttonSnap.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+				builder.setTitle("SnapShot Format");
+				builder.setSingleChoiceItems(SIZE, -1,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int item) {
+								try {
+									Bitmap bmp = camC.takeSnapshot(SIZE[item]);
+									FileOutputStream fichier = new FileOutputStream("/sdcard/test.jpeg");
+								      img.setImageBitmap(bmp);
+									bmp.compress(Bitmap.CompressFormat.JPEG,
+											80, fichier);
+									fichier.flush();
+									fichier.close();
+									Log.i(getString(R.string.logTag), "Snap Save !!");
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								dialog.dismiss();
+							}
+						});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		});
 	}
+
+	/* onCreate comment */
+	/* Authentification */
+	/*
+	 * try { URL url = new URL("http://192.168.1.20:80"); con =
+	 * url.openConnection(); con.setRequestProperty("Authorization",
+	 * base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
+	 * con.connect(); connected = true; } catch (IOException e) {
+	 * e.printStackTrace(); }
+	 */
+
+	// try {
+	// String UrlIndex = cam.protocol + "://" + cam.ip;
+	// uri = "rtsp://root:root@192.168.1.20:554/mpeg4/1/media.amp";
+	// URI t = new URI("rtsp", "root:root"
+	/*
+	 * base64Encoder. userNamePasswordBase64 (cam.login, cam.pass)
+	 */
+	/*
+	 * , "192.168.1.20", 554, null, null, null); // URL url = new URL(UrlIndex);
+	 * 
+	 * Log.i(getString(R.string.logTag), "URI : " + t.toString()); /* final URL
+	 * UrlIndex = new URL("rtsp", "192.168.1.20", 554, "", new
+	 * URLStreamHandler() {
+	 * 
+	 * @Override protected URLConnection openConnection(URL u) throws
+	 * IOException { URLConnection con = new
+	 * con.setRequestProperty("Authorization",
+	 * base64Encoder.userNamePasswordBase64( cam.login, cam.pass));
+	 * 
+	 * return con; } });// .toURL();
+	 */
+	// URL urlIndex = new URL("rtsp", "192.168.1.20", 554, "/");
+	/*
+	 * URL urlIndex = new URL("rtsp://192.168.1.20");
+	 * Log.i(getString(R.string.logTag), "URL : " + urlIndex.toString());
+	 * urlIndex.openConnection(); con.setRequestProperty("Authorization",
+	 * base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
+	 * con.connect(); connected = true;
+	 * 
+	 * Log.i(getString(R.string.logTag), "con connect" + con.getURL()); } catch
+	 * (MalformedURLException e) { Log.i(getString(R.string.logTag),
+	 * "con fail MalformedURLException"); e.printStackTrace(); } catch
+	 * (IOException e) { Log.i(getString(R.string.logTag),
+	 * "con fail IOException"); e.printStackTrace(); }
+	 */
 
 	/*
 	 * @Override public void surfaceCreated(SurfaceHolder holder) {
