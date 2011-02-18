@@ -8,7 +8,7 @@ public class base64Encoder {
 			'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8',
 			'9', '+', '/' };
 
-	private static String base64Encode(String string) {
+	public static String base64Encode(String string) {
 		String encodedString = "";
 		byte bytes[] = string.getBytes();
 		int i = 0;
