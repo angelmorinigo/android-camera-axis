@@ -28,10 +28,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -138,6 +140,22 @@ public class Video extends Activity {
 						});
 				AlertDialog alert = builder.create();
 				alert.show();
+			}
+		});
+		
+		/*
+		 * Contrôle du PTZ par déplacement sur l'écran
+		 */
+		img.setOnTouchListener(new OnTouchListener() {
+			float startX, startY;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					startX = event.getX();
+					startY = event.getY();
+					return true;
+				}
+				return false;
 			}
 		});
 	}
