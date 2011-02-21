@@ -1,12 +1,10 @@
 package com.myapps;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -43,6 +41,7 @@ public class CameraControl {
 	public static final int AUTO = 8;
 	public static final int CONTINUOUS = 16;
 	
+	// paramètres de config du Motion Detection
 	private static final int TOP = 0;
 	private static final int RIGHT = 1;
 	private static final int BOTTOM = 2;
@@ -72,98 +71,95 @@ public class CameraControl {
 	public void loadConfig(int function) {
 		HttpURLConnection con;
 		InputStream result;
-		String param = "";
-		int sum;
+		String line, property = null, value = null;
 		
 		try {
-			con = sendCommand("axis-cgi/com/ptz.cgi?info=1&camera="
-					+ String.valueOf(cam.channel));
+			con = sendCommand(this.createURL() + "axis-cgi/com/ptz.cgi?info=1&camera=1");
 			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				result = new BufferedInputStream(con.getInputStream());
-				for (int i = 0; i < CameraControl.NB_FUNC - 2; i++) {
-					sum = 0;
-					switch (function) {
-					case CameraControl.PAN:
-						param = "Pan";
-						break;
-					case CameraControl.TILT:
-						param = "Tilt";
-						break;
-					case CameraControl.ZOOM:
-						param = "Zoom";
-						break;
-					case CameraControl.FOCUS:
-						param = "Focus";
-						break;
-					case CameraControl.IRIS:
-						param = "Iris";
-						break;
-					case CameraControl.AUTOFOCUS:
-						param = "AutoFocus";
-						break;
-					case CameraControl.AUTOIRIS:
-						param = "AutoIris";
-						break;
-					case CameraControl.IR_FILTER:
-						param = "IrCutFilter";
-						break;
-					case CameraControl.AUTO_IR:
-						param = "AutoIrCutFilter";
-						break;
-					case CameraControl.BACKLIGHT:
-						param = "Backlight";
-						break;	
-					}
-					if (function >= 0 && function <= CameraControl.NB_BASIC_FUNC) {
-						sum = (result.toString().contains("Absolute" + param + "=true") ? CameraControl.ABSOLUTE : 0)
-							+ (result.toString().contains("Relative" + param + "=true") ? CameraControl.RELATIVE : 0)
-							+ (result.toString().contains("Continuous" + param + "=true") ? CameraControl.CONTINUOUS : 0);
-						
-						if (function == CameraControl.ZOOM)
-							sum += result.toString().contains("DigitalZoom=true") ? CameraControl.DIGITAL : 0;
-						else if (function == CameraControl.FOCUS || function == CameraControl.IRIS)
-							sum += result.toString().contains("Auto" + param + "=true") ? CameraControl.AUTO : 0;
-						
-						this.functionProperties[function] = sum;
-						if (sum > 0) {
-							this.currentConfig[function] = result.toString().contains(param + "Enabled=true")
-									? CameraControl.ENABLED : CameraControl.DISABLED;
+				result = con.getInputStream();
+				BufferedReader in  = new BufferedReader(new InputStreamReader(result));
+				while ((line = in.readLine()) != null) {
+					if (line.indexOf("=") > -1) {
+						property = line.substring(0, line.indexOf("=")).trim();
+						value = line.substring(line.indexOf("=") + 1);
+						System.out.println(property + "=" + value);
+						if (property.contains("pan")) {
+							if (property.contentEquals("pan"))
+								this.currentConfig[CameraControl.PAN] += CameraControl.ABSOLUTE;
+							else if (property.contentEquals("rpan"))
+								this.currentConfig[CameraControl.PAN] += CameraControl.RELATIVE;
+							else if (property.contentEquals("continuouspantiltmove")) {
+								this.currentConfig[CameraControl.PAN] += CameraControl.CONTINUOUS;
+								this.currentConfig[CameraControl.TILT] += CameraControl.CONTINUOUS;
+							}
 						}
-					} else if (function == CameraControl.AUTOFOCUS || function == CameraControl.AUTOIRIS) {
-						this.currentConfig[function] = result.toString().contains(param + "=true")
-								? CameraControl.ENABLED : CameraControl.DISABLED;
-					} else if (function == CameraControl.IR_FILTER || function == CameraControl.BACKLIGHT) {
-						this.currentConfig[function] = result.toString().contains(param + "Enabled=true")
-								? CameraControl.DISABLED : CameraControl.NOT_SUPPORTED;
-						if (function == CameraControl.IR_FILTER)
-							this.currentConfig[function] = (result.toString().contains(param + "=on")
-									|| result.toString().contains(param + "=auto"))
-									? CameraControl.ENABLED : CameraControl.DISABLED;
-						else
-							this.currentConfig[function] = result.toString().contains(param + "=true")
-									? CameraControl.ENABLED : CameraControl.DISABLED;
-					} else if (function == CameraControl.AUTO_IR) {
-						this.currentConfig[function] = result.toString().contains(param + "=true")
-								? CameraControl.DISABLED : CameraControl.NOT_SUPPORTED;
-						this.currentConfig[function] = result.toString().contains("IrCutFilter" + "=auto")
-								? CameraControl.ENABLED : CameraControl.DISABLED;
+					} else if (property.contains("tilt")) {
+						if (property.contentEquals("tilt"))
+							this.currentConfig[CameraControl.TILT] += CameraControl.ABSOLUTE;
+						else if (property.contentEquals("rtilt"))
+							this.currentConfig[CameraControl.TILT] += CameraControl.RELATIVE;
+					} else if (property.contains("zoom")) {
+						if (property.contentEquals("zoom"))
+							this.currentConfig[CameraControl.ZOOM] += CameraControl.ABSOLUTE;
+						else if (property.contentEquals("rzoom"))
+							this.currentConfig[CameraControl.ZOOM] += CameraControl.RELATIVE;
+						else if (property.contentEquals("continuouszoommove"))
+							this.currentConfig[CameraControl.ZOOM] += CameraControl.CONTINUOUS;
+						else if (property.contentEquals("digitalzoom"))
+							this.currentConfig[CameraControl.ZOOM] += CameraControl.DIGITAL;
+					} else if (property.contains("focus")) {
+						if (property.contentEquals("focus"))
+							this.currentConfig[CameraControl.FOCUS] += CameraControl.ABSOLUTE;
+						else if (property.contentEquals("rfocus"))
+							this.currentConfig[CameraControl.FOCUS] += CameraControl.RELATIVE;
+						else if (property.contentEquals("continuousfocusmove"))
+							this.currentConfig[CameraControl.FOCUS] += CameraControl.CONTINUOUS;
+						else if (property.contentEquals("autofocus")) {
+							this.currentConfig[CameraControl.FOCUS] += CameraControl.AUTO;
+							this.currentConfig[CameraControl.AUTOFOCUS] = CameraControl.DISABLED;
+						}
+					} else if (property.contains("iris")) {
+						if (property.contentEquals("iris"))
+							this.currentConfig[CameraControl.IRIS] += CameraControl.ABSOLUTE;
+						else if (property.contentEquals("riris"))
+							this.currentConfig[CameraControl.IRIS] += CameraControl.RELATIVE;
+						else if (property.contentEquals("continuousirismove"))
+							this.currentConfig[CameraControl.IRIS] += CameraControl.CONTINUOUS;
+						else if (property.contentEquals("autoiris")) {
+							this.currentConfig[CameraControl.IRIS] += CameraControl.AUTO;
+							this.currentConfig[CameraControl.AUTOFOCUS] = CameraControl.DISABLED;
+						}
+					} else if (property.contentEquals("ircutfilter")) {
+						this.currentConfig[CameraControl.IR_FILTER] = CameraControl.DISABLED;
+						if (value.contains("auto"))
+							this.currentConfig[CameraControl.AUTO_IR] = CameraControl.DISABLED;
+					} else if (property.contentEquals("backlight")) {
+						this.currentConfig[CameraControl.BACKLIGHT] = CameraControl.DISABLED;
+					}
+				}
+				
+				for (int i = 0; i < CameraControl.NB_BASIC_FUNC; i++)
+					if (this.currentConfig[i] > 0)
+						this.currentConfig[i] = CameraControl.ENABLED;
+				
+				con = sendCommand("axis-cgi/admin/param.cgi?action=list&group=Properties.Motion,Properties.Audio");
+				if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					result = con.getInputStream();
+					in  = new BufferedReader(new InputStreamReader(result));
+					while ((line = in.readLine()) != null) {
+						System.out.println(line);
+						if (line.contains("Properties.Motion.Motion=yes"))
+							this.currentConfig[CameraControl.MOTION] = CameraControl.DISABLED;
+						if (line.contains("Properties.Audio.Audio=yes"))
+							this.currentConfig[CameraControl.AUDIO] = CameraControl.DISABLED;
 					}
 				}
 			}
-			
-			con = sendCommand("axis-cgi/admin/param.cgi?action=list&group=Properties.Motion,Properties.Audio");
-			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				result = new BufferedInputStream(con.getInputStream());
-				this.currentConfig[CameraControl.MOTION] = result.toString().contains("Properties.Motion=yes")
-						? CameraControl.DISABLED : CameraControl.NOT_SUPPORTED;
-				this.currentConfig[CameraControl.AUDIO] = result.toString().contains("Properties.Audio=yes")
-				? CameraControl.DISABLED : CameraControl.NOT_SUPPORTED;
-			}
-			
-			result = null;
-			con = null;
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			result = null;
+			con = null;
 		}
 	}
 
@@ -221,9 +217,7 @@ public class CameraControl {
 			 */
 		} catch (IOException e) {
 			Log.i("Applog", e.getMessage());
-		}
-
-		finally {
+		} finally {
 			con = null;
 			url = null;
 		}
@@ -257,10 +251,7 @@ public class CameraControl {
 		try {
 			HttpURLConnection con = sendCommand("axis-cgi/com/ptz.cgi?" + query
 					+ "&camera=" + String.valueOf(cam.channel));
-			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				InputStream result = new BufferedInputStream(con.getInputStream());
-				return (result.toString().contains("OK") ? 1 : 0);
-			}
+			return (con.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) ? 1 : 0;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -270,20 +261,26 @@ public class CameraControl {
 	/*
 	 * Active / désactive l'autofocus ou l'autoiris
 	 */
-	public int switchAutoFunc(int function) {
+	public int switchAutoFunc(int function, String value) {
 		if (function != CameraControl.AUTOFOCUS && function != CameraControl.AUTOIRIS)
 			return 0;
 		if (!isSupported(function))
 			return -1;
+		if (!value.equals("on") && !value.equals("off"))
+			return 0;
 		
 		String param = (function == CameraControl.AUTOFOCUS) ? "autofocus" : "autoiris";
-		String val = isEnabled(function) ? "off" : "on";
 		try {
-			HttpURLConnection con = sendCommand("axis-cgi/com/ptz.cgi?" + param + "=" + val
+			HttpURLConnection con = sendCommand("axis-cgi/com/ptz.cgi?" + param + "=" + value
 					+ "&camera=" + String.valueOf(cam.channel));
-			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				InputStream result = new BufferedInputStream(con.getInputStream());
-				return (result.toString().contains("OK") ? 1 : 0);
+			if (con.getResponseCode() != HttpURLConnection.HTTP_NO_CONTENT) {
+				if (value.equals("on"))
+					this.enableFunction(function);
+				else 
+					this.disableFunction(function);
+				return 1;
+			} else {
+				return 0;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
