@@ -17,6 +17,9 @@
 		<activity android:name="AddCam" android:label="record" />
 		<activity android:name="Video" android:label="Viewer"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+			android:configChanges="orientation|keyboardHidden" />		
+			<activity android:name="MultiVideo" android:label="MultiVideo"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:configChanges="orientation|keyboardHidden" />
 	</application>
 </manifest>

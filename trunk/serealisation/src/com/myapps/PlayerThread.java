@@ -15,18 +15,24 @@ import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 
-public class PlayerThread implements Runnable{
+public class PlayerThread implements Runnable {
 
 	private String logTag = "AppLog";
 
 	private Bitmap bmp;
 	private ImageView img;
-private URLConnection con;
-
-
-	public PlayerThread() {
+	private URLConnection con;
+	private Camera cam;
+	long t0, t1;
+	private int delay, index;
+	
+	public PlayerThread(Camera cam, int index ,int delay) {
+		this.cam = cam;
+		this.delay = delay;
+		this.index = index;
 	}
 
 	@Override
@@ -35,35 +41,38 @@ private URLConnection con;
 		while (!Thread.currentThread().isInterrupted()) {
 			Message m = new Message();
 			m.what = Video.GUIUPDATEIDENTIFIER;
+			m.arg1 = index;
 			Bitmap bmp = null;
 			URL url;
 			try {
-				url = new URL(
-						"http://192.168.1.20/axis-cgi/jpg/image.cgi");
-
+				url = new URL("http://" + cam.ip + ":" + cam.port + "/axis-cgi/jpg/image.cgi?resolution=160x120" );
+				Log.i(logTag, url.toString());				
 				con = url.openConnection();
 				con.setRequestProperty("Authorization",
-						base64Encoder
-								.userNamePasswordBase64(
-										"root", "root"));
+						base64Encoder.userNamePasswordBase64(cam.login,cam.pass));
 				con.connect();
 				Log.i(logTag, "connected");
+
+				t0 = System.currentTimeMillis();
 				InputStream stream = con.getInputStream();
+				t1 = System.currentTimeMillis();
+				Log.i(logTag, "img dl temps : " + (t1-t0));
 				bmp = BitmapFactory.decodeStream(stream);
 				stream.close();
-				Log.i(logTag, "img dl");
-				Video.newBMP = bmp;
-				Log.i(logTag, "image set");
-				Video.myViewUpdateHandler.sendMessage(m);
+				// TROUVER UN MOYEN POUR RECUPERER LES IMAGES /HANDLER PLUS FACILEMENT
+				MultiVideo.newBMP[index] = bmp;
+				MultiVideo.myViewUpdateHandler.sendMessage(m);
 				Log.i(logTag, "message send");
 				try {
-					Thread.sleep(50);
+					Thread.sleep(delay);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 				}
 			} catch (MalformedURLException e) {
+				Log.i(logTag, "MalformedURLException");
 				e.printStackTrace();
 			} catch (IOException e) {
+				Log.i(logTag, "IOException");
 				e.printStackTrace();
 			}
 		}

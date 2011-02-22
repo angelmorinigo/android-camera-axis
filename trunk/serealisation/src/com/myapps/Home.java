@@ -210,6 +210,13 @@ public class Home extends Activity {
 			Intent intent = new Intent(this, AddCam.class);
 			startActivityForResult(intent, 1);
 			return true;
+		case R.id.menu_4vue:
+			Intent intent1 = new Intent(this, MultiVideo.class);
+			Bundle objetbunble = new Bundle();
+			objetbunble.putSerializable(getString(R.string.camListTag), camList);
+			intent1.putExtras(objetbunble);
+			Log.i(getString(R.string.logTag), "Start 4 vues");
+			startActivity(intent1);
 		}
 		return false;
 	}
