@@ -11,6 +11,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -26,7 +29,7 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
 	public final static int SIZE_BEST_FIT = 4;
 	public final static int SIZE_FULLSCREEN = 8;
 
-	private MjpegViewThread thread;
+	public static MjpegViewThread thread;
 	private MjpegInputStream mIn = null;
 	private boolean showFps = false;
 	private boolean mRun = false;
@@ -41,6 +44,7 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
 	private boolean resume = false;
 
 	private Context context;
+	private long delay;
 
 	public class MjpegViewThread extends Thread {
 		private SurfaceHolder mSurfaceHolder;

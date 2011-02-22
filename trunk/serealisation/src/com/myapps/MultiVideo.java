@@ -78,6 +78,8 @@ public class MultiVideo extends Activity {
 	}
 
 	Log.i(getString(R.string.logTag), "listner ok");
+	
+	
     }
 
     public void onDestroy() {

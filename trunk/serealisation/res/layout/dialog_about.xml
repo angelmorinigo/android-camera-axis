@@ -12,7 +12,7 @@
 		android:layout_weight="1.5">
 		<TextView android:id="@+id/about" android:layout_width="wrap_content"
 			android:layout_height="fill_parent" android:textColor="#FFF" 
-			android:layout_weight="0.25"/>
+			android:layout_weight="0.25" android:gravity="center"/>
 		<Button android:id="@+id/aboutClose" android:layout_width="wrap_content"
 			android:layout_height="fill_parent" android:text="Fermer"
 			android:layout_weight="0.75" />
