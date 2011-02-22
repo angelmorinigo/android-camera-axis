@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="horizontal" android:stretchColumns="1"
-	android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="fill">
-		<TextView android:hint="Ajouter une caméra :" android:textSize="12pt" android:gravity="center"/>
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:gravity="fill">
+	<TextView android:hint="Ajouter une caméra :"
+		android:textSize="12pt" android:gravity="center" />
 	<TableRow>
 		<TextView android:text="Identifiant :" android:id="@+id/tid" />
 		<EditText android:hint="Entrez un id" android:id="@+id/eid"
@@ -34,19 +36,18 @@
 		<EditText android:hint="Entrez un Canal" android:id="@+id/echan"
 			android:gravity="center" android:numeric="decimal" />
 	</TableRow>
-	<TableRow>
-		<TextView android:text="Protocol :" android:id="@+id/tprot" />
-		 <Spinner 
-        android:id="@+id/spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/protocol_prompt"
-        />
-		
-	</TableRow>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content" android:layout_weight="1">
-    <Button android:text="Ajouter" android:id="@+id/add" android:layout_height="wrap_content" android:gravity="center" android:layout_width="fill_parent" android:layout_weight="1"/>
-    <Button android:text="Retour" android:id="@+id/ret" android:layout_height="wrap_content" android:gravity="center" android:layout_width="fill_parent" android:layout_weight="1"/>
-</LinearLayout>
+	<!--<TableRow> <TextView android:text="Protocol :" android:id="@+id/tprot" 
+		/> <Spinner android:id="@+id/spinner" android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" android:prompt="@string/protocol_prompt" 
+		/> </TableRow> -->
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="wrap_content" android:layout_weight="1">
+		<Button android:text="Ajouter" android:id="@+id/add"
+			android:layout_height="wrap_content" android:gravity="center"
+			android:layout_width="fill_parent" android:layout_weight="1" />
+		<Button android:text="Retour" android:id="@+id/ret"
+			android:layout_height="wrap_content" android:gravity="center"
+			android:layout_width="fill_parent" android:layout_weight="1" />
+	</LinearLayout>
 </TableLayout>
 	

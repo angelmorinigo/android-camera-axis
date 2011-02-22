@@ -4,5 +4,5 @@
 	android:icon="@drawable/ic_menu_refresh"/>
 	<item android:id="@+id/menu_option_about" android:title="A Propos" android:icon="@drawable/ic_menu_preferences" />
 	<item android:id="@+id/menu_quitter" android:title="Quitter" android:icon="@drawable/ic_menu_logout"/>
-	<item android:id="@+id/menu_4vue" android:title="Mode 4 vues"/>
+	<item android:id="@+id/menu_4vue" android:title="Mode 4 vues" android:icon="@drawable/monitor"/>
 </menu> 

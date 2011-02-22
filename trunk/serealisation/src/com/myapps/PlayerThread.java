@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

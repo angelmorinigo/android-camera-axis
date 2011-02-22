@@ -26,13 +26,13 @@
 					android:layout_height="wrap_content">
 					<Button android:background="@drawable/zoom_in"
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/button5" />
-					<Button android:id="@+id/button7" android:background="@drawable/transparent"
+						android:id="@+id/zoom_in" />
+					<Button android:background="@drawable/transparent"
 						android:layout_width="fill_parent" android:layout_height="fill_parent"
 						android:layout_weight="1" />
 					<Button android:background="@drawable/zoom_out"
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/button6" />
+						android:id="@+id/zoom_out" />
 				</TableRow>
 			</LinearLayout>
 		</LinearLayout>
@@ -45,26 +45,26 @@
 					android:id="@+id/tableRow3">
 					<Button android:background="@drawable/arrow_up"
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/button3" />
+						android:id="@+id/arrow_up" />
 				</TableRow>
 				<TableRow android:layout_height="fill_parent"
 					android:layout_width="fill_parent" android:id="@+id/tableRow2">
 					<Button android:background="@drawable/arrow_left"
 						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" android:id="@+id/button2" />
-					<Button android:id="@+id/button7" android:background="@drawable/transparent"
+						android:layout_weight="1" android:id="@+id/arrow_left" />
+					<Button android:background="@drawable/transparent"
 						android:layout_width="fill_parent" android:layout_height="fill_parent"
 						android:layout_weight="1" />
 					<Button android:background="@drawable/arrow_right"
 						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" android:id="@+id/button1" />
+						android:layout_weight="1" android:id="@+id/arrow_right" />
 				</TableRow>
 				<TableRow android:layout_height="wrap_content"
 					android:layout_width="wrap_content" android:gravity="center"
 					android:id="@+id/tableRow1">
 					<Button android:background="@drawable/arrow_down"
 						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/button4" />
+						android:id="@+id/arrow_down" />
 				</TableRow>
 			</TableLayout>
 		</LinearLayout>

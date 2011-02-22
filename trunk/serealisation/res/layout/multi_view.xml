@@ -6,16 +6,16 @@
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:orientation="vertical" android:layout_weight="1">
 		<ImageView android:id="@+id/image0" android:layout_height="fill_parent"
-			android:layout_width="fill_parent" android:layout_weight="1" />
+			android:layout_width="fill_parent" android:layout_weight="1" android:background="@drawable/lecture"/>
 		<ImageView android:id="@+id/image1" android:layout_height="fill_parent"
-			android:layout_width="fill_parent" android:layout_weight="1" />
+			android:layout_width="fill_parent" android:layout_weight="1" android:background="@drawable/lecture"/>
 	</LinearLayout>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:orientation="vertical" android:layout_weight="1">
 		<ImageView android:id="@+id/image2" android:layout_height="fill_parent"
-			android:layout_width="fill_parent" android:layout_weight="1" />
+			android:layout_width="fill_parent" android:layout_weight="1" android:background="@drawable/lecture"/>
 		<ImageView android:id="@+id/image3" android:layout_height="fill_parent"
-			android:layout_width="fill_parent" android:layout_weight="1" />
+			android:layout_width="fill_parent" android:layout_weight="1" android:background="@drawable/lecture"/>
 	</LinearLayout>
 </LinearLayout>

@@ -1,52 +1,23 @@
 package com.myapps;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLStreamHandler;
-import java.sql.Time;
-
 import de.mjpegsample.MjpegView.MjpegInputStream;
 import de.mjpegsample.MjpegView.MjpegView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.net.Uri.Builder;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 public class Video extends Activity {
 	private String url;
@@ -112,6 +83,7 @@ public class Video extends Activity {
 			}
 		});
 
+
 		/*
 		 * Contrôle du PTZ par déplacement sur l'écran
 		 */
@@ -127,13 +99,13 @@ public class Video extends Activity {
 		/*
 		 * Affichage video
 		 */
-		url = "http://" + cam.ip + ":" + cam.port + "/axis-cgi/mjpg/video.cgi?resolution=1280x1024";
+		url = "http://" + cam.ip + ":" + cam.port + "/axis-cgi/mjpg/video.cgi?resolution=320x240";
 		mv = (MjpegView) findViewById(R.id.surfaceView1);
-		connection(mv, url, cam);
+		start_connection(mv, url, cam);
 
 	}
 
-	private void connection(MjpegView mv, String url, Camera cam) {
+	private void start_connection(MjpegView mv, String url, Camera cam) {
 		try {
 			URL addr = new URL(url);
 			Log.i("AppLog", addr.toString());
