@@ -31,7 +31,7 @@ public class MultiVideo extends Activity {
     public static Bitmap[] newBMP = new Bitmap[4];
 
     protected static final int GUIUPDATEIDENTIFIER = 0x101;
-    
+
     static Handler myViewUpdateHandler = new Handler() {
 	public void handleMessage(Message msg) {
 	    int index = msg.arg1;
@@ -73,13 +73,13 @@ public class MultiVideo extends Activity {
 
 	for (int i = 0; i < 4; i++) {
 	    camView[i] = null;
+	    img[i].setImageResource(R.drawable.cadre);
 	    img[i].setOnClickListener(new myOnClickListener(i));
 	    img[i].setOnLongClickListener(new myOnLongClickListener(i));
 	}
 
 	Log.i(getString(R.string.logTag), "listner ok");
-	
-	
+
     }
 
     public void onDestroy() {
