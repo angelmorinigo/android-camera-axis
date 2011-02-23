@@ -48,7 +48,7 @@ public class MultiVideo extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.multi_view);
+	setContentView(R.layout.multi_video);
 	activity = this;
 
 	/* Init */

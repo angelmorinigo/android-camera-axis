@@ -21,7 +21,7 @@
 		<TableRow>
 			<TextView android:text="Password :" android:id="@+id/tpass" />
 			<EditText android:hint="Entrez un pass" android:id="@+id/epass"
-				android:gravity="center" />
+				android:gravity="center" android:password="true"/>
 		</TableRow>
 		<TableRow>
 			<TextView android:text="Ip :" android:id="@+id/tip" />

@@ -24,7 +24,7 @@ public class AddCam extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.main);
+	setContentView(R.layout.add_cam);
 
 	// context = this;
 	id = (EditText) findViewById(R.id.eid);

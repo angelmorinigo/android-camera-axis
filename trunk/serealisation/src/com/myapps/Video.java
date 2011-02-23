@@ -1,5 +1,6 @@
 package com.myapps;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,24 +11,28 @@ import de.mjpegsample.MjpegView.MjpegView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.RemoteViews;
 
 public class Video extends Activity {
     private String url;
     private Camera cam;
     private CameraControl camC;
     public Activity activity;
-    private static ImageView img;
     private MjpegView mv;
     private boolean pause;
     protected static final int GUIUPDATEIDENTIFIER = 0x101;
@@ -37,6 +42,9 @@ public class Video extends Activity {
 	    "480x360", "CIF", "384x288", "352x288", "352x240", "320x240",
 	    "240x180", "QCIF", "192x144", "176x144", "176x120", "160x120" };
     static Bitmap newBMP;
+
+    private String fileNameURL = "/sdcard/com.myapps.camera/";
+    private NotificationManager notificationManager;
 
     public void movePanTilt(final String direction) {
 	String command;
@@ -118,17 +126,32 @@ public class Video extends Activity {
 			new DialogInterface.OnClickListener() {
 			    public void onClick(DialogInterface dialog, int item) {
 				try {
+
+				    File f = new File(fileNameURL);
+				    if (!f.exists()) {
+					f.mkdir();
+				    }
+				    String fileName = fileNameURL
+					    + System.currentTimeMillis()
+					    + ".jpeg";
+				    Log.i(getString(R.string.logTag), fileName);
 				    Bitmap bmp = camC.takeSnapshot(SIZE[item]);
+				    Log.i(getString(R.string.logTag),
+					    "Snap ok !!");
 				    FileOutputStream fichier = new FileOutputStream(
-					    "/sdcard/test.jpeg");
-				    img.setImageBitmap(bmp);
+					    fileName);
 				    bmp.compress(Bitmap.CompressFormat.JPEG,
 					    80, fichier);
 				    fichier.flush();
 				    fichier.close();
 				    Log.i(getString(R.string.logTag),
 					    "Snap Save !!");
+				    statusBarNotification(activity, bmp,
+					    ("Snap save : " + fileName),
+					    fileName);
 				} catch (IOException e) {
+				    Log.i(getString(R.string.logTag),
+					    "Snap I/O exception !!");
 				    e.printStackTrace();
 				}
 				dialog.dismiss();
@@ -190,6 +213,28 @@ public class Video extends Activity {
 	mv = (MjpegView) findViewById(R.id.surfaceView1);
 	start_connection(mv, url, cam);
 
+    }
+
+    private void statusBarNotification(Activity activity, Bitmap bmp,
+	    String text, String path) {
+	notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+	Notification notification = new Notification(R.drawable.camera,
+		"Camera-Axis", System.currentTimeMillis());
+	notification.contentView = new RemoteViews(activity.getPackageName(),
+		R.layout.notification);
+	/* Action lors d'un clic sur la notification */
+	Intent intentNotification = new Intent();
+	intentNotification.setAction(android.content.Intent.ACTION_VIEW);
+	intentNotification.setDataAndType(Uri.fromFile(new File(path)),
+		"image/png");
+	PendingIntent pendingIntent = PendingIntent.getActivity(
+		activity.getApplicationContext(), 0, intentNotification, 0);
+
+	notification.defaults |= Notification.DEFAULT_VIBRATE;
+	notification.contentIntent = pendingIntent;
+	notification.contentView.setImageViewBitmap(R.id.Nimage, bmp);
+	notification.contentView.setTextViewText(R.id.Ntext, text);
+	notificationManager.notify(1, notification);
     }
 
     private void start_connection(MjpegView mv, String url, Camera cam) {
