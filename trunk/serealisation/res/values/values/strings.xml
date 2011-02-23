@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+	<string name="hello">Hello World, record!</string>
+	<string name="app_name">Camera</string>
+	<string name="about">Version 1.0\nDéveloppé par :\nJerome NAHELOU, Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S sous android 2.1\n</string>
+	<string name="protocol_prompt">Choisir un protocol</string>
+	<string name="logTag">AppLog</string>
+	<string name="camTag">Camera</string>
+	<string name="camListTag">CameraList</string>
+
+	<string-array name="protocol_array">
+		<item>http</item>
+		<item>rtsp</item>
+		<item>rtsphttp</item>
+	</string-array>
+</resources>
