@@ -56,7 +56,7 @@ public class Home extends Activity {
 
 		List<Map<String, ?>> printCamList = new LinkedList<Map<String, ?>>();
 		for (int i = 0; i < camList.size(); i++) {
-			printCamList.add(createItem(camList.get(i).id, camList.get(i).ip));
+			printCamList.add(createItem(camList.get(i).id, camList.get(i).getURI()));
 		}
 		
 		/* Affichage de la liste */

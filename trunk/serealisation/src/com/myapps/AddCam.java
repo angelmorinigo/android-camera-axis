@@ -1,31 +1,35 @@
 package com.myapps;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-@SuppressWarnings("unused")
 public class AddCam extends Activity {
     /** Called when the activity is first created. */
     public EditText id, login, pass, ip, port, channel;
+    public String url = null;
+    Camera tmp;
+    public boolean resultFromQr = false;
+    private Context context;
 
-     private Context context;
-     public Spinner s;
+    private String ipText = "Ip found with Qr";
+    private String portText = "Port found with Qr";
+
+    // public Spinner s;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.add_cam);
-
 	// context = this;
 	id = (EditText) findViewById(R.id.eid);
 	login = (EditText) findViewById(R.id.elogin);
@@ -44,6 +48,7 @@ public class AddCam extends Activity {
 	 * ); s.setAdapter(adapter);
 	 */
 
+	Log.i(getString(R.string.logTag), "onCreate");
 	/* Buttons listener */
 	Button bAdd = (Button) findViewById(R.id.add);
 	bAdd.setOnClickListener(new View.OnClickListener() {
@@ -56,14 +61,29 @@ public class AddCam extends Activity {
 		String vProtocol = "http"; // s.getSelectedItem().toString();
 		String vChan = channel.getText().toString();
 
+		/* Check result */
 		if (vId.equalsIgnoreCase("") | vLogin.equalsIgnoreCase("")
-			| vPass.equalsIgnoreCase("") | vIp.equalsIgnoreCase("")
-			| vPort.equalsIgnoreCase("")
-			| vChan.equalsIgnoreCase(""))
+			| vPass.equalsIgnoreCase(""))
 		    return;
+		if (vChan.equalsIgnoreCase(""))
+		    vChan = "1";
 
-		Camera tmp = new Camera(vId, vLogin, vPass, vIp, Integer
-			.parseInt(vPort), vProtocol, Integer.parseInt(vChan));
+		if (!resultFromQr) {
+		    if (vIp.equalsIgnoreCase("") | vPort.equalsIgnoreCase("")
+			    | vProtocol.equalsIgnoreCase(""))
+			return;
+
+		    tmp = new Camera(vId, vLogin, vPass, vIp, Integer
+			    .parseInt(vPort), vProtocol, Integer
+			    .parseInt(vChan));
+		    Log.i(getString(R.string.logTag),
+			    ("Camera : " + tmp.getURI()));
+		} else {
+		    tmp = new Camera(vId, vLogin, vPass, url, Integer
+			    .parseInt(vChan));
+		    Log.i(getString(R.string.logTag),
+			    ("Camera : " + tmp.getURI()));
+		}
 
 		Intent outData = new Intent();
 		Bundle objetbunble = new Bundle();
@@ -86,5 +106,41 @@ public class AddCam extends Activity {
 	    }
 	});
 
+	Button b = (Button) findViewById(R.id.bqr);
+	b.setOnClickListener(new OnClickListener() {
+	    public void onClick(View v) {
+		try{
+		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		startActivityForResult(intent, 0);
+		}catch(ActivityNotFoundException e){
+		    String marketSearch = "market://details?id=com.google.zxing.client.android";
+		    Intent updateIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse(marketSearch));
+			startActivity(updateIntent); 
+		}
+	    }
+	});
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	if (requestCode == 0) {
+	    if (resultCode == RESULT_OK) {
+		resultFromQr = true;
+		String contents = intent.getStringExtra("SCAN_RESULT");
+		String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+		url = contents;
+
+		port.setHint(portText);
+		ip.setHint(ipText);
+		ip.setFocusable(false);
+		port.setFocusable(false);
+		Log.i("AppLog",
+			("content :" + contents + " format : " + format));
+	    } else if (resultCode == RESULT_CANCELED) {
+		// Handle cancel
+	    }
+	}
     }
 }

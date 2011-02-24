@@ -194,7 +194,7 @@ public class CameraControl {
 	}
 
 	private String createURL() {
-		return "http://" + cam.ip /* + ":" + String.valueOf(cam.port) */+ "/";
+		return cam.getURI();
 	}
 
 	private HttpURLConnection sendCommand(String command) {

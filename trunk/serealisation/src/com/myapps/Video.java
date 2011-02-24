@@ -50,24 +50,24 @@ public class Video extends Activity {
 	String command;
 
 	if (direction == "horizontalstart")
-	    command = "/axis-cgi/com/ptz.cgi?camera=1" + "&pan=-180"
+	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=-180"
 		    + "&tilt=0";
 	else if (direction == "horizontalend")
-	    command = "/axis-cgi/com/ptz.cgi?camera=1" + "&pan=180" + "&tilt=0";
+	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=180" + "&tilt=0";
 	else if (direction == "verticalstart")
-	    command = "/axis-cgi/com/ptz.cgi?camera=1" + "&pan=0" + "&tilt=180";
+	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=0" + "&tilt=180";
 	else if (direction == "verticalend")
-	    command = "/axis-cgi/com/ptz.cgi?camera=1" + "&pan=0"
+	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=0"
 		    + "&tilt=-180";
 
 	else {
-	    command = "/axis-cgi/com/ptz.cgi?camera=1";
+	    command = "axis-cgi/com/ptz.cgi?camera=1";
 	    command = command + "&move=";
 	    command = command + direction;
 	}
 
 	try {
-	    String url = "http://" + cam.ip + command;
+	    String url = cam.getURI() + command;
 	    Log.i(getString(R.string.logTag), url);
 	    URL addr = new URL(url);
 	    HttpURLConnection con = (HttpURLConnection) addr.openConnection();
@@ -104,12 +104,10 @@ public class Video extends Activity {
 	int netSubtype = info.getSubtype();
 	if (netType == ConnectivityManager.TYPE_WIFI) {
 	    Log.i("AppLog", "Wifi detecte");
-	    url = "http://" + cam.ip + ":" + cam.port
-		    + "/axis-cgi/mjpg/video.cgi?resolution=320x240";
+	    url = cam.getURI() + "axis-cgi/mjpg/video.cgi?resolution=320x240";
 	} else {
 	    Log.i("AppLog", "Reseau detecte");
-	    url = "http://" + cam.ip + ":" + cam.port
-		    + "/axis-cgi/mjpg/video.cgi?resolution=160x120";
+	    url = cam.getURI() + "axis-cgi/mjpg/video.cgi?resolution=160x120";
 	}
 
 	/*
@@ -144,8 +142,6 @@ public class Video extends Activity {
 					    80, fichier);
 				    fichier.flush();
 				    fichier.close();
-				    Log.i(getString(R.string.logTag),
-					    "Snap Save !!");
 				    statusBarNotification(activity, bmp,
 					    ("Snap save : " + fileName),
 					    fileName);
@@ -251,9 +247,10 @@ public class Video extends Activity {
 	    mv.setDisplayMode(MjpegView.SIZE_FULLSCREEN);
 	    mv.showFps(true);
 	    pause = false;
-	    Log.i("AppLog", "onCreate");
 
 	} catch (IOException e) {
+
+	    Log.i("AppLog", "StartConnect IOException");
 	    e.printStackTrace();
 	}
     }

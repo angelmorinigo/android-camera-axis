@@ -46,7 +46,7 @@ public class PlayerThread implements Runnable {
 			Bitmap bmp = null;
 			URL url;
 			try {
-				url = new URL("http://" + cam.ip + ":" + cam.port + "/axis-cgi/jpg/image.cgi?resolution=160x120" );
+				url = new URL( cam.getURI() +"axis-cgi/jpg/image.cgi?resolution=160x120" );
 				Log.i(logTag, url.toString());				
 				con = url.openConnection();
 				con.setRequestProperty("Authorization",
