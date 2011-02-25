@@ -27,12 +27,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RemoteViews;
-
+/**
+ * 
+ * Implements the main Video Viewer Interface
+ *
+ */
 public class Video extends Activity {
     private String url;
     private Camera cam;
     private CameraControl camC;
-    public Activity activity;
+    private Activity activity;
     private MjpegView mv;
     private boolean pause;
     protected static final int GUIUPDATEIDENTIFIER = 0x101;
@@ -41,31 +45,35 @@ public class Video extends Activity {
 	    "640x480", "640x360", "2CIFEXP", "2CIF", "704x288", "704x240",
 	    "480x360", "CIF", "384x288", "352x288", "352x240", "320x240",
 	    "240x180", "QCIF", "192x144", "176x144", "176x120", "160x120" };
-    static Bitmap newBMP;
+    protected static Bitmap newBMP;
 
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private NotificationManager notificationManager;
 
+    /**
+     * Send command to camera and execute it
+     * 
+     * @param direction
+     *            Direction to move
+     */
     public void movePanTilt(final String direction) {
 	String command;
-
+	/* Define command */
 	if (direction == "horizontalstart")
-	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=-180"
-		    + "&tilt=0";
+	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=-180" + "&tilt=0";
 	else if (direction == "horizontalend")
 	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=180" + "&tilt=0";
 	else if (direction == "verticalstart")
 	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=0" + "&tilt=180";
 	else if (direction == "verticalend")
-	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=0"
-		    + "&tilt=-180";
+	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=0" + "&tilt=-180";
 
 	else {
 	    command = "axis-cgi/com/ptz.cgi?camera=1";
 	    command = command + "&move=";
 	    command = command + direction;
 	}
-
+	/* Send command */
 	try {
 	    String url = cam.getURI() + command;
 	    Log.i(getString(R.string.logTag), url);
@@ -81,21 +89,22 @@ public class Video extends Activity {
 
     }
 
+    /**
+     * Called when Activity start or resume
+     */
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.video);
 	setRequestedOrientation(0);
 	activity = this;
 
-	/*
-	 * Récupération des arguments
-	 */
+	/* Recover arguments */
 
 	Bundle extras = getIntent().getExtras();
 	cam = (Camera) extras.getSerializable(getString(R.string.camTag));
 	camC = new CameraControl(cam);
 
-	// Only update if WiFi or 3G is connected and not roaming
+	/* Check network info */
 	ConnectivityManager mConnectivity = (ConnectivityManager) activity
 		.getApplicationContext().getSystemService(
 			Context.CONNECTIVITY_SERVICE);
@@ -110,13 +119,13 @@ public class Video extends Activity {
 	    url = cam.getURI() + "axis-cgi/mjpg/video.cgi?resolution=160x120";
 	}
 
-	/*
-	 * Buttons Listener
-	 */
-
+	/* Buttons Listener */
 	Button buttonSnap = (Button) findViewById(R.id.Snap);
 	buttonSnap.setOnClickListener(new OnClickListener() {
 	    @Override
+	    /**
+	     * Show resolution dialog, get Snapshot and record it
+	     */
 	    public void onClick(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle("SnapShot Format");
@@ -158,6 +167,7 @@ public class Video extends Activity {
 	    }
 	});
 
+	/* Motion listners */
 	Button buttonright = (Button) findViewById(R.id.arrow_right);
 	buttonright.setOnClickListener(new OnClickListener() {
 	    @Override
@@ -210,7 +220,15 @@ public class Video extends Activity {
 	start_connection(mv, url, cam);
 
     }
-
+/**
+ * 
+ * Create a StatusBar Notification for Snapshop
+ * 
+ * @param activity The current activity
+ * @param bmp The Snapshot recorded
+ * @param text A message (like url)
+ * @param path The snapshot url to start gallery activity on touch notification
+ */
     private void statusBarNotification(Activity activity, Bitmap bmp,
 	    String text, String path) {
 	notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -233,6 +251,12 @@ public class Video extends Activity {
 	notificationManager.notify(1, notification);
     }
 
+    /**
+     * Create and start the Mjpeg video
+     * @param mv
+     * @param url
+     * @param cam
+     */
     private void start_connection(MjpegView mv, String url, Camera cam) {
 	try {
 	    URL addr = new URL(url);
@@ -255,6 +279,9 @@ public class Video extends Activity {
 	}
     }
 
+    /**
+     * Resume video when activity resume.
+     */
     public void onResume() {
 	super.onResume();
 	if (pause) {
@@ -264,11 +291,17 @@ public class Video extends Activity {
 
     }
 
+    /**
+     * Stop video when activity sleep
+     */
     public void onPause() {
 	pause = true;
 	super.onPause();
     }
 
+    /**
+     * Stop Video before destroy
+     */
     public void onDestroy() {
 	super.onDestroy();
 	mv.stopPlayback();

@@ -13,24 +13,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/**
+ * Activity used to add camera
+ * Check out result with 
+ * Camera cam = (Camera) extras.getSerializable(getString(R.string.camTag));
+ */
 public class AddCam extends Activity {
-    /** Called when the activity is first created. */
-    public EditText id, login, pass, ip, port, channel;
-    public String url = null;
-    Camera tmp;
-    public boolean resultFromQr = false;
-    private Context context;
+    private EditText id, login, pass, ip, port, channel;
+ // private Spinner s;
+    private String url = null;
+    private Camera tmp;
+    private boolean resultFromQr = false;
 
     private String ipText = "Ip found with Qr";
     private String portText = "Port found with Qr";
 
-    // public Spinner s;
-
+    
+/**
+ * Called when Activity start or resume
+ */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.add_cam);
-	// context = this;
+
 	id = (EditText) findViewById(R.id.eid);
 	login = (EditText) findViewById(R.id.elogin);
 	pass = (EditText) findViewById(R.id.epass);
@@ -38,7 +44,9 @@ public class AddCam extends Activity {
 	port = (EditText) findViewById(R.id.eport);
 	channel = (EditText) findViewById(R.id.echan);
 
-	/* Spinner listener (ComboBox) */
+	/*
+	 * Spinner listener (ComboBox) never use with one protocol
+	 */
 	/*
 	 * s = (Spinner) findViewById(R.id.spinner); ArrayAdapter<CharSequence>
 	 * adapter = ArrayAdapter.createFromResource( context,
@@ -48,10 +56,14 @@ public class AddCam extends Activity {
 	 * ); s.setAdapter(adapter);
 	 */
 
-	Log.i(getString(R.string.logTag), "onCreate");
-	/* Buttons listener */
+	/*
+	 * Buttons listener
+	 */
 	Button bAdd = (Button) findViewById(R.id.add);
 	bAdd.setOnClickListener(new View.OnClickListener() {
+	    /*
+	     * Get informations from EditText and return a new Camera
+	     */
 	    public void onClick(View v) {
 		String vId = id.getText().toString();
 		String vLogin = login.getText().toString();
@@ -61,7 +73,6 @@ public class AddCam extends Activity {
 		String vProtocol = "http"; // s.getSelectedItem().toString();
 		String vChan = channel.getText().toString();
 
-		/* Check result */
 		if (vId.equalsIgnoreCase("") | vLogin.equalsIgnoreCase("")
 			| vPass.equalsIgnoreCase(""))
 		    return;
@@ -72,19 +83,18 @@ public class AddCam extends Activity {
 		    if (vIp.equalsIgnoreCase("") | vPort.equalsIgnoreCase("")
 			    | vProtocol.equalsIgnoreCase(""))
 			return;
-
 		    tmp = new Camera(vId, vLogin, vPass, vIp, Integer
 			    .parseInt(vPort), vProtocol, Integer
 			    .parseInt(vChan));
-		    Log.i(getString(R.string.logTag),
-			    ("Camera : " + tmp.getURI()));
 		} else {
 		    tmp = new Camera(vId, vLogin, vPass, url, Integer
 			    .parseInt(vChan));
-		    Log.i(getString(R.string.logTag),
-			    ("Camera : " + tmp.getURI()));
 		}
+		Log.i(getString(R.string.logTag), ("Camera : " + tmp.getURI()));
 
+		/*
+		 * Create Intent with extra to result the new Camera
+		 */
 		Intent outData = new Intent();
 		Bundle objetbunble = new Bundle();
 		objetbunble.putSerializable(getString(R.string.camTag), tmp);
@@ -96,6 +106,9 @@ public class AddCam extends Activity {
 
 	Button bRet = (Button) findViewById(R.id.ret);
 	bRet.setOnClickListener(new View.OnClickListener() {
+	    /*
+	     * Finish activity without result
+	     */
 	    public void onClick(View v) {
 		Intent outData = new Intent();
 		Bundle objetbunble = new Bundle();
@@ -108,22 +121,41 @@ public class AddCam extends Activity {
 
 	Button b = (Button) findViewById(R.id.bqr);
 	b.setOnClickListener(new OnClickListener() {
+	    /*
+	     * Read QrCode to create a Camera zxing project is required, if
+	     * zxing isn't install go to market for download it
+	     */
 	    public void onClick(View v) {
-		try{
-		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-		startActivityForResult(intent, 0);
-		}catch(ActivityNotFoundException e){
+		try {
+		    Intent intent = new Intent(
+			    "com.google.zxing.client.android.SCAN");
+		    intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		    startActivityForResult(intent, 0);
+		} catch (ActivityNotFoundException e) {
 		    String marketSearch = "market://details?id=com.google.zxing.client.android";
-		    Intent updateIntent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse(marketSearch));
-			startActivity(updateIntent); 
+		    Intent updateIntent = new Intent(Intent.ACTION_VIEW, Uri
+			    .parse(marketSearch));
+		    startActivity(updateIntent);
 		}
 	    }
 	});
 
     }
 
+    /**
+     * Called when activity result from zxing project (param detail copied from
+     * official android doc)
+     * 
+     * @param requestCode The integer request code originally supplied to
+     *                   startActivityForResult(), allowing you to identify who
+     *                   this result came from.
+     * @param resultCode
+     *            The integer result code returned by the child activity through
+     *            its setResult().
+     * @param data
+     *            An Intent, which can return result data to the caller (various
+     *            data can be attached to Intent "extras").
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 	if (requestCode == 0) {
 	    if (resultCode == RESULT_OK) {
@@ -139,7 +171,7 @@ public class AddCam extends Activity {
 		Log.i("AppLog",
 			("content :" + contents + " format : " + format));
 	    } else if (resultCode == RESULT_CANCELED) {
-		// Handle cancel
+		//Do nothing
 	    }
 	}
     }

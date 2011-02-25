@@ -1,5 +1,10 @@
 package com.myapps;
-
+/**
+ * 
+ * Encode String to base64 String
+ * @author http://www.rgagnon.com/javadetails/java-0084.html
+ *
+ */
 public class base64Encoder {
 	private static char base64Array[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
 			'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
@@ -8,6 +13,11 @@ public class base64Encoder {
 			'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8',
 			'9', '+', '/' };
 
+	/**
+	 * Convert argument to base64(argument)
+	 * @param string The String to convert
+	 * @return base64(argument)
+	 */
 	public static String base64Encode(String string) {
 		String encodedString = "";
 		byte bytes[] = string.getBytes();
@@ -52,6 +62,12 @@ public class base64Encoder {
 		return encodedString;
 	}
 
+	/**
+	 * Generate Authorization "Basic base64(login:pass)"
+	 * @param username Login
+	 * @param password Pass
+	 * @return Return "Basic base64(login:pass)" for "http" authentification
+	 */
 	public static String userNamePasswordBase64(String username, String password) {
 		return "Basic " + base64Encode(username + ":" + password);
 	}
