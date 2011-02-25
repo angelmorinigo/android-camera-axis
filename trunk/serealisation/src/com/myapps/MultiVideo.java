@@ -31,10 +31,11 @@ public class MultiVideo extends Activity {
     private Camera[] camView = new Camera[4];
     private Thread[] t = new Thread[4];
     private static ImageView[] img = new ImageView[4];
-    private boolean[] start = new boolean[4];
+    private static boolean[] start = new boolean[4];
     public static Bitmap[] newBMP = new Bitmap[4];
 
     protected static final int GUIUPDATEIDENTIFIER = 0x101;
+    protected static final int URLERRORIDENTIFIER = 0x102;
 
     static Handler myViewUpdateHandler = new Handler() {
 	public void handleMessage(Message msg) {
@@ -44,10 +45,14 @@ public class MultiVideo extends Activity {
 		img[index].invalidate();
 		Log.i("AppLog", "handleMessage");
 	    }
+	    if (msg.what == URLERRORIDENTIFIER) {
+		start[index] = false;
+		Toast.makeText(activity.getApplicationContext(),
+			"Caméra introuvable", Toast.LENGTH_LONG).show();
+	    }
 	    super.handleMessage(msg);
 	}
     };
-
 
     /**
      * Called when Activity start or resume
@@ -155,11 +160,15 @@ public class MultiVideo extends Activity {
 				start[index] = true;
 				camView[index] = camList.get(item);
 				try {
-				    t[index] = new Thread(new PlayerThread(camList
-				    	.get(item), index, 50));
+				    t[index] = new Thread(new PlayerThread(
+					    camList.get(item), index, 700));
 				} catch (IOException e) {
-				    Log.i(getString(R.string.logTag), "MultiVideo IOException");
-				    Toast.makeText(activity.getApplicationContext(), "Caméra introuvable", Toast.LENGTH_LONG).show();
+				    Log.i(getString(R.string.logTag),
+					    "MultiVideo IOException");
+				    Toast.makeText(
+					    activity.getApplicationContext(),
+					    "Caméra introuvable",
+					    Toast.LENGTH_LONG).show();
 				    e.printStackTrace();
 				}
 				t[index].start();

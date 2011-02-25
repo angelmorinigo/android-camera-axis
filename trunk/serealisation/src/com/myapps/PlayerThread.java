@@ -6,10 +6,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * PlayerThread simulate mjpeg video by downloading jpeg
@@ -20,9 +22,10 @@ public class PlayerThread implements Runnable {
 
     private URLConnection con;
     private Camera cam;
-    long t0, t1;
     private int delay, index;
-private CameraControl camC;
+
+    private CameraControl camC;
+
     /**
      * Create a PlayerThread
      * 
@@ -32,46 +35,46 @@ private CameraControl camC;
      *            index of video frame (0,1,2,3)
      * @param delay
      *            delay in milliseconds to limit fps
-     * @throws IOException 
+     * @throws IOException
      */
-    public PlayerThread(Camera cam, int index, int delay) throws IOException {
+    public PlayerThread(Camera cam, int index, int delay)
+	    throws IOException {
 	this.cam = cam;
 	this.delay = delay;
 	this.index = index;
 	this.camC = new CameraControl(cam);
     }
 
-
     /**
      * Thread code to run
      */
     public void run() {
 	Log.i(logTag, "go");
-	    Bitmap bmp = null;
-	    String command;
-	    Message m = new Message();
+	Bitmap bmp = null;
+	String command;
 	while (!Thread.currentThread().isInterrupted()) {
-	    m.what = Video.GUIUPDATEIDENTIFIER;
+	    Message m = new Message();
+	    m.what = MultiVideo.GUIUPDATEIDENTIFIER;
 	    m.arg1 = index;
 	    try {
 		/* Open HTTP connection */
 		command = "axis-cgi/jpg/image.cgi?resolution=160x120";
 		con = camC.sendCommand(command);
-		Log.i(logTag, "connected");
+		Log.i(logTag, ("" + index +" connected"));
 		/* Get image result */
-		t0 = System.currentTimeMillis();
 		InputStream stream = con.getInputStream();
-		t1 = System.currentTimeMillis();
-		Log.i(logTag, "img dl temps : " + (t1 - t0));
 		bmp = BitmapFactory.decodeStream(stream);
 		stream.close();
-		/* Set the new image to print */ 
+		/* Set the new image to print */
 		MultiVideo.newBMP[index] = bmp;
 		/* Send message to UI to refresh View */
 		MultiVideo.myViewUpdateHandler.sendMessage(m);
-		Log.i(logTag, "message send");
+		Log.i(logTag, "message send from : " + index);
 		try {
-		    /* Sleep to give hand to UI thread and limit fps to gain bandwidth */
+		    /*
+		     * Sleep to give hand to UI thread and limit fps to gain
+		     * bandwidth
+		     */
 		    Thread.sleep(delay);
 		} catch (InterruptedException e) {
 		    Thread.currentThread().interrupt();
@@ -79,9 +82,13 @@ private CameraControl camC;
 	    } catch (MalformedURLException e) {
 		Log.i(logTag, "MalformedURLException");
 		e.printStackTrace();
+		break;
 	    } catch (IOException e) {
-		Log.i(logTag, "IOException");
+		Log.i(logTag, "PlayerThread IOException");
+		m.what = MultiVideo.URLERRORIDENTIFIER;
+		MultiVideo.myViewUpdateHandler.sendMessage(m);
 		e.printStackTrace();
+		break;
 	    }
 	}
     }
