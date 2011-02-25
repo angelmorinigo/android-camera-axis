@@ -14,8 +14,9 @@ import android.util.Log;
 
 /**
  * 
- * CameraControl class implements control's camera like PTZ, Snapshot, iris, focus, etc.
- *
+ * CameraControl class implements control's camera like PTZ, Snapshot, iris,
+ * focus, etc.
+ * 
  */
 public class CameraControl {
     private static final long serialVersionUID = 1L;
@@ -56,7 +57,7 @@ public class CameraControl {
     private static final int OBJECT_SIZE = 6;
 
     private Camera cam;
-
+    private int timeout = 2000;
     private int[] currentConfig = new int[NB_FUNC];
     private int[] functionProperties = new int[NB_BASIC_FUNC];
     private float[] motionParams = new float[7];
@@ -74,13 +75,12 @@ public class CameraControl {
     }
 
     private void loadConfig(int function) {
-	HttpURLConnection con;
-	InputStream result;
+	HttpURLConnection con = null;
+	InputStream result = null;
 	String line, property = null, value = null;
 
 	try {
-	    con = sendCommand(this.createURL()
-		    + "axis-cgi/com/ptz.cgi?info=1&camera=1");
+	    con = sendCommand("axis-cgi/com/ptz.cgi?info=1&camera=1");
 	    if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 		result = con.getInputStream();
 		BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -163,11 +163,10 @@ public class CameraControl {
 		    }
 		}
 	    }
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} finally {
-	    result = null;
+	} catch (Exception e) {
 	    con = null;
+	    result = null;
+	    e.printStackTrace();
 	}
     }
 
@@ -218,24 +217,17 @@ public class CameraControl {
      * @param command
      * @return The HttpURLConnection
      */
-    private HttpURLConnection sendCommand(String command) {
+    public HttpURLConnection sendCommand(String command) throws IOException {
 	URL url = null;
 	HttpURLConnection con = null;
-
-	try {
-	    url = new URL(createURL() + command);
-	    con = (HttpURLConnection) url.openConnection();
-	    con.setDoOutput(true);
-	    con.setRequestProperty("Authorization",
-		    base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
-	    con.connect();
-	    return con;
-	} catch (IOException e) {
-	    Log.i("Applog", e.getMessage());
-	} finally {
-	    con = null;
-	    url = null;
-	}
+	Log.i("AppLog", command);
+	url = new URL(createURL() + command);
+	con = (HttpURLConnection) url.openConnection();
+	con.setConnectTimeout(timeout);
+	con.setDoOutput(true);
+	con.setRequestProperty("Authorization",
+		base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
+	con.connect();
 	return con;
     }
 
@@ -315,7 +307,8 @@ public class CameraControl {
      *            "352x240", "320x240", "240x180", "QCIF", "192x144", "176x144",
      *            "176x120", "160x120"
      * @return The Bitmap created by the camera
-     * @throws IOException If camera can't take snapshot or if the camera is unreachable
+     * @throws IOException
+     *             If camera can't take snapshot or if the camera is unreachable
      */
     public Bitmap takeSnapshot(String resolution) throws IOException {
 	URLConnection con = sendCommand("axis-cgi/jpg/image.cgi"

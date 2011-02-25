@@ -27,10 +27,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
 /**
  * 
  * Implements the main Video Viewer Interface
- *
+ * 
  */
 public class Video extends Activity {
     private String url;
@@ -75,13 +77,7 @@ public class Video extends Activity {
 	}
 	/* Send command */
 	try {
-	    String url = cam.getURI() + command;
-	    Log.i(getString(R.string.logTag), url);
-	    URL addr = new URL(url);
-	    HttpURLConnection con = (HttpURLConnection) addr.openConnection();
-	    con.setRequestProperty("Authorization",
-		    base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
-	    con.connect();
+	    HttpURLConnection con = camC.sendCommand(command);
 	    Log.i(getString(R.string.logTag), ("" + con.getResponseCode()));
 	} catch (IOException e) {
 	    e.printStackTrace();
@@ -113,10 +109,10 @@ public class Video extends Activity {
 	int netSubtype = info.getSubtype();
 	if (netType == ConnectivityManager.TYPE_WIFI) {
 	    Log.i("AppLog", "Wifi detecte");
-	    url = cam.getURI() + "axis-cgi/mjpg/video.cgi?resolution=320x240";
+	    url = "axis-cgi/mjpg/video.cgi?resolution=320x240";
 	} else {
 	    Log.i("AppLog", "Reseau detecte");
-	    url = cam.getURI() + "axis-cgi/mjpg/video.cgi?resolution=160x120";
+	    url = "axis-cgi/mjpg/video.cgi?resolution=160x120";
 	}
 
 	/* Buttons Listener */
@@ -217,18 +213,24 @@ public class Video extends Activity {
 	 */
 
 	mv = (MjpegView) findViewById(R.id.surfaceView1);
-	start_connection(mv, url, cam);
+	start_connection(mv, url);
 
     }
-/**
- * 
- * Create a StatusBar Notification for Snapshop
- * 
- * @param activity The current activity
- * @param bmp The Snapshot recorded
- * @param text A message (like url)
- * @param path The snapshot url to start gallery activity on touch notification
- */
+
+    /**
+     * 
+     * Create a StatusBar Notification for Snapshop
+     * 
+     * @param activity
+     *            The current activity
+     * @param bmp
+     *            The Snapshot recorded
+     * @param text
+     *            A message (like url)
+     * @param path
+     *            The snapshot url to start gallery activity on touch
+     *            notification
+     */
     private void statusBarNotification(Activity activity, Bitmap bmp,
 	    String text, String path) {
 	notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -253,29 +255,26 @@ public class Video extends Activity {
 
     /**
      * Create and start the Mjpeg video
+     * 
      * @param mv
      * @param url
      * @param cam
      */
-    private void start_connection(MjpegView mv, String url, Camera cam) {
+    private void start_connection(MjpegView mv, String url) {
 	try {
-	    URL addr = new URL(url);
-	    Log.i("AppLog", addr.toString());
-	    HttpURLConnection con = (HttpURLConnection) addr.openConnection();
-	    con.setRequestProperty("Authorization",
-		    base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
-	    con.connect();
-	    InputStream stream;
-	    stream = con.getInputStream();
+	    HttpURLConnection con = camC.sendCommand(url);
+	    InputStream stream = con.getInputStream();
 	    mv.setSource(new MjpegInputStream(stream));
 	    mv.setDisplayMode(MjpegView.SIZE_FULLSCREEN);
 	    mv.showFps(true);
 	    pause = false;
 
 	} catch (IOException e) {
-
-	    Log.i("AppLog", "StartConnect IOException");
+	    Log.i(getString(R.string.logTag), "StartConnect IOException");
+	    Toast.makeText(activity.getApplicationContext(),
+		    "Caméra introuvable", Toast.LENGTH_LONG).show();
 	    e.printStackTrace();
+	    finish();
 	}
     }
 

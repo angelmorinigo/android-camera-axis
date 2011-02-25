@@ -22,7 +22,7 @@ public class PlayerThread implements Runnable {
     private Camera cam;
     long t0, t1;
     private int delay, index;
-
+private CameraControl camC;
     /**
      * Create a PlayerThread
      * 
@@ -32,11 +32,13 @@ public class PlayerThread implements Runnable {
      *            index of video frame (0,1,2,3)
      * @param delay
      *            delay in milliseconds to limit fps
+     * @throws IOException 
      */
-    public PlayerThread(Camera cam, int index, int delay) {
+    public PlayerThread(Camera cam, int index, int delay) throws IOException {
 	this.cam = cam;
 	this.delay = delay;
 	this.index = index;
+	this.camC = new CameraControl(cam);
     }
 
 
@@ -45,21 +47,16 @@ public class PlayerThread implements Runnable {
      */
     public void run() {
 	Log.i(logTag, "go");
-	while (!Thread.currentThread().isInterrupted()) {
+	    Bitmap bmp = null;
+	    String command;
 	    Message m = new Message();
+	while (!Thread.currentThread().isInterrupted()) {
 	    m.what = Video.GUIUPDATEIDENTIFIER;
 	    m.arg1 = index;
-	    Bitmap bmp = null;
-	    URL url;
 	    try {
 		/* Open HTTP connection */
-		url = new URL(cam.getURI()
-			+ "axis-cgi/jpg/image.cgi?resolution=160x120");
-		Log.i(logTag, url.toString());
-		con = url.openConnection();
-		con.setRequestProperty("Authorization", base64Encoder
-			.userNamePasswordBase64(cam.login, cam.pass));
-		con.connect();
+		command = "axis-cgi/jpg/image.cgi?resolution=160x120";
+		con = camC.sendCommand(command);
 		Log.i(logTag, "connected");
 		/* Get image result */
 		t0 = System.currentTimeMillis();

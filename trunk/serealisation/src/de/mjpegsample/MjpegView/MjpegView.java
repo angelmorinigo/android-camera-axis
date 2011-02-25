@@ -148,6 +148,7 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
 									}
 								}
 							} catch (IOException e) {
+							    
 							}
 						}
 					} finally {
@@ -178,7 +179,6 @@ public class MjpegView extends SurfaceView implements SurfaceHolder.Callback {
 			displayMode = MjpegView.SIZE_STANDARD;
 			dispWidth = getWidth();
 			dispHeight = getHeight();
-			Log.i("AppLog", "init");
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.myapps;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * 
@@ -152,8 +154,14 @@ public class MultiVideo extends Activity {
 				dialog.dismiss();
 				start[index] = true;
 				camView[index] = camList.get(item);
-				t[index] = new Thread(new PlayerThread(camList
-					.get(item), index, 50));
+				try {
+				    t[index] = new Thread(new PlayerThread(camList
+				    	.get(item), index, 50));
+				} catch (IOException e) {
+				    Log.i(getString(R.string.logTag), "MultiVideo IOException");
+				    Toast.makeText(activity.getApplicationContext(), "Caméra introuvable", Toast.LENGTH_LONG).show();
+				    e.printStackTrace();
+				}
 				t[index].start();
 			    }
 			});
