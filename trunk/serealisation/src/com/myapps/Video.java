@@ -196,25 +196,10 @@ public class Video extends Activity {
 	    }
 	});
 
-	/*
-	 * Contrôle du PTZ par déplacement sur l'écran
-	 */
-	/*
-	 * img.setOnTouchListener(new OnTouchListener() { float startX, startY;
-	 * 
-	 * @Override public boolean onTouch(View v, MotionEvent event) { if
-	 * (event.getAction() == MotionEvent.ACTION_DOWN) { startX =
-	 * event.getX(); startY = event.getY(); return true; } return false; }
-	 * });
-	 */
-
-	/*
-	 * Affichage video
-	 */
-
 	mv = (MjpegView) findViewById(R.id.surfaceView1);
 	start_connection(mv, url);
 
+	mv.setOnTouchListener(new TouchListener());
     }
 
     /**
@@ -272,7 +257,7 @@ public class Video extends Activity {
 	} catch (IOException e) {
 	    Log.i(getString(R.string.logTag), "StartConnect IOException");
 	    Toast.makeText(activity.getApplicationContext(),
-		    "Cam�ra introuvable", Toast.LENGTH_LONG).show();
+		    "Cam�ra introuvable", Toast.LENGTH_LONG).show();
 	    e.printStackTrace();
 	    finish();
 	}
