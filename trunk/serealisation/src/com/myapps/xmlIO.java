@@ -16,26 +16,45 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
 
+/**
+ * 
+ * xmlIO offer two input/output function able to convert ArrayList<Camera> to
+ * xml file and vice versa, like :
+ *  <?xml version='1.0' encoding='UTF-8' standalone='yes' ?> 
+ *  <camList>
+ *  	 <camera> 
+ *  		<id>home</id>
+ * 		<adresse>http://192.168.1.20/</adresse> 
+ * 		<channel>1</channel> 
+ * 	</camera> 
+ * 	<camera> 
+ *  		<id>home ext</id>
+ * 		<adresse>http://82.---.---.---/</adresse> 
+ * 		<channel>1</channel> 
+ * 	</camera> 
+ * <camList>
+ * 
+ */
 public class xmlIO {
+/**
+ * Write the ArrayList<Camera> into file named url
+ * @param camList Your data
+ * @param url File name
+ */
     public static void xmlWrite(ArrayList<Camera> camList, String url) {
-	FileOutputStream fileos = null;
+	FileOutputStream out = null;
 	try {
-	    fileos = new FileOutputStream(url);
+	    out = new FileOutputStream(url);
 	} catch (FileNotFoundException e) {
-	    Log.e("FileNotFoundException", "can't create FileOutputStream");
+	    e.printStackTrace();
 	}
 	XmlSerializer serializer = Xml.newSerializer();
 	try {
-	    serializer.setOutput(fileos, "UTF-8");
+	    serializer.setOutput(out, "UTF-8");
 	    serializer.startDocument(null, Boolean.valueOf(true));
-	    serializer.setFeature(
-		    "http://xmlpull.org/v1/doc/features.html#indent-output",
-		    true);
-
 	    serializer.startTag(null, "camList");
 	    for (int i = 0; i < camList.size(); i++) {
 		serializer.startTag(null, "camera");
@@ -50,11 +69,10 @@ public class xmlIO {
 		serializer.endTag(null, "channel");
 		serializer.endTag(null, "camera");
 	    }
-
 	    serializer.endTag(null, "camList");
 	    serializer.endDocument();
 	    serializer.flush();
-	    fileos.close();
+	    out.close();
 	} catch (IllegalArgumentException e) {
 	    e.printStackTrace();
 	} catch (IllegalStateException e) {
@@ -64,6 +82,11 @@ public class xmlIO {
 	}
     }
 
+    /**
+     * Read the xml file named url and return the ArrayList<Camera> completed
+     * @param url The file url
+     * @return The camera's list
+     */
     public static ArrayList<Camera> xmlRead(String url) {
 	Document doc = null;
 	ArrayList<Camera> camList = new ArrayList<Camera>();
