@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView01" android:layout_height="fill_parent" android:layout_width="fill_parent">
+	<TableLayout android:orientation="horizontal"
+		android:stretchColumns="1" android:layout_height="fill_parent"
+		android:layout_width="fill_parent" android:gravity="fill"
+		android:scrollbars="vertical">
+		<TextView android:hint="Modifier une caméra :"
+			android:textSize="12pt" android:gravity="center" />
+		<TableRow>
+			<TextView android:text="Identifiant :" android:id="@+id/tmid" />
+			<EditText android:hint="Entrez un id" android:id="@+id/emid"
+				android:gravity="center" />
+		</TableRow>
+		<TableRow>
+			<TextView android:text="Login :" android:id="@+id/tmlogin" />
+			<EditText android:hint="Entrez un login" android:id="@+id/emlogin"
+				android:gravity="center" />
+		</TableRow>
+		<TableRow>
+			<TextView android:text="Password :" android:id="@+id/tmpass" />
+			<EditText android:hint="Entrez un pass" android:id="@+id/empass"
+				android:gravity="center" android:password="true"/>
+		</TableRow>
+
+		<TableRow>
+			<TextView android:text="Adresse :" android:id="@+id/tmaddr" />
+			<EditText android:hint="Entrez une adresse" android:id="@+id/emaddr"
+				android:gravity="center" />
+		</TableRow>
+		<TableRow>
+			<TextView android:text="Channel :" android:id="@+id/tmchan" />
+			<EditText android:hint="Entrez un Canal" android:id="@+id/emchan"
+				android:gravity="center" android:numeric="decimal" />
+		</TableRow>
+	
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="wrap_content" android:layout_weight="1">
+			<Button android:text="Modifier" android:id="@+id/modify"
+				android:layout_height="wrap_content" android:gravity="center"
+				android:layout_width="fill_parent" android:layout_weight="1" />
+			<Button android:text="Annuler" android:id="@+id/cancel"
+				android:layout_height="wrap_content" android:gravity="center"
+				android:layout_width="fill_parent" android:layout_weight="1" />
+		</LinearLayout>
+	</TableLayout>
+</ScrollView>
+	

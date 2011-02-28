@@ -22,10 +22,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -41,9 +43,12 @@ public class Home extends Activity {
     private static Activity activity;
     private ListView L;
     private ArrayList<Camera> camList;
+    private int editCode = 2;
 
-    private String FILE = "camera.ser";
-    private String messageRemove = "Etes vous sur de vouloir supprimer cette camera ?";
+    private String exportPath = "/sdcard/com.myapps.camera/export.xml";
+
+    private String messageRemove = "Etes-vous sur de vouloir supprimer cette camera ?";
+    private String messageChoose = "Que voulez-vous faire ?";
 
     public final static String ITEM_TITLE = "title";
     public final static String ITEM_CAPTION = "caption";
@@ -72,7 +77,7 @@ public class Home extends Activity {
 	    L.setTextFilterEnabled(true);
 
     }
-    
+
     /**
      * Called when Activity start or resume
      */
@@ -86,7 +91,7 @@ public class Home extends Activity {
 	try {
 	    /* Open custum camera file if it exist */
 	    FileInputStream fichier = activity.getApplication().openFileInput(
-		    FILE);
+		    getString(R.string.fileName));
 	    ObjectInputStream ois = new ObjectInputStream(fichier);
 	    Log.i(getString(R.string.logTag), "lecture cameras effectuee");
 	    camList = (ArrayList<Camera>) ois.readObject();
@@ -101,33 +106,44 @@ public class Home extends Activity {
 	}
 	L.setOnItemLongClickListener(new OnItemLongClickListener() {
 	    @Override
-	    /* Print dialog to delete camera */
+	    /* Print dialog to modifie or delete camera */
 	    public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 		    final int position, long arg3) {
-
-		AlertDialog alert_reset;
+		AlertDialog alert;
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setMessage(messageRemove)
+		builder.setMessage(messageChoose)
 			.setCancelable(false)
-			.setPositiveButton("Oui",
+			.setPositiveButton("Modifier",
 				new DialogInterface.OnClickListener() {
 				    @Override
 				    public void onClick(DialogInterface dialog,
 					    int id) {
-					camList.remove(position);
-					updateListView(false);
+					Intent intent = new Intent(activity
+						.getApplicationContext(),
+						EditCam.class);
+					Bundle objetbunble = new Bundle();
+					objetbunble.putSerializable(
+						getString(R.string.camTag),
+						camList.get(position));
+					intent.putExtra(
+						getString(R.string.camPosition),
+						position);
+					intent.putExtras(objetbunble);
+					dialog.cancel();
+					startActivityForResult(intent, editCode);
 				    }
 				})
-			.setNegativeButton("Non",
+			.setNegativeButton("Supprimer",
 				new DialogInterface.OnClickListener() {
 				    @Override
 				    public void onClick(DialogInterface dialog,
 					    int id) {
+					removeCam(position);
 					dialog.cancel();
 				    }
 				});
-		alert_reset = builder.create();
-		alert_reset.show();
+		alert = builder.create();
+		alert.show();
 		return true;
 	    }
 	});
@@ -151,12 +167,41 @@ public class Home extends Activity {
     }
 
     /**
+     * Show alert to remove the "position" camera
+     */
+    private void removeCam(final int position) {
+	AlertDialog alert_reset;
+	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	builder.setMessage(messageRemove)
+		.setCancelable(false)
+		.setPositiveButton("Oui",
+			new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int id) {
+				camList.remove(position);
+				updateListView(false);
+				dialog.cancel();
+			    }
+			})
+		.setNegativeButton("Non",
+			new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			    }
+			});
+	alert_reset = builder.create();
+	alert_reset.show();
+    }
+
+    /**
      * Called when Activity stop. Override to record preferences
      */
     protected void onDestroy() {
 	try {
 	    FileOutputStream fichier = activity.getApplicationContext()
-		    .openFileOutput(FILE, Context.MODE_PRIVATE);
+		    .openFileOutput(getString(R.string.fileName),
+			    Context.MODE_PRIVATE);
 	    ObjectOutputStream oos = new ObjectOutputStream(fichier);
 	    oos.writeObject(camList);
 	    oos.flush();
@@ -170,14 +215,14 @@ public class Home extends Activity {
 	super.onDestroy();
     }
 
-   
     /**
-     * Called when Activity result from AddCam activity. Add the new camera and refresh the listView. 
-     * (param detail copied from official android doc)
+     * Called when Activity result from AddCam activity. Add the new camera and
+     * refresh the listView. (param detail copied from official android doc)
      * 
-     * @param requestCode The integer request code originally supplied to
-     *                   startActivityForResult(), allowing you to identify who
-     *                   this result came from.
+     * @param requestCode
+     *            The integer request code originally supplied to
+     *            startActivityForResult(), allowing you to identify who this
+     *            result came from.
      * @param resultCode
      *            The integer result code returned by the child activity through
      *            its setResult().
@@ -194,32 +239,38 @@ public class Home extends Activity {
 	    Camera tmp = (Camera) extras
 		    .getSerializable(getString(R.string.camTag));
 	    Log.i(getString(R.string.logTag), "camera " + tmp.id + " recuperer");
-
-	    camList.add(tmp);
-	    Log.i(getString(R.string.logTag), "camera ajouter");
-
+	    /* Always add at the head */
+	    int position = 0;
+	    if (requestCode == editCode) {
+		position = extras.getInt(getString(R.string.camPosition));
+		camList.remove(position);
+	    }
+	    camList.add(position, tmp);
 	    updateListView(false);
+
 	}
     }
 
-   
     /**
      * Assign custom menu to activity
      */
-  
-    @Override 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 	MenuInflater inflater = getMenuInflater();
 	inflater.inflate(R.menu.menu, menu);
 	return true;
     }
 
-
     /**
      * Implements Menu Items Listener
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+	final Dialog dialogImportExport;
+	TextView textImportExport;
+	final EditText editImportExport;
+	Button submit;
+	
 	switch (item.getItemId()) {
 	case R.id.menu_option_about:
 	    dialog_about = new Dialog(activity);
@@ -257,6 +308,52 @@ public class Home extends Activity {
 	    intent1.putExtras(objetbunble);
 	    Log.i(getString(R.string.logTag), "Start 4 vues");
 	    startActivity(intent1);
+	    return true;
+	case R.id.export:
+	    dialogImportExport = new Dialog(activity);
+	    dialogImportExport.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+	    dialogImportExport.setContentView(R.layout.imp_exp);
+	    dialogImportExport.setTitle("Exporter");
+	    textImportExport = (TextView) dialogImportExport.findViewById(R.id.importExport);
+	    textImportExport.setText("Fichier de sortie :");
+	    editImportExport = (EditText) dialogImportExport.findViewById(R.id.imp_exp_url);
+	    editImportExport.setText(exportPath);
+	    submit = (Button) dialogImportExport.findViewById(R.id.imp_exp_ok);
+	    submit.setText("Exporter");
+	    submit.setOnClickListener(new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+		    exportPath = editImportExport.getText().toString();
+		    xmlIO.xmlWrite(camList, exportPath);
+		    dialogImportExport.cancel();
+		}
+	    });
+	    dialogImportExport.show();
+	    dialogImportExport.getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.light);
+	    return true;
+	case R.id.importer:
+	    dialogImportExport = new Dialog(activity);
+	    dialogImportExport.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+	    dialogImportExport.setContentView(R.layout.imp_exp);
+	    dialogImportExport.setTitle("Importer");
+	    textImportExport = (TextView) dialogImportExport.findViewById(R.id.importExport);
+	    textImportExport.setText("Fichier à importer :");
+	    editImportExport = (EditText) dialogImportExport.findViewById(R.id.imp_exp_url);
+	    editImportExport.setText(exportPath);
+	    submit = (Button) dialogImportExport.findViewById(R.id.imp_exp_ok);
+	    submit.setText("Importer");
+	    submit.setOnClickListener(new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+		    exportPath = editImportExport.getText().toString();
+		    camList = xmlIO.xmlRead(exportPath);
+		    updateListView(true);
+		    dialogImportExport.cancel();
+		}
+	    });
+	    dialogImportExport.show();
+	    dialogImportExport.getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.light);
+	    return true;
 	}
 	return false;
     }

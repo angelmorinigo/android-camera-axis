@@ -59,7 +59,25 @@ public class Camera implements java.io.Serializable {
 	this.uri = uri;
 	this.channel = channel;
     }
-
+    
+    /**
+     * Public constructor for a camera with a URI without username/password
+     * 
+     * @param id
+     *            The name of th camera
+     * @param uri
+     *            The address's camera
+     * @param channel
+     *            The channel's camera (no channel = 1)
+     */
+    public Camera(String id, String uri, int channel) {
+	this.id = id;
+	this.uri = uri;
+	this.channel = channel;
+	this.login = "";
+	this.pass = "";
+    }
+    
     /**
      * Create the address from camera's information
      * 

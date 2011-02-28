@@ -7,7 +7,9 @@
 	<string name="logTag">AppLog</string>
 	<string name="camTag">Camera</string>
 	<string name="camListTag">CameraList</string>
-
+	<string name="camPosition">Position</string>
+	<string name="fileName">camera.ser</string>
+	
 	<string-array name="protocol_array">
 		<item>http</item>
 		<item>rtsp</item>
