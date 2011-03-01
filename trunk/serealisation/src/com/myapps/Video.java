@@ -200,7 +200,7 @@ public class Video extends Activity {
 	mv = (MjpegView) findViewById(R.id.surfaceView1);
 	start_connection(mv, url);
 
-	mv.setOnTouchListener(new TouchListener());
+	mv.setOnTouchListener(new TouchListener(camC));
     }
 
     /**

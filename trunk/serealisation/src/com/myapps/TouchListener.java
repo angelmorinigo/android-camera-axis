@@ -19,14 +19,14 @@ public class TouchListener implements OnTouchListener {
 	private PointF current = new PointF(0, 0);
 	private float currentDist = 0;
 	
-	public TouchListener(View v, CameraControl pCamC) {
-		width = v.getWidth();
-		height = v.getHeight();
+	public TouchListener(CameraControl pCamC) {
 		camC = pCamC;
 	}
 	
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
+		width = v.getWidth();
+		height = v.getHeight();
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 		case MotionEvent.ACTION_DOWN:
 			current.set(event.getX(), event.getY());
