@@ -125,7 +125,8 @@ public class Video extends Activity {
 	    public void onClick(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle("SnapShot Format");
-		builder.setSingleChoiceItems(SIZE, -1,
+		final String[] resolutions = camC.getResolutions();
+		builder.setSingleChoiceItems(resolutions, -1,
 			new DialogInterface.OnClickListener() {
 			    public void onClick(DialogInterface dialog, int item) {
 				try {
@@ -138,7 +139,7 @@ public class Video extends Activity {
 					    + System.currentTimeMillis()
 					    + ".jpeg";
 				    Log.i(getString(R.string.logTag), fileName);
-				    Bitmap bmp = camC.takeSnapshot(SIZE[item]);
+				    Bitmap bmp = camC.takeSnapshot(resolutions[item]);
 				    Log.i(getString(R.string.logTag),
 					    "Snap ok !!");
 				    FileOutputStream fichier = new FileOutputStream(
