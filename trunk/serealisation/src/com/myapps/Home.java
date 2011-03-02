@@ -88,6 +88,9 @@ public class Home extends Activity {
 	setContentView(R.layout.view);
 	activity = this;
 
+	Dialog_welcome myDialog = new Dialog_welcome(this, "Bienvenue !");
+    myDialog.show();
+	
 	try {
 	    /* Open custum camera file if it exist */
 	    FileInputStream fichier = activity.getApplication().openFileInput(
@@ -337,7 +340,7 @@ public class Home extends Activity {
 	    dialogImportExport.setContentView(R.layout.imp_exp);
 	    dialogImportExport.setTitle("Importer");
 	    textImportExport = (TextView) dialogImportExport.findViewById(R.id.importExport);
-	    textImportExport.setText("Fichier à importer :");
+	    textImportExport.setText("Fichier ï¿½ importer :");
 	    editImportExport = (EditText) dialogImportExport.findViewById(R.id.imp_exp_url);
 	    editImportExport.setText(exportPath);
 	    submit = (Button) dialogImportExport.findViewById(R.id.imp_exp_ok);
