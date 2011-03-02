@@ -48,7 +48,7 @@ public class MultiVideo extends Activity {
 	    if (msg.what == URLERRORIDENTIFIER) {
 		start[index] = false;
 		Toast.makeText(activity.getApplicationContext(),
-			"Caméra introuvable", Toast.LENGTH_LONG).show();
+			"Camï¿½ra introuvable", Toast.LENGTH_LONG).show();
 	    }
 	    super.handleMessage(msg);
 	}
@@ -78,7 +78,7 @@ public class MultiVideo extends Activity {
 	camList = (ArrayList<Camera>) extras
 		.getSerializable(getString(R.string.camListTag));
 
-	Log.i(getString(R.string.logTag), "camera list recupérée ");
+	Log.i(getString(R.string.logTag), "camera list recupï¿½rï¿½e ");
 
 	stringCamList = new String[camList.size()];
 	for (int i = 0; i < camList.size(); i++)
@@ -161,13 +161,13 @@ public class MultiVideo extends Activity {
 				camView[index] = camList.get(item);
 				try {
 				    t[index] = new Thread(new PlayerThread(
-					    camList.get(item), index, 700));
+					    camList.get(item), index, 250));
 				} catch (IOException e) {
 				    Log.i(getString(R.string.logTag),
 					    "MultiVideo IOException");
 				    Toast.makeText(
 					    activity.getApplicationContext(),
-					    "Caméra introuvable",
+					    "Camï¿½ra introuvable",
 					    Toast.LENGTH_LONG).show();
 				    e.printStackTrace();
 				}
