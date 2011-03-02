@@ -43,15 +43,15 @@ public class Home extends Activity {
     private static Activity activity;
     private ListView L;
     private ArrayList<Camera> camList;
-    private int editCode = 2;
+    private String[] nb_view;
 
     private String exportPath = "/sdcard/com.myapps.camera/export.xml";
 
-    private String messageRemove = "Etes-vous sur de vouloir supprimer cette camera ?";
-    private String messageChoose = "Que voulez-vous faire ?";
-
-    public final static String ITEM_TITLE = "title";
-    public final static String ITEM_CAPTION = "caption";
+    
+    
+    private final static int EDIT_CODE = 2;
+    private final static String ITEM_TITLE = "title";
+    private final static String ITEM_CAPTION = "caption";
 
     private Map<String, ?> createItem(String title, String caption) {
 	Map<String, String> item = new HashMap<String, String>();
@@ -88,9 +88,10 @@ public class Home extends Activity {
 	setContentView(R.layout.view);
 	activity = this;
 
-	Dialog_welcome myDialog = new Dialog_welcome(this, "Bienvenue !");
-    myDialog.show();
-	
+	Dialog_welcome myDialog = new Dialog_welcome(this,
+		getString(R.string.messageBienvenue));
+	myDialog.show();
+
 	try {
 	    /* Open custum camera file if it exist */
 	    FileInputStream fichier = activity.getApplication().openFileInput(
@@ -114,9 +115,9 @@ public class Home extends Activity {
 		    final int position, long arg3) {
 		AlertDialog alert;
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setMessage(messageChoose)
+		builder.setMessage(getString(R.string.messageChoose))
 			.setCancelable(false)
-			.setPositiveButton("Modifier",
+			.setPositiveButton(getString(R.string.boutonModifier),
 				new DialogInterface.OnClickListener() {
 				    @Override
 				    public void onClick(DialogInterface dialog,
@@ -133,10 +134,10 @@ public class Home extends Activity {
 						position);
 					intent.putExtras(objetbunble);
 					dialog.cancel();
-					startActivityForResult(intent, editCode);
+					startActivityForResult(intent, EDIT_CODE);
 				    }
 				})
-			.setNegativeButton("Supprimer",
+			.setNegativeButton(getString(R.string.boutonSupprimer),
 				new DialogInterface.OnClickListener() {
 				    @Override
 				    public void onClick(DialogInterface dialog,
@@ -175,9 +176,9 @@ public class Home extends Activity {
     private void removeCam(final int position) {
 	AlertDialog alert_reset;
 	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-	builder.setMessage(messageRemove)
+	builder.setMessage(getString(R.string.messageRemove))
 		.setCancelable(false)
-		.setPositiveButton("Oui",
+		.setPositiveButton(getString(R.string.oui),
 			new DialogInterface.OnClickListener() {
 			    @Override
 			    public void onClick(DialogInterface dialog, int id) {
@@ -186,7 +187,7 @@ public class Home extends Activity {
 				dialog.cancel();
 			    }
 			})
-		.setNegativeButton("Non",
+		.setNegativeButton(getString(R.string.non),
 			new DialogInterface.OnClickListener() {
 			    @Override
 			    public void onClick(DialogInterface dialog, int id) {
@@ -244,7 +245,7 @@ public class Home extends Activity {
 	    Log.i(getString(R.string.logTag), "camera " + tmp.id + " recuperer");
 	    /* Always add at the head */
 	    int position = 0;
-	    if (requestCode == editCode) {
+	    if (requestCode == EDIT_CODE) {
 		position = extras.getInt(getString(R.string.camPosition));
 		camList.remove(position);
 	    }
@@ -273,15 +274,15 @@ public class Home extends Activity {
 	TextView textImportExport;
 	final EditText editImportExport;
 	Button submit;
-	
+
 	switch (item.getItemId()) {
 	case R.id.menu_option_about:
 	    dialog_about = new Dialog(activity);
 	    dialog_about.setContentView(R.layout.dialog_about);
-	    dialog_about.setTitle("A Propos");
+	    dialog_about.setTitle(getString(R.string.aboutTitle));
 
 	    TextView text = (TextView) dialog_about.findViewById(R.id.about);
-	    text.setText(activity.getResources().getString(R.string.about));
+	    text.setText(getString(R.string.messageAbout));
 	    ImageView image = (ImageView) dialog_about
 		    .findViewById(R.id.about_image);
 	    image.setImageResource(R.drawable.ic_fave1);
@@ -303,26 +304,43 @@ public class Home extends Activity {
 	    Intent intent = new Intent(this, AddCam.class);
 	    startActivityForResult(intent, 1);
 	    return true;
-	case R.id.menu_4vue:
-	    Intent intent1 = new Intent(this, MultiVideo.class);
-	    Bundle objetbunble = new Bundle();
-	    objetbunble
-		    .putSerializable(getString(R.string.camListTag), camList);
-	    intent1.putExtras(objetbunble);
-	    Log.i(getString(R.string.logTag), "Start 4 vues");
-	    startActivity(intent1);
+	case R.id.menu_multi_vue:
+	    nb_view = getResources().getStringArray(R.array.multi_view_array);
+	    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+	    builder.setTitle(getString(R.string.cameraAlertTitle));
+	    builder.setSingleChoiceItems(nb_view, -1,
+		    new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+			    dialog.dismiss();
+			    Intent intent1 = new Intent(activity,
+				    MultiVideo.class);
+			    Bundle objetbunble = new Bundle();
+			    objetbunble.putSerializable(
+				    getString(R.string.camListTag), camList);
+			    intent1.putExtras(objetbunble);
+			    intent1.putExtra(getString(R.string.nbViewTag),
+				    (item + 2));
+			    Log.i(getString(R.string.logTag),
+				    "Start multi view");
+			    startActivity(intent1);
+			}
+		    });
+	    AlertDialog alert = builder.create();
+	    alert.show();
 	    return true;
 	case R.id.export:
 	    dialogImportExport = new Dialog(activity);
 	    dialogImportExport.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 	    dialogImportExport.setContentView(R.layout.imp_exp);
-	    dialogImportExport.setTitle("Exporter");
-	    textImportExport = (TextView) dialogImportExport.findViewById(R.id.importExport);
-	    textImportExport.setText("Fichier de sortie :");
-	    editImportExport = (EditText) dialogImportExport.findViewById(R.id.imp_exp_url);
+	    dialogImportExport.setTitle(getString(R.string.boutonExporter));
+	    textImportExport = (TextView) dialogImportExport
+		    .findViewById(R.id.importExport);
+	    textImportExport.setText(getString(R.string.messageExport));
+	    editImportExport = (EditText) dialogImportExport
+		    .findViewById(R.id.imp_exp_url);
 	    editImportExport.setText(exportPath);
 	    submit = (Button) dialogImportExport.findViewById(R.id.imp_exp_ok);
-	    submit.setText("Exporter");
+	    submit.setText(getString(R.string.boutonExporter));
 	    submit.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -332,19 +350,22 @@ public class Home extends Activity {
 		}
 	    });
 	    dialogImportExport.show();
-	    dialogImportExport.getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.light);
+	    dialogImportExport.getWindow().setFeatureDrawableResource(
+		    Window.FEATURE_LEFT_ICON, R.drawable.light);
 	    return true;
 	case R.id.importer:
 	    dialogImportExport = new Dialog(activity);
 	    dialogImportExport.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 	    dialogImportExport.setContentView(R.layout.imp_exp);
-	    dialogImportExport.setTitle("Importer");
-	    textImportExport = (TextView) dialogImportExport.findViewById(R.id.importExport);
-	    textImportExport.setText("Fichier � importer :");
-	    editImportExport = (EditText) dialogImportExport.findViewById(R.id.imp_exp_url);
+	    dialogImportExport.setTitle(getString(R.string.boutonImporter));
+	    textImportExport = (TextView) dialogImportExport
+		    .findViewById(R.id.importExport);
+	    textImportExport.setText(getString(R.string.messageImport));
+	    editImportExport = (EditText) dialogImportExport
+		    .findViewById(R.id.imp_exp_url);
 	    editImportExport.setText(exportPath);
 	    submit = (Button) dialogImportExport.findViewById(R.id.imp_exp_ok);
-	    submit.setText("Importer");
+	    submit.setText(getString(R.string.boutonImporter));
 	    submit.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -355,7 +376,8 @@ public class Home extends Activity {
 		}
 	    });
 	    dialogImportExport.show();
-	    dialogImportExport.getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.light);
+	    dialogImportExport.getWindow().setFeatureDrawableResource(
+		    Window.FEATURE_LEFT_ICON, R.drawable.light);
 	    return true;
 	}
 	return false;

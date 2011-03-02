@@ -2,14 +2,51 @@
 <resources>
 	<string name="hello">Hello World, record!</string>
 	<string name="app_name">Camera</string>
-	<string name="about">Version 1.0\nDéveloppé par :\nJerome NAHELOU, Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S sous android 2.1\n</string>
-	<string name="protocol_prompt">Choisir un protocol</string>
+
 	<string name="logTag">AppLog</string>
 	<string name="camTag">Camera</string>
 	<string name="camListTag">CameraList</string>
+	<string name="nbViewTag">nb</string>
+
+
 	<string name="camPosition">Position</string>
 	<string name="fileName">camera.ser</string>
-	
+
+
+	<string name="cameraAlertTitle">Nombre de camera a afficher :</string>
+	<string name="aboutTitle">A Propos</string>
+
+
+	<string name="messageRemove">Etes-vous sur de vouloir supprimer cette camera ?
+	</string>
+	<string name="messageChoose">Que voulez-vous faire ?</string>
+	<string name="messageBienvenue">Bienvenue !</string>
+	<string name="messageAbout">Version 1.0\nDéveloppé par :\nJerome NAHELOU,
+		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S
+		sous android 2.1\n</string>
+	<string name="messageExport">Fichier de sortie :</string>
+	<string name="messageImport">Fichier a importer :</string>
+
+
+
+	<string name="boutonModifier">Modifier</string>
+	<string name="boutonSupprimer">Supprimer</string>
+	<string name="boutonExporter">Exporter</string>
+	<string name="boutonImporter">Importer</string>
+
+
+	<string name="oui">Oui</string>
+	<string name="non">Non</string>
+
+	<string-array name="multi_view_array">
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+	</string-array>
+
+	<string name="protocol_prompt">Choisir un protocol</string>
 	<string-array name="protocol_array">
 		<item>http</item>
 		<item>rtsp</item>

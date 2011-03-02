@@ -28,11 +28,12 @@ public class MultiVideo extends Activity {
     private static ArrayList<Camera> camList;
     private String[] stringCamList;
 
-    private Camera[] camView = new Camera[4];
-    private Thread[] t = new Thread[4];
-    private static ImageView[] img = new ImageView[4];
-    private static boolean[] start = new boolean[4];
-    public static Bitmap[] newBMP = new Bitmap[4];
+    private Camera[] camView;
+    private Thread[] t;
+    private static ImageView[] img;
+    private static boolean[] start;
+    public static Bitmap[] newBMP;
+    private int nbView = 0;
 
     protected static final int GUIUPDATEIDENTIFIER = 0x101;
     protected static final int URLERRORIDENTIFIER = 0x102;
@@ -61,30 +62,59 @@ public class MultiVideo extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.multi_video);
 	activity = this;
 
 	/* Init */
-	setRequestedOrientation(0);
-
-	img[0] = (ImageView) findViewById(R.id.image0);
-	img[1] = (ImageView) findViewById(R.id.image1);
-	img[2] = (ImageView) findViewById(R.id.image2);
-	img[3] = (ImageView) findViewById(R.id.image3);
-	Log.i(getString(R.string.logTag), "img ok");
-
 	/* recover the argument (camera list) */
 	Bundle extras = getIntent().getExtras();
 	camList = (ArrayList<Camera>) extras
 		.getSerializable(getString(R.string.camListTag));
-
-	Log.i(getString(R.string.logTag), "camera list recup�r�e ");
-
+	nbView = extras.getInt(getString(R.string.nbViewTag));
 	stringCamList = new String[camList.size()];
 	for (int i = 0; i < camList.size(); i++)
 	    stringCamList[i] = camList.get(i).id;
+	Log.i(getString(R.string.logTag), "camera list found ");
+
+	camView = new Camera[nbView];
+	t = new Thread[nbView];
+	img = new ImageView[nbView];
+	start = new boolean[nbView];
+	newBMP = new Bitmap[nbView];
+
+	switch (nbView) {
+	case 2:
+	    setRequestedOrientation(0);
+	    setContentView(R.layout.multi_video_2);
+	    break;
+	case 3:
+	    setRequestedOrientation(1);
+	    setContentView(R.layout.multi_video_3);
+	    break;
+	case 4:
+	    setRequestedOrientation(0);
+	    setContentView(R.layout.multi_video_4);
+	    break;
+	case 5:
+	    setRequestedOrientation(0);
+	    setContentView(R.layout.multi_video_5);
+	    break;
+	case 6:
+	    setRequestedOrientation(0);
+	    setContentView(R.layout.multi_video_6);
+	    break;
+	}
+	/*
+	 * get R.id.image0 address and inc it to find R.id.image1, R.id.image2,
+	 * ... , R.id.image.n
+	 */
+	int dep = R.id.image0;
+	for (int i = 0; i < nbView; i++) {
+	    img[i] = (ImageView) findViewById(dep + i);
+	}
+	Log.i(getString(R.string.logTag), "img ok");
+
 	/* Set Image and Listener for each view */
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < nbView; i++) {
 	    camView[i] = null;
 	    img[i].setImageResource(R.drawable.cadre);
 	    img[i].setOnClickListener(new myOnClickListener(i));
@@ -99,7 +129,7 @@ public class MultiVideo extends Activity {
      * Stop each view before destroy
      */
     public void onDestroy() {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < nbView; i++)
 	    if (t[i] != null)
 		t[i].interrupt();
 	super.onDestroy();
@@ -167,7 +197,7 @@ public class MultiVideo extends Activity {
 					    "MultiVideo IOException");
 				    Toast.makeText(
 					    activity.getApplicationContext(),
-					    "Cam�ra introuvable",
+					    "Camera introuvable",
 					    Toast.LENGTH_LONG).show();
 				    e.printStackTrace();
 				}

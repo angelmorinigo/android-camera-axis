@@ -42,6 +42,7 @@ public class Video extends Activity {
     private MjpegView mv;
     private boolean pause;
     
+    /* TODO : deplacer dans le value/stringd.xml */
     static final String[] SIZE = new String[] { "1280x1024", "1280x960",
 	    "1280x720", "768x576", "4CIF", "704x576", "704x480", "VGA",
 	    "640x480", "640x360", "2CIFEXP", "2CIF", "704x288", "704x240",

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/menu_ajouter" android:title="Ajouter une Caméra"
 		android:icon="@drawable/ic_menu_refresh" />
-	<item android:id="@+id/menu_4vue" android:title="Mode 4 vues"
+	<item android:id="@+id/menu_multi_vue" android:title="Mode multi-vues"
 		android:icon="@drawable/monitor" />
 	<item android:id="@+id/param" android:title="Paramètres"
 		android:icon="@drawable/ic_menu_preferences">
