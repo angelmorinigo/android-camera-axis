@@ -258,7 +258,7 @@ public class Video extends Activity {
 	} catch (IOException e) {
 	    Log.i(getString(R.string.logTag), "StartConnect IOException");
 	    Toast.makeText(activity.getApplicationContext(),
-		    "Cam�ra introuvable", Toast.LENGTH_LONG).show();
+		    "Camera introuvable", Toast.LENGTH_LONG).show();
 	    e.printStackTrace();
 	    finish();
 	}
