@@ -8,13 +8,13 @@
 	<string name="camListTag">CameraList</string>
 	<string name="nbViewTag">nb</string>
 	<string name="isWelcome">welcome</string>
-	
+
 	<string name="TimeOut">timeOutHTTP</string>
 	<string name="defaultTimeOut">1000</string>
-	
+
 	<string name="limitFPS">limitFPS</string>
 	<string name="defaultlimitFPS">500</string>
-	
+
 	<string name="sens">sens</string>
 	<string name="defaultSens">10</string>
 	<string name="maxSens">20</string>
@@ -38,7 +38,7 @@
 		sous android 2.1\n</string>
 	<string name="messageExport">Fichier de sortie :</string>
 	<string name="messageImport">Fichier a importer :</string>
-
+	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son depot svn http://code.google.com/p/android-camera-axis/</string>
 
 
 	<string name="boutonModifier">Modifier</string>

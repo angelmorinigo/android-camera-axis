@@ -10,6 +10,7 @@
 			<item android:id="@+id/parametres" android:title="Parametres" />
 			<item android:id="@+id/export" android:title="Exporter la configuration" />
 			<item android:id="@+id/importer" android:title="Importer la configuration" />
+			<item android:id="@+id/partager" android:title="Partager" />
 			<item android:id="@+id/menu_option_about" android:title="A Propos" />
 
 		</menu>

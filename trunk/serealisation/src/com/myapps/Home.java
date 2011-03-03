@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -278,11 +279,10 @@ public class Home extends Activity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-	final Dialog dialogImportExport;
-	TextView textImportExport;
 	final EditText editImportExport;
-	Button submit;
-
+	TextView imp_exp;
+	LayoutInflater factory = LayoutInflater.from(this);
+	final View alertDialogView = factory.inflate(R.layout.imp_exp, null);
 	switch (item.getItemId()) {
 	case R.id.menu_option_about:
 	    dialog_about = new Dialog(activity);
@@ -337,59 +337,72 @@ public class Home extends Activity {
 	    alert.show();
 	    return true;
 	case R.id.export:
-	    dialogImportExport = new Dialog(activity);
-	    dialogImportExport.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-	    dialogImportExport.setContentView(R.layout.imp_exp);
-	    dialogImportExport.setTitle(getString(R.string.boutonExporter));
-	    textImportExport = (TextView) dialogImportExport
+
+	    AlertDialog.Builder build_exp = new AlertDialog.Builder(this);
+	    build_exp.setView(alertDialogView);
+	    build_exp.setTitle(getString(R.string.boutonExporter));
+	    build_exp.setIcon(R.drawable.light);
+	    imp_exp = (TextView) alertDialogView
 		    .findViewById(R.id.importExport);
-	    textImportExport.setText(getString(R.string.messageExport));
-	    editImportExport = (EditText) dialogImportExport
+	    imp_exp.setText(getString(R.string.messageExport));
+	    editImportExport = (EditText) alertDialogView
 		    .findViewById(R.id.imp_exp_url);
 	    editImportExport.setText(exportPath);
-	    submit = (Button) dialogImportExport.findViewById(R.id.imp_exp_ok);
-	    submit.setText(getString(R.string.boutonExporter));
-	    submit.setOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-		    exportPath = editImportExport.getText().toString();
-		    xmlIO.xmlWrite(camList, exportPath);
-		    dialogImportExport.cancel();
-		}
-	    });
-	    dialogImportExport.show();
-	    dialogImportExport.getWindow().setFeatureDrawableResource(
-		    Window.FEATURE_LEFT_ICON, R.drawable.light);
+	    build_exp.setPositiveButton("OK",
+		    new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			    exportPath = editImportExport.getText().toString();
+			    xmlIO.xmlWrite(camList, exportPath);
+			    finish();
+			}
+		    });
+	    build_exp.setNegativeButton("Annuler",
+		    new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			    finish();
+			}
+		    });
+	    build_exp.show();
+
 	    return true;
 	case R.id.importer:
-	    dialogImportExport = new Dialog(activity);
-	    dialogImportExport.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-	    dialogImportExport.setContentView(R.layout.imp_exp);
-	    dialogImportExport.setTitle(getString(R.string.boutonImporter));
-	    textImportExport = (TextView) dialogImportExport
-		    .findViewById(R.id.importExport);
-	    textImportExport.setText(getString(R.string.messageImport));
-	    editImportExport = (EditText) dialogImportExport
+	    AlertDialog.Builder build_imp = new AlertDialog.Builder(this);
+	    build_imp.setView(alertDialogView);
+	    build_imp.setTitle(getString(R.string.boutonImporter));
+	    build_imp.setIcon(R.drawable.light);
+	    editImportExport = (EditText) alertDialogView
 		    .findViewById(R.id.imp_exp_url);
 	    editImportExport.setText(exportPath);
-	    submit = (Button) dialogImportExport.findViewById(R.id.imp_exp_ok);
-	    submit.setText(getString(R.string.boutonImporter));
-	    submit.setOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-		    exportPath = editImportExport.getText().toString();
-		    camList = xmlIO.xmlRead(exportPath);
-		    updateListView(true);
-		    dialogImportExport.cancel();
-		}
-	    });
-	    dialogImportExport.show();
-	    dialogImportExport.getWindow().setFeatureDrawableResource(
-		    Window.FEATURE_LEFT_ICON, R.drawable.light);
+	    imp_exp = (TextView) alertDialogView
+		    .findViewById(R.id.importExport);
+	    imp_exp.setText(getString(R.string.messageImport));
+	    build_imp.setPositiveButton("OK",
+		    new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			    exportPath = editImportExport.getText().toString();
+			    camList = xmlIO.xmlRead(exportPath);
+			    updateListView(true);
+			    dialog.dismiss();
+			}
+		    });
+	    build_imp.setNegativeButton("Annuler",
+		    new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			    dialog.dismiss();
+			}
+		    });
+	    build_imp.show();
 	    return true;
 	case R.id.parametres:
 	    activity.startActivityForResult(new Intent(activity,
 		    MesPreferences.class), 1);
+	    return true;
+
+	case R.id.partager:
+	    final Intent MessIntent = new Intent(Intent.ACTION_SEND);
+	    MessIntent.setType("text/plain");
+	    MessIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.messageShare));
+	    startActivity(Intent.createChooser(MessIntent, "Partager avec..."));
 	    return true;
 	}
 	return false;
