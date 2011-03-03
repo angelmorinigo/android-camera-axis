@@ -9,9 +9,26 @@ package com.myapps;
 
 public final class R {
     public static final class array {
-        public static final int protocol_array=0x7f050000;
+        public static final int multi_view_array=0x7f060000;
+        public static final int protocol_array=0x7f060001;
     }
     public static final class attr {
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int maxValue=0x7f010001;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int minValue=0x7f010000;
     }
     public static final class drawable {
         public static final int arrow_down=0x7f020000;
@@ -20,119 +37,198 @@ public final class R {
         public static final int arrow_up=0x7f020003;
         public static final int cadre=0x7f020004;
         public static final int camera=0x7f020005;
-        public static final int hello_android=0x7f020006;
-        public static final int ic_fave1=0x7f020007;
-        public static final int ic_menu_logout=0x7f020008;
-        public static final int ic_menu_preferences=0x7f020009;
-        public static final int ic_menu_refresh=0x7f02000a;
-        public static final int lecture=0x7f02000b;
-        public static final int light=0x7f02000c;
-        public static final int monitor=0x7f02000d;
-        public static final int transparent=0x7f02000e;
-        public static final int wallpaper=0x7f02000f;
-        public static final int zoom_in=0x7f020010;
-        public static final int zoom_out=0x7f020011;
+        public static final int cancel=0x7f020006;
+        public static final int fond=0x7f020007;
+        public static final int fond2=0x7f020008;
+        public static final int fond3=0x7f020009;
+        public static final int hello_android=0x7f02000a;
+        public static final int ic_fave1=0x7f02000b;
+        public static final int ic_menu_logout=0x7f02000c;
+        public static final int ic_menu_preferences=0x7f02000d;
+        public static final int ic_menu_refresh=0x7f02000e;
+        public static final int lecture=0x7f02000f;
+        public static final int light=0x7f020010;
+        public static final int monitor=0x7f020011;
+        public static final int ok=0x7f020012;
+        public static final int transparent=0x7f020013;
+        public static final int wallpaper=0x7f020014;
+        public static final int zoom_in=0x7f020015;
+        public static final int zoom_out=0x7f020016;
     }
     public static final class id {
-        public static final int Nimage=0x7f07002d;
-        public static final int Ntext=0x7f07002e;
-        public static final int Play=0x7f070033;
-        public static final int ScrollView01=0x7f070000;
-        public static final int Snap=0x7f070034;
-        public static final int View=0x7f070040;
-        public static final int about=0x7f070012;
-        public static final int aboutClose=0x7f070013;
-        public static final int about_image=0x7f070011;
-        public static final int add=0x7f07000e;
-        public static final int arrow_down=0x7f07003f;
-        public static final int arrow_left=0x7f07003e;
-        public static final int arrow_right=0x7f070017;
-        public static final int arrow_up=0x7f07003c;
-        public static final int bqr=0x7f070001;
-        public static final int cancel=0x7f070023;
-        public static final int echan=0x7f07000d;
-        public static final int eid=0x7f070003;
-        public static final int eip=0x7f070009;
-        public static final int elogin=0x7f070005;
-        public static final int emaddr=0x7f07001f;
-        public static final int emchan=0x7f070021;
-        public static final int emid=0x7f070019;
-        public static final int emlogin=0x7f07001b;
-        public static final int empass=0x7f07001d;
-        public static final int epass=0x7f070007;
-        public static final int eport=0x7f07000b;
-        public static final int export=0x7f070047;
-        public static final int image=0x7f070014;
-        public static final int image0=0x7f070029;
-        public static final int image1=0x7f07002a;
-        public static final int image2=0x7f07002b;
-        public static final int image3=0x7f07002c;
-        public static final int imp_exp_ok=0x7f070026;
-        public static final int imp_exp_url=0x7f070025;
-        public static final int importExport=0x7f070024;
-        public static final int importer=0x7f070048;
-        public static final int layout_root=0x7f070010;
-        public static final int linearLayout1=0x7f070030;
-        public static final int linearLayout2=0x7f070031;
-        public static final int linearLayout3=0x7f070035;
-        public static final int linearLayout4=0x7f070032;
-        public static final int linearLayout5=0x7f070039;
-        public static final int list_complex_caption=0x7f070028;
-        public static final int list_complex_title=0x7f070027;
-        public static final int lv=0x7f070042;
-        public static final int menu_4vue=0x7f070044;
-        public static final int menu_ajouter=0x7f070043;
-        public static final int menu_option_about=0x7f070046;
-        public static final int menu_quitter=0x7f070049;
-        public static final int modify=0x7f070022;
-        public static final int ok=0x7f070016;
-        public static final int param=0x7f070045;
-        public static final int ret=0x7f07000f;
-        public static final int surfaceView1=0x7f07002f;
-        public static final int tableLayout2=0x7f07003a;
-        public static final int tableRow1=0x7f070036;
-        public static final int tableRow2=0x7f07003d;
-        public static final int tableRow3=0x7f07003b;
-        public static final int tchan=0x7f07000c;
-        public static final int text=0x7f070015;
-        public static final int textView1=0x7f070041;
-        public static final int tid=0x7f070002;
-        public static final int tip=0x7f070008;
-        public static final int tlogin=0x7f070004;
-        public static final int tmaddr=0x7f07001e;
-        public static final int tmchan=0x7f070020;
-        public static final int tmid=0x7f070018;
-        public static final int tmlogin=0x7f07001a;
-        public static final int tmpass=0x7f07001c;
-        public static final int tpass=0x7f070006;
-        public static final int tport=0x7f07000a;
-        public static final int zoom_in=0x7f070037;
-        public static final int zoom_out=0x7f070038;
+        public static final int Nimage=0x7f090033;
+        public static final int Ntext=0x7f090034;
+        public static final int ScrollView01=0x7f090000;
+        public static final int Snap=0x7f090037;
+        public static final int View=0x7f090038;
+        public static final int about=0x7f090012;
+        public static final int aboutClose=0x7f090013;
+        public static final int about_image=0x7f090011;
+        public static final int add=0x7f09000e;
+        public static final int arrow_right=0x7f09001c;
+        public static final int bienvenue=0x7f090018;
+        public static final int bqr=0x7f090001;
+        public static final int cancel=0x7f090028;
+        public static final int current_value=0x7f090014;
+        public static final int echan=0x7f09000d;
+        public static final int eid=0x7f090003;
+        public static final int eip=0x7f090009;
+        public static final int elogin=0x7f090005;
+        public static final int emaddr=0x7f090024;
+        public static final int emchan=0x7f090026;
+        public static final int emid=0x7f09001e;
+        public static final int emlogin=0x7f090020;
+        public static final int empass=0x7f090022;
+        public static final int epass=0x7f090007;
+        public static final int eport=0x7f09000b;
+        public static final int export=0x7f09003f;
+        public static final int image=0x7f090019;
+        public static final int image0=0x7f09002d;
+        public static final int image1=0x7f09002e;
+        public static final int image2=0x7f09002f;
+        public static final int image3=0x7f090030;
+        public static final int image4=0x7f090031;
+        public static final int image5=0x7f090032;
+        public static final int imp_exp_url=0x7f09002a;
+        public static final int importExport=0x7f090029;
+        public static final int importer=0x7f090040;
+        public static final int layout_root=0x7f090010;
+        public static final int linearLayout1=0x7f090036;
+        public static final int list_complex_caption=0x7f09002c;
+        public static final int list_complex_title=0x7f09002b;
+        public static final int lv=0x7f09003a;
+        public static final int max_value=0x7f090017;
+        public static final int menu_ajouter=0x7f09003b;
+        public static final int menu_multi_vue=0x7f09003c;
+        public static final int menu_option_about=0x7f090042;
+        public static final int menu_quitter=0x7f090043;
+        public static final int min_value=0x7f090016;
+        public static final int modify=0x7f090027;
+        public static final int ok=0x7f09001b;
+        public static final int param=0x7f09003d;
+        public static final int parametres=0x7f09003e;
+        public static final int partager=0x7f090041;
+        public static final int ret=0x7f09000f;
+        public static final int seek_bar=0x7f090015;
+        public static final int surfaceView1=0x7f090035;
+        public static final int tchan=0x7f09000c;
+        public static final int text=0x7f09001a;
+        public static final int textView1=0x7f090039;
+        public static final int tid=0x7f090002;
+        public static final int tip=0x7f090008;
+        public static final int tlogin=0x7f090004;
+        public static final int tmaddr=0x7f090023;
+        public static final int tmchan=0x7f090025;
+        public static final int tmid=0x7f09001d;
+        public static final int tmlogin=0x7f09001f;
+        public static final int tmpass=0x7f090021;
+        public static final int tpass=0x7f090006;
+        public static final int tport=0x7f09000a;
     }
     public static final class layout {
         public static final int add_cam=0x7f030000;
         public static final int dialog_about=0x7f030001;
-        public static final int dialog_welcome=0x7f030002;
-        public static final int edit_cam=0x7f030003;
-        public static final int imp_exp=0x7f030004;
-        public static final int list_item=0x7f030005;
-        public static final int multi_video=0x7f030006;
-        public static final int notification=0x7f030007;
-        public static final int video=0x7f030008;
-        public static final int view=0x7f030009;
+        public static final int dialog_slider=0x7f030002;
+        public static final int dialog_welcome=0x7f030003;
+        public static final int edit_cam=0x7f030004;
+        public static final int imp_exp=0x7f030005;
+        public static final int list_item=0x7f030006;
+        public static final int multi_video_2=0x7f030007;
+        public static final int multi_video_3=0x7f030008;
+        public static final int multi_video_4=0x7f030009;
+        public static final int multi_video_5=0x7f03000a;
+        public static final int multi_video_6=0x7f03000b;
+        public static final int notification=0x7f03000c;
+        public static final int video=0x7f03000d;
+        public static final int view=0x7f03000e;
     }
     public static final class menu {
-        public static final int menu=0x7f060000;
+        public static final int menu=0x7f080000;
     }
     public static final class string {
-        public static final int about=0x7f040002;
-        public static final int app_name=0x7f040001;
-        public static final int camListTag=0x7f040006;
-        public static final int camPosition=0x7f040007;
-        public static final int camTag=0x7f040005;
-        public static final int fileName=0x7f040008;
-        public static final int hello=0x7f040000;
-        public static final int logTag=0x7f040004;
-        public static final int protocol_prompt=0x7f040003;
+        public static final int TimeOut=0x7f050007;
+        public static final int aboutTitle=0x7f050012;
+        public static final int app_name=0x7f050001;
+        public static final int boutonExporter=0x7f05001c;
+        public static final int boutonImporter=0x7f05001d;
+        public static final int boutonModifier=0x7f05001a;
+        public static final int boutonSupprimer=0x7f05001b;
+        public static final int camListTag=0x7f050004;
+        public static final int camPosition=0x7f05000f;
+        public static final int camTag=0x7f050003;
+        public static final int cameraAlertTitle=0x7f050011;
+        public static final int defaultSens=0x7f05000c;
+        public static final int defaultTimeOut=0x7f050008;
+        public static final int defaultlimitFPS=0x7f05000a;
+        public static final int fileName=0x7f050010;
+        public static final int hello=0x7f050000;
+        public static final int isWelcome=0x7f050006;
+        public static final int limitFPS=0x7f050009;
+        public static final int logTag=0x7f050002;
+        public static final int maxSens=0x7f05000d;
+        public static final int messageAbout=0x7f050016;
+        public static final int messageBienvenue=0x7f050015;
+        public static final int messageChoose=0x7f050014;
+        public static final int messageExport=0x7f050017;
+        public static final int messageImport=0x7f050018;
+        public static final int messageRemove=0x7f050013;
+        public static final int messageShare=0x7f050019;
+        public static final int minSens=0x7f05000e;
+        public static final int nbViewTag=0x7f050005;
+        public static final int non=0x7f05001f;
+        public static final int oui=0x7f05001e;
+        public static final int protocol_prompt=0x7f050020;
+        public static final int sens=0x7f05000b;
     }
+    public static final class style {
+        public static final int theme_dialog=0x7f070000;
+    }
+    public static final class xml {
+        public static final int preferences=0x7f040000;
+    }
+    public static final class styleable {
+        /** Attributes that can be used with a com_mnm_seekbarpreference_SeekBarPreference.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_mnm_seekbarpreference_SeekBarPreference_maxValue com.myapps:maxValue}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_mnm_seekbarpreference_SeekBarPreference_minValue com.myapps:minValue}</code></td><td></td></tr>
+           </table>
+           @see #com_mnm_seekbarpreference_SeekBarPreference_maxValue
+           @see #com_mnm_seekbarpreference_SeekBarPreference_minValue
+         */
+        public static final int[] com_mnm_seekbarpreference_SeekBarPreference = {
+            0x7f010000, 0x7f010001
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.myapps.R.attr#maxValue}
+          attribute's value can be found in the {@link #com_mnm_seekbarpreference_SeekBarPreference} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:maxValue
+        */
+        public static final int com_mnm_seekbarpreference_SeekBarPreference_maxValue = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.myapps.R.attr#minValue}
+          attribute's value can be found in the {@link #com_mnm_seekbarpreference_SeekBarPreference} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:minValue
+        */
+        public static final int com_mnm_seekbarpreference_SeekBarPreference_minValue = 0;
+    };
 }

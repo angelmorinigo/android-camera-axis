@@ -95,8 +95,7 @@ public class Home extends Activity {
 
 	/* Print tricky */
 	if (preferences.getBoolean(getString(R.string.isWelcome), true) == false) {
-	    Dialog_welcome myDialog = new Dialog_welcome(this,
-		    getString(R.string.messageBienvenue));
+	    Dialog_welcome myDialog = new Dialog_welcome(this,R.style.theme_dialog);
 	    myDialog.show();
 	}
 

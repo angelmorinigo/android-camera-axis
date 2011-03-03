@@ -3,8 +3,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:layout_weight="1"
-	android:id="@+id/View" android:gravity="center" android:background="@drawable/fond" >
-    <TextView android:text="Séléctionner une caméra" android:id="@+id/textView1" android:textSize="12pt" android:layout_width="fill_parent" android:layout_height="wrap_content" android:password="false" android:gravity="center"></TextView>
+	android:id="@+id/View" android:gravity="center" android:background="@drawable/fond3" >
+    <TextView android:text="Séléctionner une caméra" android:id="@+id/textView1"
+     android:textSize="12pt" android:layout_width="fill_parent" 
+     android:layout_height="wrap_content" android:password="false" 
+     android:gravity="center" android:textColor="#000044" />
 	
 	<ListView android:id="@+id/lv" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_weight="1" android:cacheColorHint="#00000000"/>
