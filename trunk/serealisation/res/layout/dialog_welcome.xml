@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/layout_root" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:background="#303079">
+	android:layout_width="280dip" android:layout_height="200dip"
+	android:background="#305099" android:layout_gravity="center">
+
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/layout_root" android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:layout_weight="1">
-
-		<ImageView android:id="@+id/image" android:layout_width="60dp"
-			android:layout_height="60dp" android:background="@drawable/hello_android" />
-		<TextView android:id="@+id/text" android:layout_width="wrap_content"
-			android:layout_height="fill_parent" android:textColor="#2090DD" />
+		android:layout_weight="1" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<TextView android:id="@+id/bienvenue" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:gravity="center" />
 	</LinearLayout>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/layout_root" android:orientation="horizontal"
-		android:layout_width="300dp" android:layout_height="60dp"
-		android:layout_weight="0" android:paddingLeft="120dp" >
+		android:layout_width="fill_parent" android:layout_weight="1"
+		android:layout_height="250dip">
+
+		<ImageView android:id="@+id/image" android:layout_width="60dip"
+			android:layout_height="60dip" android:background="@drawable/hello_android" />
+		<TextView android:id="@+id/text" android:layout_width="wrap_content"
+			android:layout_height="fill_parent" />
+	</LinearLayout>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/layout_root" android:orientation="horizontal"
+		android:layout_height="60dip" android:layout_weight="0"
+		android:paddingLeft="120dip" android:layout_width="fill_parent">
 
 		<Button android:text="OK" android:id="@+id/ok"
-			android:layout_height="50dp" 
-			android:layout_width="50dp" android:layout_weight="0"
-			/>
+			android:layout_height="50dip" android:layout_width="50dip"
+			android:layout_weight="0" />
 
-		<Button android:background="@drawable/arrow_right" android:layout_marginLeft="50dp"
+		<Button android:background="@drawable/arrow_right"
+			android:layout_marginLeft="30dip" android:layout_marginRight="30dip"
 			android:layout_weight="1" android:id="@+id/arrow_right"
-			android:layout_width="100dp" android:layout_height="30dp" />
+			android:layout_height="20dip" android:layout_width="fill_parent" />
 	</LinearLayout>
 </LinearLayout>

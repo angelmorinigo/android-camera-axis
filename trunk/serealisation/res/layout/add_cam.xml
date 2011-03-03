@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/ScrollView01" android:layout_height="fill_parent" android:layout_width="fill_parent">
+	android:id="@+id/ScrollView01" android:layout_height="fill_parent"
+	android:layout_width="fill_parent" android:background="@drawable/fond2">
 	<TableLayout android:orientation="horizontal"
 		android:stretchColumns="1" android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:gravity="fill"
 		android:scrollbars="vertical">
 		<TextView android:hint="Ajouter une caméra :"
-			android:textSize="12pt" android:gravity="center" />
-	<Button android:text="Ajouter Depuis un QrCode" android:id="@+id/bqr"
-				android:layout_height="wrap_content" android:gravity="center"
-				android:layout_width="fill_parent" android:layout_weight="1" />
+			android:textSize="12pt" android:gravity="center"
+			android:textColorHint="#2090DD" />
+		<Button android:text="Ajouter Depuis un QrCode" android:id="@+id/bqr"
+			android:layout_height="wrap_content" android:gravity="center"
+			android:layout_width="fill_parent" android:layout_weight="1"
+			android:textColor="#2090DD" />
 		<TableRow>
-			<TextView android:text="Identifiant :" android:id="@+id/tid" />
+			<TextView android:text="Identifiant :" android:id="@+id/tid"
+				android:textColor="#2090DD" />
 			<EditText android:hint="Entrez un id" android:id="@+id/eid"
-				android:gravity="center" />
+				android:gravity="center" android:textColorHint="#2090DD" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Login :" android:id="@+id/tlogin" />
+			<TextView android:text="Login :" android:id="@+id/tlogin"
+				android:textColor="#2090DD" />
 			<EditText android:hint="Entrez un login" android:id="@+id/elogin"
-				android:gravity="center" />
+				android:gravity="center" android:textColorHint="#2090DD" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Password :" android:id="@+id/tpass" />
+			<TextView android:text="Password :" android:id="@+id/tpass"
+				android:textColor="#2090DD" />
 			<EditText android:hint="Entrez un pass" android:id="@+id/epass"
-				android:gravity="center" android:password="true"/>
+				android:gravity="center" android:password="true"
+				android:textColorHint="#2090DD" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Ip :" android:id="@+id/tip" />
+			<TextView android:text="Ip :" android:id="@+id/tip"
+				android:textColor="#2090DD" />
 			<EditText android:hint="Entrez une ip" android:id="@+id/eip"
-				android:gravity="center" />
+				android:gravity="center" android:textColorHint="#2090DD" />
 		</TableRow>
 
 		<TableRow>
-			<TextView android:text="Port :" android:id="@+id/tport" />
+			<TextView android:text="Port :" android:id="@+id/tport"
+				android:textColor="#2090DD" />
 			<EditText android:hint="Entrez un port" android:id="@+id/eport"
-				android:gravity="center" android:numeric="decimal" />
+				android:gravity="center" android:numeric="decimal"
+				android:textColorHint="#2090DD" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Channel :" android:id="@+id/tchan" />
+			<TextView android:text="Channel :" android:id="@+id/tchan"
+				android:textColor="#2090DD" />
 			<EditText android:hint="Entrez un Canal" android:id="@+id/echan"
-				android:gravity="center" android:numeric="decimal" />
+				android:gravity="center" android:numeric="decimal"
+				android:textColorHint="#2090DD" />
 		</TableRow>
 		<!--<TableRow> <TextView android:text="Protocol :" android:id="@+id/tprot" 
 			/> <Spinner android:id="@+id/spinner" android:layout_width="fill_parent" 
@@ -49,10 +61,12 @@
 			android:layout_width="wrap_content" android:layout_weight="1">
 			<Button android:text="Ajouter" android:id="@+id/add"
 				android:layout_height="wrap_content" android:gravity="center"
-				android:layout_width="fill_parent" android:layout_weight="1" />
+				android:layout_width="fill_parent" android:layout_weight="1"
+				android:textColor="#2090DD" />
 			<Button android:text="Retour" android:id="@+id/ret"
 				android:layout_height="wrap_content" android:gravity="center"
-				android:layout_width="fill_parent" android:layout_weight="1" />
+				android:layout_width="fill_parent" android:layout_weight="1"
+				android:textColor="#2090DD" />
 		</LinearLayout>
 	</TableLayout>
 </ScrollView>

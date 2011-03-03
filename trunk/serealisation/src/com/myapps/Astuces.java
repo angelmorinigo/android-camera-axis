@@ -2,7 +2,7 @@ package com.myapps;
 public class Astuces {
 	
 	private String s[] = {
-			"Appuyez Sur Menu pour accéder aux options",
+			"Appuyez sur Menu pour accéder aux options",
 			"Vous pouvez visualiser jusqu'à 4 caméras",
 			"En touchant l'écran vous pouvez echanger les cameras", 
 			"De prochaines astuces bientôt disponibles",

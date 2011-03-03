@@ -16,19 +16,19 @@ public class Dialog_welcome extends Dialog{
         public void ready(String name);
     }
 	
-    private String name;
     private String cheats ;
     private TextView text ;
-    public Dialog_welcome(Context context, String name) {
-        super(context);
-        this.name = name;
+    private TextView bienvenue ;
+    public Dialog_welcome(Context context , int theme) {
+        super(context,theme);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_welcome);
-        setTitle(name);
+        bienvenue = (TextView) findViewById(R.id.bienvenue) ;
+        bienvenue.setText("Bienvenue !") ;
         text = (TextView) findViewById(R.id.text);
         
         Random randomGenerator = new Random() ;
