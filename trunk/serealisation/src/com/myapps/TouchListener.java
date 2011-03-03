@@ -22,7 +22,8 @@ public class TouchListener implements OnTouchListener {
     private CameraControl camC;
     private float width, height;
     private PointF current = new PointF(0, 0);
-    private float currentDist = 0;
+    private float startDist = 0, currentDist = 0;
+    private float zoomStep = 1500;
 
     public TouchListener(CameraControl pCamC) {
 	camC = pCamC;
@@ -30,67 +31,62 @@ public class TouchListener implements OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-	width = v.getWidth();
-	height = v.getHeight();
-	switch (event.getAction() & MotionEvent.ACTION_MASK) {
-	case MotionEvent.ACTION_DOWN:
-	    current.set(event.getX(), event.getY());
-	    mode = DRAG;
-	    Log.i(TAG, "mode=DRAG");
-	    break;
-
-	case MotionEvent.ACTION_POINTER_DOWN:
-	    currentDist = calculateDistance(
-		    new PointF(event.getX(0), event.getY(0)),
-		    new PointF(event.getX(1), event.getY(1)));
-	    mode = ZOOM;
-	    Log.i(TAG, "mode=ZOOM");
-	    break;
-
-	case MotionEvent.ACTION_UP:
-	case MotionEvent.ACTION_POINTER_UP:
-	    mode = NONE;
-	    Log.i(TAG, "mode=NONE");
-	    break;
-
-	case MotionEvent.ACTION_MOVE:
-	    Log.i(TAG, "ACTION_MOVE");
-	    if (mode == DRAG) {
-		PointF start = new PointF(current.x, current.y);
-		current.set(event.getX(), event.getY());
-		float moveX = scaleMoveX(calculateMoveX(start, current));
-		float moveY = scaleMoveY(calculateMoveY(start, current));
-
-		if (start.x - event.getX() < 0) {
-		    Log.i(TAG, "droite");
-		    camC.changeValFunc(CameraControl.PAN_RIGHT, moveX, moveY);
-		} else {
-		    Log.i(TAG, "gauche");
-		    camC.changeValFunc(CameraControl.PAN_LEFT, moveX, moveY);
+		width = v.getWidth();
+		height = v.getHeight();
+		switch (event.getAction() & MotionEvent.ACTION_MASK) {
+		case MotionEvent.ACTION_DOWN:
+		    current.set(event.getX(), event.getY());
+		    mode = DRAG;
+		    Log.i(TAG, "mode=DRAG");
+		    break;
+	
+		case MotionEvent.ACTION_POINTER_DOWN:
+		    currentDist = calculateDistance(
+			    new PointF(event.getX(0), event.getY(0)),
+			    new PointF(event.getX(1), event.getY(1)));
+		    mode = ZOOM;
+		    Log.i(TAG, "mode=ZOOM");
+		    break;
+	
+		case MotionEvent.ACTION_POINTER_UP:
+			startDist = currentDist;
+			currentDist = calculateDistance(
+					new PointF(event.getX(0), event.getY(0)),
+					new PointF(event.getX(1), event.getY(1)));
+			Log.i(TAG, "mode=ZOOM(P_UP)");
+			break;
+		    
+		case MotionEvent.ACTION_UP:
+			if (mode == DRAG) {
+				PointF start = new PointF(current.x, current.y);
+				current.set(event.getX(), event.getY());
+				float moveX = scaleMoveX(calculateMoveX(start, current));
+				float moveY = scaleMoveY(calculateMoveY(start, current));
+				Log.i(TAG, "move(X,Y):" + moveX + "," + moveY);
+				camC.changeValFunc(CameraControl.PAN, moveX, moveY);
+			} else if (mode == ZOOM) {
+				Log.i(TAG, "startDist=" + startDist);
+				Log.i(TAG, "currentDist=" + currentDist);
+				if (Math.abs(startDist - currentDist) > 10) {
+				    float ratio = (currentDist / startDist > 0)
+				    	? currentDist / startDist
+				    	: -1 * (startDist / currentDist);
+				    Log.i(TAG, "ratio=" + ratio);
+				    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
+				}
+			}
+			mode = NONE;
+		    Log.i(TAG, "mode=NONE");
+		    try {
+			    /* Bloc UI thread to not spam request */
+			    Thread.sleep(200);
+			} catch (InterruptedException e) {
+			    e.printStackTrace();
+			}
+			break;
 		}
-		try {
-		    /* Bloc UI thread to don't spam request */
-		    Thread.sleep(1000);
-		} catch (InterruptedException e) {
-		    e.printStackTrace();
-		}
 
-	    } else if (mode == ZOOM) {
-		float startDist = currentDist;
-		currentDist = calculateDistance(
-			new PointF(event.getX(0), event.getY(0)), new PointF(
-				event.getX(1), event.getY(1)));
-		Log.i(TAG, "currentDist=" + currentDist);
-		if (currentDist > 10) {
-		    float ratio = (currentDist / startDist > 0) ? currentDist
-			    / startDist : -1 * (startDist / currentDist);
-		    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
-		}
-	    }
-	    break;
-	}
-
-	return true;
+		return true;
     }
 
     /** Calculate the horizontal distance between 2 points */
@@ -117,11 +113,11 @@ public class TouchListener implements OnTouchListener {
 
     /** Scale screen move to real tilt move performed by the camera */
     private float scaleMoveY(float distance) {
-	return height / 180 * distance;
+	return -1 * (height / 180 * distance);
     }
 
     /** Scale screen zoom to real zoom performed by the camera */
     private float scaleZoom(float ratio) {
-	return ratio * 1000;
+	return ratio * zoomStep;
     }
 }

@@ -22,8 +22,6 @@ public class CameraControl {
     private static final long serialVersionUID = 1L;
 
     public static final int PAN = 0;
-    public static final int PAN_RIGHT = 12;
-    public static final int PAN_LEFT = 13;
     public static final int TILT = 1;
     public static final int ZOOM = 2;
     public static final int FOCUS = 3;
@@ -272,13 +270,7 @@ public class CameraControl {
 
 	String query = "";
 	switch (function) {
-	case PAN_RIGHT:
-	    query = "move=right";
-	    break;
-	case PAN_LEFT:
-	    query = "move=left";
-	    break;
-
+	case PAN:
 	case TILT:
 	    query = "rpan=" + value1 + "&rtilt=" + value2;
 	    break;
@@ -295,7 +287,7 @@ public class CameraControl {
 	try {
 	    HttpURLConnection con = sendCommand("axis-cgi/com/ptz.cgi?" + query
 		    + "&camera=" + String.valueOf(cam.channel));
-	    Log.i("ToucheLog",
+	    Log.i("TouchLog",
 		    ("axis-cgi/com/ptz.cgi?" + query + "&camera=" + String
 			    .valueOf(cam.channel)));
 	    return (con.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) ? 1
