@@ -7,6 +7,18 @@
 	<string name="camTag">Camera</string>
 	<string name="camListTag">CameraList</string>
 	<string name="nbViewTag">nb</string>
+	<string name="isWelcome">welcome</string>
+	
+	<string name="TimeOut">timeOutHTTP</string>
+	<string name="defaultTimeOut">1000</string>
+	
+	<string name="limitFPS">limitFPS</string>
+	<string name="defaultlimitFPS">500</string>
+	
+	<string name="sens">sens</string>
+	<string name="defaultSens">10</string>
+	<string name="maxSens">20</string>
+	<string name="minSens">0</string>
 
 
 	<string name="camPosition">Position</string>
@@ -52,4 +64,5 @@
 		<item>rtsp</item>
 		<item>rtsphttp</item>
 	</string-array>
+
 </resources>

@@ -7,9 +7,11 @@
 	<item android:id="@+id/param" android:title="Paramètres"
 		android:icon="@drawable/ic_menu_preferences">
 		<menu>
-			<item android:id="@+id/menu_option_about" android:title="A Propos" />
+			<item android:id="@+id/parametres" android:title="Parametres" />
 			<item android:id="@+id/export" android:title="Exporter la configuration" />
 			<item android:id="@+id/importer" android:title="Importer la configuration" />
+			<item android:id="@+id/menu_option_about" android:title="A Propos" />
+
 		</menu>
 	</item>
 	<item android:id="@+id/menu_quitter" android:title="Quitter"

@@ -67,7 +67,7 @@ public class Video extends Activity {
 
 	Bundle extras = getIntent().getExtras();
 	cam = (Camera) extras.getSerializable(getString(R.string.camTag));
-	camC = new CameraControl(cam);
+	camC = new CameraControl(cam, this);
 
 	/* Check network info */
 	ConnectivityManager mConnectivity = (ConnectivityManager) activity
@@ -75,7 +75,7 @@ public class Video extends Activity {
 			Context.CONNECTIVITY_SERVICE);
 	NetworkInfo info = mConnectivity.getActiveNetworkInfo();
 	int netType = info.getType();
-	int netSubtype = info.getSubtype();
+	//int netSubtype = info.getSubtype();
 	if (netType == ConnectivityManager.TYPE_WIFI) {
 	    Log.i("AppLog", "Wifi detecte");
 	    url = "axis-cgi/mjpg/video.cgi?resolution=320x240";

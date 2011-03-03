@@ -190,8 +190,13 @@ public class MultiVideo extends Activity {
 				start[index] = true;
 				camView[index] = camList.get(item);
 				try {
+				    int delay = Integer.parseInt(Home.preferences.getString(
+					    activity.getString(R.string.limitFPS),
+					    activity.getString(R.string.defaultlimitFPS)));
+				    Log.i(getString(R.string.logTag), "limit FPS = "+delay+";");
 				    t[index] = new Thread(new PlayerThread(
-					    camList.get(item), index, 250));
+					    camList.get(item), activity, index,
+					    delay));
 				} catch (IOException e) {
 				    Log.i(getString(R.string.logTag),
 					    "MultiVideo IOException");
@@ -214,7 +219,6 @@ public class MultiVideo extends Activity {
 	    }
 
 	}
-
     }
 
 }

@@ -24,70 +24,72 @@ public class TouchListener implements OnTouchListener {
     private PointF current = new PointF(0, 0);
     private float startDist = 0, currentDist = 0;
     private float zoomStep = 1500;
+    private int sens;
 
     public TouchListener(CameraControl pCamC) {
 	camC = pCamC;
+	this.sens = Home.preferences.getInt("seekBarPreference", 10);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-		width = v.getWidth();
-		height = v.getHeight();
-		switch (event.getAction() & MotionEvent.ACTION_MASK) {
-		case MotionEvent.ACTION_DOWN:
-		    current.set(event.getX(), event.getY());
-		    mode = DRAG;
-		    Log.i(TAG, "mode=DRAG");
-		    break;
-	
-		case MotionEvent.ACTION_POINTER_DOWN:
-		    currentDist = calculateDistance(
-			    new PointF(event.getX(0), event.getY(0)),
-			    new PointF(event.getX(1), event.getY(1)));
-		    mode = ZOOM;
-		    Log.i(TAG, "mode=ZOOM");
-		    break;
-	
-		case MotionEvent.ACTION_POINTER_UP:
-			startDist = currentDist;
-			currentDist = calculateDistance(
-					new PointF(event.getX(0), event.getY(0)),
-					new PointF(event.getX(1), event.getY(1)));
-			Log.i(TAG, "mode=ZOOM(P_UP)");
-			break;
-		    
-		case MotionEvent.ACTION_UP:
-			if (mode == DRAG) {
-				PointF start = new PointF(current.x, current.y);
-				current.set(event.getX(), event.getY());
-				float moveX = scaleMoveX(calculateMoveX(start, current));
-				float moveY = scaleMoveY(calculateMoveY(start, current));
-				Log.i(TAG, "move(X,Y):" + moveX + "," + moveY);
-				camC.changeValFunc(CameraControl.PAN, moveX/10, moveY/10);
-			} else if (mode == ZOOM) {
-				Log.i(TAG, "startDist=" + startDist);
-				Log.i(TAG, "currentDist=" + currentDist);
-				if (Math.abs(startDist - currentDist) > 10) {
-				    float ratio = (currentDist / startDist > 1)
-				    	? currentDist / startDist
-				    	: -1 * (startDist / currentDist);
-				    Log.i(TAG, "ratio=" + ratio);
-				    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
-					
-				}
-			}
-			mode = NONE;
-		    Log.i(TAG, "mode=NONE");
-		    try {
-			    /* Bloc UI thread to not spam request */
-			    Thread.sleep(200);
-			} catch (InterruptedException e) {
-			    e.printStackTrace();
-			}
-			break;
-		}
+	width = v.getWidth();
+	height = v.getHeight();
+	switch (event.getAction() & MotionEvent.ACTION_MASK) {
+	case MotionEvent.ACTION_DOWN:
+	    current.set(event.getX(), event.getY());
+	    mode = DRAG;
+	    Log.i(TAG, "mode=DRAG");
+	    break;
 
-		return true;
+	case MotionEvent.ACTION_POINTER_DOWN:
+	    currentDist = calculateDistance(
+		    new PointF(event.getX(0), event.getY(0)),
+		    new PointF(event.getX(1), event.getY(1)));
+	    mode = ZOOM;
+	    Log.i(TAG, "mode=ZOOM");
+	    break;
+
+	case MotionEvent.ACTION_POINTER_UP:
+	    startDist = currentDist;
+	    currentDist = calculateDistance(
+		    new PointF(event.getX(0), event.getY(0)),
+		    new PointF(event.getX(1), event.getY(1)));
+	    Log.i(TAG, "mode=ZOOM(P_UP)");
+	    break;
+
+	case MotionEvent.ACTION_UP:
+	    if (mode == DRAG) {
+		PointF start = new PointF(current.x, current.y);
+		current.set(event.getX(), event.getY());
+		float moveX = scaleMoveX(calculateMoveX(start, current));
+		float moveY = scaleMoveY(calculateMoveY(start, current));
+		Log.i(TAG, "move(X,Y):" + moveX + "," + moveY+ "sensibilite / " + sens);
+		camC.changeValFunc(CameraControl.PAN, moveX / sens, moveY
+			/ sens);
+	    } else if (mode == ZOOM) {
+		Log.i(TAG, "startDist=" + startDist);
+		Log.i(TAG, "currentDist=" + currentDist);
+		if (Math.abs(startDist - currentDist) > 10) {
+		    float ratio = (currentDist / startDist > 1) ? currentDist
+			    / startDist : -1 * (startDist / currentDist);
+		    Log.i(TAG, "ratio=" + ratio);
+		    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
+
+		}
+	    }
+	    mode = NONE;
+	    Log.i(TAG, "mode=NONE");
+	    try {
+		/* Bloc UI thread to not spam request */
+		Thread.sleep(200);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	    break;
+	}
+
+	return true;
     }
 
     /** Calculate the horizontal distance between 2 points */

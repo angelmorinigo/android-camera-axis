@@ -16,7 +16,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,9 +48,8 @@ public class Home extends Activity {
     private String[] nb_view;
 
     private String exportPath = "/sdcard/com.myapps.camera/export.xml";
+    public static SharedPreferences preferences;
 
-    
-    
     private final static int EDIT_CODE = 2;
     private final static String ITEM_TITLE = "title";
     private final static String ITEM_CAPTION = "caption";
@@ -88,12 +89,18 @@ public class Home extends Activity {
 	setContentView(R.layout.view);
 	activity = this;
 
-	Dialog_welcome myDialog = new Dialog_welcome(this,
-		getString(R.string.messageBienvenue));
-	myDialog.show();
+	/* Resolve preferences */
+	preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+	/* Print tricky */
+	if (preferences.getBoolean(getString(R.string.isWelcome), true) == false) {
+	    Dialog_welcome myDialog = new Dialog_welcome(this,
+		    getString(R.string.messageBienvenue));
+	    myDialog.show();
+	}
+
+	/* Open custum camera file if it exist */
 	try {
-	    /* Open custum camera file if it exist */
 	    FileInputStream fichier = activity.getApplication().openFileInput(
 		    getString(R.string.fileName));
 	    ObjectInputStream ois = new ObjectInputStream(fichier);
@@ -134,7 +141,8 @@ public class Home extends Activity {
 						position);
 					intent.putExtras(objetbunble);
 					dialog.cancel();
-					startActivityForResult(intent, EDIT_CODE);
+					startActivityForResult(intent,
+						EDIT_CODE);
 				    }
 				})
 			.setNegativeButton(getString(R.string.boutonSupprimer),
@@ -378,6 +386,10 @@ public class Home extends Activity {
 	    dialogImportExport.show();
 	    dialogImportExport.getWindow().setFeatureDrawableResource(
 		    Window.FEATURE_LEFT_ICON, R.drawable.light);
+	    return true;
+	case R.id.parametres:
+	    activity.startActivityForResult(new Intent(activity,
+		    MesPreferences.class), 1);
 	    return true;
 	}
 	return false;

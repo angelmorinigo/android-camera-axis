@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -57,14 +58,15 @@ public class CameraControl {
     private static final int OBJECT_SIZE = 6;
 
     private Camera cam;
-    private int timeout = 2000;
     private int[] currentConfig = new int[NB_FUNC];
     private int[] functionProperties = new int[NB_BASIC_FUNC];
     private float[] motionParams = new float[7];
     private String[] resolutions, rotations, formats;
 
-    public CameraControl(Camera cam) {
+    private Activity activity;
+    public CameraControl(Camera cam, Activity activity) {
 	this.cam = cam;
+	this.activity = activity;
 	this.initConfig();
 	this.loadConfig(-1);
     }
@@ -248,10 +250,12 @@ public class CameraControl {
     public HttpURLConnection sendCommand(String command) throws IOException {
 	URL url = null;
 	HttpURLConnection con = null;
-	Log.i("AppLog", command);
+	Log.i(activity.getString(R.string.logTag), command);
 	url = new URL(createURL() + command);
 	con = (HttpURLConnection) url.openConnection();
+	int timeout = Integer.parseInt(Home.preferences.getString(activity.getString(R.string.TimeOut),activity.getString(R.string.defaultTimeOut)));
 	con.setConnectTimeout(timeout);
+	Log.i(activity.getString(R.string.logTag), "timeout : " + timeout);
 	con.setDoOutput(true);
 	con.setRequestProperty("Authorization",
 		base64Encoder.userNamePasswordBase64(cam.login, cam.pass));

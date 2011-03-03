@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,7 +24,7 @@ public class PlayerThread implements Runnable {
     private URLConnection con;
     private Camera cam;
     private int delay, index;
-
+    private Activity activity;
     private CameraControl camC;
 
     /**
@@ -37,12 +38,12 @@ public class PlayerThread implements Runnable {
      *            delay in milliseconds to limit fps
      * @throws IOException
      */
-    public PlayerThread(Camera cam, int index, int delay)
+    public PlayerThread(Camera cam, Activity activity, int index, int delay)
 	    throws IOException {
 	this.cam = cam;
 	this.delay = delay;
 	this.index = index;
-	this.camC = new CameraControl(cam);
+	this.camC = new CameraControl(cam, activity);
     }
 
     /**
@@ -60,7 +61,7 @@ public class PlayerThread implements Runnable {
 		/* Open HTTP connection */
 		command = "axis-cgi/jpg/image.cgi?resolution=160x120";
 		con = camC.sendCommand(command);
-		Log.i(logTag, ("" + index +" connected"));
+		Log.i(logTag, ("" + index + " connected"));
 		/* Get image result */
 		InputStream stream = con.getInputStream();
 		bmp = BitmapFactory.decodeStream(stream);
