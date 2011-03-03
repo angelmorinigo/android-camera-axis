@@ -8,65 +8,7 @@
 	<LinearLayout android:id="@+id/linearLayout1"
 		android:orientation="vertical" android:layout_height="fill_parent"
 		android:layout_width="fill_parent">
-		<LinearLayout android:id="@+id/linearLayout2"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:layout_weight="1">
-			<LinearLayout android:id="@+id/linearLayout4"
-				android:layout_height="fill_parent" android:layout_width="fill_parent"
-				android:layout_weight="1">
-				<Button android:layout_width="wrap_content" android:text="Play"
-					android:id="@+id/Play" android:layout_height="wrap_content" />
-				<Button android:layout_width="wrap_content" android:text="Snap"
-					android:id="@+id/Snap" android:layout_height="wrap_content" />
-			</LinearLayout>
-			<LinearLayout android:id="@+id/linearLayout3"
-				android:layout_width="fill_parent" android:layout_weight="1"
-				android:gravity="right" android:layout_height="fill_parent">
-				<TableRow android:layout_width="wrap_content" android:id="@+id/tableRow1"
-					android:layout_height="wrap_content">
-					<Button android:background="@drawable/zoom_in"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/zoom_in" />
-					<Button android:background="@drawable/transparent"
-						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" />
-					<Button android:background="@drawable/zoom_out"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/zoom_out" />
-				</TableRow>
-			</LinearLayout>
-		</LinearLayout>
-		<LinearLayout android:layout_width="wrap_content"
-			android:id="@+id/linearLayout5" android:layout_height="wrap_content">
-			<TableLayout android:id="@+id/tableLayout2"
-				android:layout_width="wrap_content" android:layout_height="wrap_content">
-				<TableRow android:layout_height="wrap_content"
-					android:layout_width="wrap_content" android:gravity="center"
-					android:id="@+id/tableRow3">
-					<Button android:background="@drawable/arrow_up"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/arrow_up" />
-				</TableRow>
-				<TableRow android:layout_height="fill_parent"
-					android:layout_width="fill_parent" android:id="@+id/tableRow2">
-					<Button android:background="@drawable/arrow_left"
-						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" android:id="@+id/arrow_left" />
-					<Button android:background="@drawable/transparent"
-						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" />
-					<Button android:background="@drawable/arrow_right"
-						android:layout_width="fill_parent" android:layout_height="fill_parent"
-						android:layout_weight="1" android:id="@+id/arrow_right" />
-				</TableRow>
-				<TableRow android:layout_height="wrap_content"
-					android:layout_width="wrap_content" android:gravity="center"
-					android:id="@+id/tableRow1">
-					<Button android:background="@drawable/arrow_down"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:id="@+id/arrow_down" />
-				</TableRow>
-			</TableLayout>
-		</LinearLayout>
+		<Button android:layout_width="wrap_content" android:text="Snap"
+			android:id="@+id/Snap" android:layout_height="wrap_content" />
 	</LinearLayout>
 </RelativeLayout>

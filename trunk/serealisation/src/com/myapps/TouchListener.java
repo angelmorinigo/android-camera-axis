@@ -63,16 +63,17 @@ public class TouchListener implements OnTouchListener {
 				float moveX = scaleMoveX(calculateMoveX(start, current));
 				float moveY = scaleMoveY(calculateMoveY(start, current));
 				Log.i(TAG, "move(X,Y):" + moveX + "," + moveY);
-				camC.changeValFunc(CameraControl.PAN, moveX, moveY);
+				camC.changeValFunc(CameraControl.PAN, moveX/10, moveY/10);
 			} else if (mode == ZOOM) {
 				Log.i(TAG, "startDist=" + startDist);
 				Log.i(TAG, "currentDist=" + currentDist);
 				if (Math.abs(startDist - currentDist) > 10) {
-				    float ratio = (currentDist / startDist > 0)
+				    float ratio = (currentDist / startDist > 1)
 				    	? currentDist / startDist
 				    	: -1 * (startDist / currentDist);
 				    Log.i(TAG, "ratio=" + ratio);
 				    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
+					
 				}
 			}
 			mode = NONE;

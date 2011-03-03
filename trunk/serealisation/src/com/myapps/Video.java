@@ -53,38 +53,6 @@ public class Video extends Activity {
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private NotificationManager notificationManager;
 
-    /**
-     * Send command to camera and execute it
-     * 
-     * @param direction
-     *            Direction to move
-     */
-    public void movePanTilt(final String direction) {
-	String command;
-	/* Define command */
-	if (direction == "horizontalstart")
-	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=-180" + "&tilt=0";
-	else if (direction == "horizontalend")
-	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=180" + "&tilt=0";
-	else if (direction == "verticalstart")
-	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=0" + "&tilt=180";
-	else if (direction == "verticalend")
-	    command = "axis-cgi/com/ptz.cgi?camera=1" + "&pan=0" + "&tilt=-180";
-
-	else {
-	    command = "axis-cgi/com/ptz.cgi?camera=1";
-	    command = command + "&move=";
-	    command = command + direction;
-	}
-	/* Send command */
-	try {
-	    HttpURLConnection con = camC.sendCommand(command);
-	    Log.i(getString(R.string.logTag), ("" + con.getResponseCode()));
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-
-    }
 
     /**
      * Called when Activity start or resume
@@ -126,8 +94,9 @@ public class Video extends Activity {
 	    public void onClick(View v) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setTitle("SnapShot Format");
-		final String[] resolutions = camC.getResolutions();
-		builder.setSingleChoiceItems(resolutions, -1,
+		/* TODO getResolutions() MARCHE PAS */
+	//	final String[] resolutions = camC.getResolutions();
+		builder.setSingleChoiceItems(SIZE, -1,
 			new DialogInterface.OnClickListener() {
 			    public void onClick(DialogInterface dialog, int item) {
 				try {
@@ -140,7 +109,7 @@ public class Video extends Activity {
 					    + System.currentTimeMillis()
 					    + ".jpeg";
 				    Log.i(getString(R.string.logTag), fileName);
-				    Bitmap bmp = camC.takeSnapshot(resolutions[item]);
+				    Bitmap bmp = camC.takeSnapshot(SIZE[item]);
 				    Log.i(getString(R.string.logTag),
 					    "Snap ok !!");
 				    FileOutputStream fichier = new FileOutputStream(
@@ -162,39 +131,6 @@ public class Video extends Activity {
 			});
 		AlertDialog alert = builder.create();
 		alert.show();
-	    }
-	});
-
-	/* Motion listners */
-	Button buttonright = (Button) findViewById(R.id.arrow_right);
-	buttonright.setOnClickListener(new OnClickListener() {
-	    @Override
-	    public void onClick(View v) {
-		movePanTilt("right");
-	    }
-	});
-
-	Button buttonleft = (Button) findViewById(R.id.arrow_left);
-	buttonleft.setOnClickListener(new OnClickListener() {
-	    @Override
-	    public void onClick(View v) {
-		movePanTilt("left");
-	    }
-	});
-
-	Button buttonup = (Button) findViewById(R.id.arrow_up);
-	buttonup.setOnClickListener(new OnClickListener() {
-	    @Override
-	    public void onClick(View v) {
-		movePanTilt("up");
-	    }
-	});
-
-	Button buttondown = (Button) findViewById(R.id.arrow_down);
-	buttondown.setOnClickListener(new OnClickListener() {
-	    @Override
-	    public void onClick(View v) {
-		movePanTilt("down");
 	    }
 	});
 
