@@ -7,7 +7,7 @@
     <TextView android:text="Séléctionner une caméra" android:id="@+id/textView1"
      android:textSize="12pt" android:layout_width="fill_parent" 
      android:layout_height="wrap_content" android:password="false" 
-     android:gravity="center" android:textColor="#000044" />
+     android:gravity="center" android:textColor="#000033" />
 	
 	<ListView android:id="@+id/lv" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_weight="1" android:cacheColorHint="#00000000"/>
