@@ -1,58 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/ScrollView01" android:layout_height="fill_parent"
-	android:layout_width="fill_parent" android:background="@drawable/fond2">
+	android:layout_width="fill_parent">
 	<TableLayout android:orientation="horizontal"
 		android:stretchColumns="1" android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:gravity="fill"
 		android:scrollbars="vertical">
-		<TextView android:hint="Modifier une caméra :"
-			android:textSize="12pt" android:gravity="center"
-			android:textColorHint="#2090DD" />
+		<TextView android:hint="Modifier une caméra"
+			android:textSize="12pt" android:gravity="center" android:layout_marginBottom="10px"/>
 		<TableRow>
-			<TextView android:text="Identifiant :" android:id="@+id/tmid"
-				android:textColor="#2090DD" />
+			<TextView android:text="Identifiant :" android:id="@+id/tmid"/>
 			<EditText android:hint="Entrez un id" android:id="@+id/emid"
-				android:gravity="center" android:textColorHint="#2090DD" />
+				android:gravity="center" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Login :" android:id="@+id/tmlogin"
-				android:textColor="#2090DD" />
+			<TextView android:text="Login :" android:id="@+id/tmlogin" />
 			<EditText android:hint="Entrez un login" android:id="@+id/emlogin"
-				android:gravity="center" android:textColorHint="#2090DD" />
+				android:gravity="center" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Password :" android:id="@+id/tmpass"
-				android:textColor="#2090DD" />
+			<TextView android:text="Password :" android:id="@+id/tmpass" />
 			<EditText android:hint="Entrez un pass" android:id="@+id/empass"
-				android:gravity="center" android:password="true"
-				android:textColorHint="#2090DD" />
+				android:gravity="center" android:password="true" />
 		</TableRow>
 
 		<TableRow>
-			<TextView android:text="Adresse :" android:id="@+id/tmaddr"
-				android:textColor="#2090DD" />
+			<TextView android:text="Adresse :" android:id="@+id/tmaddr" />
 			<EditText android:hint="Entrez une adresse" android:id="@+id/emaddr"
-				android:gravity="center" android:textColorHint="#2090DD" />
+				android:gravity="center" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Channel :" android:id="@+id/tmchan"
-				android:textColor="#2090DD" />
+			<TextView android:text="Channel :" android:id="@+id/tmchan" />
 			<EditText android:hint="Entrez un Canal" android:id="@+id/emchan"
-				android:gravity="center" android:numeric="decimal"
-				android:textColorHint="#2090DD" />
+				android:gravity="center" android:numeric="decimal" />
 		</TableRow>
 
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:layout_weight="1" android:paddingLeft="90dip"
-			android:paddingRight="90dip" 
-			android:layout_height="30dip">
-			<Button android:id="@+id/modify" android:background="@drawable/ok"
-				android:layout_height="25dip" android:layout_marginRight="20dip"
-				android:layout_width="wrap_content" android:layout_weight="2" />
-			<Button android:id="@+id/cancel" android:background="@drawable/cancel"
-				android:layout_height="25dip" android:layout_marginLeft="20dip"
-				android:layout_width="wrap_content" android:layout_weight="2" />
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<Button android:id="@+id/modify" android:text="Modifier"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:layout_weight="1" />
+			<Button android:id="@+id/cancel" android:text="Annuler"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:layout_weight="1" />
 		</LinearLayout>
 	</TableLayout>
 </ScrollView>
