@@ -12,7 +12,7 @@
 	<color name="silver">#C0C0C0</color>
 	<color name="darkgray">#A9A9A9</color>
 	<color name="greenyellow">#ADFF2F</color>
-
+	<!-- Theme styles -->
 	<style name="CustomTheme" parent="android:Theme.NoTitleBar">
 		<item name="android:colorBackground">@color/black</item>
 		<item name="android:buttonStyle">@style/StandardButton</item>
@@ -20,7 +20,7 @@
 		<item name="android:editTextStyle">@style/StandardEditText</item>
 		<item name="android:listViewStyle">@style/StandardListView</item>
 	</style>
-
+	<!-- Button style -->
 	<style name="StandardButton" parent="@android:style/Widget.Button">
 		<item name="android:gravity">center_vertical|center_horizontal</item>
 		<item name="android:textColor">@color/white</item>
@@ -32,33 +32,43 @@
 		<item name="android:focusable">true</item>
 		<item name="android:clickable">true</item>
 	</style>
-
+	<!-- TextView style -->
 	<style name="StandardTextView" parent="@android:style/Widget.TextView">
 		<item name="android:textColorHint">@color/greenyellow</item>
 		<item name="android:textColor">@color/silver</item>
 		<item name="android:typeface">monospace</item>
 	</style>
-
+	<!-- EditText style -->
 	<style name="StandardEditText" parent="@android:style/Widget.EditText">
 		<item name="android:background">@drawable/my_edit_text_style</item>
 		<item name="android:textColorHint">@color/darkgray</item>
 		<item name="android:textColor">@color/black</item>
 	</style>
-	
+	<!-- ListText style -->
 	<style name="StandardListView" parent="@android:style/Widget.ListView">
 		<item name="android:cacheColorHint">#00000000</item>
 		<item name="android:textColorHint">@color/greenyellow</item>
 		<item name="android:textColor">@color/silver</item>
 	</style>
-	
+	<!-- TextView List style -->
 	<style name="StandardListItemInfo" parent="@android:style/Widget.TextView">
 		<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
 		<item name="android:textColor">@color/silver</item>
 		<item name="android:textStyle">italic</item>
 	</style>
-	
 	<style name="StandardListItemHint" parent="@android:style/Widget.TextView">
 		<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+		<item name="android:textColor">@color/greenyellow</item>
+	</style>
+
+	<style name="theme_dialog" parent="android:style/Theme.Dialog">
+		<item name="android:textColor">@color/silver</item>
+		<item name="android:buttonStyle">@style/StandardButton</item>
+		<item name="android:windowTitleStyle">@style/WindowTitleBackground</item>
+	</style>
+	<style name="WindowTitleBackground">
+		<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+		<item name="android:gravity">center</item>
 		<item name="android:textColor">@color/greenyellow</item>
 	</style>
 

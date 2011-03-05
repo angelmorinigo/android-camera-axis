@@ -18,7 +18,8 @@ public class Dialog_welcome extends Dialog{
 	
     private String cheats ;
     private TextView text ;
-    private TextView bienvenue ;
+
+    
     public Dialog_welcome(Context context , int theme) {
         super(context,theme);
     }
@@ -27,8 +28,7 @@ public class Dialog_welcome extends Dialog{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_welcome);
-        bienvenue = (TextView) findViewById(R.id.bienvenue) ;
-        bienvenue.setText("Bienvenue !") ;
+        setTitle("Bienvenue !") ;
         text = (TextView) findViewById(R.id.text);
         
         Random randomGenerator = new Random() ;
@@ -38,8 +38,7 @@ public class Dialog_welcome extends Dialog{
         text.setText("Astuce : ") ;
         cheats = a.getLabel(randomInt) ;
         text.append(cheats) ;
-
-        
+   
         Button buttonOK = (Button) findViewById(R.id.ok);
         buttonOK.setOnClickListener(new OKListener());
         

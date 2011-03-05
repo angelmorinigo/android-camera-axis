@@ -284,7 +284,7 @@ public class Home extends Activity {
 	final View alertDialogView = factory.inflate(R.layout.imp_exp, null);
 	switch (item.getItemId()) {
 	case R.id.menu_option_about:
-	    dialog_about = new Dialog(activity);
+	    dialog_about = new Dialog(activity,R.style.theme_dialog);
 	    dialog_about.setContentView(R.layout.dialog_about);
 	    dialog_about.setTitle(getString(R.string.aboutTitle));
 
