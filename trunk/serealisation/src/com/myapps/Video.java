@@ -22,6 +22,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,6 +62,16 @@ public class Video extends Activity {
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private NotificationManager notificationManager;
 
+    public final static int MVTMSG = 5;
+    public static Handler myViewUpdateHandler = new Handler() {
+	public void handleMessage(Message msg) {
+	    if (msg.what == MVTMSG) {
+		Log.i("AppLog", "handleMessage");
+	    }
+	    super.handleMessage(msg);
+	}
+    };
+
     /**
      * Called when Activity start or resume
      */
@@ -96,6 +108,17 @@ public class Video extends Activity {
 	start_connection(mv, url);
 
 	mv.setOnTouchListener(new TouchListener(camC));
+	try {
+	    camC.sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M1,group=Motion.M2,group=Motion.M3,group=Motion.M4,group=Motion.M5");
+	    camC.sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
+	    MotionDetection m = new MotionDetection(camC, "0", 30);
+	    Thread t = new Thread(m);
+	    t.start();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+
     }
 
     private class MyOnClickListenerControl implements OnClickListener {
@@ -219,32 +242,32 @@ public class Video extends Activity {
 			.setOnClickListener(new MyOnClickListenerControl(
 				CameraControl.BRIGHTNESS, -2500, 0));
 		Button buttonIROn = (Button) findViewById(R.id.IROn);
-		buttonIROn.setOnClickListener(new OnClickListener() {	    
+		buttonIROn.setOnClickListener(new OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-			    camC.switchAutoFunc(CameraControl.AUTO_IR, "on");
+			camC.switchAutoFunc(CameraControl.AUTO_IR, "on");
 		    }
 		});
-		
+
 		Button buttonIROff = (Button) findViewById(R.id.IROff);
-		buttonIROff.setOnClickListener(new OnClickListener() {	    
+		buttonIROff.setOnClickListener(new OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-			    camC.switchAutoFunc(CameraControl.AUTO_IR, "off");
+			camC.switchAutoFunc(CameraControl.AUTO_IR, "off");
 		    }
 		});
-		Button backlightOn = (Button) findViewById(R.id.BacklightOn); 
-		backlightOn.setOnClickListener(new OnClickListener() {	    
+		Button backlightOn = (Button) findViewById(R.id.BacklightOn);
+		backlightOn.setOnClickListener(new OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-			    camC.switchAutoFunc(CameraControl.BACKLIGHT, "on");
+			camC.switchAutoFunc(CameraControl.BACKLIGHT, "on");
 		    }
 		});
-		Button backlightOff = (Button) findViewById(R.id.BacklightOff); 
-		backlightOff.setOnClickListener(new OnClickListener() {	    
+		Button backlightOff = (Button) findViewById(R.id.BacklightOff);
+		backlightOff.setOnClickListener(new OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-			    camC.switchAutoFunc(CameraControl.BACKLIGHT, "off");
+			camC.switchAutoFunc(CameraControl.BACKLIGHT, "off");
 		    }
 		});
 	    } else {

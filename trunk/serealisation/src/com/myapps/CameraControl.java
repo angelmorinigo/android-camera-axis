@@ -184,6 +184,7 @@ public class CameraControl {
 		}
 	    }
 	} catch (Exception e) {
+	    Log.i(activity.getString(R.string.logTag), "load param exception");
 	    con = null;
 	    result = null;
 	    e.printStackTrace();
@@ -382,7 +383,7 @@ public class CameraControl {
 
     public void activateMotionD(int sensitivity, int limit) throws IOException {
     	if (!isEnabled(MOTION_D)) {
-	    	HttpURLConnection con = sendCommand("http://myserver/axis-cgi/"
+	    	HttpURLConnection con = sendCommand("axis-cgi/"
 	    			+ "operator/param.cgi?action=add&group=Motion&template="
 	    			+ "motion&Motion.M.Sensitivity=" + sensitivity
 	    			+ "Motion.M.ObjectSize=" + limit);
@@ -406,7 +407,7 @@ public class CameraControl {
     
     public void desactivateMotionD() throws IOException {
     	if (isEnabled(MOTION_D) && motionD != null) {
-    		HttpURLConnection con = sendCommand("http://myserver/axis-cgi/operator/"
+    		HttpURLConnection con = sendCommand("axis-cgi/operator/"
     				+ "param.cgi?action=add&group=Motion&template=motion");
     		if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
     			motionD = null;
