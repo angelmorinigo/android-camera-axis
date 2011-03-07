@@ -34,12 +34,11 @@ public class CameraControl {
     public static final int IR_FILTER = 7;
     public static final int AUTO_IR = 8;
     public static final int BACKLIGHT = 9;
-    public static final int MOTION = 10;
+    public static final int MOTION_D = 10;
     public static final int AUDIO = 11;
     public static final int BRIGHTNESS = 12;
-    public static final int AUTOIR = 13;
 
-    private static final int NB_FUNC = 14;
+    private static final int NB_FUNC = 13;
     private static final int NB_BASIC_FUNC = 5;
 
     public static final int NOT_SUPPORTED = -1;
@@ -66,7 +65,8 @@ public class CameraControl {
     private int[] functionProperties = new int[NB_BASIC_FUNC];
     private float[] motionParams = new float[7];
     private String[] resolutions, rotations, formats;
-
+    private MotionDetection motionD;
+    
     private Activity activity;
 
     public CameraControl(Camera cam, Activity activity) {
@@ -167,7 +167,7 @@ public class CameraControl {
 		    in = new BufferedReader(new InputStreamReader(result));
 		    while ((line = in.readLine()) != null) {
 			if (line.contains("Properties.Motion.Motion=yes"))
-			    this.currentConfig[MOTION] = DISABLED;
+			    this.currentConfig[MOTION_D] = DISABLED;
 			else if (line.contains("Properties.Audio.Audio=yes"))
 			    this.currentConfig[AUDIO] = DISABLED;
 			else if (line.contains("Properties.Image.Rotation")) {
@@ -314,7 +314,7 @@ public class CameraControl {
 
     /** Switch on/off the autofocus or the autoiris on the camera */
     public int switchAutoFunc(int function, String value) {
-	if (function != AUTOFOCUS && function != AUTOIRIS && function != AUTOIR && function != BACKLIGHT)
+	if (function != AUTOFOCUS && function != AUTOIRIS && function != AUTO_IR && function != BACKLIGHT)
 	    return 0;
 /*	if (!isSupported(function))
 	    return -1;*/
@@ -328,7 +328,7 @@ public class CameraControl {
 	case AUTOIRIS:
 	    param = "autoiris";
 	    break;
-	case AUTOIR:
+	case AUTO_IR:
 	    param = "ircutfilter";
 	    break;
 	case BACKLIGHT:
@@ -380,4 +380,39 @@ public class CameraControl {
 	return bmp;
     }
 
+    public void activateMotionD(int sensitivity, int limit) throws IOException {
+    	if (!isEnabled(MOTION_D)) {
+	    	HttpURLConnection con = sendCommand("http://myserver/axis-cgi/"
+	    			+ "operator/param.cgi?action=add&group=Motion&template="
+	    			+ "motion&Motion.M.Sensitivity=" + sensitivity
+	    			+ "Motion.M.ObjectSize=" + limit);
+	    	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	    		try {
+	    			InputStream result = con.getInputStream();
+	    			BufferedReader in = new BufferedReader(new InputStreamReader(result));
+	    			String line = in.readLine();
+	    			int end = line.indexOf("OK") - 1;
+	    			String id = line.substring(1, end);
+	    			motionD = new MotionDetection(this, id, limit);
+	    		} catch (IOException e) {
+	    			Log.i("AppLog", "MotionDetection IOException");
+	    			e.printStackTrace();
+	    		}
+	    		enableFunction(MOTION_D);
+	    		Log.i("AppLog", "Detection activee");
+	    	}
+    	}
+    }
+    
+    public void desactivateMotionD() throws IOException {
+    	if (isEnabled(MOTION_D) && motionD != null) {
+    		HttpURLConnection con = sendCommand("http://myserver/axis-cgi/operator/"
+    				+ "param.cgi?action=add&group=Motion&template=motion");
+    		if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+    			motionD = null;
+    			disableFunction(MOTION_D);
+    			Log.i("AppLog", "Detection desactivee");
+    		}
+    	}
+    }
 }

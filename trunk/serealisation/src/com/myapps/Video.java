@@ -222,7 +222,7 @@ public class Video extends Activity {
 		buttonIROn.setOnClickListener(new OnClickListener() {	    
 		    @Override
 		    public void onClick(View v) {
-			    camC.switchAutoFunc(CameraControl.AUTOIR, "on");
+			    camC.switchAutoFunc(CameraControl.AUTO_IR, "on");
 		    }
 		});
 		
@@ -230,7 +230,7 @@ public class Video extends Activity {
 		buttonIROff.setOnClickListener(new OnClickListener() {	    
 		    @Override
 		    public void onClick(View v) {
-			    camC.switchAutoFunc(CameraControl.AUTOIR, "off");
+			    camC.switchAutoFunc(CameraControl.AUTO_IR, "off");
 		    }
 		});
 		Button backlightOn = (Button) findViewById(R.id.BacklightOn); 
@@ -259,7 +259,7 @@ public class Video extends Activity {
 	    camC.switchAutoFunc(CameraControl.AUTOFOCUS, "on");
 	    return true;
 	case R.id.menu_auto_ir:
-	    camC.switchAutoFunc(CameraControl.AUTOIR, "auto");
+	    camC.switchAutoFunc(CameraControl.AUTO_IR, "auto");
 	    return true;
 	case R.id.menu_auto_iris:
 	    camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
