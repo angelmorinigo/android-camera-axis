@@ -1,10 +1,14 @@
-package com.myapps;
+package com.myapps.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import com.myapps.Camera;
+import com.myapps.CameraControl;
+import com.myapps.MultiVideo;
 
 import android.app.Activity;
 import android.content.Context;

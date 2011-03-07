@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.myapps.utils.base64Encoder;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,8 +36,10 @@ public class CameraControl {
     public static final int BACKLIGHT = 9;
     public static final int MOTION = 10;
     public static final int AUDIO = 11;
+    public static final int BRIGHTNESS = 12;
+    public static final int AUTOIR = 13;
 
-    private static final int NB_FUNC = 12;
+    private static final int NB_FUNC = 14;
     private static final int NB_BASIC_FUNC = 5;
 
     public static final int NOT_SUPPORTED = -1;
@@ -64,6 +68,7 @@ public class CameraControl {
     private String[] resolutions, rotations, formats;
 
     private Activity activity;
+
     public CameraControl(Camera cam, Activity activity) {
 	this.cam = cam;
 	this.activity = activity;
@@ -253,7 +258,9 @@ public class CameraControl {
 	Log.i(activity.getString(R.string.logTag), command);
 	url = new URL(createURL() + command);
 	con = (HttpURLConnection) url.openConnection();
-	int timeout = Integer.parseInt(Home.preferences.getString(activity.getString(R.string.TimeOut),activity.getString(R.string.defaultTimeOut)));
+	int timeout = Integer.parseInt(Home.preferences.getString(
+		activity.getString(R.string.TimeOut),
+		activity.getString(R.string.defaultTimeOut)));
 	con.setConnectTimeout(timeout);
 	Log.i(activity.getString(R.string.logTag), "timeout : " + timeout);
 	con.setDoOutput(true);
@@ -267,10 +274,10 @@ public class CameraControl {
      * Change the value of PTZ/Focus/Iris used by the camera (perform an action)
      */
     public int changeValFunc(int function, float value1, float value2) {
-//	if (function < 0 || function >= NB_BASIC_FUNC)
-//	    return 0;
-	//if (!isSupported(function))
-	//    return -1;
+	// if (function < 0 || function >= NB_BASIC_FUNC)
+	// return 0;
+	// if (!isSupported(function))
+	// return -1;
 
 	String query = "";
 	switch (function) {
@@ -286,6 +293,9 @@ public class CameraControl {
 	    break;
 	case IRIS:
 	    query = "riris=" + value1;
+	    break;
+	case BRIGHTNESS:
+	    query = "rbrightness=" + value1;
 	    break;
 	}
 	try {
@@ -304,17 +314,33 @@ public class CameraControl {
 
     /** Switch on/off the autofocus or the autoiris on the camera */
     public int switchAutoFunc(int function, String value) {
-	if (function != AUTOFOCUS && function != AUTOIRIS)
+	if (function != AUTOFOCUS && function != AUTOIRIS && function != AUTOIR && function != BACKLIGHT)
 	    return 0;
-	if (!isSupported(function))
-	    return -1;
-	if (!value.equals("on") && !value.equals("off"))
+/*	if (!isSupported(function))
+	    return -1;*/
+	if (!value.equals("on") && !value.equals("off") && !value.equals("auto"))
 	    return 0;
-
-	String param = (function == AUTOFOCUS) ? "autofocus" : "autoiris";
+	String param = "";
+	switch (function) {
+	case AUTOFOCUS:
+	    param = "autofocus";
+	    break;
+	case AUTOIRIS:
+	    param = "autoiris";
+	    break;
+	case AUTOIR:
+	    param = "ircutfilter";
+	    break;
+	case BACKLIGHT:
+	    param = "backlight";
+	    break;
+	}
 	try {
 	    HttpURLConnection con = sendCommand("axis-cgi/com/ptz.cgi?" + param
 		    + "=" + value + "&camera=" + String.valueOf(cam.channel));
+	    Log.i("TouchLog",
+		    ("axis-cgi/com/ptz.cgi?" + param + "=" + value + "&camera=" + String
+			    .valueOf(cam.channel)));
 	    if (con.getResponseCode() != HttpURLConnection.HTTP_NO_CONTENT) {
 		if (value.equals("on"))
 		    this.enableFunction(function);

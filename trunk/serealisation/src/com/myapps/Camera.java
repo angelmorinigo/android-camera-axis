@@ -101,6 +101,24 @@ public class Camera implements java.io.Serializable {
     public String getURI() {
 	return uri;
     }
+    
+    /**
+     * Get the camera ID
+     * 
+     * @return camera ID
+     */
+    public String getId() {
+	return id;
+    }
+    
+    /**
+     * Get the camera channel
+     * 
+     * @return camera channel
+     */
+    public int getChannel() {
+	return channel;
+    }
 
     /**
      * toString with camera name

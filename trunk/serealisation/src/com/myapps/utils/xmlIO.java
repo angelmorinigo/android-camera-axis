@@ -1,4 +1,4 @@
-package com.myapps;
+package com.myapps.utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,6 +15,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
+
+import com.myapps.Camera;
 
 import android.util.Log;
 import android.util.Xml;
@@ -59,13 +61,13 @@ public class xmlIO {
 	    for (int i = 0; i < camList.size(); i++) {
 		serializer.startTag(null, "camera");
 		serializer.startTag(null, "id");
-		serializer.text(camList.get(i).id);
+		serializer.text(camList.get(i).getId());
 		serializer.endTag(null, "id");
 		serializer.startTag(null, "adresse");
-		serializer.text(camList.get(i).uri);
+		serializer.text(camList.get(i).getURI());
 		serializer.endTag(null, "adresse");
 		serializer.startTag(null, "channel");
-		serializer.text("" + camList.get(i).channel);
+		serializer.text("" + camList.get(i).getChannel());
 		serializer.endTag(null, "channel");
 		serializer.endTag(null, "camera");
 	    }

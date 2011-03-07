@@ -23,10 +23,16 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -41,7 +47,8 @@ public class Video extends Activity {
     private Activity activity;
     private MjpegView mv;
     private boolean pause;
-    
+    private boolean advanceCtrl = false;
+
     /* TODO : deplacer dans le value/stringd.xml */
     static final String[] SIZE = new String[] { "1280x1024", "1280x960",
 	    "1280x720", "768x576", "4CIF", "704x576", "704x480", "VGA",
@@ -53,13 +60,14 @@ public class Video extends Activity {
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private NotificationManager notificationManager;
 
-
     /**
      * Called when Activity start or resume
      */
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.video);
+	if (!advanceCtrl)
+	    setContentView(R.layout.video);
+
 	setRequestedOrientation(0);
 	activity = this;
 
@@ -75,7 +83,7 @@ public class Video extends Activity {
 			Context.CONNECTIVITY_SERVICE);
 	NetworkInfo info = mConnectivity.getActiveNetworkInfo();
 	int netType = info.getType();
-	//int netSubtype = info.getSubtype();
+	// int netSubtype = info.getSubtype();
 	if (netType == ConnectivityManager.TYPE_WIFI) {
 	    Log.i("AppLog", "Wifi detecte");
 	    url = "axis-cgi/mjpg/video.cgi?resolution=320x240";
@@ -84,60 +92,180 @@ public class Video extends Activity {
 	    url = "axis-cgi/mjpg/video.cgi?resolution=160x120";
 	}
 
-	/* Buttons Listener */
-	Button buttonSnap = (Button) findViewById(R.id.Snap);
-	buttonSnap.setOnClickListener(new OnClickListener() {
-	    @Override
-	    /**
-	     * Show resolution dialog, get Snapshot and record it
-	     */
-	    public void onClick(View v) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setTitle("SnapShot Format");
-		/* TODO getResolutions() MARCHE PAS */
-	//	final String[] resolutions = camC.getResolutions();
-		builder.setSingleChoiceItems(SIZE, -1,
-			new DialogInterface.OnClickListener() {
-			    public void onClick(DialogInterface dialog, int item) {
-				try {
-
-				    File f = new File(fileNameURL);
-				    if (!f.exists()) {
-					f.mkdir();
-				    }
-				    String fileName = fileNameURL
-					    + System.currentTimeMillis()
-					    + ".jpeg";
-				    Log.i(getString(R.string.logTag), fileName);
-				    Bitmap bmp = camC.takeSnapshot(SIZE[item]);
-				    Log.i(getString(R.string.logTag),
-					    "Snap ok !!");
-				    FileOutputStream fichier = new FileOutputStream(
-					    fileName);
-				    bmp.compress(Bitmap.CompressFormat.JPEG,
-					    80, fichier);
-				    fichier.flush();
-				    fichier.close();
-				    statusBarNotification(activity, bmp,
-					    ("Snap save : " + fileName),
-					    fileName);
-				} catch (IOException e) {
-				    Log.i(getString(R.string.logTag),
-					    "Snap I/O exception !!");
-				    e.printStackTrace();
-				}
-				dialog.dismiss();
-			    }
-			});
-		AlertDialog alert = builder.create();
-		alert.show();
-	    }
-	});
-
 	mv = (MjpegView) findViewById(R.id.surfaceView1);
 	start_connection(mv, url);
 
 	mv.setOnTouchListener(new TouchListener(camC));
+    }
+
+    private class MyOnClickListenerControl implements OnClickListener {
+	float value0, value1;
+	int function;
+
+	public MyOnClickListenerControl(int function, float value0, float value1) {
+	    this.function = function;
+	    this.value0 = value0;
+	    this.value1 = value1;
+	}
+
+	@Override
+	public void onClick(View v) {
+	    camC.changeValFunc(function, value0, value1);
+	}
+
+    }
+
+    /**
+     * Assign custom menu to activity
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+	MenuInflater inflater = getMenuInflater();
+	inflater.inflate(R.menu.menu_video, menu);
+	return true;
+    }
+
+    /**
+     * Implements Menu Items Listener
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case R.id.menu_control:
+	    if (!advanceCtrl) {
+		advanceCtrl = true;
+		setContentView(R.layout.adv_video);
+		/* Buttons Listener */
+
+		Button buttonSnap = (Button) findViewById(R.id.Snap);
+		buttonSnap.setOnClickListener(new OnClickListener() {
+		    @Override
+		    /**
+		     * Show resolution dialog, get Snapshot and record it
+		     */
+		    public void onClick(View v) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+				activity);
+			builder.setTitle("SnapShot Format");
+			/* TODO getResolutions() MARCHE PAS */
+			// final String[] resolutions = camC.getResolutions();
+			builder.setSingleChoiceItems(SIZE, -1,
+				new DialogInterface.OnClickListener() {
+				    public void onClick(DialogInterface dialog,
+					    int item) {
+					try {
+
+					    File f = new File(fileNameURL);
+					    if (!f.exists()) {
+						f.mkdir();
+					    }
+					    String fileName = fileNameURL
+						    + System.currentTimeMillis()
+						    + ".jpeg";
+					    Log.i(getString(R.string.logTag),
+						    fileName);
+					    Bitmap bmp = camC
+						    .takeSnapshot(SIZE[item]);
+					    Log.i(getString(R.string.logTag),
+						    "Snap ok !!");
+					    FileOutputStream fichier = new FileOutputStream(
+						    fileName);
+					    bmp.compress(
+						    Bitmap.CompressFormat.JPEG,
+						    80, fichier);
+					    fichier.flush();
+					    fichier.close();
+					    statusBarNotification(
+						    activity,
+						    bmp,
+						    ("Snap save : " + fileName),
+						    fileName);
+					} catch (IOException e) {
+					    Log.i(getString(R.string.logTag),
+						    "Snap I/O exception !!");
+					    e.printStackTrace();
+					}
+					dialog.dismiss();
+				    }
+				});
+			AlertDialog alert = builder.create();
+			alert.show();
+		    }
+		});
+
+		Button buttonIrisP = (Button) findViewById(R.id.IrisP);
+		buttonIrisP.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.IRIS, 250, 0));
+
+		Button buttonIrisM = (Button) findViewById(R.id.IrisM);
+		buttonIrisM.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.IRIS, -250, 0));
+
+		Button buttonFocusP = (Button) findViewById(R.id.FocusP);
+		buttonFocusP.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.FOCUS, 2500, 0));
+
+		Button buttonFocusM = (Button) findViewById(R.id.FocusM);
+		buttonFocusM.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.FOCUS, -2500, 0));
+
+		Button buttonBrightnessP = (Button) findViewById(R.id.BrightnessP);
+		buttonBrightnessP
+			.setOnClickListener(new MyOnClickListenerControl(
+				CameraControl.BRIGHTNESS, 2500, 0));
+
+		Button buttonBrightnessM = (Button) findViewById(R.id.BrightnessM);
+		buttonBrightnessM
+			.setOnClickListener(new MyOnClickListenerControl(
+				CameraControl.BRIGHTNESS, -2500, 0));
+		Button buttonIROn = (Button) findViewById(R.id.IROn);
+		buttonIROn.setOnClickListener(new OnClickListener() {	    
+		    @Override
+		    public void onClick(View v) {
+			    camC.switchAutoFunc(CameraControl.AUTOIR, "on");
+		    }
+		});
+		
+		Button buttonIROff = (Button) findViewById(R.id.IROff);
+		buttonIROff.setOnClickListener(new OnClickListener() {	    
+		    @Override
+		    public void onClick(View v) {
+			    camC.switchAutoFunc(CameraControl.AUTOIR, "off");
+		    }
+		});
+		Button backlightOn = (Button) findViewById(R.id.BacklightOn); 
+		backlightOn.setOnClickListener(new OnClickListener() {	    
+		    @Override
+		    public void onClick(View v) {
+			    camC.switchAutoFunc(CameraControl.BACKLIGHT, "on");
+		    }
+		});
+		Button backlightOff = (Button) findViewById(R.id.BacklightOff); 
+		backlightOff.setOnClickListener(new OnClickListener() {	    
+		    @Override
+		    public void onClick(View v) {
+			    camC.switchAutoFunc(CameraControl.BACKLIGHT, "off");
+		    }
+		});
+	    } else {
+		advanceCtrl = false;
+		setContentView(R.layout.video);
+	    }
+	    mv = (MjpegView) findViewById(R.id.surfaceView1);
+	    start_connection(mv, url);
+	    mv.setOnTouchListener(new TouchListener(camC));
+	    return true;
+	case R.id.menu_auto_focus:
+	    camC.switchAutoFunc(CameraControl.AUTOFOCUS, "on");
+	    return true;
+	case R.id.menu_auto_ir:
+	    camC.switchAutoFunc(CameraControl.AUTOIR, "auto");
+	    return true;
+	case R.id.menu_auto_iris:
+	    camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
+	    return true;
+	}
+	return false;
     }
 
     /**

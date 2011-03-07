@@ -3,6 +3,8 @@ package com.myapps;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.myapps.utils.PlayerThread;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -35,10 +37,10 @@ public class MultiVideo extends Activity {
     public static Bitmap[] newBMP;
     private int nbView = 0;
 
-    protected static final int GUIUPDATEIDENTIFIER = 0x101;
-    protected static final int URLERRORIDENTIFIER = 0x102;
+    public static final int GUIUPDATEIDENTIFIER = 0x101;
+    public static final int URLERRORIDENTIFIER = 0x102;
 
-    static Handler myViewUpdateHandler = new Handler() {
+    public static Handler myViewUpdateHandler = new Handler() {
 	public void handleMessage(Message msg) {
 	    int index = msg.arg1;
 	    if (msg.what == GUIUPDATEIDENTIFIER) {

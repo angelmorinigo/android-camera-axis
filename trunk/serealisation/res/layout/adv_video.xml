@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:layout_weight="1">
+	<de.mjpegsample.MjpegView.MjpegView
+		android:layout_width="fill_parent" android:id="@+id/surfaceView1"
+		android:layout_height="fill_parent" />
+	<LinearLayout android:id="@+id/linearLayout1"
+		android:orientation="vertical" android:layout_height="fill_parent"
+		android:layout_width="fill_parent">
+		<Button android:layout_width="wrap_content" android:text="Snap"
+			android:id="@+id/Snap" android:layout_height="wrap_content" />
+				<LinearLayout android:id="@+id/linearLayout1"
+			android:orientation="horizontal" android:layout_height="fill_parent"
+			android:layout_width="fill_parent" android:layout_weight="1">
+		<LinearLayout android:id="@+id/linearLayout1"
+			android:orientation="vertical" android:layout_height="fill_parent"
+			android:layout_width="fill_parent" android:layout_weight="1">
+			<LinearLayout android:id="@+id/linearLayout1"
+				android:orientation="vertical" android:layout_height="fill_parent"
+				android:layout_width="fill_parent" android:gravity="bottom">
+				<TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:layout_width="fill_parent" android:text="Iris+"
+						android:id="@+id/IrisP" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+					<Button android:layout_width="fill_parent" android:text="Iris-"
+						android:id="@+id/IrisM" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+				</TableRow>
+				<TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:layout_width="fill_parent" android:text="Focus+"
+						android:id="@+id/FocusP" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+					<Button android:layout_width="fill_parent" android:text="Focus-"
+						android:id="@+id/FocusM" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+				</TableRow>
+				<TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:layout_width="fill_parent" android:text="Brightness+"
+						android:id="@+id/BrightnessP" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+					<Button android:layout_width="fill_parent" android:text="Brightness-"
+						android:id="@+id/BrightnessM" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+				</TableRow>
+				<TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:layout_width="fill_parent" android:text="IR On"
+						android:id="@+id/IROn" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+					<Button android:layout_width="fill_parent" android:text="IR Off"
+						android:id="@+id/IROff" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+				</TableRow>
+				<TableRow android:id="@+id/tableRow1" android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+					<Button android:layout_width="fill_parent" android:text="Backlight comp On"
+						android:id="@+id/BacklightOn" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+					<Button android:layout_width="fill_parent" android:text="Backlight comp Off"
+						android:id="@+id/BacklightOff" android:layout_height="fill_parent"
+						android:layout_weight="1" />
+				</TableRow>
+			</LinearLayout>
+		</LinearLayout>
+		<LinearLayout android:id="@+id/linearLayout1"
+			android:orientation="horizontal" android:layout_height="fill_parent"
+			android:layout_width="fill_parent" android:gravity="bottom"
+			android:layout_weight="0.5" />
+	</LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

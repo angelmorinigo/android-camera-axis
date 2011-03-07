@@ -1,4 +1,4 @@
-package com.myapps;
+package com.myapps.utils;
 /**
  * 
  * Encode String to base64 String
