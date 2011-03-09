@@ -7,12 +7,14 @@ import com.myapps.utils.PlayerThread;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +41,7 @@ public class MultiVideo extends Activity {
 
     public static final int GUIUPDATEIDENTIFIER = 0x101;
     public static final int URLERRORIDENTIFIER = 0x102;
+    private PowerManager.WakeLock wl;
 
     public static Handler myViewUpdateHandler = new Handler() {
 	public void handleMessage(Message msg) {
@@ -65,6 +68,9 @@ public class MultiVideo extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	activity = this;
+	
+	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+	wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tags");
 
 	/* Init */
 	/* recover the argument (camera list) */
@@ -127,6 +133,20 @@ public class MultiVideo extends Activity {
 
     }
 
+    /**
+     *  Acquire wakelock
+     */
+    public void onResume() {
+	super.onResume();
+	wl.acquire();
+    }
+    /**
+     *  Release wakelock
+     */
+    public void onPause() {
+	wl.release();
+	super.onPause();
+    }
     /**
      * Stop each view before destroy
      */

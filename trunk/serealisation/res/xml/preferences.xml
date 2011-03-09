@@ -30,5 +30,9 @@
 			android:summary="Vous pouvez augmenter ou diminuer la sensibilite du PTZ"
 			android:persistent="true" android:defaultValue="10"
 			seekbarattr:minValue="1" seekbarattr:maxValue="20" />
+		<EditTextPreference android:key="@string/SeuilDM"
+			android:title="Detection des mouvements" android:numeric="decimal"
+			android:summary="Definie le seuil de la detection des mouvements">
+		</EditTextPreference>
 	</PreferenceCategory>
 </PreferenceScreen>

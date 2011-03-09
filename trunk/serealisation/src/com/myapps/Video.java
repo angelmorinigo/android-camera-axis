@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import com.myapps.utils.notificationLauncher;
+
 import de.mjpegsample.MjpegView.MjpegInputStream;
 import de.mjpegsample.MjpegView.MjpegView;
 
@@ -24,6 +27,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +56,7 @@ public class Video extends Activity {
     private boolean advanceCtrl = false;
     private Thread t;
     private boolean mdActivated = false;
+    private boolean isCalledFromService = false;
 
     /* TODO : deplacer dans le value/stringd.xml */
     static final String[] SIZE = new String[] { "1280x1024", "1280x960",
@@ -62,17 +67,7 @@ public class Video extends Activity {
     protected static Bitmap newBMP;
 
     private String fileNameURL = "/sdcard/com.myapps.camera/";
-    private NotificationManager notificationManager;
-
-    public final static int MVTMSG = 5;
-    public static Handler myViewUpdateHandler = new Handler() {
-	public void handleMessage(Message msg) {
-	    if (msg.what == MVTMSG) {
-		Log.i("AppLog", "handleMessage");
-	    }
-	    super.handleMessage(msg);
-	}
-    };
+    private PowerManager.WakeLock wl;
 
     /**
      * Called when Activity start or resume
@@ -83,6 +78,8 @@ public class Video extends Activity {
 	    setContentView(R.layout.video);
 
 	setRequestedOrientation(0);
+	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+	wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tags");
 	activity = this;
 
 	/* Recover arguments */
@@ -90,6 +87,11 @@ public class Video extends Activity {
 	Bundle extras = getIntent().getExtras();
 	cam = (Camera) extras.getSerializable(getString(R.string.camTag));
 	camC = new CameraControl(cam, this);
+	isCalledFromService = extras.getBoolean("isCalledFromService", false);
+	if (isCalledFromService) {
+	    Log.i("AppLog", "isCalledFromService");
+	    mdActivated = true;
+	}
 
 	/* Check network info */
 	ConnectivityManager mConnectivity = (ConnectivityManager) activity
@@ -97,7 +99,6 @@ public class Video extends Activity {
 			Context.CONNECTIVITY_SERVICE);
 	NetworkInfo info = mConnectivity.getActiveNetworkInfo();
 	int netType = info.getType();
-	// int netSubtype = info.getSubtype();
 	if (netType == ConnectivityManager.TYPE_WIFI) {
 	    Log.i("AppLog", "Wifi detecte");
 	    url = "axis-cgi/mjpg/video.cgi?resolution=320x240";
@@ -190,11 +191,12 @@ public class Video extends Activity {
 						    80, fichier);
 					    fichier.flush();
 					    fichier.close();
-					    statusBarNotification(
-						    activity,
-						    bmp,
-						    ("Snap save : " + fileName),
-						    fileName);
+					    notificationLauncher
+						    .statusBarNotificationImage(
+							    activity,
+							    bmp,
+							    ("Snap save : " + fileName),
+							    fileName, 1);
 					} catch (IOException e) {
 					    Log.i(getString(R.string.logTag),
 						    "Snap I/O exception !!");
@@ -281,7 +283,8 @@ public class Video extends Activity {
 	    return true;
 	case R.id.menu_active_md:
 	    if (mdActivated) {
-		t.interrupt();
+		Intent intent = new Intent(this, MotionDetectionService.class);
+		stopService(intent);
 		mdActivated = false;
 	    } else {
 		try {
@@ -289,12 +292,23 @@ public class Video extends Activity {
 		    // BARRE POUR LA SENSIBILITE
 		    camC.sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M1,group=Motion.M2,group=Motion.M3,group=Motion.M4,group=Motion.M5");
 		    camC.sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
-		    MotionDetection m = new MotionDetection(camC, "0", 30,
-			    Long.parseLong(Home.preferences.getString(
-				    getString(R.string.NotifTO),
-				    getString(R.string.defaultNotifTO))));
-		    t = new Thread(m);
-		    t.start();
+		    Intent intent = new Intent(this,
+			    MotionDetectionService.class);
+		    Bundle objetbunble = new Bundle();
+		    objetbunble
+			    .putSerializable(getString(R.string.camTag), cam);
+		    intent.putExtras(objetbunble);
+		    int lim = Integer.parseInt(Home.preferences.getString(
+			    getString(R.string.SeuilDM),
+			    getString(R.string.defaultSeuilDM)));
+
+		    intent.putExtra("limit", lim);
+		    long delay = Long.parseLong(Home.preferences.getString(
+			    getString(R.string.NotifTO),
+			    getString(R.string.defaultNotifTO)));
+		    intent.putExtra("delay", delay);
+		    Log.i(getString(R.string.logTag), "Start service");
+		    startService(intent);
 		    mdActivated = true;
 		} catch (IOException e) {
 		    e.printStackTrace();
@@ -303,42 +317,6 @@ public class Video extends Activity {
 	    }
 	}
 	return false;
-    }
-
-    /**
-     * 
-     * Create a StatusBar Notification for Snapshop
-     * 
-     * @param activity
-     *            The current activity
-     * @param bmp
-     *            The Snapshot recorded
-     * @param text
-     *            A message (like url)
-     * @param path
-     *            The snapshot url to start gallery activity on touch
-     *            notification
-     */
-    private void statusBarNotification(Activity activity, Bitmap bmp,
-	    String text, String path) {
-	notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-	Notification notification = new Notification(R.drawable.camera,
-		"Camera-Axis", System.currentTimeMillis());
-	notification.contentView = new RemoteViews(activity.getPackageName(),
-		R.layout.notification);
-	/* Action lors d'un clic sur la notification */
-	Intent intentNotification = new Intent();
-	intentNotification.setAction(android.content.Intent.ACTION_VIEW);
-	intentNotification.setDataAndType(Uri.fromFile(new File(path)),
-		"image/png");
-	PendingIntent pendingIntent = PendingIntent.getActivity(
-		activity.getApplicationContext(), 0, intentNotification, 0);
-
-	notification.defaults |= Notification.DEFAULT_VIBRATE;
-	notification.contentIntent = pendingIntent;
-	notification.contentView.setImageViewBitmap(R.id.Nimage, bmp);
-	notification.contentView.setTextViewText(R.id.Ntext, text);
-	notificationManager.notify(1, notification);
     }
 
     /**
@@ -367,10 +345,11 @@ public class Video extends Activity {
     }
 
     /**
-     * Resume video when activity resume.
+     * Resume video and acquire wakelock when activity resume.
      */
     public void onResume() {
 	super.onResume();
+	wl.acquire();
 	if (pause) {
 	    mv.resumePlayback();
 	    pause = false;
@@ -379,10 +358,11 @@ public class Video extends Activity {
     }
 
     /**
-     * Stop video when activity sleep
+     * Stop video and release wakelock when activity sleep
      */
     public void onPause() {
 	pause = true;
+	wl.release();
 	super.onPause();
     }
 
@@ -390,10 +370,11 @@ public class Video extends Activity {
      * Stop Video before destroy
      */
     public void onDestroy() {
-	super.onDestroy();
 	if (mdActivated) {
-	    t.interrupt();
+	    // t.interrupt();
 	}
 	mv.stopPlayback();
+	super.onDestroy();
+
     }
 }

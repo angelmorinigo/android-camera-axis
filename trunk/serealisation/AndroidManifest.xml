@@ -7,10 +7,11 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.VIBRATE"/>
 	<application android:icon="@drawable/camera" android:label="@string/app_name">
 		<activity android:name="Home" android:label="@string/app_name"
-		android:theme="@style/CustomTheme"
-			android:configChanges="keyboardHidden|orientation">
+			android:theme="@style/CustomTheme" android:configChanges="keyboardHidden|orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -26,7 +27,7 @@
 		<activity android:name="MultiVideo" android:label="MultiVideo"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:configChanges="orientation|keyboardHidden" />
-		<activity android:name="MesPreferences"/>
-
+		<activity android:name="MesPreferences" />
+		<service android:name="MotionDetectionService" />
 	</application>
 </manifest>

@@ -14,9 +14,13 @@
 
 	<string name="limitFPS">limitFPS</string>
 	<string name="defaultlimitFPS">500</string>
-	
+
 	<string name="NotifTO">NotifTO</string>
 	<string name="defaultNotifTO">5000</string>
+
+	<string name="SeuilDM">SeuilDM</string>
+	<string name="defaultSeuilDM">30</string>
+
 
 	<string name="sens">sens</string>
 	<string name="defaultSens">10</string>
@@ -41,7 +45,8 @@
 		sous android 2.1\n</string>
 	<string name="messageExport">Fichier de sortie :</string>
 	<string name="messageImport">Fichier a importer :</string>
-	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son depot svn http://code.google.com/p/android-camera-axis/</string>
+	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son depot
+		svn http://code.google.com/p/android-camera-axis/</string>
 
 
 	<string name="boutonModifier">Modifier</string>

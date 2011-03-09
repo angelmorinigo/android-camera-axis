@@ -64,7 +64,6 @@ public class CameraControl {
 	private int[] currentConfig = new int[NB_FUNC];
 	private int[] functionProperties = new int[NB_BASIC_FUNC];
 	private String[] resolutions, rotations, formats;
-	private MotionDetection motionD;
 
 	private Activity activity;
 
@@ -164,17 +163,14 @@ public class CameraControl {
 				if (this.currentConfig[i] > 0)
 					this.currentConfig[i] = ENABLED;
 			con.disconnect();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 			HttpURLConnection con1 = sendCommand("axis-cgi/admin/param.cgi?action=list");
-			Log.i(activity.getString(R.string.logTag), ""+con1.getResponseCode());
 			if (con1.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				result = con1.getInputStream();
 				BufferedReader in2 = new BufferedReader(new InputStreamReader(
 						result));
 				Log.i(activity.getString(R.string.logTag), "msg recu");
-				int i = 0;
 				while ((line = in2.readLine()) != null) {
-					Log.i(activity.getString(R.string.logTag), line + i);
 					if (line.contains("Properties.Motion.Motion=yes"))
 						this.currentConfig[MOTION_D] = ENABLED;
 					else if (line.contains("Properties.Audio.Audio=yes"))
@@ -191,11 +187,8 @@ public class CameraControl {
 						formats = value.split(",");
 					}
 				}
-			} else {
-				Log.i(activity.getString(R.string.logTag), "msg 2 non recu");
 			}
 		} catch (IOException e) {
-			Log.i(activity.getString(R.string.logTag), e.toString());
 			con = null;
 			result = null;
 			e.printStackTrace();
@@ -203,10 +196,6 @@ public class CameraControl {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		for (int i = 0; i < currentConfig.length; i++) {
-			Log.i(activity.getString(R.string.logTag),
-					("" + i + currentConfig[i]));
 		}
 
 	}
@@ -417,7 +406,6 @@ public class CameraControl {
 					String line = in.readLine();
 					int end = line.indexOf("OK") - 1;
 					String id = line.substring(1, end);
-					motionD = new MotionDetection(this, id, limit, delay);
 				} catch (IOException e) {
 					Log.i("AppLog", "MotionDetection IOException");
 					e.printStackTrace();
@@ -429,11 +417,10 @@ public class CameraControl {
 	}
 
 	public void desactivateMotionD() throws IOException {
-		if (isEnabled(MOTION_D) && motionD != null) {
+		if (isEnabled(MOTION_D)) {
 			HttpURLConnection con = sendCommand("axis-cgi/operator/"
 					+ "param.cgi?action=add&group=Motion&template=motion");
 			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				motionD = null;
 				disableFunction(MOTION_D);
 				Log.i("AppLog", "Detection desactivee");
 			}
