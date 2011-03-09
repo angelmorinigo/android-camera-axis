@@ -30,8 +30,12 @@ public class MesPreferences extends PreferenceActivity {
 		getString(R.string.defaultlimitFPS));
 	fps.setText(valueFps);
 	
-	/* Show current sensibility */
-
+	
+	/* Show current to interval for motion detection*/
+	EditTextPreference tomd = (EditTextPreference) findPreference(getString(R.string.NotifTO));
+	String valueTomd = preferences.getString(getString(R.string.NotifTO),
+		getString(R.string.defaultNotifTO));
+	tomd.setText(valueTomd);
     }
 
     public void onDestroy() {
@@ -75,6 +79,26 @@ public class MesPreferences extends PreferenceActivity {
 			    + preferences.getString(
 				    getString(R.string.limitFPS),
 				    getString(R.string.defaultlimitFPS)) + ";");
+
+	}
+	
+	/* Get limitFPS value to bloc value = "" */
+	String valueTONMD = preferences.getString(getString(R.string.NotifTO),
+		getString(R.string.defaultNotifTO));
+	Log.i(getString(R.string.logTag), "NMD save=" + valueTONMD + ";");
+	
+	/* Change value and commited it */
+	if (valueTONMD.equalsIgnoreCase("")) {
+	    Log.i(getString(R.string.logTag), "onDestroy change value");
+	    SharedPreferences.Editor editor = preferences.edit();
+	    editor.putString(getString(R.string.NotifTO),
+		    getString(R.string.defaultNotifTO));
+	    editor.commit();
+	    Log.i(getString(R.string.logTag),
+		    "onDestroy commit"
+			    + preferences.getString(
+				    getString(R.string.NotifTO),
+				    getString(R.string.defaultNotifTO)) + ";");
 
 	}
 	super.onDestroy();

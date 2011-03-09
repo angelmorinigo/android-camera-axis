@@ -12,6 +12,10 @@
 			android:numeric="decimal" android:title="Time-out connection HTTP"
 			android:summary="Definir soit-meme le temps de non reponse des requetes HTTP (en ms)">
 		</EditTextPreference>
+		<EditTextPreference android:key="@string/NotifTO"
+			android:numeric="decimal" android:title="Delai de Notification Motion Detection"
+			android:summary="Definir l'interval minimum entre deux notification pour la detection de mouvements (en ms)">
+		</EditTextPreference>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Option">
 		<CheckBoxPreference android:key="@string/isWelcome"

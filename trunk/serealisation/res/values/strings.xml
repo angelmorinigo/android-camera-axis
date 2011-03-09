@@ -14,6 +14,9 @@
 
 	<string name="limitFPS">limitFPS</string>
 	<string name="defaultlimitFPS">500</string>
+	
+	<string name="NotifTO">NotifTO</string>
+	<string name="defaultNotifTO">5000</string>
 
 	<string name="sens">sens</string>
 	<string name="defaultSens">10</string>

@@ -50,6 +50,8 @@ public class Video extends Activity {
     private MjpegView mv;
     private boolean pause;
     private boolean advanceCtrl = false;
+    private Thread t;
+    private boolean mdActivated = false;
 
     /* TODO : deplacer dans le value/stringd.xml */
     static final String[] SIZE = new String[] { "1280x1024", "1280x960",
@@ -108,16 +110,6 @@ public class Video extends Activity {
 	start_connection(mv, url);
 
 	mv.setOnTouchListener(new TouchListener(camC));
-	try {
-	    camC.sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M1,group=Motion.M2,group=Motion.M3,group=Motion.M4,group=Motion.M5");
-	    camC.sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
-	    MotionDetection m = new MotionDetection(camC, "0", 30);
-	    Thread t = new Thread(m);
-	    t.start();
-	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
 
     }
 
@@ -287,6 +279,28 @@ public class Video extends Activity {
 	case R.id.menu_auto_iris:
 	    camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
 	    return true;
+	case R.id.menu_active_md:
+	    if (mdActivated) {
+		t.interrupt();
+		mdActivated = false;
+	    } else {
+		try {
+		    // A REMPLACER PAR LES PRIMITIVES AJOUTER UN DIALOG AVEC UNE
+		    // BARRE POUR LA SENSIBILITE
+		    camC.sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M1,group=Motion.M2,group=Motion.M3,group=Motion.M4,group=Motion.M5");
+		    camC.sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
+		    MotionDetection m = new MotionDetection(camC, "0", 30,
+			    Long.parseLong(Home.preferences.getString(
+				    getString(R.string.NotifTO),
+				    getString(R.string.defaultNotifTO))));
+		    t = new Thread(m);
+		    t.start();
+		    mdActivated = true;
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+		return true;
+	    }
 	}
 	return false;
     }
@@ -377,6 +391,7 @@ public class Video extends Activity {
      */
     public void onDestroy() {
 	super.onDestroy();
+	t.interrupt();
 	mv.stopPlayback();
     }
 }

@@ -8,4 +8,6 @@
 		android:icon="@drawable/ic_menu_refresh" />
 		<item android:id="@+id/menu_auto_ir" android:title="Auto IR cut filter"
 		android:icon="@drawable/ic_menu_refresh" />
+		<item android:id="@+id/menu_active_md" android:title="Activer Motion Detection"
+		android:icon="@drawable/alert_dialog_icon" />
 </menu> 

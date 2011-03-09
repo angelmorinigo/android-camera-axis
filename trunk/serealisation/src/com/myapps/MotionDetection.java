@@ -14,11 +14,14 @@ public class MotionDetection implements Runnable {
     private HttpURLConnection con;
     private String motionId;
     private int limit;
+    private long delay;
 
-    public MotionDetection(CameraControl pCamC, String pMotionId, int pLimit) {
+    public MotionDetection(CameraControl pCamC, String pMotionId, int pLimit,
+	    long pdelay) {
 	camC = pCamC;
 	motionId = pMotionId;
 	limit = pLimit;
+	delay = pdelay;
     }
 
     @Override
@@ -32,8 +35,7 @@ public class MotionDetection implements Runnable {
 	    String s;
 	    int lvlc, lvlb, lvlf;
 	    long last = System.currentTimeMillis();
-	    long delay = 10000;
-	    while (true) {
+	    while (!Thread.currentThread().isInterrupted()) {
 		s = br.readLine();
 		if (s.contains("level=") == true) {
 		    lvlc = s.indexOf("level=");
