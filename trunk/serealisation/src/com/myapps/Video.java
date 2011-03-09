@@ -391,7 +391,9 @@ public class Video extends Activity {
      */
     public void onDestroy() {
 	super.onDestroy();
-	t.interrupt();
+	if (mdActivated) {
+	    t.interrupt();
+	}
 	mv.stopPlayback();
     }
 }
