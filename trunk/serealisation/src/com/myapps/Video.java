@@ -54,6 +54,7 @@ public class Video extends Activity {
     private MjpegView mv;
     private boolean pause;
     private boolean advanceCtrl = false;
+    private boolean MDWindowSelector = false;
     private Thread t;
     private int id;
 
@@ -87,8 +88,8 @@ public class Video extends Activity {
 	Bundle extras = getIntent().getExtras();
 	cam = (Camera) extras.getSerializable(getString(R.string.camTag));
 	camC = new CameraControl(cam, this);
-	
-	TextView tv = (TextView)findViewById(R.id.idTV);
+
+	TextView tv = (TextView) findViewById(R.id.idTV);
 	tv.setText("ID : " + cam.uniqueID + "-" + cam.id);
 	/* Check network info */
 	ConnectivityManager mConnectivity = (ConnectivityManager) activity
@@ -287,30 +288,53 @@ public class Video extends Activity {
 		MotionDetectionService.stopRunningDetection(cam,
 			this.getApplication(), indice);
 	    } else {
-		try {
-		    // A REMPLACER PAR LES PRIMITIVES AJOUTER UN DIALOG AVEC UNE
-		    // BARRE POUR LA SENSIBILITE
-		    camC.sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M1,group=Motion.M2,group=Motion.M3,group=Motion.M4,group=Motion.M5");
-		    camC.sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
-		    Intent intent = new Intent(this,
-			    MotionDetectionService.class);
-		    Bundle objetbunble = new Bundle();
-		    objetbunble
-			    .putSerializable(getString(R.string.camTag), cam);
-		    intent.putExtras(objetbunble);
-		    int lim = Integer.parseInt(Home.preferences.getString(
-			    getString(R.string.SeuilDM),
-			    getString(R.string.defaultSeuilDM)));
-		    intent.putExtra("limit", lim);
-		    long delay = Long.parseLong(Home.preferences.getString(
-			    getString(R.string.NotifTO),
-			    getString(R.string.defaultNotifTO)));
-		    intent.putExtra("delay", delay);
-		    Log.i(getString(R.string.logTag), "Start service");
-		    startService(intent);
-		} catch (IOException e) {
-		    e.printStackTrace();
+
+		if (!MDWindowSelector) {
+		    advanceCtrl = true;
+		    setContentView(R.layout.mds_video);
+		    Button ok = (Button) findViewById(R.id.okRectView);
+		    ok.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+			    try {
+				// A REMPLACER PAR LES PRIMITIVES AJOUTER UN
+				// DIALOG AVEC UNE
+				// BARRE POUR LA SENSIBILITE
+				camC.sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M1,group=Motion.M2,group=Motion.M3,group=Motion.M4,group=Motion.M5");
+				camC.sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
+				Intent intent = new Intent(v.getContext(),
+					MotionDetectionService.class);
+				Bundle objetbunble = new Bundle();
+				objetbunble.putSerializable(
+					getString(R.string.camTag), cam);
+				intent.putExtras(objetbunble);
+				int lim = Integer.parseInt(Home.preferences
+					.getString(
+						getString(R.string.SeuilDM),
+						getString(R.string.defaultSeuilDM)));
+				intent.putExtra("limit", lim);
+				long delay = Long.parseLong(Home.preferences
+					.getString(
+						getString(R.string.NotifTO),
+						getString(R.string.defaultNotifTO)));
+				intent.putExtra("delay", delay);
+				Log.i(getString(R.string.logTag),
+					"Start service");
+				startService(intent);
+			    } catch (IOException e) {
+				e.printStackTrace();
+			    }
+			}
+		    });
+		} else {
+		    MDWindowSelector = false;
+		    advanceCtrl = false;
+		    setContentView(R.layout.video);
 		}
+		mv = (MjpegView) findViewById(R.id.surfaceView1);
+		start_connection(mv, url);
+		mv.setOnTouchListener(new TouchListener(camC));
 		return true;
 	    }
 	}
