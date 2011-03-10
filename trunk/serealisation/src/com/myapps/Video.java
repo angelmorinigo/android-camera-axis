@@ -55,8 +55,7 @@ public class Video extends Activity {
     private boolean pause;
     private boolean advanceCtrl = false;
     private Thread t;
-    private boolean mdActivated = false;
-    private boolean isCalledFromService = false;
+    private int id;
 
     /* TODO : deplacer dans le value/stringd.xml */
     static final String[] SIZE = new String[] { "1280x1024", "1280x960",
@@ -81,18 +80,16 @@ public class Video extends Activity {
 	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 	wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tags");
 	activity = this;
+	id = 0;
 
 	/* Recover arguments */
 
 	Bundle extras = getIntent().getExtras();
 	cam = (Camera) extras.getSerializable(getString(R.string.camTag));
 	camC = new CameraControl(cam, this);
-	isCalledFromService = extras.getBoolean("isCalledFromService", false);
-	if (isCalledFromService) {
-	    Log.i("AppLog", "isCalledFromService");
-	    mdActivated = true;
-	}
-
+	
+	TextView tv = (TextView)findViewById(R.id.idTV);
+	tv.setText("ID : " + cam.uniqueID + "-" + cam.id);
 	/* Check network info */
 	ConnectivityManager mConnectivity = (ConnectivityManager) activity
 		.getApplicationContext().getSystemService(
@@ -196,7 +193,9 @@ public class Video extends Activity {
 							    activity,
 							    bmp,
 							    ("Snap save : " + fileName),
-							    fileName, 1);
+							    fileName, id,
+							    "" + cam.uniqueID);
+					    id++;
 					} catch (IOException e) {
 					    Log.i(getString(R.string.logTag),
 						    "Snap I/O exception !!");
@@ -282,10 +281,11 @@ public class Video extends Activity {
 	    camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
 	    return true;
 	case R.id.menu_active_md:
-	    if (mdActivated) {
-		Intent intent = new Intent(this, MotionDetectionService.class);
-		stopService(intent);
-		mdActivated = false;
+	    int indice;
+	    if ((indice = MotionDetectionService.isAlreadyRunning(cam)) != -1) {
+		Log.i(getString(R.string.logTag), "Remove cam " + indice);
+		MotionDetectionService.stopRunningDetection(cam,
+			this.getApplication(), indice);
 	    } else {
 		try {
 		    // A REMPLACER PAR LES PRIMITIVES AJOUTER UN DIALOG AVEC UNE
@@ -301,7 +301,6 @@ public class Video extends Activity {
 		    int lim = Integer.parseInt(Home.preferences.getString(
 			    getString(R.string.SeuilDM),
 			    getString(R.string.defaultSeuilDM)));
-
 		    intent.putExtra("limit", lim);
 		    long delay = Long.parseLong(Home.preferences.getString(
 			    getString(R.string.NotifTO),
@@ -309,7 +308,6 @@ public class Video extends Activity {
 		    intent.putExtra("delay", delay);
 		    Log.i(getString(R.string.logTag), "Start service");
 		    startService(intent);
-		    mdActivated = true;
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
@@ -370,9 +368,6 @@ public class Video extends Activity {
      * Stop Video before destroy
      */
     public void onDestroy() {
-	if (mdActivated) {
-	    // t.interrupt();
-	}
 	mv.stopPlayback();
 	super.onDestroy();
 

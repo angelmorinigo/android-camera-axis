@@ -93,7 +93,6 @@ public class CameraControl {
 				result = con.getInputStream();
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						result));
-				Log.i(activity.getString(R.string.logTag), "msg 1 recu");
 
 				while ((line = in.readLine()) != null) {
 					if (line.indexOf("=") > -1) {
@@ -169,7 +168,6 @@ public class CameraControl {
 				result = con1.getInputStream();
 				BufferedReader in2 = new BufferedReader(new InputStreamReader(
 						result));
-				Log.i(activity.getString(R.string.logTag), "msg recu");
 				while ((line = in2.readLine()) != null) {
 					if (line.contains("Properties.Motion.Motion=yes"))
 						this.currentConfig[MOTION_D] = ENABLED;
@@ -194,7 +192,6 @@ public class CameraControl {
 			e.printStackTrace();
 
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -272,7 +269,6 @@ public class CameraControl {
 				activity.getString(R.string.TimeOut),
 				activity.getString(R.string.defaultTimeOut)));
 		con.setConnectTimeout(timeout);
-		Log.i(activity.getString(R.string.logTag), "timeout : " + timeout);
 		con.setDoOutput(true);
 		con.setRequestProperty("Authorization",
 				base64Encoder.userNamePasswordBase64(cam.login, cam.pass));

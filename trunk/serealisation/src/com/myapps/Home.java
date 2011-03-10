@@ -46,7 +46,7 @@ public class Home extends Activity {
     private static Dialog dialog_about;
     private static Activity activity;
     private ListView L;
-    private ArrayList<Camera> camList;
+    public static ArrayList<Camera> camList;
     private String[] nb_view;
 
     private String exportPath = "/sdcard/com.myapps.camera/export.xml";
@@ -67,7 +67,8 @@ public class Home extends Activity {
 
 	List<Map<String, ?>> printCamList = new LinkedList<Map<String, ?>>();
 	for (int i = 0; i < camList.size(); i++) {
-	    printCamList.add(createItem(camList.get(i).id, camList.get(i)
+	    camList.get(i).setUniqueID(i);
+	    printCamList.add(createItem((camList.get(i).uniqueID+"-"+camList.get(i).id), camList.get(i)
 		    .getURI()));
 	}
 
@@ -94,6 +95,11 @@ public class Home extends Activity {
 	/* Resolve preferences */
 	preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+	/* Start motion detection service manager */ 
+	  Intent intent = new Intent(this,
+		    MotionDetectionService.class);
+	startService(intent);
+	
 	/* Print tricky */
 	if (preferences.getBoolean(getString(R.string.isWelcome), true) == false) {
 	    Dialog_welcome myDialog = new Dialog_welcome(this,R.style.theme_dialog);
@@ -253,14 +259,15 @@ public class Home extends Activity {
 		    .getSerializable(getString(R.string.camTag));
 	    Log.i(getString(R.string.logTag), "camera " + tmp.id + " recuperer");
 	    /* Always add at the head */
-	    int position = 0;
+	    int position = camList.size();
 	    if (requestCode == EDIT_CODE) {
 		position = extras.getInt(getString(R.string.camPosition));
 		camList.remove(position);
 	    }
+	    
 	    camList.add(position, tmp);
+	    tmp.setUniqueID(position);
 	    updateListView(false);
-
 	}
     }
 

@@ -5,4 +5,5 @@
 	<de.mjpegsample.MjpegView.MjpegView
 		android:layout_width="fill_parent" android:id="@+id/surfaceView1"
 		android:layout_height="fill_parent" />
+	<TextView android:text="TextView" android:id="@+id/idTV" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 </RelativeLayout>

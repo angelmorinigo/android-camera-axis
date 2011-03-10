@@ -34,7 +34,7 @@ public class notificationLauncher {
      *            notification
      */
     public static void statusBarNotificationImage(Activity activity, Bitmap bmp,
-	    String text, String path, int id) {
+	    String text, String path, int id, String tag) {
 	NotificationManager notificationManager;
 	notificationManager = (NotificationManager) activity
 		.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -54,14 +54,13 @@ public class notificationLauncher {
 	notification.contentIntent = pendingIntent;
 	notification.contentView.setImageViewBitmap(R.id.Nimage, bmp);
 	notification.contentView.setTextViewText(R.id.Ntext, text);
-	notificationManager.notify(id, notification);
+	notificationManager.notify(tag, id, notification);
     }
 
-    public static void statusBarNotificationRunning(Application application, Intent notificationIntent,
-	    int id) {
+    public static void statusBarNotificationRunning(Application application, PendingIntent contentIntent,
+	    int id, String text) {
 	/* Notification Running */
 	NotificationManager mNotificationManager;
-
 	mNotificationManager = (NotificationManager) application
 		.getApplicationContext().getSystemService(
 			Context.NOTIFICATION_SERVICE);
@@ -69,15 +68,12 @@ public class notificationLauncher {
 		"Camera-Axis Motion Detection", System.currentTimeMillis());
 	notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
-	notificationIntent.setAction(Intent.ACTION_MAIN);
-	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	//launcher.setAction(Intent.ACTION_MAIN);
+	//launcher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-	PendingIntent contentIntent = PendingIntent.getActivity(
-		application.getApplicationContext(), 0, notificationIntent,
-		PendingIntent.FLAG_CANCEL_CURRENT);
 
 	notification.setLatestEventInfo(application.getApplicationContext(),
-		"Camera-Axis", ("Motion Detection camera " + id),
+		"Camera-Axis",  text,
 		contentIntent);
 	mNotificationManager.notify(id, notification);
 

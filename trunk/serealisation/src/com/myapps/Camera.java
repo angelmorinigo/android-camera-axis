@@ -3,10 +3,10 @@ package com.myapps;
 /**
  * Camera class describe information's camera
  */
-public class Camera implements java.io.Serializable {
+public class Camera implements java.io.Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
     protected String id, login, pass, ip, protocol, uri;
-    protected int port, channel;
+    protected int port, channel, uniqueID = -1;
 
     /**
      * Public constructor for a camera with information
@@ -59,7 +59,7 @@ public class Camera implements java.io.Serializable {
 	this.uri = uri;
 	this.channel = channel;
     }
-    
+
     /**
      * Public constructor for a camera with a URI without username/password
      * 
@@ -77,7 +77,7 @@ public class Camera implements java.io.Serializable {
 	this.login = "";
 	this.pass = "";
     }
-    
+
     /**
      * Create the address from camera's information
      * 
@@ -101,7 +101,7 @@ public class Camera implements java.io.Serializable {
     public String getURI() {
 	return uri;
     }
-    
+
     /**
      * Get the camera ID
      * 
@@ -110,7 +110,7 @@ public class Camera implements java.io.Serializable {
     public String getId() {
 	return id;
     }
-    
+
     /**
      * Get the camera channel
      * 
@@ -128,5 +128,15 @@ public class Camera implements java.io.Serializable {
     @Override
     public String toString() {
 	return id;
+    }
+
+    public void setUniqueID(int id) {
+	uniqueID = id;
+    }
+
+    protected Object clone() throws CloneNotSupportedException {
+	Camera clone;
+	clone = (Camera) super.clone();
+	return clone;
     }
 }
