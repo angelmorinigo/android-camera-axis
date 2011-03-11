@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.myapps.utils.CouldNotCreateGroupException;
+import com.myapps.utils.drawRectOnTouchView;
 import com.myapps.utils.notificationLauncher;
 
 import de.mjpegsample.MjpegView.MjpegInputStream;
@@ -21,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Path.FillType;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -34,9 +37,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +75,7 @@ public class Video extends Activity {
 
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private PowerManager.WakeLock wl;
+    private TouchListener customTouchListener;
 
     /**
      * Called when Activity start or resume
@@ -108,7 +116,8 @@ public class Video extends Activity {
 	mv = (MjpegView) findViewById(R.id.surfaceView1);
 	start_connection(mv, url);
 
-	mv.setOnTouchListener(new TouchListener(camC));
+	customTouchListener = new TouchListener(camC);
+	mv.setOnTouchListener(customTouchListener);
 
     }
 
@@ -144,13 +153,19 @@ public class Video extends Activity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+	RelativeLayout screen = (RelativeLayout) findViewById(R.id.RelativeLayout01);
+	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	switch (item.getItemId()) {
 	case R.id.menu_control:
 	    if (!advanceCtrl) {
+		if (MDWindowSelector) {
+		    MDWindowSelector = false;
+		    screen.removeView(findViewById(R.id.mds_video));
+		}
 		advanceCtrl = true;
-		setContentView(R.layout.adv_video);
-		/* Buttons Listener */
+		inflater.inflate(R.layout.adv_video, screen, true);
 
+		/* Buttons Listener */
 		Button buttonSnap = (Button) findViewById(R.id.Snap);
 		buttonSnap.setOnClickListener(new OnClickListener() {
 		    @Override
@@ -266,11 +281,9 @@ public class Video extends Activity {
 		});
 	    } else {
 		advanceCtrl = false;
-		setContentView(R.layout.video);
+		screen.removeView(findViewById(R.id.englobe));
 	    }
-	    mv = (MjpegView) findViewById(R.id.surfaceView1);
-	    start_connection(mv, url);
-	    mv.setOnTouchListener(new TouchListener(camC));
+	    screen.invalidate();
 	    return true;
 	case R.id.menu_auto_focus:
 	    camC.switchAutoFunc(CameraControl.AUTOFOCUS, "on");
@@ -282,27 +295,38 @@ public class Video extends Activity {
 	    camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
 	    return true;
 	case R.id.menu_active_md:
-	    int indice;
-	    if ((indice = MotionDetectionService.isAlreadyRunning(cam)) != -1) {
-		Log.i(getString(R.string.logTag), "Remove cam " + indice);
-		MotionDetectionService.stopRunningDetection(cam,
-			this.getApplication(), indice);
-	    } else {
-
-		if (!MDWindowSelector) {
-		    advanceCtrl = true;
-		    setContentView(R.layout.mds_video);
-		    Button ok = (Button) findViewById(R.id.okRectView);
-		    ok.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
+	    if (!MDWindowSelector) {
+		if (advanceCtrl) {
+		    advanceCtrl = false;
+		    screen.removeView(findViewById(R.id.englobe));
+		}
+		inflater.inflate(R.layout.mds_video, screen, true);
+		Button ok = (Button) findViewById(R.id.okRectView);
+		ok.setOnClickListener(new OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			int indice;
+			if ((indice = MotionDetectionService
+				.isAlreadyRunning(cam)) != -1) {
+			    Log.i(getString(R.string.logTag), "Remove cam "
+				    + indice);
+			    MotionDetectionService.stopRunningDetection(cam,
+				    activity.getApplication(), indice);
 			    try {
+				camC.removeMotionD();
+			    } catch (IOException e) {
+				e.printStackTrace();
+			    }
+			} else {
+			    try {
+				drawRectOnTouchView drawRect = (drawRectOnTouchView) findViewById(R.id.drawRect);
+				if (drawRect.isDraw())
+				    Log.i("AppLog",
+					    "Point : " + drawRect.toString());
 				// A REMPLACER PAR LES PRIMITIVES AJOUTER UN
 				// DIALOG AVEC UNE
 				// BARRE POUR LA SENSIBILITE
-				camC.sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M1,group=Motion.M2,group=Motion.M3,group=Motion.M4,group=Motion.M5");
-				camC.sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
+				camC.addMotionD();
 				Intent intent = new Intent(v.getContext(),
 					MotionDetectionService.class);
 				Bundle objetbunble = new Bundle();
@@ -324,19 +348,21 @@ public class Video extends Activity {
 				startService(intent);
 			    } catch (IOException e) {
 				e.printStackTrace();
+			    } catch (CouldNotCreateGroupException e) {
+				Log.i(getString(R.string.logTag),
+					"CouldNotCreateGroupException");
+				e.printStackTrace();
 			    }
 			}
-		    });
-		} else {
-		    MDWindowSelector = false;
-		    advanceCtrl = false;
-		    setContentView(R.layout.video);
-		}
-		mv = (MjpegView) findViewById(R.id.surfaceView1);
-		start_connection(mv, url);
-		mv.setOnTouchListener(new TouchListener(camC));
-		return true;
+		    }
+		});
+		MDWindowSelector = true;
+	    } else {
+		MDWindowSelector = false;
+		screen.removeView(findViewById(R.id.mds_video));
 	    }
+	    screen.invalidate();
+	    return true;
 	}
 	return false;
     }
