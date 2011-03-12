@@ -75,10 +75,11 @@ public class MotionDetectionService extends Service {
 
     public static int isAlreadyRunning(Camera c) {
 	for (int i = 0; i < currentMDCam.size(); i++) {
-	    Log.i("AppLog", "camera running : "+ currentMDCam.get(i).uniqueID + " indice = " + i);
-	    if (currentMDCam.get(i).uniqueID == c.uniqueID){
-		  Log.i("AppLog", "camera found indice : "+  i);
+	    if (currentMDCam.get(i).uniqueID == c.uniqueID) {
+		if (currentMDCam.get(i).groupID == c.groupID){
+		    Log.i("AppLog", "camera found indice : " + i + "groupe : " + i);
 		return i;
+		}
 	    }
 	}
 	return -1;
@@ -91,7 +92,9 @@ public class MotionDetectionService extends Service {
 	    currentMD.get(indice).interrupt();
 	    currentMD.remove(indice);
 	    notificationLauncher.removeStatusBarNotificationRunning(app,
-		    START_ID + c.uniqueID);
+		    (START_ID + (c.uniqueID * 10) + c.groupID));
+	    Log.i("AppLog", ("Motion Detection remove notif" + START_ID
+		    + (c.uniqueID * 10) + c.groupID));
 	    return true;
 	}
 	return false;
@@ -110,27 +113,37 @@ public class MotionDetectionService extends Service {
 	cam = (Camera) extras.getSerializable(getString(R.string.camTag));
 	limit = extras.getInt("limit");
 	delay = extras.getLong("delay");
-	Log.i("AppLog", "onStart " + cam.uniqueID + "-"+ cam.getId());
+	Log.i("AppLog", "onStart " + cam.uniqueID + "-" + cam.getId() + "-"
+		+ cam.groupID);
 
-	
 	Intent notificationIntent = new Intent(getApplicationContext(),
 		Video.class);
-	
+
 	Bundle objetbunble = new Bundle();
 	objetbunble.putSerializable(getString(R.string.camTag), cam);
 	notificationIntent.putExtras(objetbunble);
 	notificationIntent.setAction(Intent.ACTION_MAIN);
-	/* Set data because  filterEquals() compare intents without extras !!!!!!!!! */
-	notificationIntent.setDataAndType(Uri.parse(""+cam.uniqueID) ,"Camera" );
-	
+	/*
+	 * Set data because filterEquals() compare intents without extras
+	 * !!!!!!!!!
+	 */
+	notificationIntent.setDataAndType(
+		Uri.parse("" + cam.uniqueID + cam.groupID), "Camera");
 	PendingIntent contentIntent = PendingIntent.getActivity(
-		getApplicationContext(), 0, notificationIntent,0);
-	
+		getApplicationContext(), 0, notificationIntent, 0);
+	/*
+	 * Forme de l'id : StartId + 10*UniqueId + 1* GroupId [0-9] pour eviter
+	 * les conflit d'id
+	 */
 	notificationLauncher.statusBarNotificationRunning(
-		this.getApplication(), contentIntent,
-		START_ID + cam.uniqueID,
-		("Motion Detection Camera " + cam.uniqueID + "-" + cam.id));
-	
+		this.getApplication(), contentIntent, START_ID
+			+ (cam.uniqueID * 10) + cam.groupID,
+		"Motion Detection " + cam.uniqueID + "-" + cam.getId() + "-"
+			+ cam.groupID);
+
+	Log.i("AppLog", ("Motion Detection notif" + START_ID
+		+ (cam.uniqueID * 10) + cam.groupID));
+
 	t = new Thread(new serviceWork(cam, currentMD.size()));
 	currentMDCam.add(cam);
 	currentMD.add(t);
@@ -141,11 +154,15 @@ public class MotionDetectionService extends Service {
     @Override
     public void onDestroy() {
 	int size = currentMD.size();
+	Camera c;
 	for (int i = 0; i < size; i++) {
+	    c = currentMDCam.get(i);
+	    currentMDCam.remove(i);
 	    currentMD.get(i).interrupt();
 	    currentMD.remove(i);
 	    notificationLauncher.removeStatusBarNotificationRunning(
-		    this.getApplication(), START_ID + i);
+		    this.getApplication(), START_ID + (c.uniqueID * 10)
+			    + c.groupID);
 	}
 	super.onDestroy();
     }
@@ -159,12 +176,12 @@ public class MotionDetectionService extends Service {
     private class serviceWork implements Runnable {
 	Camera cam;
 	int id;
-	
-	public serviceWork(Camera cam, int id){
+
+	public serviceWork(Camera cam, int id) {
 	    this.cam = cam;
 	    this.id = id;
 	}
-	
+
 	@Override
 	public void run() {
 	    HttpURLConnection con;

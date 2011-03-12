@@ -61,12 +61,11 @@ public class CameraControl {
     private static final int HISTORY = 5;
     private static final int OBJECT_SIZE = 6;
 
-    private Camera cam;
+    Camera cam;
     private int[] currentConfig = new int[NB_FUNC];
     private int[] functionProperties = new int[NB_BASIC_FUNC];
     private String[] resolutions, rotations, formats;
 
-    private int motionDGroup = -1;
 
     private Activity activity;
 
@@ -165,7 +164,6 @@ public class CameraControl {
 		if (this.currentConfig[i] > 0)
 		    this.currentConfig[i] = ENABLED;
 	    con.disconnect();
-	    Thread.sleep(500);
 	    HttpURLConnection con1 = sendCommand("axis-cgi/admin/param.cgi?action=list");
 	    if (con1.getResponseCode() == HttpURLConnection.HTTP_OK) {
 		result = con1.getInputStream();
@@ -192,9 +190,6 @@ public class CameraControl {
 	} catch (IOException e) {
 	    con = null;
 	    result = null;
-	    e.printStackTrace();
-
-	} catch (InterruptedException e) {
 	    e.printStackTrace();
 	}
 
@@ -403,9 +398,9 @@ public class CameraControl {
 		if (line.contains("# Request failed: Couldn't create group"))
 		    throw new CouldNotCreateGroupException();
 		if (line.contains("M")) {
-		    motionDGroup = Integer.parseInt(line.substring(1, 2));
-		    Log.i("AppLog", "MotionDetection groupe = " + motionDGroup);
-		    return motionDGroup;
+		    cam.groupID = Integer.parseInt(line.substring(1, 2));
+		    Log.i("AppLog", "MotionDetection groupe = " + cam.groupID);
+		    return cam.groupID;
 		}
 	    }
 	}
@@ -413,16 +408,14 @@ public class CameraControl {
     }
 
     public int getMotionDGroup() {
-	return motionDGroup;
+	return cam.groupID;
     }
 
     public void removeMotionD() throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M"
-		+ motionDGroup);
-	Log.i("AppLog", con.getResponseCode()
-		+ "MotionDetection free groupe = " + motionDGroup);
+		+ cam.groupID);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-		motionDGroup = -1;
+	    cam.groupID = -1;
 	}
     }
 

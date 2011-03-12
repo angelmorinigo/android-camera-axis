@@ -6,7 +6,7 @@ package com.myapps;
 public class Camera implements java.io.Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
     protected String id, login, pass, ip, protocol, uri;
-    protected int port, channel, uniqueID = -1;
+    protected int port, channel, uniqueID = -1, groupID =-1;
 
     /**
      * Public constructor for a camera with information
@@ -132,6 +132,10 @@ public class Camera implements java.io.Serializable, Cloneable {
 
     public void setUniqueID(int id) {
 	uniqueID = id;
+    }
+    
+    public void setGroup(int group) {
+	groupID = group;
     }
 
     protected Object clone() throws CloneNotSupportedException {

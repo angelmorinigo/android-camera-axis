@@ -306,8 +306,9 @@ public class Video extends Activity {
 		    @Override
 		    public void onClick(View v) {
 			int indice;
+			Log.i(getString(R.string.logTag), "Camera : " + camC.cam.id + camC.cam.groupID );
 			if ((indice = MotionDetectionService
-				.isAlreadyRunning(cam)) != -1) {
+				.isAlreadyRunning(camC.cam)) != -1) {
 			    Log.i(getString(R.string.logTag), "Remove cam "
 				    + indice);
 			    MotionDetectionService.stopRunningDetection(cam,
@@ -321,27 +322,28 @@ public class Video extends Activity {
 			    try {
 				drawRectOnTouchView drawRect = (drawRectOnTouchView) findViewById(R.id.drawRect);
 				if (drawRect.isDraw())
-				    Log.i("AppLog",
-					    "Point : " + drawRect.toString());
+				    Log.i("AppLog",    "Point : " + drawRect.toString());
 				// A REMPLACER PAR LES PRIMITIVES AJOUTER UN
 				// DIALOG AVEC UNE
 				// BARRE POUR LA SENSIBILITE
-				camC.addMotionD();
+				int group = camC.addMotionD();
+				camC.cam.setGroup(group);
+				Log.i(getString(R.string.logTag), "Camera : " + camC.cam.id + camC.cam.groupID );
 				Intent intent = new Intent(v.getContext(),
 					MotionDetectionService.class);
 				Bundle objetbunble = new Bundle();
 				objetbunble.putSerializable(
-					getString(R.string.camTag), cam);
+					getString(R.string.camTag), camC.cam);
 				intent.putExtras(objetbunble);
 				int lim = Integer.parseInt(Home.preferences
 					.getString(
 						getString(R.string.SeuilDM),
 						getString(R.string.defaultSeuilDM)));
-				intent.putExtra("limit", lim);
 				long delay = Long.parseLong(Home.preferences
 					.getString(
 						getString(R.string.NotifTO),
 						getString(R.string.defaultNotifTO)));
+				intent.putExtra("limit", lim);		
 				intent.putExtra("delay", delay);
 				Log.i(getString(R.string.logTag),
 					"Start service");
