@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * 
@@ -52,28 +53,19 @@ public class CameraControl {
     public static final int AUTO = 8;
     public static final int CONTINUOUS = 16;
 
-    // paramètres de config du Motion Detection
-    private static final int TOP = 0;
-    private static final int RIGHT = 1;
-    private static final int BOTTOM = 2;
-    private static final int LEFT = 3;
-    private static final int SENSITIVITY = 4;
-    private static final int HISTORY = 5;
-    private static final int OBJECT_SIZE = 6;
-
-    Camera cam;
+    private Camera cam;
     private int[] currentConfig = new int[NB_FUNC];
     private int[] functionProperties = new int[NB_BASIC_FUNC];
     private String[] resolutions, rotations, formats;
-
+    private int motionDGroup = -1;
 
     private Activity activity;
 
     public CameraControl(Camera cam, Activity activity) {
-	this.cam = cam;
-	this.activity = activity;
-	this.initConfig();
-	this.loadConfig(-1);
+		this.cam = cam;
+		this.activity = activity;
+		this.initConfig();
+		this.loadConfig();
     }
 
     /** Initialize all the camera's functions to the NOT_SUPPORTED state */
@@ -83,116 +75,122 @@ public class CameraControl {
 	}
     }
 
-    /** Request camera's possibilities from server and mark off them */
-    private void loadConfig(int function) {
-	HttpURLConnection con = null;
-	InputStream result = null;
-	String line, property = null, value = null;
+	/** Request camera's possibilities from server and mark off them */
+	private void loadConfig() {
+		HttpURLConnection con;
+		InputStream result;
+		BufferedReader in;
+		String line, property, value;
 
-	try {
-	    con = sendCommand("axis-cgi/com/ptz.cgi?info=1&camera=1");
-	    if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-		result = con.getInputStream();
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-			result));
-
-		while ((line = in.readLine()) != null) {
-		    if (line.indexOf("=") > -1) {
-			property = line.substring(0, line.indexOf("=")).trim();
-			value = line.substring(line.indexOf("=") + 1);
-			System.out.println(property + "=" + value);
-			if (property.contains("pan")) {
-			    if (property.contentEquals("pan"))
-				this.currentConfig[PAN] += ABSOLUTE;
-			    else if (property.contentEquals("rpan"))
-				this.currentConfig[PAN] += RELATIVE;
-			    else if (property
-				    .contentEquals("continuouspantiltmove")) {
-				this.currentConfig[PAN] += CONTINUOUS;
-				this.currentConfig[TILT] += CONTINUOUS;
-			    }
-			} else if (property.contains("tilt")) {
-			    if (property.contentEquals("tilt"))
-				this.currentConfig[TILT] += ABSOLUTE;
-			    else if (property.contentEquals("rtilt"))
-				this.currentConfig[TILT] += RELATIVE;
-			} else if (property.contains("zoom")) {
-			    if (property.contentEquals("zoom"))
-				this.currentConfig[ZOOM] += ABSOLUTE;
-			    else if (property.contentEquals("rzoom"))
-				this.currentConfig[ZOOM] += RELATIVE;
-			    else if (property
-				    .contentEquals("continuouszoommove"))
-				this.currentConfig[ZOOM] += CONTINUOUS;
-			    else if (property.contentEquals("digitalzoom"))
-				this.currentConfig[ZOOM] += DIGITAL;
-			} else if (property.contains("focus")) {
-			    if (property.contentEquals("focus"))
-				this.currentConfig[FOCUS] += ABSOLUTE;
-			    else if (property.contentEquals("rfocus"))
-				this.currentConfig[FOCUS] += RELATIVE;
-			    else if (property
-				    .contentEquals("continuousfocusmove"))
-				this.currentConfig[FOCUS] += CONTINUOUS;
-			    else if (property.contentEquals("autofocus")) {
-				this.currentConfig[FOCUS] += AUTO;
-				this.currentConfig[AUTOFOCUS] = DISABLED;
-			    }
-			} else if (property.contains("iris")) {
-			    if (property.contentEquals("iris"))
-				this.currentConfig[IRIS] += ABSOLUTE;
-			    else if (property.contentEquals("riris"))
-				this.currentConfig[IRIS] += RELATIVE;
-			    else if (property
-				    .contentEquals("continuousirismove"))
-				this.currentConfig[IRIS] += CONTINUOUS;
-			    else if (property.contentEquals("autoiris")) {
-				this.currentConfig[IRIS] += AUTO;
-				this.currentConfig[AUTOFOCUS] = DISABLED;
-			    }
-			} else if (property.contentEquals("ircutfilter")) {
-			    this.currentConfig[IR_FILTER] = DISABLED;
-			    if (value.contains("auto"))
-				this.currentConfig[AUTO_IR] = DISABLED;
-			} else if (property.contentEquals("backlight")) {
-			    this.currentConfig[BACKLIGHT] = DISABLED;
+		try {
+			con = sendCommand("axis-cgi/com/ptz.cgi?info=1&camera=1");
+			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				result = con.getInputStream();
+				in = new BufferedReader(new InputStreamReader(
+						result));
+				while ((line = in.readLine()) != null) {
+					if (line.indexOf("=") > -1) {
+						property = line.substring(0, line.indexOf("=")).trim();
+						value = line.substring(line.indexOf("=") + 1);
+						System.out.println(property + "=" + value);
+						if (property.contains("pan")) {
+							if (property.contentEquals("pan"))
+								functionProperties[PAN] += ABSOLUTE;
+							else if (property.contentEquals("rpan"))
+								functionProperties[PAN] += RELATIVE;
+							else if (property
+									.contentEquals("continuouspantiltmove")) {
+								functionProperties[PAN] += CONTINUOUS;
+								functionProperties[TILT] += CONTINUOUS;
+							}
+						} else if (property.contains("tilt")) {
+							if (property.contentEquals("tilt"))
+								functionProperties[TILT] += ABSOLUTE;
+							else if (property.contentEquals("rtilt"))
+								functionProperties[TILT] += RELATIVE;
+						} else if (property.contains("zoom")) {
+							if (property.contentEquals("zoom"))
+								functionProperties[ZOOM] += ABSOLUTE;
+							else if (property.contentEquals("rzoom"))
+								functionProperties[ZOOM] += RELATIVE;
+							else if (property
+									.contentEquals("continuouszoommove"))
+								functionProperties[ZOOM] += CONTINUOUS;
+							else if (property.contentEquals("digitalzoom"))
+								functionProperties[ZOOM] += DIGITAL;
+						} else if (property.contains("focus")) {
+							if (property.contentEquals("focus"))
+								functionProperties[FOCUS] += ABSOLUTE;
+							else if (property.contentEquals("rfocus"))
+								functionProperties[FOCUS] += RELATIVE;
+							else if (property
+									.contentEquals("continuousfocusmove"))
+								functionProperties[FOCUS] += CONTINUOUS;
+							else if (property.contentEquals("autofocus")) {
+								functionProperties[FOCUS] += AUTO;
+								currentConfig[AUTOFOCUS] = DISABLED;
+							}
+						} else if (property.contains("iris")) {
+							if (property.contentEquals("iris"))
+								functionProperties[IRIS] += ABSOLUTE;
+							else if (property.contentEquals("riris"))
+								functionProperties[IRIS] += RELATIVE;
+							else if (property
+									.contentEquals("continuousirismove"))
+								functionProperties[IRIS] += CONTINUOUS;
+							else if (property.contentEquals("autoiris")) {
+								functionProperties[IRIS] += AUTO;
+								currentConfig[AUTOIRIS] = DISABLED;
+							}
+						} else if (property.contentEquals("ircutfilter")) {
+							currentConfig[IR_FILTER] = DISABLED;
+							if (value.contains("auto"))
+								currentConfig[AUTO_IR] = DISABLED;
+						} else if (property.contentEquals("backlight")) {
+							currentConfig[BACKLIGHT] = DISABLED;
+						}
+					}
+				}
 			}
-		    }
+			for (int i = 0; i < NB_BASIC_FUNC; i++)
+				if (functionProperties[i] > 0)
+					currentConfig[i] = ENABLED;
+			
+			con.disconnect();
+			Thread.sleep(500);
+			con = sendCommand("axis-cgi/admin/param.cgi?action=list&group=" +
+					"Properties.Motion.Motion,Properties.Audio.Audio," +
+					"Properties.Image");
+			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				result = con.getInputStream();
+				in = new BufferedReader(new InputStreamReader(
+						result));
+				while ((line = in.readLine()) != null) {
+					if (line.contains("Properties.Motion.Motion=yes"))
+						currentConfig[MOTION_D] = ENABLED;
+					else if (line.contains("Properties.Audio.Audio=yes"))
+						currentConfig[AUDIO] = ENABLED;
+					else if (line.contains("Properties.Image.Rotation")) {
+						value = line.substring(line.indexOf("=") + 1);
+						rotations = value.split(",");
+					} else if (line.contains("Properties.Image.Resolution")) {
+						value = line.substring(line.indexOf("=") + 1);
+						resolutions = value.split(",");
+						Log.i(activity.getString(R.string.logTag), value);
+					} else if (line.contains("Properties.Image.Format")) {
+						value = line.substring(line.indexOf("=") + 1);
+						formats = value.split(",");
+					}
+				}
+				for (int i = 0; i < NB_FUNC; i++)
+					Log.i(activity.getString(R.string.logTag), "func" + i + ": "
+							+ currentConfig[i]);
+			}
+		} catch (IOException e) {
+		    e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-	    }
-	    for (int i = 0; i < NB_BASIC_FUNC; i++)
-		if (this.currentConfig[i] > 0)
-		    this.currentConfig[i] = ENABLED;
-	    con.disconnect();
-	    HttpURLConnection con1 = sendCommand("axis-cgi/admin/param.cgi?action=list");
-	    if (con1.getResponseCode() == HttpURLConnection.HTTP_OK) {
-		result = con1.getInputStream();
-		BufferedReader in2 = new BufferedReader(new InputStreamReader(
-			result));
-		while ((line = in2.readLine()) != null) {
-		    if (line.contains("Properties.Motion.Motion=yes"))
-			this.currentConfig[MOTION_D] = ENABLED;
-		    else if (line.contains("Properties.Audio.Audio=yes"))
-			this.currentConfig[AUDIO] = ENABLED;
-		    else if (line.contains("Properties.Image.Rotation")) {
-			value = line.substring(line.indexOf("=") + 1);
-			rotations = value.split(",");
-		    } else if (line.contains("Properties.Image.Resolution")) {
-			value = line.substring(line.indexOf("=") + 1);
-			resolutions = value.split(",");
-			Log.i(activity.getString(R.string.logTag), value);
-		    } else if (line.contains("Properties.Image.Format")) {
-			value = line.substring(line.indexOf("=") + 1);
-			formats = value.split(",");
-		    }
-		}
-	    }
-	} catch (IOException e) {
-	    con = null;
-	    result = null;
-	    e.printStackTrace();
-	}
-
     }
 
     /** Return the array containing the different resolutions used for snapshot */
@@ -398,9 +396,9 @@ public class CameraControl {
 		if (line.contains("# Request failed: Couldn't create group"))
 		    throw new CouldNotCreateGroupException();
 		if (line.contains("M")) {
-		    cam.groupID = Integer.parseInt(line.substring(1, 2));
-		    Log.i("AppLog", "MotionDetection groupe = " + cam.groupID);
-		    return cam.groupID;
+		    motionDGroup = Integer.parseInt(line.substring(1, 2));
+		    Log.i("AppLog", "MotionDetection groupe = " + motionDGroup);
+		    return motionDGroup;
 		}
 	    }
 	}
@@ -408,14 +406,16 @@ public class CameraControl {
     }
 
     public int getMotionDGroup() {
-	return cam.groupID;
+	return motionDGroup;
     }
 
     public void removeMotionD() throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M"
-		+ cam.groupID);
+		+ motionDGroup);
+	Log.i("AppLog", con.getResponseCode()
+		+ "MotionDetection free groupe = " + motionDGroup);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-	    cam.groupID = -1;
+		motionDGroup = -1;
 	}
     }
 
