@@ -25,8 +25,9 @@
 	<string name="boutonImporter">Importer</string>
 
 
-	<string name="oui">Oui</string>
+	<string name="boutonArreter">Parar</string><string name="oui">Oui</string>
 	<string name="non">Non</string>
 
 	<string name="protocol_prompt">Choisir un protocol</string>
+
 </resources>

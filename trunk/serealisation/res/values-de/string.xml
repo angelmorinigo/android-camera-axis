@@ -107,9 +107,10 @@
 	<string name="boutonSupprimer">Löschen</string>
 	<string name="boutonExporter">Export</string>
 	<string name="boutonImporter">Import</string>
-	<string name="oui">Ja</string>
+	<string name="boutonArreter">Stoppen</string><string name="oui">Ja</string>
 	<string name="non">Nein</string>
 
 	<string name="protocol_prompt">Wählen Sie ein Protokoll</string>
+
 
 </resources>

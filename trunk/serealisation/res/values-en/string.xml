@@ -98,10 +98,11 @@
 	<string name="boutonModifier">Modify</string>
 	<string name="boutonSupprimer">Delete</string>
 	<string name="boutonExporter">Export</string>
-	<string name="boutonImporter">Import</string>
+	<string name="boutonImporter">Import</string><string name="boutonArreter">Stop</string>
 
 
 	<string name="oui">Yes</string>
 	<string name="non">No</string>
 	<string name="protocol_prompt">Choose a protocol</string>
+
 </resources>
