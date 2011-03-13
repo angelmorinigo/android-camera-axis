@@ -137,6 +137,10 @@ public class Camera implements java.io.Serializable, Cloneable {
     public void setGroup(int group) {
 	groupID = group;
     }
+    
+    public int getMotionDetectionID(int startID){
+	return groupID + (uniqueID*10) + startID;
+    }
 
     protected Object clone() throws CloneNotSupportedException {
 	Camera clone;

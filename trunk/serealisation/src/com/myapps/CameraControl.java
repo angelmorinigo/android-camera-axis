@@ -53,12 +53,11 @@ public class CameraControl {
     public static final int AUTO = 8;
     public static final int CONTINUOUS = 16;
 
-    private Camera cam;
+    protected Camera cam;
     private int[] currentConfig = new int[NB_FUNC];
     private int[] functionProperties = new int[NB_BASIC_FUNC];
     private String[] resolutions, rotations, formats;
     private int motionDGroup = -1;
-
     private Activity activity;
 
     public CameraControl(Camera cam, Activity activity) {
@@ -417,6 +416,16 @@ public class CameraControl {
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 		motionDGroup = -1;
 	}
+    }
+
+    public boolean updateMotionDParam(String param, String value)
+	    throws IOException {
+	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=update&Motion.M"
+		+ cam.groupID + "." + param + "=" + value);
+	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	    return true;
+	}
+	return false;
     }
 
     /* NEVER USE FOR THE MOMENT */

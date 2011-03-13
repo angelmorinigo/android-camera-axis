@@ -5,28 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.os.PowerManager;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.net.URL;
 
 import com.myapps.utils.CouldNotCreateGroupException;
 import com.myapps.utils.drawRectOnTouchView;
@@ -34,6 +13,41 @@ import com.myapps.utils.notificationLauncher;
 
 import de.mjpegsample.MjpegView.MjpegInputStream;
 import de.mjpegsample.MjpegView.MjpegView;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Path.FillType;
+import android.graphics.PointF;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.PowerManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RemoteViews;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -53,12 +67,12 @@ public class Video extends Activity {
     private int id;
 
     /* TODO : deplacer dans le value/stringd.xml */
-    /*static final String[] SIZE = new String[] { "1280x1024", "1280x960",
+    static final String[] SIZE = new String[] { "1280x1024", "1280x960",
 	    "1280x720", "768x576", "4CIF", "704x576", "704x480", "VGA",
 	    "640x480", "640x360", "2CIFEXP", "2CIF", "704x288", "704x240",
 	    "480x360", "CIF", "384x288", "352x288", "352x240", "320x240",
 	    "240x180", "QCIF", "192x144", "176x144", "176x120", "160x120" };
-    protected static Bitmap newBMP;*/
+    protected static Bitmap newBMP;
 
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private PowerManager.WakeLock wl;
@@ -140,263 +154,248 @@ public class Video extends Activity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    	RelativeLayout screen = (RelativeLayout) findViewById(R.id.RelativeLayout01);
-    	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	switch (item.getItemId()) {
-		case R.id.menu_control:
-		    if (!advanceCtrl) {
-				if (MDWindowSelector) {
-				    MDWindowSelector = false;
-				    screen.removeView(findViewById(R.id.mds_video));
-				}
-				advanceCtrl = true;
-				inflater.inflate(R.layout.adv_video, screen, true);
-		
-				/* Buttons Listener */
-				Button buttonSnap = (Button) findViewById(R.id.Snap);
-				buttonSnap.setOnClickListener(new OnClickListener() {
-					@Override
-				    /**
-				     * Show resolution dialog, get Snapshot and record it
-				     */
-				    public void onClick(View v) {
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								activity);
-						builder.setTitle("SnapShot Format");
-						/* TODO getResolutions() MARCHE PAS */
-						final String[] resolutions = camC.getResolutions();
-						builder.setSingleChoiceItems(resolutions, -1,
-								new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-							    int item) {
-								try {
-			
-								    File f = new File(fileNameURL);
-								    if (!f.exists()) {
-								    	f.mkdir();
-								    }
-								    String fileName = fileNameURL
-									    + System.currentTimeMillis()
-									    + ".jpeg";
-								    Log.i(getString(R.string.logTag),
-									    fileName);
-								    Bitmap bmp = camC
-									    .takeSnapshot(resolutions[item]);
-								    Log.i(getString(R.string.logTag),
-									    "Snap ok !!");
-								    FileOutputStream fichier = new FileOutputStream(
-									    fileName);
-								    bmp.compress(
-									    Bitmap.CompressFormat.JPEG,
-									    80, fichier);
-								    fichier.flush();
-								    fichier.close();
-								    notificationLauncher
-									    .statusBarNotificationImage(
-										    activity,
-										    bmp,
-										    ("Snap save : " + fileName),
-										    fileName, id,
-										    "" + cam.uniqueID);
-								    id++;
-								} catch (IOException e) {
-								    Log.i(getString(R.string.logTag),
-									    "Snap I/O exception !!");
-								    e.printStackTrace();
-								}
-								dialog.dismiss();
-							}
-						});
-						AlertDialog alert = builder.create();
-						alert.show();
-					}
-				});
+	RelativeLayout screen = (RelativeLayout) findViewById(R.id.RelativeLayout01);
+	LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	switch (item.getItemId()) {
+	case R.id.menu_control:
+	    if (!advanceCtrl) {
+		if (MDWindowSelector) {
+		    MDWindowSelector = false;
+		    screen.removeView(findViewById(R.id.mds_video));
+		}
+		advanceCtrl = true;
+		inflater.inflate(R.layout.adv_video, screen, true);
 
-					Button buttonIrisP = (Button) findViewById(R.id.IrisP);
-					buttonIrisP.setOnClickListener(new MyOnClickListenerControl(
-						CameraControl.IRIS, 250, 0));
-					buttonIrisP.setEnabled(camC.isSupported(CameraControl.IRIS));
-			
-					Button buttonIrisM = (Button) findViewById(R.id.IrisM);
-					buttonIrisM.setOnClickListener(new MyOnClickListenerControl(
-						CameraControl.IRIS, -250, 0));
-					buttonIrisM.setEnabled(camC.isSupported(CameraControl.IRIS));
-			
-					Button buttonFocusP = (Button) findViewById(R.id.FocusP);
-					buttonFocusP.setOnClickListener(new MyOnClickListenerControl(
-						CameraControl.FOCUS, 2500, 0));
-					buttonFocusP.setEnabled(camC.isSupported(CameraControl.FOCUS));
-			
-					Button buttonFocusM = (Button) findViewById(R.id.FocusM);
-					buttonFocusM.setOnClickListener(new MyOnClickListenerControl(
-						CameraControl.FOCUS, -2500, 0));
-					buttonFocusM.setEnabled(camC.isSupported(CameraControl.FOCUS));
-			
-					Button buttonBrightnessP = (Button) findViewById(R.id.BrightnessP);
-					buttonBrightnessP
-						.setOnClickListener(new MyOnClickListenerControl(
-							CameraControl.BRIGHTNESS, 2500, 0));
-					buttonBrightnessP.setEnabled(camC.isSupported(CameraControl.BRIGHTNESS));
-			
-					Button buttonBrightnessM = (Button) findViewById(R.id.BrightnessM);
-					buttonBrightnessM
-						.setOnClickListener(new MyOnClickListenerControl(
-							CameraControl.BRIGHTNESS, -2500, 0));
-					buttonBrightnessM.setEnabled(camC.isSupported(CameraControl.BRIGHTNESS));
-					
-					Button buttonIROn = (Button) findViewById(R.id.IROn);
-					buttonIROn.setOnClickListener(new OnClickListener() {
-					    @Override
-					    public void onClick(View v) {
-						camC.switchAutoFunc(CameraControl.IR_FILTER, "on");
+		/* Buttons Listener */
+		Button buttonSnap = (Button) findViewById(R.id.Snap);
+		buttonSnap.setOnClickListener(new OnClickListener() {
+		    @Override
+		    /**
+		     * Show resolution dialog, get Snapshot and record it
+		     */
+		    public void onClick(View v) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+				activity);
+			builder.setTitle("SnapShot Format");
+			/* TODO getResolutions() MARCHE PAS */
+			// final String[] resolutions = camC.getResolutions();
+			builder.setSingleChoiceItems(SIZE, -1,
+				new DialogInterface.OnClickListener() {
+				    public void onClick(DialogInterface dialog,
+					    int item) {
+					try {
+
+					    File f = new File(fileNameURL);
+					    if (!f.exists()) {
+						f.mkdir();
 					    }
-					});
-					buttonIROn.setEnabled(camC.isSupported(CameraControl.AUTO_IR));
-			
-					Button buttonIROff = (Button) findViewById(R.id.IROff);
-					buttonIROff.setOnClickListener(new OnClickListener() {
-					    @Override
-					    public void onClick(View v) {
-						camC.switchAutoFunc(CameraControl.IR_FILTER, "off");
-					    }
-					});
-					buttonIROff.setEnabled(camC.isSupported(CameraControl.AUTO_IR));
-					
-					Button backlightOn = (Button) findViewById(R.id.BacklightOn);
-					backlightOn.setOnClickListener(new OnClickListener() {
-					    @Override
-					    public void onClick(View v) {
-						camC.switchAutoFunc(CameraControl.BACKLIGHT, "on");
-					    }
-					});
-					backlightOn.setEnabled(camC.isSupported(CameraControl.BACKLIGHT));
-				
-					Button backlightOff = (Button) findViewById(R.id.BacklightOff);
-					backlightOff.setOnClickListener(new OnClickListener() {
-					    @Override
-					    public void onClick(View v) {
-						camC.switchAutoFunc(CameraControl.BACKLIGHT, "off");
-					    }
-					});
-					backlightOff.setEnabled(camC.isSupported(CameraControl.BACKLIGHT));		
-			    } else {
-			    	advanceCtrl = false;
-			    	setContentView(R.layout.video);
-			    	mv = (MjpegView) findViewById(R.id.surfaceView1);
-				    start_connection(mv, url);
-				    mv.setOnTouchListener(new TouchListener(camC));
-			    }
-		    return true;
-		case R.id.menu_auto_focus:
-			if (camC.isSupported(CameraControl.AUTOFOCUS)) {
-				camC.switchAutoFunc(CameraControl.AUTOFOCUS, "on");
-			} else {
-				Toast.makeText(activity.getApplicationContext(), 
-						"La camera ne gere pas l'autofocus",
-						Toast.LENGTH_LONG).show();
-			}
-		    return true;
-		case R.id.menu_auto_ir:
-			if (camC.isSupported(CameraControl.AUTO_IR)) {
-				camC.switchAutoFunc(CameraControl.AUTO_IR, "auto");
-			} else {
-				Toast.makeText(activity.getApplicationContext(), 
-						"La camera ne gere pas le filtre infrarouge automatique",
-						Toast.LENGTH_LONG).show();
-			}
-		    return true;
-		case R.id.menu_auto_iris:
-		    if (camC.isSupported(CameraControl.AUTOIRIS)) {
-		    	camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
-			} else {
-				Toast.makeText(activity.getApplicationContext(), 
-						"La camera ne gere pas l'auto-iris",
-						Toast.LENGTH_LONG).show();
-			}
-		    return true;
-		case R.id.menu_active_md:
-			if (camC.isSupported(CameraControl.MOTION_D)) {
-			    if (!MDWindowSelector) {
-					if (advanceCtrl) {
-					    advanceCtrl = false;
-					    screen.removeView(findViewById(R.id.englobe));
+					    String fileName = fileNameURL
+						    + System.currentTimeMillis()
+						    + ".jpeg";
+					    Log.i(getString(R.string.logTag),
+						    fileName);
+					    Bitmap bmp = camC
+						    .takeSnapshot(SIZE[item]);
+					    Log.i(getString(R.string.logTag),
+						    "Snap ok !!");
+					    FileOutputStream fichier = new FileOutputStream(
+						    fileName);
+					    bmp.compress(
+						    Bitmap.CompressFormat.JPEG,
+						    80, fichier);
+					    fichier.flush();
+					    fichier.close();
+					    notificationLauncher
+						    .statusBarNotificationImage(
+							    activity,
+							    bmp,
+							    ("Snap save : " + fileName),
+							    fileName, id,
+							    "" + cam.uniqueID);
+					    id++;
+					} catch (IOException e) {
+					    Log.i(getString(R.string.logTag),
+						    "Snap I/O exception !!");
+					    e.printStackTrace();
 					}
-					inflater.inflate(R.layout.mds_video, screen, true);
-					final Button ok = (Button) findViewById(R.id.okRectView);
-					if (MotionDetectionService.isAlreadyRunning(cam) != -1)
-						ok.setText("Arreter");
-					else 
-						ok.setText("Lancer");
-					ok.setOnClickListener(new OnClickListener() {
-				    @Override
-				    public void onClick(View v) {
-						int indice;
-						if ((indice = MotionDetectionService
-							.isAlreadyRunning(cam)) != -1) {
-						    Log.i(getString(R.string.logTag), "Remove cam "
-							    + indice);
-						    MotionDetectionService.stopRunningDetection(cam,
-							    activity.getApplication(), indice);
-						    try {
-							camC.removeMotionD();
-							ok.setText("Lancer");
-						    } catch (IOException e) {
-							e.printStackTrace();
-						    }
-						} else {
-						    try {
-							drawRectOnTouchView drawRect = (drawRectOnTouchView) findViewById(R.id.drawRect);
-							if (drawRect.isDraw())
-							    Log.i("AppLog",
-								    "Point : " + drawRect.toString());
-							// A REMPLACER PAR LES PRIMITIVES AJOUTER UN
-							// DIALOG AVEC UNE
-							// BARRE POUR LA SENSIBILITE
-							camC.addMotionD();
-							ok.setText("Arreter");
-							Intent intent = new Intent(v.getContext(),
-								MotionDetectionService.class);
-							Bundle objetbunble = new Bundle();
-							objetbunble.putSerializable(
-								getString(R.string.camTag), cam);
-							intent.putExtras(objetbunble);
-							int lim = Integer.parseInt(Home.preferences
-								.getString(
-									getString(R.string.SeuilDM),
-									getString(R.string.defaultSeuilDM)));
-							intent.putExtra("limit", lim);
-							long delay = Long.parseLong(Home.preferences
-								.getString(
-									getString(R.string.NotifTO),
-									getString(R.string.defaultNotifTO)));
-							intent.putExtra("delay", delay);
-							Log.i(getString(R.string.logTag),
-								"Start service");
-							startService(intent);
-						    } catch (IOException e) {
-							e.printStackTrace();
-						    } catch (CouldNotCreateGroupException e) {
-							Log.i(getString(R.string.logTag),
-								"CouldNotCreateGroupException");
-							e.printStackTrace();
-						    }
-						}
+					dialog.dismiss();
 				    }
 				});
-				MDWindowSelector = true;
-			    } else {
-				MDWindowSelector = false;
-				screen.removeView(findViewById(R.id.mds_video));
-			    }
-			    screen.invalidate();
-			} else {
-				Toast.makeText(activity.getApplicationContext(), 
-						"La camera ne gere pas la detection de mouvement",
-						Toast.LENGTH_LONG).show();
-			}
-			return true;
+			AlertDialog alert = builder.create();
+			alert.show();
+		    }
+		});
+
+		Button buttonIrisP = (Button) findViewById(R.id.IrisP);
+		buttonIrisP.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.IRIS, 250, 0));
+
+		Button buttonIrisM = (Button) findViewById(R.id.IrisM);
+		buttonIrisM.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.IRIS, -250, 0));
+
+		Button buttonFocusP = (Button) findViewById(R.id.FocusP);
+		buttonFocusP.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.FOCUS, 2500, 0));
+
+		Button buttonFocusM = (Button) findViewById(R.id.FocusM);
+		buttonFocusM.setOnClickListener(new MyOnClickListenerControl(
+			CameraControl.FOCUS, -2500, 0));
+
+		Button buttonBrightnessP = (Button) findViewById(R.id.BrightnessP);
+		buttonBrightnessP
+			.setOnClickListener(new MyOnClickListenerControl(
+				CameraControl.BRIGHTNESS, 2500, 0));
+
+		Button buttonBrightnessM = (Button) findViewById(R.id.BrightnessM);
+		buttonBrightnessM
+			.setOnClickListener(new MyOnClickListenerControl(
+				CameraControl.BRIGHTNESS, -2500, 0));
+		Button buttonIROn = (Button) findViewById(R.id.IROn);
+		buttonIROn.setOnClickListener(new OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			camC.switchAutoFunc(CameraControl.AUTO_IR, "on");
+		    }
+		});
+
+		Button buttonIROff = (Button) findViewById(R.id.IROff);
+		buttonIROff.setOnClickListener(new OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			camC.switchAutoFunc(CameraControl.AUTO_IR, "off");
+		    }
+		});
+		Button backlightOn = (Button) findViewById(R.id.BacklightOn);
+		backlightOn.setOnClickListener(new OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			camC.switchAutoFunc(CameraControl.BACKLIGHT, "on");
+		    }
+		});
+		Button backlightOff = (Button) findViewById(R.id.BacklightOff);
+		backlightOff.setOnClickListener(new OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			camC.switchAutoFunc(CameraControl.BACKLIGHT, "off");
+		    }
+		});
+	    } else {
+		advanceCtrl = false;
+		screen.removeView(findViewById(R.id.englobe));
+	    }
+	    screen.invalidate();
+	    return true;
+	case R.id.menu_auto_focus:
+	    camC.switchAutoFunc(CameraControl.AUTOFOCUS, "on");
+	    return true;
+	case R.id.menu_auto_ir:
+	    camC.switchAutoFunc(CameraControl.AUTO_IR, "auto");
+	    return true;
+	case R.id.menu_auto_iris:
+	    camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
+	    return true;
+	case R.id.menu_active_md:
+	    if (!MDWindowSelector) {
+		if (advanceCtrl) {
+		    advanceCtrl = false;
+		    screen.removeView(findViewById(R.id.englobe));
 		}
-		return false;
+		inflater.inflate(R.layout.mds_video, screen, true);
+		Button ok = (Button) findViewById(R.id.okRectView);
+		ok.setOnClickListener(new OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			int indice;
+			Log.i(getString(R.string.logTag), "Camera : "
+				+ camC.cam.id + camC.cam.groupID);
+			if ((indice = MotionDetectionService
+				.isAlreadyRunning(camC.cam)) != -1) {
+			    Log.i(getString(R.string.logTag), "Remove cam "
+				    + indice);
+			    MotionDetectionService.stopRunningDetection(cam,
+				    activity.getApplication(), indice);
+			    try {
+				camC.removeMotionD();
+			    } catch (IOException e) {
+				e.printStackTrace();
+			    }
+			} else {
+			    try {
+				drawRectOnTouchView drawRect = (drawRectOnTouchView) findViewById(R.id.drawRect);
+				// A REMPLACER PAR LES PRIMITIVES AJOUTER UN
+				// DIALOG AVEC UNE
+				// BARRE POUR LA SENSIBILITE
+				int group = camC.addMotionD();
+				if (drawRect.isDraw()) {
+				    Log.i("AppLog",
+					    "Point : " + drawRect.toString());
+				    PointF start = drawRect.getStart();
+				    PointF end = drawRect.getEnd();
+				    int absoluteTop = (int) (start.y * 10000 / drawRect
+					    .getBottom());
+				    int absoluteBottom = (int) (end.y * 10000 / drawRect
+					    .getBottom());
+				    int absoluteRight = (int) (end.x * 10000 / drawRect
+					    .getRight());
+				    int absoluteLeft = (int) (start.x * 10000 / drawRect
+					    .getRight());
+				    Log.i("AppLog", "top : " + absoluteTop
+					    + " bottom : " + absoluteBottom
+					    + " right : " + absoluteRight
+					    + " left : " + absoluteLeft);
+
+				    camC.updateMotionDParam("Top", ""
+					    + absoluteTop);
+				    camC.updateMotionDParam("Bottom", ""
+					    + absoluteBottom);
+				    camC.updateMotionDParam("Right", ""
+					    + absoluteRight);
+				    camC.updateMotionDParam("Left", ""
+					    + absoluteLeft);
+
+				}
+				camC.cam.setGroup(group);
+				Log.i(getString(R.string.logTag), "Camera : "
+					+ camC.cam.id + camC.cam.groupID);
+				Intent intent = new Intent(v.getContext(),
+					MotionDetectionService.class);
+				Bundle objetbunble = new Bundle();
+				objetbunble.putSerializable(
+					getString(R.string.camTag), camC.cam);
+				intent.putExtras(objetbunble);
+				int lim = Integer.parseInt(Home.preferences
+					.getString(
+						getString(R.string.SeuilDM),
+						getString(R.string.defaultSeuilDM)));
+				long delay = Long.parseLong(Home.preferences
+					.getString(
+						getString(R.string.NotifTO),
+						getString(R.string.defaultNotifTO)));
+				intent.putExtra("limit", lim);
+				intent.putExtra("delay", delay);
+				Log.i(getString(R.string.logTag),
+					"Start service");
+				startService(intent);
+			    } catch (IOException e) {
+				e.printStackTrace();
+			    } catch (CouldNotCreateGroupException e) {
+				Log.i(getString(R.string.logTag),
+					"CouldNotCreateGroupException");
+				e.printStackTrace();
+			    }
+			}
+		    }
+		});
+		MDWindowSelector = true;
+	    } else {
+		MDWindowSelector = false;
+		screen.removeView(findViewById(R.id.mds_video));
+	    }
+	    screen.invalidate();
+	    return true;
+	}
+	return false;
     }
 
     /**

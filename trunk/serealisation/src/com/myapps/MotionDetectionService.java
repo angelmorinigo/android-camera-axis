@@ -77,7 +77,6 @@ public class MotionDetectionService extends Service {
 	for (int i = 0; i < currentMDCam.size(); i++) {
 	    if (currentMDCam.get(i).uniqueID == c.uniqueID) {
 		if (currentMDCam.get(i).groupID == c.groupID){
-		    Log.i("AppLog", "camera found indice : " + i + "groupe : " + i);
 		return i;
 		}
 	    }
@@ -91,10 +90,8 @@ public class MotionDetectionService extends Service {
 	    currentMDCam.remove(indice);
 	    currentMD.get(indice).interrupt();
 	    currentMD.remove(indice);
-	    notificationLauncher.removeStatusBarNotificationRunning(app,
-		    (START_ID + (c.uniqueID * 10) + c.groupID));
-	    Log.i("AppLog", ("Motion Detection remove notif" + START_ID
-		    + (c.uniqueID * 10) + c.groupID));
+	    notificationLauncher.removeStatusBarNotificationRunning(app, c.getMotionDetectionID(START_ID));
+	    Log.i("AppLog", "Motion Detection remove notif" + c.getMotionDetectionID(START_ID));
 	    return true;
 	}
 	return false;
@@ -140,11 +137,8 @@ public class MotionDetectionService extends Service {
 			+ (cam.uniqueID * 10) + cam.groupID,
 		"Motion Detection " + cam.uniqueID + "-" + cam.getId() + "-"
 			+ cam.groupID);
-
-	Log.i("AppLog", ("Motion Detection notif" + START_ID
-		+ (cam.uniqueID * 10) + cam.groupID));
-
-	t = new Thread(new serviceWork(cam, currentMD.size()));
+	Log.i("AppLog", "Motion Detection notif" + cam.getMotionDetectionID(START_ID));
+	t = new Thread(new serviceWork(cam));
 	currentMDCam.add(cam);
 	currentMD.add(t);
 	t.start();
@@ -161,8 +155,7 @@ public class MotionDetectionService extends Service {
 	    currentMD.get(i).interrupt();
 	    currentMD.remove(i);
 	    notificationLauncher.removeStatusBarNotificationRunning(
-		    this.getApplication(), START_ID + (c.uniqueID * 10)
-			    + c.groupID);
+		    this.getApplication(), c.getMotionDetectionID(START_ID));
 	}
 	super.onDestroy();
     }
@@ -175,11 +168,9 @@ public class MotionDetectionService extends Service {
 
     private class serviceWork implements Runnable {
 	Camera cam;
-	int id;
 
-	public serviceWork(Camera cam, int id) {
+	public serviceWork(Camera cam) {
 	    this.cam = cam;
-	    this.id = id;
 	}
 
 	@Override
@@ -188,7 +179,7 @@ public class MotionDetectionService extends Service {
 	    Log.i("AppLog", "thread run");
 	    try {
 		con = sendCommand(cam,
-			"axis-cgi/motion/motiondata.cgi?Sensitivity=65&History=50&Size=25");
+			"axis-cgi/motion/motiondata.cgi?group="+cam.groupID);
 		InputStreamReader isr = new InputStreamReader(
 			con.getInputStream());
 		BufferedReader br = new BufferedReader(isr);
@@ -198,6 +189,7 @@ public class MotionDetectionService extends Service {
 		while (!Thread.currentThread().isInterrupted()) {
 		    s = br.readLine();
 		    if (s.contains("level=") == true) {
+			Log.i("AppLog", s);
 			lvlc = s.indexOf("level=");
 			s = s.substring(lvlc);
 			lvlb = s.indexOf("=");
@@ -209,7 +201,6 @@ public class MotionDetectionService extends Service {
 			    if (last + delay < System.currentTimeMillis()) {
 				MotionDetectionService.myViewUpdateHandler
 					.sendMessage(m);
-				Log.i("AppLog", "Mouvement thread " + id);
 				last = System.currentTimeMillis();
 			    }
 			}

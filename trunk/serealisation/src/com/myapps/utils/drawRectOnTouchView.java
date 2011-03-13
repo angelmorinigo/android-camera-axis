@@ -38,7 +38,6 @@ public class drawRectOnTouchView extends View {
 	canvas.drawLine(end.x, start.y, end.x, end.y, mPaint);
 	canvas.drawLine(start.x, start.y, start.x, end.y, mPaint);
 	canvas.drawLine(start.x, start.y, end.x, start.y, mPaint);
-
     }
 
     @Override
@@ -50,6 +49,11 @@ public class drawRectOnTouchView extends View {
 	case MotionEvent.ACTION_DOWN:
 	    start.set(x, y);
 	    isDraw = false;
+	    break;
+	case MotionEvent.ACTION_MOVE:
+	    end.set(x, y);
+	    isDraw = false;
+	    invalidate();
 	    break;
 	case MotionEvent.ACTION_UP:
 	    end.set(x, y);
@@ -69,12 +73,15 @@ public class drawRectOnTouchView extends View {
     }
 
     public boolean isDraw() {
+	if(start.equals(end.x, end.y))
+	    return false;
 	return isDraw;
     }
-    
-    public String toString(){
-	return "Point A = {" + start.x + "," + start.y + "}" + " Point B = {" + end.x + "," + end.y + "}";
-	
+
+    public String toString() {
+	return "Point A = {" + start.x + "," + start.y + "}" + " Point B = {"
+		+ end.x + "," + end.y + "}";
+
     }
 
 }
