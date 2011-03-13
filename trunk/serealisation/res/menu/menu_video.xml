@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/menu_control" android:title="Activer les controles avancés"
+	<item android:id="@+id/menu_control" android:title="@string/enableAC"
 		android:icon="@drawable/ic_menu_refresh" />
-		<item android:id="@+id/menu_auto_iris" android:title="Auto Iris"
-		android:icon="@drawable/ic_menu_refresh" />
-		<item android:id="@+id/menu_auto_focus" android:title="Auto Focus"
-		android:icon="@drawable/ic_menu_refresh" />
-		<item android:id="@+id/menu_auto_ir" android:title="Auto IR cut filter"
-		android:icon="@drawable/ic_menu_refresh" />
-		<item android:id="@+id/menu_active_md" android:title="Activer Motion Detection"
+	<item android:id="@+id/menu_active_md" android:title="@string/enableMD"
 		android:icon="@drawable/alert_dialog_icon" />
+	<item android:id="@+id/menu_auto_iris" android:title="Auto Iris"
+		android:icon="@drawable/ic_menu_refresh" />
+	<item android:id="@+id/menu_auto_focus" android:title="Auto Focus"
+		android:icon="@drawable/ic_menu_refresh" />
+	<item android:id="@+id/menu_auto_ir" android:title="Auto IR cut filter"
+		android:icon="@drawable/ic_menu_refresh" />
 </menu> 

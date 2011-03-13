@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/menu_ajouter" android:title="Ajouter une Caméra"
+	<item android:id="@+id/menu_ajouter" android:title="@string/addCam"
 		android:icon="@drawable/ic_menu_refresh" />
-	<item android:id="@+id/menu_multi_vue" android:title="Mode multi-vues"
+	<item android:id="@+id/menu_multi_vue" android:title="@string/multiView"
 		android:icon="@drawable/monitor" />
-	<item android:id="@+id/param" android:title="Paramètres"
+	<item android:id="@+id/param" android:title="@string/more"
 		android:icon="@drawable/ic_menu_preferences">
 		<menu>
-			<item android:id="@+id/parametres" android:title="Parametres" />
-			<item android:id="@+id/export" android:title="Exporter la configuration" />
-			<item android:id="@+id/importer" android:title="Importer la configuration" />
-			<item android:id="@+id/partager" android:title="Partager" />
-			<item android:id="@+id/menu_option_about" android:title="A Propos" />
+			<item android:id="@+id/parametres" android:title="@string/params" />
+			<item android:id="@+id/export" android:title="@string/exportConfig" />
+			<item android:id="@+id/importer" android:title="@string/importConfig" />
+			<item android:id="@+id/partager" android:title="@string/share" />
+			<item android:id="@+id/menu_option_about" android:title="@string/aboutTitle" />
 
 		</menu>
 	</item>
-	<item android:id="@+id/menu_quitter" android:title="Quitter"
+	<item android:id="@+id/menu_quitter" android:title="@string/close"
 		android:icon="@drawable/ic_menu_logout" />
 </menu> 

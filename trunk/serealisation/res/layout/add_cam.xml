@@ -6,40 +6,40 @@
 		android:stretchColumns="1" android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:gravity="fill"
 		android:scrollbars="vertical">
-		<TextView android:hint="Ajouter une caméra" android:textSize="12pt"
+		<TextView android:hint="@string/addCam" android:textSize="12pt"
 			android:gravity="center" />
-		<Button android:text="Ajouter Depuis un QrCode" android:id="@+id/bqr"
+		<Button android:text="@string/addCamQR" android:id="@+id/bqr"
 			android:layout_height="wrap_content" android:gravity="center"
 			android:layout_width="fill_parent" android:layout_weight="1" />
 		<TableRow>
-			<TextView android:text="Identifiant :" android:id="@+id/tid" />
-			<EditText android:hint="Entrez un id" android:id="@+id/eid"
+			<TextView android:text="@string/description" android:id="@+id/tid" />
+			<EditText android:hint="@string/descriptionHint" android:id="@+id/eid"
 				android:gravity="center" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Login :" android:id="@+id/tlogin" />
-			<EditText android:hint="Entrez un login" android:id="@+id/elogin"
+			<TextView android:text="@string/login" android:id="@+id/tlogin" />
+			<EditText android:hint="@string/loginHint" android:id="@+id/elogin"
 				android:gravity="center" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Password :" android:id="@+id/tpass" />
-			<EditText android:hint="Entrez un pass" android:id="@+id/epass"
+			<TextView android:text="@string/pass" android:id="@+id/tpass" />
+			<EditText android:hint="@string/passHint" android:id="@+id/epass"
 				android:gravity="center" android:password="true" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Ip :" android:id="@+id/tip" />
-			<EditText android:hint="Entrez une ip" android:id="@+id/eip"
+			<TextView android:text="@string/ip" android:id="@+id/tip" />
+			<EditText android:hint="@string/ipHint" android:id="@+id/eip"
 				android:gravity="center" />
 		</TableRow>
 
 		<TableRow>
-			<TextView android:text="Port :" android:id="@+id/tport" />
-			<EditText android:hint="Entrez un port" android:id="@+id/eport"
+			<TextView android:text="@string/port" android:id="@+id/tport" />
+			<EditText android:hint="@string/portHint" android:id="@+id/eport"
 				android:gravity="center" android:numeric="decimal" />
 		</TableRow>
 		<TableRow>
-			<TextView android:text="Channel :" android:id="@+id/tchan" />
-			<EditText android:hint="Entrez un Canal" android:id="@+id/echan"
+			<TextView android:text="@string/chan" android:id="@+id/tchan" />
+			<EditText android:hint="@string/chanHint" android:id="@+id/echan"
 				android:gravity="center" android:numeric="decimal" />
 		</TableRow>
 		<!--<TableRow> <TextView android:text="Protocol :" android:id="@+id/tprot" 
@@ -47,10 +47,10 @@
 			android:layout_height="wrap_content" android:prompt="@string/protocol_prompt" 
 			/> </TableRow> -->
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android">
-			<Button android:id="@+id/add" android:text="Ajouter"
+			<Button android:id="@+id/add" android:text="@string/add"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_weight="1" />
-			<Button android:id="@+id/ret" android:text="Annuler"
+			<Button android:id="@+id/ret" android:text="@string/cancel"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_weight="1" />
 		</LinearLayout>

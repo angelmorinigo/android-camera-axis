@@ -90,7 +90,7 @@ public class Home extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.view);
+	setContentView(R.layout.main_view);
 	activity = this;
 	
 	/* Resolve preferences */

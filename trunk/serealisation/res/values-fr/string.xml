@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Camera</string>
+
+	<!-- AddCam -->
+	<string name="addCam">Ajouter une caméra</string>
+	<string name="addCamQR">Ajouter Depuis un QrCode</string>
+	<string name="description">Description</string>
+	<string name="descriptionHint">Entrez un descriptif</string>
+	<string name="login">Identifiant :</string>
+	<string name="loginHint">Entrez un identifiant </string>
+	<string name="pass">Mot de pass :</string>
+	<string name="passHint">Entrez un mdp</string>
+	<string name="ip">Adresse ip :</string>
+	<string name="ipHint">Entrez une ip</string>
+	<string name="port">Port :</string>
+	<string name="portHint">Entrez un port</string>
+	<string name="chan">Cannal :</string>
+	<string name="chanHint">Entrez un cannal </string>
+	<string name="add">Ajouter</string>
+	<string name="cancel">Annuler</string>
+
+	<!-- AdvVideo -->
+
+	<!-- dialog About -->
+	<string name="aboutTitle">A Propos</string>
+	<string name="close">Fermer</string>
+
+	<!-- dialog Welcome -->
+	<string name="ok">OK</string>
+
+	<!-- edit Cam -->
+	<string name="edit">Modifier</string>
+	<string name="editCam">Modifier une caméra</string>
+	<string name="addr">Adresse :</string>
+	<string name="addrHint">Entrez une Adresse</string>
+
+	<!-- imp exp -->
+	<string name="enterUrl">Entrez une URL</string>
+
+	<!-- mds video -->
+	<string name="run">Demarrer</string>
+
+	<!-- main view -->
+	<string name="selectCam">Séléctionner une caméra</string>
+
+	<!-- multi view -->
+	<string name="cameraAlertTitle">Nombre de camera a afficher :</string>
+
+	<!-- main menu -->
+	<string name="multiView">Mode multi-vues</string>
+	<string name="more">Plus</string>
+	<string name="params">Paramètres</string>
+	<string name="exportConfig">Exporter la configuration</string>
+	<string name="importConfig">Importer la configuration</string>
+	<string name="share">Partager</string>
+
+	<!-- video menu -->
+	<string name="enableMD">Activer Motion Detection</string>
+	<string name="enableAC">Activer les controles avancés</string>
+
+	<!-- preferences -->
+	<string name="Delai">Delai</string>
+	<string name="DelaiFPS">Delai FPS</string>
+	<string name="DelaiFPSHint">Un delai (en ms) élevé entre chaque
+		raffraichissement diminue les fps mais permet la reduction de data !
+		(mode multi-vues uniquement)</string>
+	<string name="DelaiTO">Time-out connection HTTP</string>
+	<string name="DelaiTOHint">Definir soit-meme le temps de non reponse des
+		requetes HTTP (en ms)</string>
+	<string name="DelaiNMD">Delai de Notification Motion Detection</string>
+	<string name="DelaiNMDHint">Definir un interval minimum personnalisé entre deux
+		notification
+		pour la detection de mouvements (en ms)</string>
+
+	<string name="other">Autre</string>
+	<string name="disableTricky">Desactiver les astuces</string>
+	<string name="disableTrickyHint">Ne lance plus les astuces au demarrage</string>
+
+	<string name="sens">Sensibilité</string>
+	<string name="sensCam">Controle de la camera</string>
+	<string name="sensCamHint">Vous pouvez augmenter ou diminuer la sensibilite du
+		PTZ</string>
+	<string name="sensMD">Detection des mouvements</string>
+	<string name="sensMDHint">Definie le seuil de la detection des mouvements
+	</string>
+
+
+
+
+
+	<!-- Messages -->
+	<string name="messageRemove">Etes-vous sur de vouloir supprimer cette camera ?
+	</string>
+	<string name="messageChoose">Que voulez-vous faire ?</string>
+	<string name="messageBienvenue">Bienvenue !</string>
+	<string name="messageAbout">Version 1.0\nDéveloppé par :\nJerome NAHELOU,
+		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S
+		sous android 2.1\n</string>
+	<string name="messageExport">Fichier de sortie :</string>
+	<string name="messageImport">Fichier a importer :</string>
+	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son depot
+		svn http://code.google.com/p/android-camera-axis/</string>
+
+	<!-- bouttons -->
+	<string name="boutonModifier">Modifier</string>
+	<string name="boutonSupprimer">Supprimer</string>
+	<string name="boutonExporter">Exporter</string>
+	<string name="boutonImporter">Importer</string>
+
+
+	<string name="oui">Oui</string>
+	<string name="non">Non</string>
+
+	<string name="protocol_prompt">Choisir un protocol</string>
+
+</resources>

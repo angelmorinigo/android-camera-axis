@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Cámara</string>
+	
+	<string name="cameraAlertTitle">Número de cámaras que se muestra :</string>
+	<string name="aboutTitle">A Propos</string>
+
+
+	<string name="messageRemove">Etes-vous sur de vouloir supprimer cette camera ?
+	</string>
+	<string name="messageChoose">Que voulez-vous faire ?</string>
+	<string name="messageBienvenue">Bienvenue !</string>
+	<string name="messageAbout">Version 1.0\nDéveloppé par :\nJerome NAHELOU,
+		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S
+		sous android 2.1\n</string>
+	<string name="messageExport">Fichier de sortie :</string>
+	<string name="messageImport">Fichier a importer :</string>
+	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son depot
+		svn http://code.google.com/p/android-camera-axis/</string>
+
+
+	<string name="boutonModifier">Modifier</string>
+	<string name="boutonSupprimer">Supprimer</string>
+	<string name="boutonExporter">Exporter</string>
+	<string name="boutonImporter">Importer</string>
+
+
+	<string name="oui">Oui</string>
+	<string name="non">Non</string>
+
+	<string name="protocol_prompt">Choisir un protocol</string>
+</resources>

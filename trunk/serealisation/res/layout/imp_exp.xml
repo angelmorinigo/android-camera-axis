@@ -7,7 +7,7 @@
 		android:text="je suis la !!!" android:layout_height="fill_parent"
 		android:layout_weight="1" android:gravity="center" />
 
-	<EditText android:hint="Entrez une url" android:id="@+id/imp_exp_url"
+	<EditText android:hint="@string/enterUrl" android:id="@+id/imp_exp_url"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:layout_weight="1" />
 

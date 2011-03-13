@@ -7,7 +7,7 @@
 		android:layout_height="fill_parent" android:layout_width="fill_parent" />
 	<LinearLayout android:orientation="vertical"
 		android:layout_height="fill_parent" android:layout_width="fill_parent">
-		<Button android:layout_width="wrap_content" android:text="Lancer"
+		<Button android:layout_width="wrap_content" android:text="@string/run"
 			android:id="@+id/okRectView" android:layout_height="wrap_content" />
 	</LinearLayout>
 </RelativeLayout>
