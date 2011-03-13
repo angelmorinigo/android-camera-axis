@@ -67,13 +67,13 @@ public class Video extends Activity {
     private int id;
 
     /* TODO : deplacer dans le value/stringd.xml */
-    static final String[] SIZE = new String[] { "1280x1024", "1280x960",
-	    "1280x720", "768x576", "4CIF", "704x576", "704x480", "VGA",
-	    "640x480", "640x360", "2CIFEXP", "2CIF", "704x288", "704x240",
-	    "480x360", "CIF", "384x288", "352x288", "352x240", "320x240",
-	    "240x180", "QCIF", "192x144", "176x144", "176x120", "160x120" };
-    protected static Bitmap newBMP;
-
+    /*
+     * static final String[] SIZE = new String[] { "1280x1024", "1280x960",
+     * "1280x720", "768x576", "4CIF", "704x576", "704x480", "VGA", "640x480",
+     * "640x360", "2CIFEXP", "2CIF", "704x288", "704x240", "480x360", "CIF",
+     * "384x288", "352x288", "352x240", "320x240", "240x180", "QCIF", "192x144",
+     * "176x144", "176x120", "160x120" }; protected static Bitmap newBMP;
+     */
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private PowerManager.WakeLock wl;
     private TouchListener customTouchListener;
@@ -178,8 +178,8 @@ public class Video extends Activity {
 				activity);
 			builder.setTitle("SnapShot Format");
 			/* TODO getResolutions() MARCHE PAS */
-			// final String[] resolutions = camC.getResolutions();
-			builder.setSingleChoiceItems(SIZE, -1,
+			final String[] resolutions = camC.getResolutions();
+			builder.setSingleChoiceItems(resolutions, -1,
 				new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog,
 					    int item) {
@@ -195,7 +195,7 @@ public class Video extends Activity {
 					    Log.i(getString(R.string.logTag),
 						    fileName);
 					    Bitmap bmp = camC
-						    .takeSnapshot(SIZE[item]);
+						    .takeSnapshot(resolutions[item]);
 					    Log.i(getString(R.string.logTag),
 						    "Snap ok !!");
 					    FileOutputStream fichier = new FileOutputStream(
@@ -296,105 +296,116 @@ public class Video extends Activity {
 	    camC.switchAutoFunc(CameraControl.AUTOIRIS, "on");
 	    return true;
 	case R.id.menu_active_md:
-	    if (!MDWindowSelector) {
-		if (advanceCtrl) {
-		    advanceCtrl = false;
-		    screen.removeView(findViewById(R.id.englobe));
-		}
-		inflater.inflate(R.layout.mds_video, screen, true);
-		Button ok = (Button) findViewById(R.id.okRectView);
-		ok.setOnClickListener(new OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-			int indice;
-			Log.i(getString(R.string.logTag), "Camera : "
-				+ camC.cam.id + camC.cam.groupID);
-			if ((indice = MotionDetectionService
-				.isAlreadyRunning(camC.cam)) != -1) {
-			    Log.i(getString(R.string.logTag), "Remove cam "
-				    + indice);
-			    MotionDetectionService.stopRunningDetection(cam,
-				    activity.getApplication(), indice);
-			    try {
-				camC.removeMotionD();
-			    } catch (IOException e) {
-				e.printStackTrace();
-			    }
-			} else {
-			    try {
-				drawRectOnTouchView drawRect = (drawRectOnTouchView) findViewById(R.id.drawRect);
-				// A REMPLACER PAR LES PRIMITIVES AJOUTER UN
-				// DIALOG AVEC UNE
-				// BARRE POUR LA SENSIBILITE
-				int group = camC.addMotionD();
-				if (drawRect.isDraw()) {
-				    Log.i("AppLog",
-					    "Point : " + drawRect.toString());
-				    PointF start = drawRect.getStart();
-				    PointF end = drawRect.getEnd();
-				    int absoluteTop = (int) (start.y * 10000 / drawRect
-					    .getBottom());
-				    int absoluteBottom = (int) (end.y * 10000 / drawRect
-					    .getBottom());
-				    int absoluteRight = (int) (end.x * 10000 / drawRect
-					    .getRight());
-				    int absoluteLeft = (int) (start.x * 10000 / drawRect
-					    .getRight());
-				    Log.i("AppLog", "top : " + absoluteTop
-					    + " bottom : " + absoluteBottom
-					    + " right : " + absoluteRight
-					    + " left : " + absoluteLeft);
-
-				    camC.updateMotionDParam("Top", ""
-					    + absoluteTop);
-				    camC.updateMotionDParam("Bottom", ""
-					    + absoluteBottom);
-				    camC.updateMotionDParam("Right", ""
-					    + absoluteRight);
-				    camC.updateMotionDParam("Left", ""
-					    + absoluteLeft);
-
+	    if (camC.isSupported(CameraControl.MOTION_D)) {
+		if (!MDWindowSelector) {
+		    if (advanceCtrl) {
+			advanceCtrl = false;
+			screen.removeView(findViewById(R.id.englobe));
+		    }
+		    inflater.inflate(R.layout.mds_video, screen, true);
+		    Button ok = (Button) findViewById(R.id.okRectView);
+		    ok.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			    int indice;
+			    Log.i(getString(R.string.logTag), "Camera : "
+				    + camC.cam.id + camC.cam.groupID);
+			    if ((indice = MotionDetectionService
+				    .isAlreadyRunning(camC.cam)) != -1) {
+				Log.i(getString(R.string.logTag), "Remove cam "
+					+ indice);
+				MotionDetectionService.stopRunningDetection(
+					cam, activity.getApplication(), indice);
+				try {
+				    camC.removeMotionD();
+				} catch (IOException e) {
+				    e.printStackTrace();
 				}
-				camC.cam.setGroup(group);
-				Log.i(getString(R.string.logTag), "Camera : "
-					+ camC.cam.id + camC.cam.groupID);
-				Intent intent = new Intent(v.getContext(),
-					MotionDetectionService.class);
-				Bundle objetbunble = new Bundle();
-				objetbunble.putSerializable(
-					getString(R.string.camTag), camC.cam);
-				intent.putExtras(objetbunble);
-				int lim = Integer.parseInt(Home.preferences
-					.getString(
-						getString(R.string.SeuilDM),
-						getString(R.string.defaultSeuilDM)));
-				long delay = Long.parseLong(Home.preferences
-					.getString(
-						getString(R.string.NotifTO),
-						getString(R.string.defaultNotifTO)));
-				intent.putExtra("limit", lim);
-				intent.putExtra("delay", delay);
-				Log.i(getString(R.string.logTag),
-					"Start service");
-				startService(intent);
-			    } catch (IOException e) {
-				e.printStackTrace();
-			    } catch (CouldNotCreateGroupException e) {
-				Log.i(getString(R.string.logTag),
-					"CouldNotCreateGroupException");
-				e.printStackTrace();
+			    } else {
+				try {
+				    drawRectOnTouchView drawRect = (drawRectOnTouchView) findViewById(R.id.drawRect);
+				    // A REMPLACER PAR LES PRIMITIVES AJOUTER UN
+				    // DIALOG AVEC UNE
+				    // BARRE POUR LA SENSIBILITE
+				    int group = camC.addMotionD();
+				    if (drawRect.isDraw()) {
+					Log.i("AppLog",
+						"Point : "
+							+ drawRect.toString());
+					PointF start = drawRect.getStart();
+					PointF end = drawRect.getEnd();
+					int absoluteTop = (int) (start.y * 10000 / drawRect
+						.getBottom());
+					int absoluteBottom = (int) (end.y * 10000 / drawRect
+						.getBottom());
+					int absoluteRight = (int) (end.x * 10000 / drawRect
+						.getRight());
+					int absoluteLeft = (int) (start.x * 10000 / drawRect
+						.getRight());
+					Log.i("AppLog", "top : " + absoluteTop
+						+ " bottom : " + absoluteBottom
+						+ " right : " + absoluteRight
+						+ " left : " + absoluteLeft);
+
+					camC.updateMotionDParam("Top", ""
+						+ absoluteTop);
+					camC.updateMotionDParam("Bottom", ""
+						+ absoluteBottom);
+					camC.updateMotionDParam("Right", ""
+						+ absoluteRight);
+					camC.updateMotionDParam("Left", ""
+						+ absoluteLeft);
+
+				    }
+				    camC.cam.setGroup(group);
+				    Log.i(getString(R.string.logTag),
+					    "Camera : " + camC.cam.id
+						    + camC.cam.groupID);
+				    Intent intent = new Intent(v.getContext(),
+					    MotionDetectionService.class);
+				    Bundle objetbunble = new Bundle();
+				    objetbunble.putSerializable(
+					    getString(R.string.camTag),
+					    camC.cam);
+				    intent.putExtras(objetbunble);
+				    int lim = Integer.parseInt(Home.preferences
+					    .getString(
+						    getString(R.string.SeuilDM),
+						    getString(R.string.defaultSeuilDM)));
+				    long delay = Long.parseLong(Home.preferences
+					    .getString(
+						    getString(R.string.NotifTO),
+						    getString(R.string.defaultNotifTO)));
+				    intent.putExtra("limit", lim);
+				    intent.putExtra("delay", delay);
+				    Log.i(getString(R.string.logTag),
+					    "Start service");
+				    startService(intent);
+				} catch (IOException e) {
+				    e.printStackTrace();
+				} catch (CouldNotCreateGroupException e) {
+				    Log.i(getString(R.string.logTag),
+					    "CouldNotCreateGroupException");
+				    e.printStackTrace();
+				}
 			    }
 			}
-		    }
-		});
-		MDWindowSelector = true;
+		    });
+		    MDWindowSelector = true;
+		} else {
+		    MDWindowSelector = false;
+		    screen.removeView(findViewById(R.id.mds_video));
+		}
+		screen.invalidate();
 	    } else {
-		MDWindowSelector = false;
-		screen.removeView(findViewById(R.id.mds_video));
+		Toast.makeText(activity.getApplicationContext(),
+			"La camera ne gere pas la detection de mouvement",
+			Toast.LENGTH_LONG).show();
+
 	    }
-	    screen.invalidate();
 	    return true;
 	}
+
 	return false;
     }
 
