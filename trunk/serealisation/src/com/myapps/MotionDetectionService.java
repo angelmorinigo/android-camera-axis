@@ -187,7 +187,8 @@ public class MotionDetectionService extends Service {
 		int lvlc, lvlb, lvlf;
 		long last = System.currentTimeMillis();
 		while (!Thread.currentThread().isInterrupted()) {
-		    s = br.readLine();
+		    while( (s = br.readLine()) == null)
+		    Thread.sleep(100);
 		    if (s.contains("level=") == true) {
 			Log.i("AppLog", s);
 			lvlc = s.indexOf("level=");
@@ -208,6 +209,8 @@ public class MotionDetectionService extends Service {
 		}
 	    } catch (IOException e) {
 		Log.i("AppLog", "IOE");
+		e.printStackTrace();
+	    } catch (InterruptedException e) {
 		e.printStackTrace();
 	    }
 	}
