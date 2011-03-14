@@ -91,27 +91,28 @@ public class Video extends Activity {
 			Context.CONNECTIVITY_SERVICE);
 	NetworkInfo info = mConnectivity.getActiveNetworkInfo();
 	if (info != null && info.isConnected()) {
-		int netType = info.getType();
-		if (netType == ConnectivityManager.TYPE_WIFI) {
-		    Log.i("AppLog", "Wifi detecte");
-		    url = "axis-cgi/mjpg/video.cgi?resolution=320x240";
-		} else {
-		    Log.i("AppLog", "Reseau detecte");
-		    url = "axis-cgi/mjpg/video.cgi?resolution=160x120";
-		}
-		
-		camC = new CameraControl(cam, this);
-		
-		mv = (MjpegView) findViewById(R.id.surfaceView1);
-		start_connection(mv, url);
-	
-		customTouchListener = new TouchListener(camC);
-		mv.setOnTouchListener(customTouchListener);
+	    int netType = info.getType();
+	    if (netType == ConnectivityManager.TYPE_WIFI) {
+		Log.i("AppLog", "Wifi detecte");
+		url = "axis-cgi/mjpg/video.cgi?resolution=320x240";
+	    } else {
+		Log.i("AppLog", "Reseau detecte");
+		url = "axis-cgi/mjpg/video.cgi?resolution=160x120";
+	    }
+
+	    camC = new CameraControl(cam, this);
+
+	    mv = (MjpegView) findViewById(R.id.surfaceView1);
+	    start_connection(mv, url);
+
+	    customTouchListener = new TouchListener(camC);
+	    mv.setOnTouchListener(customTouchListener);
 	} else {
-		Log.i("AppLog", "No network");
-		Toast.makeText(activity.getApplicationContext(),
-				"Veuillez vérifier votre connexion", Toast.LENGTH_LONG).show();
-		finish();
+	    Log.i("AppLog", "No network");
+	    Toast.makeText(activity.getApplicationContext(),
+		    "Veuillez vérifier votre connexion", Toast.LENGTH_LONG)
+		    .show();
+	    finish();
 	}
     }
 
@@ -240,17 +241,19 @@ public class Video extends Activity {
 		buttonFocusM.setEnabled(camC.isSupported(CameraControl.FOCUS));
 
 		Button buttonBrightnessP = (Button) findViewById(R.id.BrightnessP);
-		buttonBrightnessP.setOnClickListener(new MyOnClickListenerControl(
-			CameraControl.BRIGHTNESS, 2500, 0));
-		buttonBrightnessP.setEnabled(camC.isSupported(
-				CameraControl.BRIGHTNESS));
+		buttonBrightnessP
+			.setOnClickListener(new MyOnClickListenerControl(
+				CameraControl.BRIGHTNESS, 2500, 0));
+		buttonBrightnessP.setEnabled(camC
+			.isSupported(CameraControl.BRIGHTNESS));
 
 		Button buttonBrightnessM = (Button) findViewById(R.id.BrightnessM);
-		buttonBrightnessM.setOnClickListener(new MyOnClickListenerControl(
+		buttonBrightnessM
+			.setOnClickListener(new MyOnClickListenerControl(
 				CameraControl.BRIGHTNESS, -2500, 0));
-		buttonBrightnessM.setEnabled(camC.isSupported(
-				CameraControl.BRIGHTNESS));
-		
+		buttonBrightnessM.setEnabled(camC
+			.isSupported(CameraControl.BRIGHTNESS));
+
 		Button buttonIROn = (Button) findViewById(R.id.IROn);
 		buttonIROn.setOnClickListener(new OnClickListener() {
 		    @Override
@@ -258,7 +261,8 @@ public class Video extends Activity {
 			camC.switchAutoFunc(CameraControl.AUTO_IR, "on");
 		    }
 		});
-		buttonIROn.setEnabled(camC.isSupported(CameraControl.IR_FILTER));
+		buttonIROn
+			.setEnabled(camC.isSupported(CameraControl.IR_FILTER));
 
 		Button buttonIROff = (Button) findViewById(R.id.IROff);
 		buttonIROff.setOnClickListener(new OnClickListener() {
@@ -267,8 +271,9 @@ public class Video extends Activity {
 			camC.switchAutoFunc(CameraControl.AUTO_IR, "off");
 		    }
 		});
-		buttonIROff.setEnabled(camC.isSupported(CameraControl.IR_FILTER));
-		
+		buttonIROff.setEnabled(camC
+			.isSupported(CameraControl.IR_FILTER));
+
 		Button backlightOn = (Button) findViewById(R.id.BacklightOn);
 		backlightOn.setOnClickListener(new OnClickListener() {
 		    @Override
@@ -276,8 +281,9 @@ public class Video extends Activity {
 			camC.switchAutoFunc(CameraControl.BACKLIGHT, "on");
 		    }
 		});
-		backlightOn.setEnabled(camC.isSupported(CameraControl.BACKLIGHT));
-		
+		backlightOn.setEnabled(camC
+			.isSupported(CameraControl.BACKLIGHT));
+
 		Button backlightOff = (Button) findViewById(R.id.BacklightOff);
 		backlightOff.setOnClickListener(new OnClickListener() {
 		    @Override
@@ -285,7 +291,8 @@ public class Video extends Activity {
 			camC.switchAutoFunc(CameraControl.BACKLIGHT, "off");
 		    }
 		});
-		backlightOff.setEnabled(camC.isSupported(CameraControl.BACKLIGHT));
+		backlightOff.setEnabled(camC
+			.isSupported(CameraControl.BACKLIGHT));
 	    } else {
 		advanceCtrl = false;
 		screen.removeView(findViewById(R.id.englobe));
@@ -310,14 +317,15 @@ public class Video extends Activity {
 		    }
 		    inflater.inflate(R.layout.mds_video, screen, true);
 		    Button ok = (Button) findViewById(R.id.okRectView);
-		    if (MotionDetectionService
-				    .isAlreadyRunning(camC.cam) != -1) {
-		    	ok.setText(R.string.boutonArreter);
+		    if (MotionDetectionService.isAlreadyRunning(camC.cam) != -1) {
+			ok.setText(R.string.boutonArreter);
+			ok.invalidate();
 		    }
 		    ok.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 			    int indice;
+			    Button ok = (Button) findViewById(R.id.okRectView);
 			    Log.i(getString(R.string.logTag), "Camera : "
 				    + camC.cam.id + camC.cam.groupID);
 			    if ((indice = MotionDetectionService
@@ -331,6 +339,8 @@ public class Video extends Activity {
 				} catch (IOException e) {
 				    e.printStackTrace();
 				}
+				ok.setText(R.string.run);
+				ok.invalidate();
 			    } else {
 				try {
 				    drawRectOnTouchView drawRect = (drawRectOnTouchView) findViewById(R.id.drawRect);
@@ -391,6 +401,8 @@ public class Video extends Activity {
 				    Log.i(getString(R.string.logTag),
 					    "Start service");
 				    startService(intent);
+				    ok.setText(R.string.boutonArreter);
+				    ok.invalidate();
 				} catch (IOException e) {
 				    e.printStackTrace();
 				} catch (CouldNotCreateGroupException e) {
@@ -470,8 +482,8 @@ public class Video extends Activity {
      * Stop Video before destroy
      */
     public void onDestroy() {
-    	if (mv != null)
-    		mv.stopPlayback();
-    	super.onDestroy();
+	if (mv != null)
+	    mv.stopPlayback();
+	super.onDestroy();
     }
 }
