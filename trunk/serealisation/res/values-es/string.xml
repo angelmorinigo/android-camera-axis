@@ -6,28 +6,28 @@
 	<string name="aboutTitle">A Propos</string>
 
 
-	<string name="messageRemove">Etes-vous sur de vouloir supprimer cette camera ?
-	</string>
-	<string name="messageChoose">Que voulez-vous faire ?</string>
-	<string name="messageBienvenue">Bienvenue !</string>
-	<string name="messageAbout">Version 1.0\nDéveloppé par :\nJerome NAHELOU,
-		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S
-		sous android 2.1\n</string>
-	<string name="messageExport">Fichier de sortie :</string>
-	<string name="messageImport">Fichier a importer :</string>
-	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son depot
+	<string name="messageRemove">¿Está seguro que desea eliminar esta cámara?
+ </string>
+	<string name="messageChoose">¿Qué hacer?</string>
+	<string name="messageBienvenue">Bienvenido !</string>
+	<string name="messageAbout">Version 1.0\nDesarrikkado por :\nJerome NAHELOU,
+	Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npara Samsung Galaxy S
+		android 2.1\n</string>
+	<string name="messageExport">Archivo de salida :</string>
+	<string name="messageImport">Archivo para importar :</string>
+	<string name="messageShare">Buscar libre Camera-Axis en su depósito
 		svn http://code.google.com/p/android-camera-axis/</string>
 
 
-	<string name="boutonModifier">Modifier</string>
-	<string name="boutonSupprimer">Supprimer</string>
-	<string name="boutonExporter">Exporter</string>
-	<string name="boutonImporter">Importer</string>
+	<string name="boutonModifier">Editar</string>
+	<string name="boutonSupprimer">Suprimir</string>
+	<string name="boutonExporter">Exportar</string>
+	<string name="boutonImporter">Importar</string>
 
 
-	<string name="boutonArreter">Parar</string><string name="oui">Oui</string>
-	<string name="non">Non</string>
+	<string name="boutonArreter">Parar</string><string name="oui">Si</string>
+	<string name="non">No</string>
 
-	<string name="protocol_prompt">Choisir un protocol</string>
+	<string name="protocol_prompt">Elegir un protocolo</string>
 
 </resources>
