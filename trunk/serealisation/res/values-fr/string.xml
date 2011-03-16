@@ -15,8 +15,8 @@
 	<string name="ipHint">Entrez une ip</string>
 	<string name="port">Port :</string>
 	<string name="portHint">Entrez un port</string>
-	<string name="chan">Cannal :</string>
-	<string name="chanHint">Entrez un cannal </string>
+	<string name="chan">Canal :</string>
+	<string name="chanHint">Entrez un canal </string>
 	<string name="add">Ajouter</string>
 	<string name="cancel">Annuler</string>
 

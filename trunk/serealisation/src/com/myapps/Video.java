@@ -326,7 +326,7 @@ public class Video extends Activity {
 			    int indice;
 			    Button ok = (Button) findViewById(R.id.okRectView);
 			    Log.i(getString(R.string.logTag), "Camera : "
-				    + camC.cam.id + camC.cam.groupID);
+				    + camC.cam.id + camC.cam.groupeID);
 			    if ((indice = MotionDetectionService
 				    .isAlreadyRunning(camC.cam)) != -1) {
 				Log.i(getString(R.string.logTag), "Remove cam "
@@ -379,7 +379,7 @@ public class Video extends Activity {
 				    camC.cam.setGroup(group);
 				    Log.i(getString(R.string.logTag),
 					    "Camera : " + camC.cam.id
-						    + camC.cam.groupID);
+						    + camC.cam.groupeID);
 				    Intent intent = new Intent(v.getContext(),
 					    MotionDetectionService.class);
 				    Bundle objetbunble = new Bundle();

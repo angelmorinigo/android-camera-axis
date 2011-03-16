@@ -76,7 +76,7 @@ public class MotionDetectionService extends Service {
     public static int isAlreadyRunning(Camera c) {
 	for (int i = 0; i < currentMDCam.size(); i++) {
 	    if (currentMDCam.get(i).uniqueID == c.uniqueID) {
-		if (currentMDCam.get(i).groupID == c.groupID){
+		if (currentMDCam.get(i).groupeID == c.groupeID){
 		return i;
 		}
 	    }
@@ -111,7 +111,7 @@ public class MotionDetectionService extends Service {
 	limit = extras.getInt("limit");
 	delay = extras.getLong("delay");
 	Log.i("AppLog", "onStart " + cam.uniqueID + "-" + cam.getId() + "-"
-		+ cam.groupID);
+		+ cam.groupeID);
 
 	Intent notificationIntent = new Intent(getApplicationContext(),
 		Video.class);
@@ -125,7 +125,7 @@ public class MotionDetectionService extends Service {
 	 * !!!!!!!!!
 	 */
 	notificationIntent.setDataAndType(
-		Uri.parse("" + cam.uniqueID + cam.groupID), "Camera");
+		Uri.parse("" + cam.uniqueID + cam.groupeID), "Camera");
 	PendingIntent contentIntent = PendingIntent.getActivity(
 		getApplicationContext(), 0, notificationIntent, 0);
 	/*
@@ -134,9 +134,9 @@ public class MotionDetectionService extends Service {
 	 */
 	notificationLauncher.statusBarNotificationRunning(
 		this.getApplication(), contentIntent, START_ID
-			+ (cam.uniqueID * 10) + cam.groupID,
+			+ (cam.uniqueID * 10) + cam.groupeID,
 		"Motion Detection " + cam.uniqueID + "-" + cam.getId() + "-"
-			+ cam.groupID);
+			+ cam.groupeID);
 	Log.i("AppLog", "Motion Detection notif" + cam.getMotionDetectionID(START_ID));
 	t = new Thread(new serviceWork(cam));
 	currentMDCam.add(cam);
@@ -179,7 +179,7 @@ public class MotionDetectionService extends Service {
 	    Log.i("AppLog", "thread run");
 	    try {
 		con = sendCommand(cam,
-			"axis-cgi/motion/motiondata.cgi?group="+cam.groupID);
+			"axis-cgi/motion/motiondata.cgi?group="+cam.groupeID);
 		InputStreamReader isr = new InputStreamReader(
 			con.getInputStream());
 		BufferedReader br = new BufferedReader(isr);

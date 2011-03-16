@@ -394,33 +394,31 @@ public class CameraControl {
 		if (line.contains("# Request failed: Couldn't create group"))
 		    throw new CouldNotCreateGroupException();
 		if (line.contains("M")) {
-		    cam.groupID = Integer.parseInt(line.substring(1, 2));
-		    Log.i("AppLog", "MotionDetection groupe = " + cam.groupID);
-		    return cam.groupID;
+		    cam.groupeID = Integer.parseInt(line.substring(1, 2));
+		    Log.i("AppLog", "MotionDetection groupe = " + cam.groupeID);
+		    return cam.groupeID;
 		}
 	    }
 	}
 	throw new CouldNotCreateGroupException();
     }
 
-    public int getMotionDGroup() {
-	return cam.groupID;
-    }
+
 
     public void removeMotionD() throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M"
-		+ cam.groupID);
+		+ cam.groupeID);
 	Log.i("AppLog", con.getResponseCode()
-		+ "MotionDetection free groupe = " + cam.groupID);
+		+ "MotionDetection free groupe = " + cam.groupeID);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-	    cam.groupID = -1;
+	    cam.groupeID = -1;
 	}
     }
 
     public boolean updateMotionDParam(String param, String value)
 	    throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=update&Motion.M"
-		+ cam.groupID + "." + param + "=" + value);
+		+ cam.groupeID + "." + param + "=" + value);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 	    return true;
 	}

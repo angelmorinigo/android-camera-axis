@@ -68,7 +68,7 @@ public class Home extends Activity {
 	List<Map<String, ?>> printCamList = new LinkedList<Map<String, ?>>();
 	for (int i = 0; i < camList.size(); i++) {
 	    camList.get(i).setUniqueID(i);
-	    camList.get(i).groupID = -1;
+	    camList.get(i).groupeID = -1;
 	    printCamList.add(createItem((camList.get(i).uniqueID+"-"+camList.get(i).id), camList.get(i)
 		    .getURI()));
 	}
