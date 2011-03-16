@@ -1,0 +1,11 @@
+La communication pour le contrôle du Pan/Tilt/Zoom et des fonctionnalités spécifiques (snapshot, contrôles avancés) de la caméra s'effectuent à travers la classe CameraControl.
+Les fonctions changeValFunc et switchAutoFunc permettent d'envoyer les requêtes HTTP à la caméra pour changer les valeurs associées aux paramètres :
+- PAN, TILT, FOCUS, IRIS, BRIGHTNESS qui prennent une valeur flottante
+- AUTOFOCUS, AUTOIRIS, AUTO_IR, BACKLIGHT dont la valeur est comprise dans { on, off, auto }
+Une réponse de code HttpURLConnection.HTTP_NO_CONTENT (204) indique la réussite de la requête.
+
+La fonction takeSnapshot réalise la requête de capture d'écran avec une résolution dont la valeur est passée en paramètre.
+Elle retourne les données renvoyées par la caméra sous forme d'un objet Bitmap.
+
+
+Cette classe s'occupe également des activation/désactivation de la détection de mouvements.
