@@ -171,7 +171,6 @@ public class Video extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 				activity);
 			builder.setTitle("SnapShot Format");
-			/* TODO getResolutions() MARCHE PAS */
 			final String[] resolutions = camC.getResolutions();
 			builder.setSingleChoiceItems(resolutions, -1,
 				new DialogInterface.OnClickListener() {
