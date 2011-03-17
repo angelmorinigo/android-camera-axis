@@ -1,0 +1,47 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{ulem}
+\usepackage[frenchb]{babel}
+\usepackage{graphicx}
+\usepackage[final]{pdfpages}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{chngpage}
+
+\setlength{\topmargin}{-2cm}
+
+%%%% debut macro %%%%
+\newenvironment{changemargin}[2]{\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{0pt}%
+\setlength{\rightmargin}{0pt}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{0pt plus 1pt}%
+\addtolength{\leftmargin}{#1}%
+\addtolength{\rightmargin}{#2}%
+}\item }{\end{list}}
+%%%% fin macro %%%%
+
+
+\lstset{language=java, frame=single, breaklines=true, frameround=fttt,
+captionpos=b}
+
+\title{Vidéo surveillance, Streaming vidéo et contrôle de caméra via
+Android}
+\author{Jerome NAHELOU, Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD}
+
+\begin{document}
+\title{Vidéo surveillance, Streaming vidéo et contrôle de caméra via
+Android}
+\author{Jerome NAHELOU, Quentin NEBOUT,\\ Romain SOLVE, Fabien QUINTARD}
+\renewcommand{\today}{Universitée Bordeaux 1, Talence}
+\maketitle
+\tableofcontents \clearpage
+
+\input{EtudeExistant}
+\input{Besoins}
+\input{Implementation}
+
+\end{document}

@@ -259,7 +259,6 @@ public class Home extends Activity {
 	    Camera tmp = (Camera) extras
 		    .getSerializable(getString(R.string.camTag));
 	    Log.i(getString(R.string.logTag), "camera " + tmp.id + " recuperer");
-	    /* Always add at the head */
 	    int position = camList.size();
 	    if (requestCode == EDIT_CODE) {
 		position = extras.getInt(getString(R.string.camPosition));

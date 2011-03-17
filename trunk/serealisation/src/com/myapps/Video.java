@@ -69,8 +69,7 @@ public class Video extends Activity {
      */
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	if (!advanceCtrl)
-	    setContentView(R.layout.video);
+	setContentView(R.layout.video);
 
 	setRequestedOrientation(0);
 	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -474,6 +473,8 @@ public class Video extends Activity {
     public void onPause() {
 	pause = true;
 	wl.release();
+	if (mv != null)
+	    mv.stopPlayback();
 	super.onPause();
     }
 
