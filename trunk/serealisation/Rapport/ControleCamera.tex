@@ -1,52 +1,82 @@
-La communication pour le contrôle du Pan/Tilt/Zoom et des fonctionnalités spécifiques (snapshot, contrôles avancés) de la caméra s'effectuent à travers la classe CameraControl.
-Les fonctions changeValFunc et switchAutoFunc permettent d'envoyer les requêtes HTTP à la caméra pour changer les valeurs associées aux paramètres :
-- PAN, TILT, FOCUS, IRIS, BRIGHTNESS qui prennent une valeur flottante
-- AUTOFOCUS, AUTOIRIS, AUTO_IR, BACKLIGHT dont la valeur est comprise dans { on, off, auto }
-Une réponse de code HttpURLConnection.HTTP_NO_CONTENT (204) indique la réussite de la requête.
+\subsection{CameraControl}
+La communication pour le contrôle du Pan/Tilt/Zoom et des fonctionnalités spécifiques (snapshot, contrôles avancés) de la caméra s'effectuent à travers la classe \textit{CameraControl}.
+Les fonctions \textit{changeValFunc} et \textit{switchAutoFunc} permettent d'envoyer les requêtes HTTP à la caméra pour changer la valeur des différents paramètres de celle-ci :
+- \textit{PAN}, \textit{TILT}, \textit{FOCUS}, \textit{IRIS}, \textit{BRIGHTNESS} identifient des paramètres prenant une valeur flottante
+- \textit{AUTOFOCUS}, \textit{AUTOIRIS}, \textit{AUTO_IR}, \textit{BACKLIGHT} identifient des paramètres dont la valeur est comprise dans { \textit{on}, \textit{off}, \textit{auto} }
+Une réponse HTTP de code \textit{HttpURLConnection.HTTP_NO_CONTENT} (code 204) indique la réussite de la requête, cependant nous ne savons pas si l'action a bien été effectuée.
 
-La fonction takeSnapshot réalise la requête de capture d'écran avec comme résolution la valeur passée en paramètre.
-Elle retourne les données renvoyées par la caméra sous forme d'un objet Bitmap.
+La fonction \textit{takeSnapshot} réalise la requête de capture d'écran avec comme résolution la valeur passée en paramètre.
+Elle retourne les données renvoyées par la caméra sous forme d'un objet \textit{Bitmap}.
 
 Cette classe s'occupe également des activation/désactivation de la détection de mouvements.
-addMotionD
-removeMotionD
-getMotionDGroup
-updateMotionDParam
+\begin{itemize}
+	\item \textit{addMotionD} : 
+	\item \textit{removeMotionD} : 
+	\item textit{getMotionDGroup} : 
+	\item textit{updateMotionDParam} : 
+\end{itemize}
 
-
-Lors du chargement du menu et du layout des contrôles de la caméra, nous vérifions si les fonctionnalités correspondantes sont supportées et/ou activées à l'aide des fonctions
-is supported et isEnabled. Un appui sur les boutons du menu apparaissant lors de l'appui sur la touche "Menu" déclenchera une alerte texte si la fonctionnalité n'est pas
+Lors du chargement du menu et du layout des contrôles avancés de la caméra, nous vérifions si les fonctionnalités correspondantes sont supportées et/ou activées à l'aide des fonctions
+\textit{isSupported} et \textit{isEnabled}. Un appui sur les boutons du menu (celui-ci apparaissant lors de l'appui sur la touche "Menu") déclenchera une alerte texte si la fonctionnalité n'est pas
 disponible, alors que pour le layout des contrôles avancés nous définissons la disponibilité de la fonctionnalité directement par l'état du bouton (activé/désactivé).
 
-Le contrôle du PTZ tactile a été implémenté à l'aide de la classe TouchListener. Nous avons défini deux gestes possibles pour notre application : un déplacement avec un seul pointeur
-(doigt, stylet, ...) pour faire bouger la caméra (Pan/Tilt) et un écartement/rapprochement de deux pointeurs pour zoomer/dézoomer. Cette classe implémente l'interface OnTouchListener
-fournissant une fonction onTouch dans laquelle nous gérons chaque mouvement du ou des pointeurs à partir d'un objet MotionEvent. Un geste est un suite de mouvements de type MotionEvent.
-Il existe une dizaine de types d'actions possibles pour MotionEvent, cependant nous utilisons seulement les 4 suivantes pour notre application :
-- ACTION_DOWN : le premier pointeur a été ajouté (le geste est commencé) et l'événement contient les coordonnées du pointeur
-- ACTION_POINTER_DOWN : un nouveau pointeur a été ajouté
-- ACTION_POINTER_UP : un pointeur a été enlevé
-- ACTION_UP : le dernier pointeur a été enlevé (le geste est terminé) et l'événement contient les coordonnées du dernier pointeur
-A partir de ces types d'actions, nous pouvons définir le déplacement de la caméra par la suite ACTION_DOWN - ACTION_UP et la gestion du zoom par la suite
-ACTION_DOWN - ACTION_POINTER_DOWN - ACTION_DOWN_UP - ACTION_UP (nous considérons cependant que le zoom est possible qu'à partir de l'événement ACTION_POINTER_DOWN).
+\subsection{TouchListener}
+Le contrôle du PTZ tactile a été implémenté à l'aide de la classe \textit{TouchListener}. Nous avons défini deux gestes possibles avec un ou plusieurs pointeurs (doigt, stylet, ...) pour notre application :
+\begin{itemize}
+\item un déplacement avec un seul pointeur pour faire bouger la caméra (Pan/Tilt)
+\item un écartement/rapprochement de deux pointeurs pour zoomer/dézoomer
+\end{itemize}
+Cette classe implémente l'interface \textit{OnTouchListener} fournissant une fonction \textit{onTouch} dans laquelle nous gérons chaque mouvement du ou des pointeurs à partir d'un objet \textit{MotionEvent}. Un geste sous Android est défini par une suite de mouvements de type \textit{MotionEvent}.
+Il existe une dizaine de types d'actions possibles pour \textit{MotionEvent}, cependant nous utilisons seulement les 4 suivants pour notre application :
+\begin{itemize}
+\item \textit{ACTION_DOWN} : le premier pointeur a été ajouté (le geste est commencé) et l'événement contient les coordonnées du pointeur
+\item \textit{ACTION_POINTER_DOWN} : un nouveau pointeur a été ajouté
+\item \textit{ACTION_POINTER_UP} : un pointeur a été enlevé
+\item \textit{ACTION_UP} : le dernier pointeur a été enlevé (le geste est terminé) et l'événement contient les coordonnées du dernier pointeur
+\end{itemize}
+A partir de ces types d'actions, nous pouvons définir le déplacement de la caméra par la suite \textit{ACTION_DOWN - ACTION_UP} et la gestion du zoom par la suite
+\textit{ACTION_DOWN - ACTION_POINTER_DOWN - ACTION_DOWN_UP - ACTION_UP} (nous considérons cependant que le zoom n'est réalisé qu'à partir de l'événement \textit{ACTION_POINTER_DOWN}).
 
-Le champ \textit{mode} contient l'état actuel du geste, soit une des constantes NONE, DRAG ou ZOOM.
-Nous récupérons également les dimensions de la vue par getWidth() et getHeight() pour la mise à l'échelle des distances de déplacements. 
-Pour représenter les coordonnées des pointeurs, nous avons utilisé le type PointF.
+Le champ \textit{mode} contient l'état actuel du geste, soit une des constantes \textit{NONE}, \textit{DRAG} ou \textit{ZOOM}.
+Nous récupérons également les dimensions de la vue par \textit{getWidth} et \textit{getHeight} pour la mise à l'échelle des distances de déplacements. 
+Pour représenter les coordonnées des pointeurs, nous avons utilisé le type \textit{PointF}.
 
-Nous avons implémenté dans la classe TouchListener des méthodes de calcul géométrique entre deux objets PointF :
-- calculateMoveX
-- calculateMoveY
-- calculateDistance
+Nous avons implémenté dans cette classe des méthodes de calcul géométrique entre deux objets \textit{PointF} :
+\begin{itemize}
+	\item \textit{calculateMoveX}
+	\item \textit{calculateMoveY}
+	\item \textit{calculateDistance}
+\end{itemize}
 
 Nous avons également développé des méthodes pour mettre à l'échelle le déplacement des pointeurs sur l'écran par rapport au déplacement réel réalisé par la caméra :
-- scaleMoveX
-- scaleMoveY
-- scaleZoom
+\begin{itemize}
+	\item \textit{scaleMoveX}
+	\item \textit{scaleMoveY}
+	\item \textit{scaleZoom}
+\end{itemize}
 
-Ainsi, pour traiter le geste de déplacement (mode == DRAG), nous mettons d'abord en mémoire les coordonnées du premier pointeur (reconnu comme point de départ du déplacement) à l'événement ACTION_DOWN.
-A l'événement ACTION_UP, si le geste actuel est bien un déplacement, nous récupérons les coordonnées du dernier pointeur (reconnu comme point d'arrivée) et nous calculons les déplacements horizontaux
-et verticaux (respectivement moveX et moveY) avec mise à l'échelle. Afin de rendre moins "agressif" le déplacement sur le téléphone, nous avons mis en place un paramètre de sensibilité, celui-ci étant
+Afin de rendre moins "agressif" le déplacement sur le téléphone, nous avons mis en place un paramètre de sensibilité, celui-ci étant
 modifiable dans les préférences.
-Le geste de zoom/dézoom (mode == ZOOM) repose sur le même principe mais les calculs ne sont pas réalisés sur les mêmes événements. La distance de départ entre les deux premiers pointeurs (même
-si plus de deux pointeurs sont actuellement sur l'écran) est définie à l'événement ACTION_POINTER_DOWN. La distance d'arrivée est quant à elle définie sur l'événement ACTION_POINTER_UP.
-Enfin, à l'événement ACTION_UP, le ratio entre les deux distances est calculé et mis à l'échelle pour la caméra.
+Le tableau ci-dessous montre le traitement réalisé par la méthode \textit{onTouch} dont le code est présenté après.
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+Type d'action & Geste du déplacement & Geste du zoom \\
+\hline
+ACTION\_DOWN & Mise en mémoire des coordonnées du point de départ &  \\
+ & \textit{mode = DRAG} & \\
+ACTION\_POINTER\_DOWN & & Calcul et mise en mémoire de la distance de départ \\
+ & & \textit{mode = ZOOM} \\
+ACTION\_POINTER\_UP & & Calcul et mise en mémoire de la distance d'arrivée \\
+ACTION\_UP & Calcul des déplacements horizontaux et verticaux & Calcul du ratio entre les deux distances \\
+ & Mise à l'échelle des déplacements & Mise à l'échelle du ratio (avec le champ \textit{zoomStep}) \\
+ & \textit{mode = NONE} & \textit{mode = NONE} \\
+\hline
+\end{tabular}
+\newline
+\textit{Algorithme du traitement \textit{onTouch}}
+\newline
+\end{center}
+
+\begin{lstlisting}[]

@@ -57,7 +57,7 @@
 	<string name="enableAC">Enable advanced controls</string>
 
 	<!-- preferences -->
-	<string name="Delai">Timeout</string>
+	<string name="disableAC">Disable advanced controls</string><string name="Delai">Timeout</string>
 	<string name="DelaiFPS">Timeout FPS</string>
 	<string name="DelaiFPSHint">A delay (in ms) between each refresh reduces FPS
 		but allows the reduction of data! (Multi-view mode only)</string>
@@ -104,5 +104,6 @@
 	<string name="oui">Yes</string>
 	<string name="non">No</string>
 	<string name="protocol_prompt">Choose a protocol</string>
+
 
 </resources>

@@ -57,10 +57,10 @@
 
 	<!-- video menu -->
 	<string name="enableMD">Activer Motion Detection</string>
-	<string name="enableAC">Activer les controles avancés</string>
+	<string name="enableAC">Activer les contrôles avancés</string>
 
 	<!-- preferences -->
-	<string name="Delai">Delai</string>
+	<string name="disableAC">Désactiver les contrôles avancés</string><string name="Delai">Delai</string>
 	<string name="DelaiFPS">Delai FPS</string>
 	<string name="DelaiFPSHint">Un delai (en ms) élevé entre chaque
 		raffraichissement diminue les fps mais permet la reduction de data !
@@ -114,6 +114,7 @@
 	<string name="non">Non</string>
 
 	<string name="protocol_prompt">Choisir un protocol</string>
+
 
 
 </resources>

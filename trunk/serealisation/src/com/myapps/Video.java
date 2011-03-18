@@ -155,6 +155,7 @@ public class Video extends Activity {
 		if (MDWindowSelector) {
 		    MDWindowSelector = false;
 		    screen.removeView(findViewById(R.id.mds_video));
+		    item.setTitle(R.string.enableAC);
 		}
 		advanceCtrl = true;
 		inflater.inflate(R.layout.adv_video, screen, true);
@@ -294,6 +295,7 @@ public class Video extends Activity {
 	    } else {
 		advanceCtrl = false;
 		screen.removeView(findViewById(R.id.englobe));
+		item.setTitle(R.string.disableAC);
 	    }
 	    screen.invalidate();
 	    return true;
@@ -455,7 +457,7 @@ public class Video extends Activity {
     }
 
     /**
-     * Resume video and acquire wakelock when activity resume.
+     * Resume video and acquire wakelock when activity resumes
      */
     public void onResume() {
 	super.onResume();
@@ -468,7 +470,7 @@ public class Video extends Activity {
     }
 
     /**
-     * Stop video and release wakelock when activity sleep
+     * Stop video and release wakelock when activity sleeps
      */
     public void onPause() {
 	pause = true;

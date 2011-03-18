@@ -30,4 +30,5 @@
 
 	<string name="protocol_prompt">Elegir un protocolo</string>
 
+<string name="disableAC">Desactivar los controles avanzados</string>
 </resources>

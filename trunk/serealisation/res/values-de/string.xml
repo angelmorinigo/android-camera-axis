@@ -57,7 +57,7 @@
 
 	<!-- video menu -->
 	<string name="enableMD">Aktivieren Motion Detection</string>
-	<string name="enableAC">Aktivieren erweiterte Kontrollen</string>
+	<string name="enableAC">Aktivieren erweiterte Kontrollen</string><string name="disableAC">Deaktivieren erweiterte Kontrollen</string>
 
 
 	<!-- preferences -->
@@ -111,6 +111,7 @@
 	<string name="non">Nein</string>
 
 	<string name="protocol_prompt">Wählen Sie ein Protokoll</string>
+
 
 
 </resources>
