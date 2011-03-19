@@ -586,19 +586,19 @@ img[i].setOnLongClickListener(new myOnLongClickListener(i));
 \end{changemargin}
 
  \begin{figure}[H]
-  \label{DiagrammeSequenceMultiView}
+  \label{2cam.eps}
   \centering
-   \includegraphics[,scale=0.4]{Images/2cam.eps}
+   \includegraphics[scale=0.4]{Images/2cam.eps}
   \caption{Multi-View 2 camera}
 \end{figure}  
 \begin{figure}[H]
-  \label{DiagrammeSequenceMultiView}
+  \label{3cam.eps}
   \centering
-   \includegraphics[angle=90,scale=0.4]{Images/3cam.eps}
+   \includegraphics[scale=0.4]{Images/3cam.eps}
   \caption{Multi-View sequence 3 camera}
 \end{figure}  
 \begin{figure}[H]
-  \label{DiagrammeSequenceMultiView}
+  \label{5cam.eps}
   \centering
    \includegraphics[scale=0.4]{Images/5cam.eps}
   \caption{Multi-View 5 camera}
@@ -617,10 +617,109 @@ revenir sur la vue precedent en appuyant sur le bouton retour de son telephone.
 
 \section{Contrôle de la caméra}
 \input{ControleCamera}
-\section{Fonctionnalités avancés}
+\section{Fonctionnalités avancées et réglages}
+Les caméras \textit{Axis} offrent un grand nombre de services pour lesquels
+nous avons implementer la possibiliter de les utiliser directement avec le
+telephone.
 \subsection{Snapshot}
+Parmis ces services, la camera propose a l'utilisateur la possibilite de
+prendre une photo instantanée. \newline
+Pour ce faire il nous suffit d'envoyer une requete \textit{HTTP} a l'adresse
+suivante : 
+\begin{lstlisting}
+http://<servername>/axis-cgi/jpg/image.cgi
+\end{lstlisting}
+Dans cette requete, nous avons la possibilitée d'ajouter de nombreux parametres
+comme la résolution, le taux de compression, l'affichage de la date, l'heure,
+etc. Toutes ces options sont décritent dans la documentation de la caméra
+\footnote{\label{MjpegView}http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php\#api\_blocks\_image\_video\_jpeg\_snapshot}.
+L'image est contenu dans la réponse :
+\begin{lstlisting}
+HTTP/1.0 200 OK\r\n
+Content-Type: image/jpeg\r\n
+Content-Length: <image size>\r\n
+\r\n
+<JPEG image data>\r\n
+\end{lstlisting}
+Une fois la resolution choisi, il ne nous reste qu'a convertir le flux en image
+a l'aide de la fonction :
+\begin{lstlisting}
+Bitmap bmp = BitmapFactory.decodeStream(stream);
+\end{lstlisting}
+puis l'enregistrer dans un fichier :
+\begin{lstlisting}
+ bmp.compress(Bitmap.CompressFormat.JPEG, 80, fichier);
+\end{lstlisting}
+Afin de prévenir l'utilisateur de la reception de la capture, nous avons
+implémenté une fonction permettant d'ajouter une notification personnalisée dans
+la barre de status du telephone.\newline
+En plus de notifier l'utilisateur, nous lui offrons la possibilitée de visionner
+la photo en cliquant sur la notification.
+\begin{changemargin}{0cm}{-2cm}
+\begin{lstlisting}[caption={ImageView address resolver},
+framexleftmargin=7mm, numbers=left] 
+ public static void statusBarNotificationImage(Activity activity, Bitmap bmp, String text, String path, int id, String tag) {
+	NotificationManager notificationManager;
+	notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+	Notification notification = new Notification(R.drawable.camera,	"Camera-Axis", System.currentTimeMillis());
+	notification.contentView = new RemoteViews(activity.getPackageName(), R.layout.notification);
+	/* Notification action (Open gallery) */ 
+	Intent intentNotification = new Intent();
+	intentNotification.setAction(android.content.Intent.ACTION_VIEW);
+	intentNotification.setDataAndType(Uri.fromFile(new File(path)), "image/png");
+	PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intentNotification, 0);
+	notification.defaults |= Notification.DEFAULT_VIBRATE;
+	notification.contentIntent = pendingIntent;
+	notification.contentView.setImageViewBitmap(R.id.Nimage, bmp);
+	notification.contentView.setTextViewText(R.id.Ntext, text);
+	notificationManager.notify(tag, id, notification);
+    }
+\end{lstlisting}   
+\end{changemargin}
+Ainsi nous obtenons la notification suivante : 
+\begin{figure}[H]
+  \label{notification}
+  \centering
+   \includegraphics[scale=0.4]{Images/notification.eps}
+  \caption{Notification SnapShot}
+\end{figure}  
 
-\subsection{Autres réglage}
+\subsection{Autres réglages}
+Afin d'ameliorer la visibilitée de la caméra, celle ci propose un grand nombre
+de fonction comme le réglage de la luminositée, de la mise au point
+(focus), l'ouverture ou la fermeture de l'iris, et beaucoup d'autres fonctions
+egalement disponible sur la
+documentation\footnote{\label{MjpegView}http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php\#api\_blocks\_ptz\_control}
+de la caméra.\newline
+\indent Nous avons choisis d'implémenter certaines d'entre elles dont nous
+fournissons l'acces via l'interface de controle avancé disponible dans le menu
+de l'activitée \textit{Video}.
+
+\begin{figure}[H]
+  \label{ctrl2}
+  \centering
+   \includegraphics[scale=0.4]{Images/ctrl2.eps}
+  \caption{Advance Controls}
+\end{figure}  
+\begin{itemize}
+  \item \underline{Focus + / Focus - :} Augmenter ou diminuer la mise au
+  point.
+  \item \underline{Brightness + / Brightness - :} Augmenter ou diminuer la luminosité
+  \item \underline{Iris + / Iris - :} Augmenter ou diminuer l'exposition.
+  \item \underline{IR On / IR Off :} Activer ou desactiver le filtre
+  anti-IR
+  \item \underline{Backlight comp On / Backlight comp Off :} Activer ou
+  desactiver la correction pour la surexposition a la lumiere.
+\end{itemize}
+Mais nous avons également offert la possibilité a l'utilisateur d'utiliser les
+réglages automatique de la caméra toujours a partir du menu de l'activitée
+\textit{Video}.
+\begin{figure}[H]
+  \label{ctrl2}
+  \centering
+   \includegraphics[scale=0.4]{Images/ctrl1.eps}
+  \caption{Advance Controls}
+\end{figure}  
 
 
 \section{Détection de mouvements}
