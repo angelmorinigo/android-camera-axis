@@ -155,9 +155,9 @@ public class Video extends Activity {
 		if (MDWindowSelector) {
 		    MDWindowSelector = false;
 		    screen.removeView(findViewById(R.id.mds_video));
-		    item.setTitle(R.string.enableAC);
 		}
 		advanceCtrl = true;
+		item.setTitle(R.string.disableAC);
 		inflater.inflate(R.layout.adv_video, screen, true);
 
 		/* Buttons Listener */
@@ -218,7 +218,8 @@ public class Video extends Activity {
 			alert.show();
 		    }
 		});
-
+		buttonSnap.setEnabled(camC.getResolutions() != null);
+		
 		Button buttonIrisP = (Button) findViewById(R.id.IrisP);
 		buttonIrisP.setOnClickListener(new MyOnClickListenerControl(
 			CameraControl.IRIS, 250, 0));
@@ -294,8 +295,8 @@ public class Video extends Activity {
 			.isSupported(CameraControl.BACKLIGHT));
 	    } else {
 		advanceCtrl = false;
+		item.setTitle(R.string.enableAC);
 		screen.removeView(findViewById(R.id.englobe));
-		item.setTitle(R.string.disableAC);
 	    }
 	    screen.invalidate();
 	    return true;
