@@ -6,8 +6,11 @@
 \usepackage[final]{pdfpages}
 \usepackage{url}
 \usepackage{xcolor}
+\usepackage[formats]{listings}
 \usepackage{listings}
 \usepackage{chngpage}
+\usepackage{float}
+
 
 \setlength{\topmargin}{-2cm}
 
@@ -24,9 +27,15 @@
 }\item }{\end{list}}
 %%%% fin macro %%%%
 
+\lstdefineformat{JAVA}{%
+\{=\string\newline\indent,%
+\}=\noindent\string\newline,%
+;=[\ ]\string\space}
 
-\lstset{language=java, frame=single, breaklines=true, frameround=fttt,
-captionpos=b}
+
+
+\lstset{language=java, frame=single, tabsize=2, breaklines=true,
+frameround=fttt, captionpos=b, format=JAVA}
 
 \title{Vidéo surveillance, Streaming vidéo et contrôle de caméra via
 Android}
@@ -43,5 +52,6 @@ Android}
 \input{EtudeExistant}
 \input{Besoins}
 \input{Implementation}
+
 
 \end{document}
