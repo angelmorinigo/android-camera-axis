@@ -1,31 +1,31 @@
 \chapter{Implémentation}
 \section{L'objet Caméra}
 \subsection{Description}
-L'objet Camera est implémenté dans la classe \textit{Camera.java}.\newline
+L'objet Caméra est implémenté dans la classe \textit{Camera.java}.\newline
 Celle-ci y regroupe les informations suivante : 
 \begin{itemize} 
 \item un descriptif de la caméra. Exemple : ``Caméra du Jardin''
 \item le protocole de communication à utiliser (http ou rtsp).
-\item l'url d'acces. Exemple : ``http://192.168.1.20''
-\item le port (par defaut le port 80 est utilisé).
+\item l'url d'accès. Exemple : ``http://192.168.1.20''
+\item le port (par défaut le port 80 est utilisé).
 \item le nom d'utilisateur (login).
-\item le mot de pass.
-\item le canal (necesaire lors de l'utilisation de plusieurs caméras pour une
-meme adresse).
-\item un identifiant unique appelé \textit{uniqueID} definit par la position de
-la caméra dans la liste sur la page d'acceuil.
-\item le groupe assigné lors de la mise en route de la détéction de mouvement
+\item le mot de passe.
+\item le canal (nécessaire lors de l'utilisation de plusieurs caméras pour une
+même adresse).
+\item un identifiant unique appelé \textit{uniqueID} défini par la position de
+la caméra dans la liste sur la page d'accueil.
+\item le groupe assigné lors de la mise en route de la détection de mouvement
 (compris entre 0 et 9) appelé \textit{groupeID}.\\
 \end{itemize}
-Afin de pouvoir communiquer une caméra entre plusieurs \textit{activitées
+\indent Afin de pouvoir communiquer une caméra entre plusieurs \textit{activités
 (activity)} nous avons choisi de rendre cette classe \textit{serializable} pour
-ne pas devoir passer une a une chaques caracteristiques.\\
+ne pas devoir passer une a une chacune des caractéristiques.\\
 Cette classe contient également une primitive capable de générer un entier
 unique pour le couple \textit{uniqueID} et \textit{groupID} afin de pouvoir
-lancer plusieurs fenetres de detection de mouvement pour une meme caméra
+lancer plusieurs fenêtres de détection de mouvement pour une même caméra
 (\textit{getMotionDetectionID}).
 \subsection{Construction de l'objet}
-La création d'une caméra se fait via l'interface graphique definit par le
+La création d'une caméra se fait via l'interface graphique défini par le
 fichier \textit{add\_cam.xml}.\newline
 
  \begin{center}
@@ -38,19 +38,18 @@ fichier \textit{add\_cam.xml}.\newline
 \end{center}
 
 
-On y retrouve des champs de texte édiatable pour chacunes
-des caracteristiques de la caméra ainsi qu'un bouton permettant l'ajout de caméra via
-\textit{QrCode}.
+On y retrouve des champs de texte éditable pour chacune
+des caractéristiques de la caméra ainsi qu'un bouton permettant l'ajout de caméra via \textit{QrCode}.\newline
 \indent Le lecteur de code Qr est implémenté par la bibliothèque
 \textit{zxing}\footnote{\label{zxing} http://code.google.com/p/zxing/}. \newline
 Lors d'un clic sur ce bouton, nous appelons l'activité 
-\textit{SCAN} de la bibliotheque zxing avec comme argument
+\textit{SCAN} de la bibliothèque zxing avec comme argument
 \textit{QR\_CODE\_MODE}.\newline
 Si la bibliothèque n'est pas disponible sur l'appareil, nous faisons appel a
-\textit{l'android market} afin de telecharger l'application \textit{zxing} (qui
+\textit{l'Android market} afin de telecharger   l'application \textit{zxing} (qui
 implémente l'ensemble des fonctions proposées par la bibliothèque).
 \newpage
-\begin{lstlisting}[caption={Lancement de l'activité zxing ou de l'android
+\begin{lstlisting}[caption={Lancement de l'activité zxing ou de l'Android
 market.}] 
     public void onClick(View v) { try {
             Intent intent = new Intent(
@@ -66,63 +65,63 @@ market.}]
 \end{lstlisting}
 
 \indent \newline
-\indent Lorsque l'activitée \textit{zxing} se termine, l'activité
-\textit{addCam} recupere l'adresse de la caméra contenu dans le code Qr puis verrouille les
-champs de texte édiatable adresse et port.\\
+\indent Lorsque l'\textit{Activity} \textit{zxing} se termine, l'activité
+\textit{addCam} récupère l'adresse de la caméra contenu dans le code Qr puis verrouille les
+champs de texte éditable adresse et port.\\
 \indent Pour ajouter la nouvelle
-caméra, il ne reste plus  é l'utilisateur qu'é cliquer sur le bouton
-\textit{ajouter} pour revenir sur l'écran d'acceuil et constater l'ajout de la caméra. Cependant il reste possible de revenir é l'écran d'acceuil sans sauvegarder les changement en cliquant sur \textit{fermer}.
+caméra, il ne reste à l'utilisateur qu'à cliquer sur le bouton
+\textit{ajouter} pour revenir sur l'écran d'accueil et constater l'ajout de la caméra. Cependant il reste possible de revenir à l'écran d'accueil sans sauvegarder les changements en cliquant sur \textit{fermer}.
 
 \subsection{Affichage des Caméras}
-Une fois la phase de création reussie, nous avons implémenté une nouvelle
-activité permettant d'afficher l'ensemble des caméras ajouter par l'utilisateur.
-Cette activité s'appele \textit{Home} et est contenue dans la classe
-\textit{Home.java}.\newline
-Android defini une cycle de vie pour chaque activitée selon le diagramme
-decrit par la \textit{figure 3.2}.
+Une fois la phase de création réussie, nous avons implémenté une nouvelle
+activité permettant d'afficher l'ensemble des caméras ajouté par l'utilisateur.
+Cette activité s'appelle \textit{Home} et est contenue dans la classe
+\textit{Home.java}.\newline \newline
+\indent Android défini une cycle de vie pour chaque activité selon le diagramme
+décrit par la \textit{figure 3.2}.
 \newline
-\indent Ce cycle de vie nous permet d'initialiser, d'interrompre, ou de detruire
-les differentes vues et fonctionnalitées de notre activitée. Dans le cas de
-l'activité \textit{Home} (qui est l'activité d'acceuil de notre application), ce cycle se traduit par : 
+\indent Ce cycle de vie nous permet d'initialiser, d'interrompre, ou de détruire
+les différentes vues et fonctionnalités de notre activité. Dans le cas de
+l'activité \textit{Home} (qui est l'activité d'accueil de notre application), ce cycle se traduit par : 
 \begin{itemize}
   \item   \underline{onCreate :} \begin{enumerate}
-    \item Allouer les ressources a l'aide du construteur de la classe parent
+    \item Allouer les ressources a l'aide du constructeur de la classe parent
     (\textit{super.onCreate(savedInstanceState});)
-    \item Récuperation des préférences de l'utilisateur via un
-    \textit{SharedPreferences} décrit utlétieurement.
-    \item Démarrage du service de détéction de mouvement.
+    \item Récupération des préférences de l'utilisateur via un
+    \textit{SharedPreferences} décrit ultérieurement.
+    \item Démarrage du service de détection de mouvement.
     \item Affichage d'un pop-up d'aide et astuces (si l'utilisateur n'a pas
-    choisi de le desactiver).
-    \item Lecture de la liste des caméras deja enregistré si disponible.
+    choisi de le désactiver).
+    \item Lecture de la liste des caméras déjà enregistrées si disponible.
     \item Mise a jour et implémentation des \textit{listeners} de la liste
     affichant les caméras.\newline
   \end{enumerate} 
-  \item \underline{ onActivityResult :}\newline Lorsqu'un activitée demarre une
-  autre activitée via les \textit{startActivity(intent)} ou
+  \item \underline{ onActivityResult :}\newline Lorsqu'un activité démarre une
+  autre activité via les \textit{startActivity(intent)} ou
   \textit{startActivityForResult(intent, 1)} celle-ci passe en arrière plan pour
-  executer l'activité décrite par l'\textit{intent}. Durant cette état elle peut
-  être ``tuée'' par le gestionnaire de tache, ou en attente d'un resultat. C'est pourquoi l'état
+  exécuter l'activité décrite par l'\textit{intent}. Durant cette état elle peut
+  être ``tuée'' par le gestionnaire de taches, ou en attente d'un résultat. C'est pourquoi l'état
   onResume de la \textit{figure 3.1} englobe également l'état
   \textit{onActivityResult}.\newline
-  Pour faire appel a l'activité permettant d'ajouter une caméra, l'utilisateur
-  doit utiliser le \textit{Menu} (defini dans la classe \textit{Home.java}) puis
-  cliquer sur ``Ajouter une caméra''. Cette action lancera l'activitée
-  \textit{addCam} et attendra le resultat (la nouvelle caméra).
+  Pour faire appel à l'activité permettant d'ajouter une caméra, l'utilisateur
+  doit utiliser le \textit{Menu} (défini dans la classe \textit{Home.java}) puis
+  cliquer sur ``Ajouter une caméra''. Cette action lancera l'activité
+  \textit{addCam} et attendra le résultat (la nouvelle caméra).
   \newline Quand l'utilisateur aura cliqué sur le bouton ``Ajouter'' de
-  l'activitée \textit{addCam}, celle-ci ce terminera en ayant defini comme
-  resultat le code \textit{OK}, et comme valeure \textit{extra} associé au tag
-  deini par la variable\textit{ camTag} la caméra
-  précédement \textit{serialisée}.\newline Il ne reste plus qu'a la fonction
-  \textit{onActivityResult} de deserialisée la caméra, de l'ajouter dans la
-  liste de caméras deja ajoutées (appelé \textit{camList}), et pour finir de
+  l'activité \textit{addCam}, celle-ci ce terminera en ayant défini comme
+  résultat le code \textit{OK}, et comme valeur \textit{extra} associé au tag
+  défini par la variable\textit{ camTag} la caméra
+  précédemment \textit{sérialisée}.\newline Il ne reste plus qu'a la fonction
+  \textit{onActivityResult} de déserialisér la caméra, de l'ajouter dans la
+  liste de caméras déjà ajoutées (appelé \textit{camList}), et pour finir de
   mettre a jour l'affichage.\newline
   
   \item \underline{onDestroy :}\newline
-  Afin de ne pas devoir entrer les caméras à chaque demarrage de
-  l'application, nous avons choisis de serealiser puis de sauvegarder la liste
+  Afin de ne pas devoir entrer les caméras à chaque démarrage de
+  l'application, nous avons choisis de sérialiser puis de sauvegarder la liste
   des caméras dans un fichier pour les ajouter automatiquement à chaque
-  demarrage. Cette sauvegarde s'effectue juste avant de liberer les ressources
-  en surchargant la fonction \textit{onDestroy}. 
+  démarrage. Cette sauvegarde s'effectue juste avant de libérer les ressources
+  en surchargent la fonction \textit{onDestroy}. 
   \end{itemize}
   
 \begin{center}
@@ -137,14 +136,14 @@ l'activité \textit{Home} (qui est l'activité d'acceuil de notre application), 
   \end{center}
 \footnotetext{http://developer.android.com/reference/android/app/Activity.html}
 \newpage
- L'affichage de l'activitée \textit{Home} est decris ci-dessous, on peut y
+ L'affichage de l'activité \textit{Home} est décrit ci-dessous, on peut y
  retrouver une liste personnalisée contenant :
  \begin{itemize}
    \item L'identifiant unique de la caméra.
-   \item Suivit de son descriptif.
+   \item Suivi de son descriptif.
    \item Puis en indication son l'url.
  \end{itemize}
- On peut également voir en bas de l'image, le menu qui apparait lors de l'appuis
+ On peut également voir en bas de l'image, le menu qui apparaît lors de l'appui
  sur la touche menu du téléphone.\newline
  \begin{center}
  \begin{figure}[H] 
@@ -157,14 +156,14 @@ l'activité \textit{Home} (qui est l'activité d'acceuil de notre application), 
 
 \subsection{Modification et Suppression de l'objet}
 Lors d'un appuis long sur une élément de la liste
-(\textit{setOnItemLongClickListener}) une alerte apparait pour demander a
+(\textit{setOnItemLongClickListener}) une alerte apparaît pour demander à
 l'utilisateur si il souhaite modifier, ou supprimer l'élément (la caméra).
 \begin{itemize}
-  \item Si il choisit de supprimer l'élément, une seconde alerte apparait pour confirmer
+  \item Si il choisit de supprimer l'élément, une seconde alerte apparaît pour confirmer
 ou annuler son choix. 
 \item Si il choisit de modifier la caméra, l'application lance une nouvelle
-activité adaptée a la modification de la caméra. Il peut alors appliquer ou
-annuler ses changements sur le meme principe que l'ajout d'une caméra.
+activité adaptée à la modification de la caméra. Il peut alors appliquer ou
+annuler ses changements sur le même principe que l'ajout d'une caméra.
 \end{itemize}
 \newpage
 \begin{changemargin}{0cm}{0cm}
@@ -208,20 +207,20 @@ public boolean onItemLongClick(AdapterView<?> arg0,
 \section{Gestion du flux vidéo}
 \subsection{Vue Simple}
 Cette partie consiste a décrire l'implémentation de la retransmission de la
-video d'une seul sur le téléphone. On trouve cette implémentation dans la classe
-\textit{Video.java} qui implémente l'activitée \textit{Video}.
+vidéo d'une seule caméra sur le téléphone. On trouve cette l'implémentation dans la classe
+\textit{Video.java} qui implémente l'activité \textit{Video}.
 \subsubsection{Cycle de vie}
-Précédement nous avons décrit le cycle de vie de l'activitée \textit{Home}.
-Ici nous avons également ajouté des fonctionnalité aux differents états afin de
-ne pas consomer de ressource inutilement. En effet, lorsque l'activitée n'est
-plus au premier plan, il est inutile de continuer a retransmettre le flux
-video.\newline
-C'est également le cas pour l'utilisation du verrou nous permettant d'empecher
-le telephone de se mettre en veille lors de la retransmission de la video. Le
-code suivant illustre l'arret de la video et l'utilisation du verrou
-(wl).\newline
-Il existe plusieurs type de verrou, pour les utiliser il faut recuperer une
-instance du gestionnaire d'énérgie \textit{PowerManager} a l'aide de la
+Précédemment nous avons décrit le cycle de vie de l'activité \textit{Home}.
+Ici nous avons également ajouté des fonctionnalitées aux différents états afin de
+ne pas consommer de ressources inutilement. En effet, lorsque l'activité n'est
+plus au premier plan, il est inutile de continuer à retransmettre le flux
+Video.\newline
+C'est également le cas pour l'utilisation du verrou nous permettant d'empêcher
+le téléphone de se mettre en veille lors de la retransmission de la vidéo. Le
+code suivant illustre l'arrêt de la vidéo et la libération du verrou
+(wl)lorsque l'activité n'est pas active.\newline
+Il existe plusieurs type de verrou, pour les utiliser il faut récupérer une
+instance du gestionnaire d'énergie \textit{PowerManager} à l'aide de la
 fonction : 
 \begin{lstlisting}
  PowerManager pm = Context.getSystemService(Context.POWER_SERVICE).
@@ -231,8 +230,8 @@ Puis demander explicitement la création d'un nouveau verrou
 \begin{lstlisting}
  pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,"Tag");
 \end{lstlisting}
-Ces differents verrou sont definit par le premier argument. Il existe quatre
-type de verrou dont les caracteristiques sont definie ci-dessous :\newline
+Ces différents verrou sont défini par le premier argument. Il existe quatre
+type de verrou dont les caractéristiques sont définies ci-dessous :\newline
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -250,8 +249,8 @@ http://developer.android.com/reference/android/os/PowerManager.html}}
 \newline
 \end{center}
 Nous avons choisi d'utiliser un verrou \textit{SCREEN\_DIM\_WAKE\_LOCK} afin de
-garder simplement allumé avec une luminosité au minimum pour ne pas consomer
-exessivement la batterie du téléphone.
+garder l'écran simplement allumé avec une luminosité au minimum pour ne pas consommer
+excessivement la batterie du téléphone.
 \newpage
  \begin{lstlisting}[caption={Video life-cycle}] 
 /**
@@ -298,16 +297,15 @@ public void onDestroy() {
 }
 \end{lstlisting}
 \subsubsection{ConnectivityManager}
-L'accés a internet pour un téléphone disposant d'un systeme d'exploitation
-comme Android se fait par des couches phisique de nature differente . Le debit
-est donc phortement dependand du support utilisé, c'est pourquoi nous faisons
-appel a la classe \textit{ConnectivityManager} afin de récupéré la nature du
-support pour definir la resolution aupres de la caméra de la video à envoyer.
-Nous avons principalement distingué deux type de réseau : \textit{WiFi} et les
-autres réseaux mobile (\textit{3G}, \textit{3G+}, \textit{EDGE}, \ldots).
-Afin de definir la correspondance suivant qui nous permet d'obtenir un
-taux de raffraichissement correct en \textit{WiFi} (moyenne de 25fps pour une
-couverture total) et utilisant la resolution minimal pour les autres reseaux:
+L'accès à internet pour un téléphone disposant d'un système d'exploitation
+comme Android se fait par des couches physique de nature différente . Le débit
+est donc fortement dépendant du support utilisé, c'est pourquoi nous faisons
+appel à la classe \textit{ConnectivityManager} afin de récupérer la nature du
+support pour définir la résolution (de la vidéo à envoyer) auprès de la caméra.
+Nous avons principalement distingué deux types de réseaux : \textit{WiFi} et les
+autres réseaux mobile (\textit{3G}, \textit{3G+}, \textit{EDGE}, \ldots), afin de définir la correspondance suivante qui nous permet d'obtenir un
+taux de rafraîchissement correct en \textit{WiFi} (moyenne de 25fps pour une
+couverture total) et utilisant la résolution minimal pour les autres réseaux:
 \begin{center}
 \begin{tabular}{|c|c|}
 \hline
@@ -319,7 +317,7 @@ Other &168x120\\
 \end{tabular}
 \newline\newline
 \end{center}
-Pour récupéré le type de réseau on fait une nouvelle fois appel a la
+Pour récupérer le type de réseau on fait une nouvelle fois appel à la
 fonction :
 \begin{lstlisting}
 ConnectivityManager mConnectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -337,42 +335,41 @@ if (info != null && info.isConnected()) {
 \end{lstlisting}
 
 \subsubsection{Format Vidéo}
-Android est capable d'encoder et de decoder un grand nombre de format audio et
-video (cf Android Supported Media Formats\footnote{\label{mediaFormat}
-http://developer.android.com/guide/appendix/media-formats.html}) a travers
+Android est capable d'encoder et de décoder un grand nombre de format audio et
+vidéo (cf Android Supported Media Formats\footnote{\label{mediaFormat}
+http://developer.android.com/guide/appendix/media-formats.html}) à travers
 deux protocoles (\textit{HTTP ou RTSP}).\newline
 La caméra mise a notre disposition propose uniquement deux formats vidéo :
-\textit{MJPEG} via le protocol \textit{HTTP} et \textit{MPEG4} via le protocol
-\textit{RTSP}.\newline Cependant malgres que le systeme d'exploitation est
+\textit{MJPEG} via le protocole \textit{HTTP} et \textit{MPEG4} via le protocole
+\textit{RTSP}.\newline Cependant malgré que le système d'exploitation est
 capable d'utiliser le protocole \textit{RTSP}, celui-ci ne nous permet pas de
-modifier les requetes afin d'y ajouter l'authentification necessaire pour la
+modifier les requêtes afin d'y ajouter l'authentification nécessaire pour la
 lecture de la video. Celle-ci est donc accessible uniquement si la caméra
-autorise les utilisateurs anonyme a la visionner.\newline Nous sommes donc
-limité au protocol \textit{HTTP} dans lequel nous avons expliqué précédement
-la maniere dont nous nous authentifion.\newline\newline
-Nous devons donc utiliser le protocol \textit{HTTP} qui fournit une video au
-format \textit{MJPEG}. Ce format n'etant pas géré par le
+autorise les utilisateurs anonyme à la visionner.\newline Nous sommes donc
+limités au protocole \textit{HTTP} dans lequel nous avons expliqué précédemment
+la manière dont nous nous authentifions.\newline\newline
+Le format \textit{MJPEG} transporté via le protocole \textit{HTTP} n'étant pas géré par le
 \textit{mediaPlayer}\footnote{\label{mediaPlayer}
 http://developer.android.com/reference/android/media/MediaPlayer.html}, nous
-avons du trouver un autre moyen d'afficher la video.
+avons dû trouver un autre moyen d'afficher la video.
 \subsubsection{MjpegView}
-Grace a la documentation de la caméra\footnote{\label{docAxis}
+Grâce à la documentation de la caméra\footnote{\label{docAxis}
 http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php} on peut
-constater que la vidéo est en realité composé de la succession d'une multitude
-d'image. Pour afficher la vidéo il faut donc simplement faire defiler chacune
-des images recupéré dans la réponse d'une requete de video \textit{MJPEG}.
+constater que la vidéo est en réalité composée de la succession d'une multitude
+d'images. Pour afficher la vidéo il faut donc simplement faire défiler chacune
+des images récupérées dans la réponse de la requête permettant d'obtenir le flux de vidéo \textit{MJPEG}.
 \newline
 Nous avons trouvé sur internet une composant graphique \textit{OpenSource}
 appelé \textit{MjpegView}\footnote{\label{MjpegView}
 http://www.anddev.org/multimedia-problems-f28/mjpeg-on-android-anyone-t1871-30.html}
 réalisant exactement ce traitement.
-Nous avons tout de meme du effectuer quelques modifiaction pour l'adapter a
+Nous avons tout de même dû effectuer quelques modifications pour l'adapter à
 notre utilisation (comme l'ajout d'une fonction \textit{resumePlayback} pour
-redemarrer la lecture de la vidéo par exemple).\newline
-Comme chacun des composants graphique, il peut etre ajouter dans une activité ou
-defini directement dans une vue au format \textit{xml}.\newline
+redémarrer la lecture de la vidéo par exemple).\newline
+Comme chacun des composants graphique, il peut être ajouter dans une activité ou
+défini directement dans une vue au format \textit{xml}.\newline
 \begin{center}
-\begin{lstlisting}[language=XML, caption={video.xml}]
+\begin{lstlisting}[language=XML, format=XML, caption={video.xml}]
 <de.mjpegsample.MjpegView.MjpegView
 	android:id="@+id/surfaceView1"
 	android:layout_width="fill_parent"
@@ -394,14 +391,14 @@ public void onCreate(Bundle icicle) {
 \end{center}
 
 
-\subsubsection{Interface de controle de la camera}
-Nous avons choisi de mettre à disposition les commandes permettant le controle
-de la caméra dans cette activité. Ainsi l'utilisateur peur observer instantannément les
+\subsubsection{Interface de contrôle de la caméra}
+Nous avons choisi de mettre à disposition les commandes permettant le contrôle
+de la caméra dans cette activité. Ainsi l'utilisateur peut observer instantanément les
 modifications.\newline\newline
-\indent Le \textit{LayoutInflater} est une service du systeme d'exploitation qui
+\indent Le \textit{LayoutInflater} est une service du système d'exploitation qui
 permet de charger une vue a partir d'un fichier \textit{.xml}. Nous allons utiliser ce
-service pour ajouter, ou supprimer un ensemble de composant graphique a la vue
-retransmettant la video.
+service pour ajouter, ou supprimer un ensemble de composant graphique à la vue
+retransmettant la vidéo.
 \begin{lstlisting}[caption={LayoutInflater utilisation}]
 RelativeLayout screen = (RelativeLayout) findViewById(R.id.RelativeLayout01);
 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -410,7 +407,7 @@ inflater.inflate(R.layout.mds_video, screen, true);
 /* Remove all component contained in the mainLayout */
 screen.removeView(findViewById(R.id.mainLayout));
 \end{lstlisting}
-Voici les differentes vue produitent :
+Voici les différentes vue produites :
 
 \begin{center}
 \begin{figure}[H] 
@@ -435,36 +432,36 @@ Voici les differentes vue produitent :
 \end{figure}  
 \end{center}
 
-Toutes ces vues peuvent etre ajouter ou supprimer en utilisant le menu
-personalisé dans l'activitée \textit{Video}.
+Toutes ces vues peuvent être ajouter ou supprimer en utilisant le menu
+personnalisé dans l'activité \textit{Video}.
 
 \subsection{Multi-Vue}
-Nous avons souhaité implémenter la possibilitée de visionner plusieurs caméra
-simultanement sur une même vue. De nouvelles contraintes sont donc apparuent : 
+Nous avons souhaité implémenter la possibilité de visionner plusieurs caméras
+simultanément sur une même vue. De nouvelles contraintes sont donc apparuent : 
 \begin{itemize}
   \item Comment télécharger et afficher plusieurs vidéos \textit{mjpeg}
-  provenant de differentes sources ?
+  provenant de différentes sources ?
   \item Pouvoir choisir le nombre de caméras à afficher.
   \item Comment choisir les caméras ?
-  \item Comment controler les caméras ?
+  \item Comment contrôler les caméras ?
 \end{itemize}
 
 \subsubsection{Playerthread video}
 Le thread lancé au démarrage d'une activité est appelé \textit{UI Thread}\footnote{\label{UIThread}
 http://davy-leggieri.developpez.com/tutoriels/android/ui-thread/} ou
-\textit{User Interface thread}. Le role de se thread est d'éxécuter le cycle de
-vie de l'activitée. C'est également lui qui gere les interactions
+\textit{User Interface thread}. Le rôle de se thread est d'exécuter le cycle de
+vie de l'activité. C'est également lui qui gère les interactions
 utilisateurs et l'affichage. Seul l'UI thread peut modifier l'affichage
 ou capturer une interaction.\newline 
 \indent Pour afficher simultanément plusieurs vidéos, nous devons donc utiliser
-plusieurs threads afin d'obtenir un affichage fluide des videos.\newline
-Chaque thread aura pour tache de telecharger l'image, puis de signaler a l'UI
+plusieurs threads afin d'obtenir un affichage fluide des vidéos.\newline
+Chaque thread aura pour tache de télécharger l'image, puis de signaler à l'UI
 qu'une nouvelle image est disponible afin d'actualiser
-l'affichage.\newline\newline\indent Il existe plusieurs mecanisme pour effectuer
+l'affichage.\newline\newline\indent Il existe plusieurs mécanisme pour effectuer
 cette notification.\newline
 \begin{itemize}
-  \item La premiere methode est d'enfiler un obtjet de type
-  Runnable, dans la file d'exectution de l'UI a l'aide de la
+  \item La première méthode est d'enfiler un objet de type
+  Runnable, dans la file d'exécution de l'UI à l'aide de la
   fonction : \newline
   \begin{lstlisting}[caption={Example of use runOnUiThread}]
  runOnUiThread(new Runnable() {
@@ -475,9 +472,9 @@ cette notification.\newline
   }
 });  
   \end{lstlisting}
-\item Une autre methode consiste a notifier l'UI a l'aide de
-\textit{Message} grace a la mise en place d'un \textit{handler} qui
-execute une action pour chaque message recu.\newline
+\item Une autre méthode consiste à notifier l'UI à l'aide de
+\textit{Message} grâce à la mise en place d'un \textit{handler} qui
+exécute une action pour chaque message reçu.\newline
 \begin{lstlisting}[caption={Example of message handler}] 
 /* Performed by the UI thread */
 public static Handler myViewUpdateHandler = new Handler() {
@@ -493,11 +490,11 @@ public static Handler myViewUpdateHandler = new Handler() {
 }};    
 \end{lstlisting}    
 \end{itemize}
-Le diagramme suivant décrit l'execution de l'activitée \textit{MultiVideo}. A
-noter la presence d'un delai entre chaque telechargement d'une nouvelle image.
-Ce delai nous permet de ralentir le nombre d'image par seconde dans le but de reduire considerablement la consomation de la bande passsante.
-L'utilisateur a la possibilité de regler lui meme ce delay dans le menu des
-parametres.
+Le diagramme suivant décrit l'exécution de l'activité \textit{MultiVideo}. A
+noter la présence d'un délai entre chaque téléchargement d'une nouvelle image.
+Ce délai nous permet de ralentir le nombre d'image par seconde dans le but de réduire considérablement la consommation de la bande passante.
+L'utilisateur à la possibilité de régler lui même ce délai dans le menu des
+paramètres.
  \begin{figure}[H]
   \label{DiagrammeSequenceMultiView}
   \centering
@@ -509,14 +506,14 @@ parametres.
 
 
 \subsubsection{Layout personnalisés}
-Maintenant que vous somme capable d'afficher plusieurs video simultanément,
-nous nous sommes interessé a la disposition de celles-ci sur l'écran.
-Pour sa faire nous offrons dans un premier temps a l'utilisateur la possibilité
-de choisir le nombre de caméra a afficher (entre 2 et 6).\newline
-Ceci a l'aide d'un alert dialogqui affichera sous forme d'une liste, le nombre
-de caméra a afficher. Puis lors de la capture d'un clic sur l'un des element de
-la liste, nous lancerons l'activitée \textit{MultiVideo} en y ajoutant un
-parametre supplémentaire appelé \textit{nbViewTag} qui definie le nombre de vue
+Maintenant que vous sommes capable d'afficher plusieurs vidéos simultanément,
+nous nous sommes intéressés à la disposition de celles-ci sur l'écran.
+Pour sa faire nous offrons dans un premier temps à l'utilisateur la possibilité
+de choisir le nombre de caméra à afficher (entre 2 et 6).\newline
+Ceci à l'aide d'un alert dialog qui affichera sous forme d'une liste, le nombre
+de caméra à afficher. Puis lors de la capture d'un clic sur l'un des éléments de
+la liste, nous lancerons l'activité \textit{MultiVideo} en y ajoutant un
+paramètre supplémentaire appelé \textit{nbViewTag} qui défini le nombre de vue
 ainsi récupéré.
 \begin{changemargin}{0cm}{0cm}
 \begin{lstlisting}[caption={Multi-Video launcher}] 
@@ -537,32 +534,32 @@ AlertDialog alert = builder.create();
 alert.show();
 \end{lstlisting}    
 \end{changemargin}
-Enfin des le lancement de l'activité \textit{MultiVideo}, il ne nous reste plus
-qu'a recuperer les parametres pour definir le layout à utiliser.\\
-\newline\indent Nous allons maintenant commenter un probleme technique
+Enfin dès le lancement de l'activité \textit{MultiVideo}, il ne nous reste plus
+qu'à récupérer les paramètres pour définir le layout à utiliser.\\
+\newline\indent Nous allons maintenant commenter un problème technique
 rencontrer lors de la mise en place des layouts.
-Nous avons expliqué precedement la maniere dont nous recupérions le nombre de
-caméra a afficher. Afin d'afficher les images recupérées par les differents
-threads, nous devons dans un premier temps récépérer chaqunes des adresses des
-differentes \textit{ImageView} definie dans les cinq layout. \newline Pour se
-faire, toutes les \textit{ImageView} aurons un identifiant defini par leurs
-position sur l'ecran :
+Nous avons expliqué précédemment la manière dont nous récupérions le nombre de
+caméra à afficher. Afin d'afficher les images récupérées par les différents
+threads, nous devons dans un premier temps récépérer chacune des adresses des
+différentes \textit{ImageView} défini dans les cinq layout. \newline Pour se
+faire, toutes les \textit{ImageView} auront un identifiant défini par leurs
+positions sur l'écran :
 \begin{itemize}
 \item image0 pour le 1er emplacement
 \item image1 pour le second
 \item image5 pour le 6eme emplacement (le plus grand disponible)
 \end{itemize}
-En nomant toutes les \textit{ImageView} des differents layout avec un
-identifiant equivalent, nous pouvons deduire l'ensemble des adresses en
-recupérant celle de l'image0.
-En effet lors de la compilation, le compilateur genere un fichier appelé
-\textit{R.java}. Dans ce fichier on trouve l'ensemble des adresse pour chaque
-classe, layout, et objet de l'application trié par ordre alphabetique. Cette
-derniere propriétée nous garantie que l'adresse de l'image1 vaut l'adresse de
-l'image0 plus un, etc \ldots. Nous somme donc en mesure de recuperer chacune des 
-\textit{ImageView} afin de les mettres a jours, lors de la reception de nouvelle
-images mais aussi de definir les \textit{listener} pour capturer les
-interactions.
+En nommant toutes les \textit{ImageView} des différents layout avec un
+identifiant équivalent, nous pouvons déduire l'ensemble des adresses en
+récupérant celle de l'image0.
+En effet lors de la compilation, le compilateur génère un fichier appelé
+\textit{R.java}. Dans ce fichier on trouve l'ensemble des adresses pour chaque
+classe, layout, et objet de l'application trié par ordre alphabétique. Cette
+dernière propriété nous garantie que l'adresse de l'image1 vaut l'adresse de
+l'image0 plus un, etc \ldots. Nous sommes donc en mesure de récupérer chacune des 
+\textit{ImageView} afin de les mettre a jours, lors de la réception de nouvelle
+images mais aussi de définir les \textit{listener} pour chaque images permettant 
+de capturer les interactions.
 \begin{changemargin}{0cm}{0cm}
 \begin{lstlisting}[caption={ImageView address resolver}] 
 /*
@@ -600,34 +597,33 @@ img[i].setOnLongClickListener(new myOnLongClickListener(i));
   \caption{Multi-View 5 camera}
 \end{figure}  
 \subsubsection{Utilisation}
-Nous offrons a l'utilisateur de choisir la caméra a afficher sur chacune des
-\textit{ImageView}. 
+L'utilisateur a également la possibilité de choisir la caméra à afficher sur chacune des \textit{ImageView}. 
 \begin{itemize}
 \item Le premier clique sur l'une d'elle affiche une liste permettant de
-choisir la caméra a afficher.
+choisir la caméra à afficher.
 \item Un nouveau clique stop la vidéo.
-\item Un long clique lance l'activitée \textit{Video} pour donner a
-l'utilisateur de controler la caméra. Une fois les reglages effectuer, il peut
-revenir sur la vue precedent en appuyant sur le bouton retour de son telephone.
+\item Un long clique lance l'activité \textit{Video} pour permettre à
+l'utilisateur de contrôler la caméra. Une fois les réglages effectuer, il peut
+revenir sur la vue précèdente en appuyant sur le bouton retour de son téléphone.
 \end{itemize}
 
 \section{Contrôle de la caméra}
 \input{ControleCamera}
 \section{Fonctionnalités avancées et réglages}
 Les caméras \textit{Axis} offrent un grand nombre de services pour lesquels
-nous avons implementer la possibiliter de les utiliser directement avec le
-telephone.
+nous avons implémenter la possibilité de les utiliser directement avec le
+téléphone.
 \subsection{Snapshot}
-Parmis ces services, la camera propose a l'utilisateur la possibilite de
+Parmi ces services, la camera propose à l'utilisateur la possibilité de
 prendre une photo instantanée. \newline
-Pour ce faire il nous suffit d'envoyer une requete \textit{HTTP} a l'adresse
+Pour ce faire il nous suffit d'envoyer une requête \textit{HTTP} à l'adresse
 suivante : 
 \begin{lstlisting}
 http://<servername>/axis-cgi/jpg/image.cgi
 \end{lstlisting}
-Dans cette requete, nous avons la possibilitée d'ajouter de nombreux parametres
+Dans cette requête, nous avons la possibilité d'ajouter de nombreux paramètres
 comme la résolution, le taux de compression, l'affichage de la date, l'heure,
-etc. Toutes ces options sont décritent dans la documentation de la caméra
+etc. Toutes ces options sont décrites dans la documentation de la caméra
 \footnote{\label{MjpegView}http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php\#api\_blocks\_image\_video\_jpeg\_snapshot}.
 L'image est contenu dans la réponse :
 \begin{lstlisting}
@@ -637,8 +633,8 @@ Content-Length: <image size>\r\n
 \r\n
 <JPEG image data>\r\n
 \end{lstlisting}
-Une fois la resolution choisi, il ne nous reste qu'a convertir le flux en image
-a l'aide de la fonction :
+Il ne nous reste qu'a convertir le flux en image
+à l'aide de la fonction :
 \begin{lstlisting}
 Bitmap bmp = BitmapFactory.decodeStream(stream);
 \end{lstlisting}
@@ -646,11 +642,10 @@ puis l'enregistrer dans un fichier :
 \begin{lstlisting}
  bmp.compress(Bitmap.CompressFormat.JPEG, 80, fichier);
 \end{lstlisting}
-Afin de prévenir l'utilisateur de la reception de la capture, nous avons
+Afin de prévenir l'utilisateur de la réception de la capture, nous avons
 implémenté une fonction permettant d'ajouter une notification personnalisée dans
-la barre de status du telephone.\newline
-En plus de notifier l'utilisateur, nous lui offrons la possibilitée de visionner
-la photo en cliquant sur la notification.
+la barre de notification du téléphone.\newline
+En plus de notifier l'utilisateur, nous lui offrons la possibilité de visionner directement la photo (via le visionneur d'images par defaut) en cliquant sur la notification.
 \begin{changemargin}{0cm}{0cm}
 \begin{lstlisting}[caption={ImageView address resolver}] 
  public static void statusBarNotificationImage(Activity activity, Bitmap bmp, String text, String path, int id, String tag) {
@@ -680,15 +675,15 @@ Ainsi nous obtenons la notification suivante :
 \end{figure}  
 
 \subsection{Autres réglages}
-Afin d'ameliorer la visibilitée de la caméra, celle ci propose un grand nombre
-de fonction comme le réglage de la luminositée, de la mise au point
+Afin d'améliorer la visibilité de la caméra, celle ci propose un grand nombre
+de fonction comme le réglage de la luminosité, de la mise au point
 (focus), l'ouverture ou la fermeture de l'iris, et beaucoup d'autres fonctions
-egalement disponible sur la
+également disponible sur la
 documentation\footnote{\label{MjpegView}http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php\#api\_blocks\_ptz\_control}
 de la caméra.\newline
 \indent Nous avons choisis d'implémenter certaines d'entre elles dont nous
-fournissons l'acces via l'interface de controle avancé disponible dans le menu
-de l'activitée \textit{Video}.
+fournissons l'accès via l'interface de contrôle avancé disponible dans le menu
+de l'activité \textit{Video}.
 
 \begin{figure}[H]
   \label{ctrl2}
@@ -704,10 +699,10 @@ de l'activitée \textit{Video}.
   \item \underline{IR On / IR Off :} Activer ou desactiver le filtre
   anti-IR
   \item \underline{Backlight comp On / Backlight comp Off :} Activer ou
-  desactiver la correction pour la surexposition a la lumiere.
+  desactiver la correction pour la surexposition à la lumière.
 \end{itemize}
-Mais nous avons également offert la possibilité a l'utilisateur d'utiliser les
-réglages automatique de la caméra toujours a partir du menu de l'activitée
+Mais nous avons également offert la possibilité à l'utilisateur d'utiliser les
+réglages automatique de la caméra toujours à partir du menu de l'activité
 \textit{Video}.
 \begin{figure}[H]
   \label{ctrl2}
@@ -718,10 +713,10 @@ réglages automatique de la caméra toujours a partir du menu de l'activitée
 
 \section{Détection de mouvements}
 \subsection{Présentation}
-La détéction de mouvement est une mécanisme utiliser pour detecter les
-changements de position, et les mouvement d'objets ou d'indicidu dans une
+La détection de mouvement est une mécanisme utilisé pour détecter les
+changements de position, et les mouvements d'objets ou d'individus dans une
 zone couverte par un dispositif de video-surveillance.\newline
-Selon une traduction de la definition de wikipedia\footnote{\label{MotionDetection}
+Selon une traduction de la définition de wikipedia\footnote{\label{MotionDetection}
 http://en.wikipedia.org/wiki/Motion\_detection} : \newline
 \begin{quotation}
 `` Ceci peut être réalisé soit par des dispositifs mécaniques qui interagissent
@@ -732,19 +727,19 @@ Le mouvement peut être détecté par: son (capteurs acoustiques), l'opacité
 géomagnétisme (capteurs magnétiques, magnétomètres), la réflexion de l'énergie
 transmise (radar laser infrarouges, capteurs ultrasoniques, capteurs et radars
 micro-ondes), induction électromagnétique (détecteurs à boucle inductive), et
-les vibrations (triboélectrique, sismiques, et des capteurs d'inertie-switch). ``
+les vibrations (triboélectrique, sismiques, et des capteurs d'inertie). ``
 \end{quotation}
-\indent La caméra mise a notre disposition contient un service capable de
-detecter les mouvements couvert par l'objectif ou limité a une zone
-particuliere.\newline Nous avons souhaiter offrir a l'utilisateur la possibilité
-de detecter les mouvements et d'en etre avertie en temps réel sur son telephone.
-C'est pourquoi nous avons implémenté un service a l'écoute de chacune des
-cameras afin de detecter les mouvements sans que l'application soit active.
+\indent La caméra mise à notre disposition contient un service capable de
+détecter les mouvements couvert par l'objectif ou limité à une zone
+particulière.\newline Nous avons souhaiter offrir à l'utilisateur la possibilité
+de détecter les mouvements et d'en être averti en temps réel sur son téléphone.
+C'est pourquoi nous avons implémenté un service à l'écoute de chacune des
+caméras afin de détecter les mouvements sans que l'application soit active.
 \subsection{Utilisation de service Android}
-Sous Android, les services sont des composants qui permettent l'execution de
-fonctionnalités en arriere plan pendant une durée indeterminée meme lorsque les
-activitées de l'application ne sont pas lancée.
-Pour créer un service il faut dans un premier temps le declarer dans le fichier
+Sous Android, les services sont des composants qui permettent l'exécution de
+fonctionnalités en arrière plan pendant une durée indéterminée même lorsque les
+activités de l'application ne sont pas lancée.
+Pour créer un service il faut dans un premier temps le déclarer dans le fichier
 \textit{AndroidManifest.xml} :\newline
 \begin{lstlisting}[format=XML]
 <application android:icon="@drawable/camera" 
@@ -755,7 +750,7 @@ Pour créer un service il faut dans un premier temps le declarer dans le fichier
 \end{lstlisting}
 Puis en implémentant le service dans le fichier
 \textit{MotionDetectionService.java}.
- Tout comme les activitées, les services ont
+ Tout comme les activités, les services ont
 un cycle de vie :
 \newpage
 \begin{center}
@@ -770,31 +765,29 @@ un cycle de vie :
   \end{center}
 \footnotetext{http://www.linuxtopia.org/online\_books/android/devguide/guide/topics/fundamentals.html}
 
-Ce shcema illustre la possibilité de contacter un service de deux manieres
-differentes. La premiere (cycle de gauche) se limite a envoyer des insctuctions 
-au service pour y declancher un traitement definit dans la fonction :
+Ce schéma illustre la possibilité de contacter un service de deux manières
+différentes. La première (cycle de gauche) se limite à envoyer des instructions 
+au service pour y déclencher un traitement défini dans la fonction :
 \begin{lstlisting}
 @Override
 public int onStartCommand(Intent intent, int flags, int startId){
 /* work to do */
 }
 \end{lstlisting}
-La seconde (cycle de droite) permet a une activitée de se lier a
-un service afin de pouvoir utiliser toutes les méthodes public du
-service.\newline
+La seconde (cycle de droite) permet à une activité de se lier à
+un service afin de pouvoir utiliser toutes les ses méthodes public.\newline
 N'ayant pas besoin de communiquer autrement avec les services que pour leurs
-demander d'effectuer un traitement, la premiere methode nous avons choisi
-d'implémenter le 1er cycle.
+demander d'effectuer un traitement, nous avons choisi d'implémenter le 1er cycle.
 
 \subsection{Activation du service}
-Les caméras Axis peuvent gerer jusqu'a dix fenetre de detection de mouvement par
-caméra simutanement. Pour ajouter une fenetre (avec les valeurs par defaut) il
-suffit d'envoyer une requette \textit{HTTP GET} a l'adresse : 
+Les caméras Axis peuvent gérer jusqu'à dix fenêtres de detection de mouvement par
+caméra simultanément. Pour ajouter une fenêtre (avec les valeurs par défaut) il
+suffit d'envoyer une requête \textit{HTTP GET} a l'adresse : 
 \begin{lstlisting}
 http://myserver/axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion
 \end{lstlisting}
-Pour ajouter une fenetre defini par sa position sur l'ecran, il faut spécifier
-explicitement la position de la fenetre :
+Pour ajouter une fenêtre défini par sa position sur l'écran, il faut spécifier
+explicitement la position de la fenêtre :
 \begin{lstlisting}
 http://myserver/axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion
 &Motion.M.Top=500
@@ -802,42 +795,52 @@ http://myserver/axis-cgi/operator/param.cgi?action=add&group=Motion&template=mot
 &Motion.M.Left=5000
 &Motion.M.Right=8500
 \end{lstlisting}
-Chacune de ces requettes nous fournira le numero du groupe (de 0 a 9) associer a
-la requete, nous permettant plus tard de recuperer le niveau de la detection.
-La reponse est de la forme : 
+Chacune de ces requêtes nous fournira le numéro du groupe (de 0 a 9) associer a
+la requête, nous permettant plus tard de recuperer le niveau de la detection.
+La réponse est de la forme : 
 \begin{lstlisting}
 HTTP/1.0 200 OK\r\n
 Content-Type: text/plain\r\n
 \r\n
 M<group number> OK\r\n
 \end{lstlisting}
-Pour selectionner la fenetre a detecter, nous avons implementer un nouveau
+Nous avons de ce fait differencié les détections de mouvement a l'aide d'un entier unique defini tel que : 
+\begin{lstlisting}
+public int getMotionDetectionID(int startID) {
+return groupeID + (uniqueID * 10) + startID;
+}
+\end{lstlisting}
+Chaque caméra dispose d'un numéro unique (sa position dans la liste).
+Si elles sont toutes capable de créer dix fenetres de detection, 
+en multipliant leur numéro par dix et en additionnant le numero de groupe on peut garantir l'unicité de l'identifiant. Nous ajoutons également un entier \textit{startID} afin de ne pas commencer à compter à partir de zero mais à partir de la valeur contenu dans \textit{startID}.\newline
+
+\indent Pour sélectionner la fenêtre à détecter, nous avons implémenté un nouveau
 composant graphique appelé \textit{drawRectOnTouchView} dont la fonction est de
-dessiner un rectangle et de recuperer la position de la fenetre a partir d'un
+dessiner un rectangle et de récupérer la position de la fenêtre à partir d'un
 clique de l'utilisateur.
 \subsubsection{drawRectOnTouchView}
 Comme pour le lecteur \textit{mjpeg}, l'implémentation d'un nouveau composant
-graphique se fait en etendant la classe \textit{View}. Dans une premier temps il
-faut definir les constructeurs (Création de la surface sur laquel dessiner,
-definition des couleures, \ldots). Puis il est necessaire de surcharger la
-methode :
+graphique se fait en étendant la classe \textit{View}. Dans une premier temps il
+faut définir les constructeurs (Création de la surface sur laquelle dessiner,
+définition des couleurs, \ldots). Puis il est nécessaire de surcharger la
+méthode :
 \begin{lstlisting}
 @Override
 protected void onDraw(Canvas canvas)
 \end{lstlisting}
 afin de dessiner le composant. Dans notre utilisation, nous souhaitons dessiner
-dynamiquent un dessin en fonction des interactions fournient par l'utilisateur.
+dynamiquement un rectangle en fonction des interactions fournis par l'utilisateur.
 Android nous propose de surcharger une fonction qui est appeler lors de chaque
-interaction avec le composant appelé : 
+interactions avec le composant appelé : 
 \begin{lstlisting}
 @Override
 public boolean onTouchEvent(MotionEvent event)
 \end{lstlisting}
-Grace a cette fonction, nous allons dessiner un rectangle qui suivra le doigt de
-l'utilisateur jusqu'a ce qu'il relache la pression de l'écran.
-Précédement nous avons présenté les actions definie par les
-\textit{MotionEvent}. Nous allons egalement a nouveau utiliser ces interactions
-pour definir le comportement de notre composants :
+Grâce a cette fonction, nous allons dessiner un rectangle qui suivra le doigt de
+l'utilisateur jusqu'à ce qu'il relâche la pression sur l'écran.
+Précédemment nous avons présenté les actions définies par les
+\textit{MotionEvent}. Nous allons à nouveau utiliser ces interactions
+pour définir le comportement de notre composants :
 \begin{lstlisting}[caption={Draw Rectangle Component}] 
 @Override
 public boolean onTouchEvent(MotionEvent event) {
@@ -872,30 +875,30 @@ public boolean onTouchEvent(MotionEvent event) {
     }
 \end{lstlisting}
 Lors de l'appuie sur l'ecran, nous sauvegardons les coordonnées du point, puis
-dès le deplacement du doigt de l'utilisateur, on commence a tracer le rectangle.
-Enfin lorsque l'utilisateur releve son doigt, on sauvegarde la position du
-point, puis on signal que le dessin est dessiné a l'aide du flag
-\textit{isDraw}. La fonction \textit{onDraw} nous permet de dessiner les aretes
-du rectangle a partir des coordonnées sauvegardées.\newline
+dès le déplacement du doigt de l'utilisateur, on commence à tracer le rectangle.
+Enfin lorsque l'utilisateur relève son doigt, on sauvegarde la position du
+point, puis on signal que le dessin est dessiné à l'aide du flag
+\textit{isDraw}. La fonction \textit{onDraw} nous permet de dessiner les arêtes
+du rectangle à partir des coordonnées sauvegardées.\newline
 \indent Enfin en affectant la couleur ``transparente'' au fond du composant, on
 peut le superposer au dessus d'une vue \textit{mjpeg} pour dessiner un rectangle
 sur notre video.\newline
-\newline\indent Une fois la detection activée aupres de la caméra, nous pouvons
-demarrer notre service en lui indiquant le groupe fournis par la caméra.
+\newline\indent Une fois la détection activée auprès de la caméra, nous pouvons
+démarrer notre service en lui indiquant le groupe fournit par la caméra.
 
-\subsection{Detection et Signalisation}
-Dans cette partie nous allons etudier le comportement du service.
-La detection de mouvement aupres des caméra \textit{Axis} se fait au travers de
-la requete GET: 
+\subsection{Détection et Signalisation}
+Dans cette partie nous allons étudier le comportement du service.
+La detection de mouvement auprès des caméra \textit{Axis} se fait au travers de
+la requête GET à l'adresse : 
 \begin{lstlisting}
 http://myserver/axis-cgi/motion/motiondata.cgi?group=<group number>
 \end{lstlisting}
-Dans le resultat de cette requete, nous nous interessons a la valeure du niveau
-de detection. Si celui ci depasse le seuil defini dans les parametre
-utilisateur, le service declanche une notification sous forme de vibration du
-telephone.\newline Afin de ne pas ``spammer'' l'utilisateur de notification,
-nous avons decider d'etablir un delai minimum entre deux notifications réglable
-dans les parametres.
+Dans le résultat de cette requête, nous nous intéressons à la valeur du niveau
+de detection. Si celui-ci dépasse le seuil défini dans les paramètres
+utilisateur, le service déclenche une notification sous forme de vibration du
+téléphone.\newline Afin de ne pas ``spammer'' l'utilisateur de notification,
+nous avons décider d'établir un délai minimum entre deux notifications réglable
+dans les paramètres.
 \begin{lstlisting}
 HTTP/1.0 200 OK\r\n
 Content-Type: multipart/x-mixed-replace;boundary=axismdb\r\n\r\n
@@ -922,22 +925,22 @@ http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php\#api\_blocks\
 
 
 \subsection{Implémentation et lancement de la tache}
-Le traitement a éffectuer pour chacunes des detections lancées sera de
-``parser'' le contenu de la reponse cité ci-dessus, puis avertir l'utilisateur en cas de mouvement.
-Grace a la fonction \textit{onStartCommand} defini ci-dessus nous somme en
-mesure de lancer des threads dont le role sera justement d'effectuer ce
-traitement (un thread par caméra).\newline Lorsqu'un mouvement sera détécté
-par l'un des threads, nous utiliserons le meme principe de handler que le
-\textit{PlayerThread} pour prevenir le service activant ainsi une notification.
+Le traitement à effectuer pour chacune des détections lancées sera de
+``parser'' le contenu de la réponse citée ci-dessus, puis avertir l'utilisateur en cas de mouvement.
+Grâce a la fonction \textit{onStartCommand} défini ci-dessus nous somme en
+mesure de lancer des threads dont le rôle sera justement d'effectuer ce
+traitement (un thread par caméra).\newline Lorsqu'un mouvement sera détecté
+par l'un des threads, nous utiliserons le même principe de handler que le
+\textit{PlayerThread} pour prévenir le service activant ainsi une notification.
 \begin{figure}[H]
   \label{service}
   \centering
    \includegraphics[scale=0.4]{Images/service.eps}
   \caption{Service Sequence Diagramm}
 \end{figure}  
-\indent De plus chaque demande de detection de mouvement aupres d'une
-caméra créra une notification ``en cours'' dans la barre de status du telephone.
-Ainsi l'utilisateur pourra acceder facilement et rapidement a la caméra dont il
+\indent De plus chaque demande de détection de mouvement auprès d'une
+caméra créera une notification ``en cours'' dans la barre de notification du téléphone.
+Ainsi l'utilisateur pourra accéder facilement et rapidement à la caméra dont il
 souhaite surveiller les mouvements.
 \begin{figure}[H]
   \label{notifencours}
@@ -947,14 +950,14 @@ souhaite surveiller les mouvements.
 \end{figure}  
 \section{Gestion des préférences}
 \subsection{Import / Export}
-Cette partie s'interesse a la sauvegarde de la liste des caméras. En effet si
-l'utilisateur decide de desinstaller l'application, ou si il change de
-telephone, nous avons souhaiter qu'il ai la possibilité de partager la liste de
+Cette partie s'intéresse à la sauvegarde de la liste des caméras. En effet si
+l'utilisateur décide de desinstaller l'application, ou si il change de
+téléphone, nous avons souhaité qu'il ai la possibilité de partager la liste de
 ses caméras. Pour ce faire nous avons implémenté deux fonctions pour importer et
 exporter cette liste.\newline
-La facilitée de modification, et la portabilité du language \textit{xml} nous as
-conduit a formaliser les éléments de cette liste sous forme de differente
-balises imbriquer :
+La facilitée de modification, et la portabilité du langage \textit{xml} nous a
+conduit à formaliser les éléments de cette liste sous forme de différentes
+balises imbriquées :
 \begin{lstlisting}[language=XML, format=XML]
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?> 
 <camList>
@@ -970,29 +973,29 @@ balises imbriquer :
   	</camera> 
 </camList>
 \end{lstlisting}
-Pour des raison de s'écuritée evidente, nous n'avons pas souhaité sauvegarder
-les noms d'utilisateurs et mots de pass, c'est pourquoi lorsque l'utilisateur
-importe ses caméra, il devra tout de même les modifier une a une afin de
-remplire les champs en question.\newline
-\indent L'ecriture et la lecture de se fichier se fait a travers deux fonctions
+Pour des raisons de sécurités évidente, nous n'avons pas souhaité sauvegarder
+les noms d'utilisateurs et mots de passe, c'est pourquoi lorsque l'utilisateur
+importe ses caméras, il devra tout de même les modifier une à une afin de
+remplir les champs en question.\newline
+\indent L'écriture et la lecture de se fichier se fait au travers de deux fonctions
 :
 \begin{lstlisting}
 public static void xmlWrite(ArrayList<Camera> camList, String url)
 public static ArrayList<Camera> xmlRead(String url)
 \end{lstlisting}
-La premiere crée et rempli le fichier en utilisant la classe
-\textit{XmlSerializer} a partir des caméras fourni en parametres.
-La seconde lit et alloue une liste de caméras grace a la classe
+La première crée et rempli le fichier en utilisant la classe
+\textit{XmlSerializer} à partir des caméras fourni en paramètres.
+La seconde lit et alloue une liste de caméras grâce à la classe
 \textit{DocumentBuilderFactory} qui nous permet de ``parser'' le fichier afin de
-recuperer le contenu de chacunes des balises a l'aide de la fonction :
+récupérer le contenu de chacune des balises à l'aide de la fonction :
 \begin{lstlisting}
 doc.getElementsByTagName("camera");
 \end{lstlisting}
 \indent Nous avons choisis d'exporter les caméras dans une zone mémoire
 accessible aux utilisateurs ne disposant pas de téléphone ``rooté''. C'est pourquoi le dossier
-de destination par defaut est "/sdcard/com.myapps.camera/". Mais lors de
-l'exportation l'utilisateur peut tout de meme modifier ce chemin en le modifiant
-lui meme lors de l'apparition de l'\textit{AlertDialog}.
+de destination par défaut est "/sdcard/com.myapps.camera/". Mais lors de
+l'exportation l'utilisateur peut tout de même modifier ce chemin en le modifiant
+manuelement lors de l'apparition de l'\textit{AlertDialog}.
 \begin{figure}[H]
   \label{export}
   \centering
@@ -1002,12 +1005,12 @@ lui meme lors de l'apparition de l'\textit{AlertDialog}.
 
 \subsection{Shared Preferences}
 Tout au long de se projet nous avons implémenté un grand nombre de fonction
-disposant de parametre defini par l'utilisateur.
+disposant de paramètres défini par l'utilisateur.
 La classe \textit{SharedPreferences} permet de sauvegarder des couples
-``donnée-clée'' afin de faire perdurer ces données entre les sessions.\newline
-Il est necessaire d'établir plusieurs etapes pour utiliser cette classe : 
+``donnée/clée'' afin de faire perdurer ces données entre les sessions.\newline
+Il est nécessaire d'établir plusieurs étapes pour utiliser cette classe : 
 \begin{enumerate}
-  \item Implémentation de la vue pour acceder a nos parametres :
+  \item Implémentation de la vue pour accéder à nos paramètres :
   \begin{lstlisting}[language=XML, format=XML]
   <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:seekbarattr="http://schemas.android.com/apk/res/com.myapps">
@@ -1031,8 +1034,8 @@ Il est necessaire d'établir plusieurs etapes pour utiliser cette classe :
 	</PreferenceCategory>
  </PreferenceScreen> 
   \end{lstlisting}
-\item Il faut ensuite créer une classe pour utiliser la vue precedement
-defini et initialiser les differents composant :
+\item Il faut ensuite créer une classe pour utiliser la vue précedement
+défini et initialiser les différents composants :
 \begin{lstlisting}
 public class MesPreferences extends PreferenceActivity{
 @Override
@@ -1049,8 +1052,8 @@ public void onCreate(Bundle savedInstanceState) {
 		}
 		}
 \end{lstlisting}
-\item Il ne reste plus q'a utiliser le \textit{SharedPreferences} en recupérant
-une instance de celui-ci dans l'activitée principale : 
+\item Il ne reste plus qu'à utiliser le \textit{SharedPreferences} en récupérant
+une instance de celui-ci dans l'activité principale : 
 \begin{lstlisting}
 preferences = PreferenceManager.getDefaultSharedPreferences(this);
 /* Print tricky */
@@ -1060,33 +1063,33 @@ myDialog.show();
 }
 \end{lstlisting}
 \end{enumerate}
-Nous sommes donc en mesure de regler un nombre illimité de parametres comme :
+\indent Nous sommes donc en mesure de régler un nombre illimité de paramètres comme :
 \begin{itemize}
-  \item Le delai d'attente entre chaque téléchargement d'image pour le
+  \item Le Delai d'attente entre chaque téléchargement d'image pour le
   \textit{PlayerThread}.
-  \item Le temps de non reponse maximum pour un requette \textit{HTTP}.
+  \item Le temps de non réponse maximum pour un requête \textit{HTTP}.
   \item L'interval entre deux notification lors de la detection de mouvement.
-  \item l'activation ou non du pop-up d'astuce au démarrage.
-  \item La sensibilitée du PTZ reglable a l'aide d'une ``seekBar'' disponible
+  \item L'activation ou non du pop-up d'astuces au démarrage.
+  \item La sensibilité du PTZ réglable a l'aide d'une ``seekBar'' disponible
   en Open Source a l'adresse suivant :\newline
   http://www.codeproject.com/KB/android/seekbar\_preference.aspx
-  \item Le seuil de detection de mouvement.
+  \item Le seuil de détection de mouvement.
 \end{itemize}
 
 \section{Multilangues, Interface  et Partage}
 \subsubsection{Multilangues}
-Android offre la possibilité a une application d'apater son language en fonction
-de la langue du telephone. Nos chaines de caracteres etant deja regroupées dans
-le fichiers \textit{res/values/strings.xml}, nous avons decider de traduire
-notre application en quates langues : Allemand, Anglais, Espagnol, Francais.\newline
-Pour ce faire il suffit de creer 4 fichiers :
+Android offre la possibilité à une application d'adapter son langage en fonction
+de la langue du téléphone. Nos chaînes de caractères étant déjà regroupées dans
+le fichier \textit{res/values/strings.xml}, nous avons décider de traduire
+notre application en quatre langues : Allemand, Anglais, Espagnol, Français.\newline
+Pour ce faire il suffit de créer 4 fichiers :
 \begin{itemize}
 \item \textit{res/values-de/strings.xml}
 \item \textit{res/values-en/strings.xml}
 \item \textit{res/values-es/strings.xml}
 \item \textit{res/values-fr/strings.xml}
 \end{itemize}
-contenant respectivement la traduction des chaines de caracteres en fonction des
+contenant respectivement la traduction des chaînes de caractères en fonction des
 langues citées ci-dessus.
 \begin{figure}[H]
 \centering
@@ -1098,12 +1101,12 @@ langues citées ci-dessus.
 
 
 \subsubsection{Interface}
-Nous avons defini les couleures, police, et taille des differents textes a
-l'aide de feuille de style (equivalent \textit{css} pour Android) dans le
+Nous avons défini les couleurs, la police, et la taille des différents textes à
+l'aide de feuille de styles (équivalent \textit{css} pour Android) dans le
 fichier : \textit{res/values/attrs}. L'idée est de surcharger le style par
-defaut de chacun des composants graphique afin d'y apporter quelques
-modifications (comme la couleure par exemple) créant ainsi notre propre theme
-independant des themes implémentés par les constructeurs (\textit{HTC Sens},
+défaut de chacun des composants graphique afin d'y apporter quelques
+modifications (comme la couleur par exemple) créant ainsi notre propre thème
+indépendant des thèmes implémentés par les constructeurs (\textit{HTC Sens},
 \textit{Samsung TouchWiz}, \textit{Motorola Motoblur}, \ldots).
 \begin{lstlisting}[language=XML, format=XML]
 <style name="CustomTheme" parent="android:Theme.NoTitleBar">
@@ -1139,14 +1142,14 @@ independant des themes implémentés par les constructeurs (\textit{HTC Sens},
 
 \subsubsection{Partage}
 Enfin pour finir sur le chapitre concernant l'implémentation, nous avons fourni
-a l'utilisateur une fonction permettant le partage de l'application via un
-message pouvant etre diffuser par de nombreuses application (mail, sms,
+à l'utilisateur une fonction permettant le partage de l'application via un
+message pouvant être diffusé par de nombreuses applications (mail, sms,
 ``facebook'', \ldots).
-Dans un premier temps, il faut definir l'action de l'intent (dans notre cas
+Dans un premier temps, il faut définir l'action de l'intent (dans notre cas
 nous souhaitons partager des données, nous utilisons donc le flag
-\textit{ACTION\_SEND}). Puis il faut spécifier le type des données a partager
-(ici il s'agit simplement d'une chaine de caracteres).
-Enfin nous pouvons demarrer l'activitée choisis lors de l'affichage de
+\textit{ACTION\_SEND}). Puis il faut spécifier le type des données à partager
+(ici il s'agit simplement d'une chaîne de caractères).
+Enfin nous pouvons démarrer l'activité choisi lors de l'affichage de
 l'\textit{AlertDialog}.
 \begin{lstlisting}
     final Intent messIntent = new Intent(Intent.ACTION_SEND);
@@ -1158,7 +1161,7 @@ l'\textit{AlertDialog}.
 \centering
   \label{partage}
    \includegraphics[scale=0.4]{Images/partage.eps}
-  \caption{Share with \ldots}
+  \caption{Share with\ldots}
 \end{figure}  
 
 
@@ -1168,7 +1171,7 @@ l'\textit{AlertDialog}.
 \section{Optimisations / Extensions futures}
 \subsection{Retransmission du signal audio}
 \subsection{Enregistrement vidéo}
-\subsection{Edition des fenêtres de détection  de mouvement}
-\subsection{Ajout d'evénements suite à la détection (mail / snapshot)}
+\subsection{Édition des fenêtres de détection  de mouvement}
+\subsection{Ajout d'évènements suite à la détection (mail / snapshot)}
 \subsection{Compte utilisateur}
 \clearpage
