@@ -10,9 +10,7 @@
 \usepackage{listings}
 \usepackage{chngpage}
 \usepackage{float}
-
-
-\setlength{\topmargin}{-2cm}
+\usepackage{fullpage}
 
 %%%% debut macro %%%%
 \newenvironment{changemargin}[2]{\begin{list}{}{%
@@ -31,6 +29,12 @@
 \{=\string\newline\indent,%
 \}=\noindent\string\newline,%
 ;=[\ ]\string\space}
+
+\lstdefineformat{XML}{%
+\<\/=\noindent\string,%
+\<=[/]\string\indent,%
+\/\>=\noindent\string,%
+}
 
 \lstset{language=java, frame=single, tabsize=2, breaklines=true,
 frameround=fttt, captionpos=b, format=JAVA}

@@ -360,13 +360,13 @@ public class Home extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 			    exportPath = editImportExport.getText().toString();
 			    xmlIO.xmlWrite(camList, exportPath);
-			    finish();
+			    dialog.dismiss();
 			}
 		    });
 	    build_exp.setNegativeButton("Annuler",
 		    new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-			    finish();
+			    dialog.dismiss();
 			}
 		    });
 	    build_exp.show();
@@ -406,10 +406,10 @@ public class Home extends Activity {
 	    return true;
 
 	case R.id.partager:
-	    final Intent MessIntent = new Intent(Intent.ACTION_SEND);
-	    MessIntent.setType("text/plain");
-	    MessIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.messageShare));
-	    startActivity(Intent.createChooser(MessIntent, "Partager avec..."));
+	    final Intent messIntent = new Intent(Intent.ACTION_SEND);
+	    messIntent.setType("text/plain");
+	    messIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.messageShare));
+	    startActivity(Intent.createChooser(messIntent, getString(R.string.shareTitle)));
 	    return true;
 	}
 	return false;

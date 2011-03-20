@@ -167,7 +167,7 @@ activité adaptée a la modification de la caméra. Il peut alors appliquer ou
 annuler ses changements sur le meme principe que l'ajout d'une caméra.
 \end{itemize}
 \newpage
-\begin{changemargin}{-1cm}{-1.5cm}
+\begin{changemargin}{0cm}{0cm}
 \begin{lstlisting}[caption={Gestion d'un appui long sur un élément de la
 liste.}]
 public boolean onItemLongClick(AdapterView<?> arg0, 
@@ -197,7 +197,7 @@ public boolean onItemLongClick(AdapterView<?> arg0,
 		alert = builder.create();
 		alert.show();
 		return true;
-}});
+}
 \end{lstlisting}
 \end{changemargin}
 
@@ -518,7 +518,7 @@ de caméra a afficher. Puis lors de la capture d'un clic sur l'un des element de
 la liste, nous lancerons l'activitée \textit{MultiVideo} en y ajoutant un
 parametre supplémentaire appelé \textit{nbViewTag} qui definie le nombre de vue
 ainsi récupéré.
-\begin{changemargin}{0cm}{-2cm}
+\begin{changemargin}{0cm}{0cm}
 \begin{lstlisting}[caption={Multi-Video launcher}] 
 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 builder.setTitle(getString(R.string.cameraAlertTitle));
@@ -563,7 +563,7 @@ l'image0 plus un, etc \ldots. Nous somme donc en mesure de recuperer chacune des
 \textit{ImageView} afin de les mettres a jours, lors de la reception de nouvelle
 images mais aussi de definir les \textit{listener} pour capturer les
 interactions.
-\begin{changemargin}{0cm}{-2cm}
+\begin{changemargin}{0cm}{0cm}
 \begin{lstlisting}[caption={ImageView address resolver}] 
 /*
  * get R.id.image0 address and inc it to find R.id.image1,
@@ -651,7 +651,7 @@ implémenté une fonction permettant d'ajouter une notification personnalisée d
 la barre de status du telephone.\newline
 En plus de notifier l'utilisateur, nous lui offrons la possibilitée de visionner
 la photo en cliquant sur la notification.
-\begin{changemargin}{0cm}{-2cm}
+\begin{changemargin}{0cm}{0cm}
 \begin{lstlisting}[caption={ImageView address resolver}] 
  public static void statusBarNotificationImage(Activity activity, Bitmap bmp, String text, String path, int id, String tag) {
 	NotificationManager notificationManager;
@@ -746,8 +746,9 @@ fonctionnalités en arriere plan pendant une durée indeterminée meme lorsque l
 activitées de l'application ne sont pas lancée.
 Pour créer un service il faut dans un premier temps le declarer dans le fichier
 \textit{AndroidManifest.xml} :\newline
-\begin{lstlisting}
-<application android:icon="@drawable/camera" android:label="@string/app_name">
+\begin{lstlisting}[format=XML]
+<application android:icon="@drawable/camera" 
+	android:label="@string/app_name">
 	<activity <!-- activities list --> />
 	<service android:name="MotionDetectionService" />
 </application>
@@ -768,7 +769,6 @@ un cycle de vie :
   \end{figure}
   \end{center}
 \footnotetext{http://www.linuxtopia.org/online\_books/android/devguide/guide/topics/fundamentals.html}
-\newpage
 
 Ce shcema illustre la possibilité de contacter un service de deux manieres
 differentes. La premiere (cycle de gauche) se limite a envoyer des insctuctions 
@@ -893,7 +893,9 @@ http://myserver/axis-cgi/motion/motiondata.cgi?group=<group number>
 Dans le resultat de cette requete, nous nous interessons a la valeure du niveau
 de detection. Si celui ci depasse le seuil defini dans les parametre
 utilisateur, le service declanche une notification sous forme de vibration du
-telephone.\newline
+telephone.\newline Afin de ne pas ``spammer'' l'utilisateur de notification,
+nous avons decider d'etablir un delai minimum entre deux notifications réglable
+dans les parametres.
 \begin{lstlisting}
 HTTP/1.0 200 OK\r\n
 Content-Type: multipart/x-mixed-replace;boundary=axismdb\r\n\r\n
@@ -914,23 +916,252 @@ group=1;level=19;threshold=25;\r\n
  .
  . 
 \end{lstlisting}
-Exemple tiré de la documentation de la caméra dans la partie
 \textit{5.4.5 Get the Motion Detection
 level\footnote{\label{MotionDetectionDoc}
 http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php\#api\_blocks\_motion\_get\_md\_level}.}
-\newline\indent
-Chaque demande de detection de mouvement aupres d'une caméra cré une
-notification ``en cours'' dans la barre de status du telephone.
-Ainsi l'utilisateur peut acceder facilement et rapidement a la caméra dont il
-surveille les mouvement.
 
 
+\subsection{Implémentation et lancement de la tache}
+Le traitement a éffectuer pour chacunes des detections lancées sera de
+``parser'' le contenu de la reponse cité ci-dessus, puis avertir l'utilisateur en cas de mouvement.
+Grace a la fonction \textit{onStartCommand} defini ci-dessus nous somme en
+mesure de lancer des threads dont le role sera justement d'effectuer ce
+traitement (un thread par caméra).\newline Lorsqu'un mouvement sera détécté
+par l'un des threads, nous utiliserons le meme principe de handler que le
+\textit{PlayerThread} pour prevenir le service activant ainsi une notification.
+\begin{figure}[H]
+  \label{service}
+  \centering
+   \includegraphics[scale=0.4]{Images/service.eps}
+  \caption{Service Sequence Diagramm}
+\end{figure}  
+\indent De plus chaque demande de detection de mouvement aupres d'une
+caméra créra une notification ``en cours'' dans la barre de status du telephone.
+Ainsi l'utilisateur pourra acceder facilement et rapidement a la caméra dont il
+souhaite surveiller les mouvements.
+\begin{figure}[H]
+  \label{notifencours}
+  \centering
+   \includegraphics[scale=0.4]{Images/notifencours.eps}
+  \caption{Running Notification}
+\end{figure}  
 \section{Gestion des préférences}
 \subsection{Import / Export}
+Cette partie s'interesse a la sauvegarde de la liste des caméras. En effet si
+l'utilisateur decide de desinstaller l'application, ou si il change de
+telephone, nous avons souhaiter qu'il ai la possibilité de partager la liste de
+ses caméras. Pour ce faire nous avons implémenté deux fonctions pour importer et
+exporter cette liste.\newline
+La facilitée de modification, et la portabilité du language \textit{xml} nous as
+conduit a formaliser les éléments de cette liste sous forme de differente
+balises imbriquer :
+\begin{lstlisting}[language=XML, format=XML]
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?> 
+<camList>
+   	 <camera> 
+   		<id>home</id>
+  		<adresse>http://192.168.1.20/</adresse> 
+  		<channel>1</channel> 
+  	</camera> 
+  	<camera> 
+   		<id>home ext</id>
+  		<adresse>http://82.---.---.---/</adresse> 
+  		<channel>1</channel> 
+  	</camera> 
+</camList>
+\end{lstlisting}
+Pour des raison de s'écuritée evidente, nous n'avons pas souhaité sauvegarder
+les noms d'utilisateurs et mots de pass, c'est pourquoi lorsque l'utilisateur
+importe ses caméra, il devra tout de même les modifier une a une afin de
+remplire les champs en question.\newline
+\indent L'ecriture et la lecture de se fichier se fait a travers deux fonctions
+:
+\begin{lstlisting}
+public static void xmlWrite(ArrayList<Camera> camList, String url)
+public static ArrayList<Camera> xmlRead(String url)
+\end{lstlisting}
+La premiere crée et rempli le fichier en utilisant la classe
+\textit{XmlSerializer} a partir des caméras fourni en parametres.
+La seconde lit et alloue une liste de caméras grace a la classe
+\textit{DocumentBuilderFactory} qui nous permet de ``parser'' le fichier afin de
+recuperer le contenu de chacunes des balises a l'aide de la fonction :
+\begin{lstlisting}
+doc.getElementsByTagName("camera");
+\end{lstlisting}
+\indent Nous avons choisis d'exporter les caméras dans une zone mémoire
+accessible aux utilisateurs ne disposant pas de téléphone ``rooté''. C'est pourquoi le dossier
+de destination par defaut est "/sdcard/com.myapps.camera/". Mais lors de
+l'exportation l'utilisateur peut tout de meme modifier ce chemin en le modifiant
+lui meme lors de l'apparition de l'\textit{AlertDialog}.
+\begin{figure}[H]
+  \label{export}
+  \centering
+   \includegraphics[scale=0.4]{Images/export.eps}
+  \caption{Export Dialog}
+\end{figure}  
 
 \subsection{Shared Preferences}
+Tout au long de se projet nous avons implémenté un grand nombre de fonction
+disposant de parametre defini par l'utilisateur.
+La classe \textit{SharedPreferences} permet de sauvegarder des couples
+``donnée-clée'' afin de faire perdurer ces données entre les sessions.\newline
+Il est necessaire d'établir plusieurs etapes pour utiliser cette classe : 
+\begin{enumerate}
+  \item Implémentation de la vue pour acceder a nos parametres :
+  \begin{lstlisting}[language=XML, format=XML]
+  <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:seekbarattr="http://schemas.android.com/apk/res/com.myapps">
 
-\section{Multilangues, Interface et Partage}
+	<PreferenceCategory android:title="Delai">
+		<EditTextPreference 
+			android:key="limitFPS"
+			android:title="Delai FPS" 
+			android:numeric="decimal"
+			android:summary="Une description"/>
+		<EditTextPreference android:key="@string/NotifTO"
+			android:numeric="decimal"
+			android:title="Delai de Notification Motion Detection"
+			android:summary="Une description"/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Autre">
+		<CheckBoxPreference 
+			android:key="@string/isWelcome"
+			android:title="Desactiver l'astuce"
+			android:summary="Une description"/>
+	</PreferenceCategory>
+ </PreferenceScreen> 
+  \end{lstlisting}
+\item Il faut ensuite créer une classe pour utiliser la vue precedement
+defini et initialiser les differents composant :
+\begin{lstlisting}
+public class MesPreferences extends PreferenceActivity{
+@Override
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	addPreferencesFromResource(R.xml.preferences);
+	preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+/* Show current delay */
+	preferenceManagerUtils.setEditTextPreferenceValueFromPreference(this,
+		preferences, getString(R.string.TimeOut),
+		getString(R.string.defaultTimeOut));
+/*	.... */
+		}
+		}
+\end{lstlisting}
+\item Il ne reste plus q'a utiliser le \textit{SharedPreferences} en recupérant
+une instance de celui-ci dans l'activitée principale : 
+\begin{lstlisting}
+preferences = PreferenceManager.getDefaultSharedPreferences(this);
+/* Print tricky */
+if (preferences.getBoolean(getString(R.string.isWelcome), true) == false) {
+Dialog_welcome myDialog = new Dialog_welcome(this,R.style.theme_dialog);
+myDialog.show();
+}
+\end{lstlisting}
+\end{enumerate}
+Nous sommes donc en mesure de regler un nombre illimité de parametres comme :
+\begin{itemize}
+  \item Le delai d'attente entre chaque téléchargement d'image pour le
+  \textit{PlayerThread}.
+  \item Le temps de non reponse maximum pour un requette \textit{HTTP}.
+  \item L'interval entre deux notification lors de la detection de mouvement.
+  \item l'activation ou non du pop-up d'astuce au démarrage.
+  \item La sensibilitée du PTZ reglable a l'aide d'une ``seekBar'' disponible
+  en Open Source a l'adresse suivant :\newline
+  http://www.codeproject.com/KB/android/seekbar\_preference.aspx
+  \item Le seuil de detection de mouvement.
+\end{itemize}
+
+\section{Multilangues, Interface  et Partage}
+\subsubsection{Multilangues}
+Android offre la possibilité a une application d'apater son language en fonction
+de la langue du telephone. Nos chaines de caracteres etant deja regroupées dans
+le fichiers \textit{res/values/strings.xml}, nous avons decider de traduire
+notre application en quates langues : Allemand, Anglais, Espagnol, Francais.\newline
+Pour ce faire il suffit de creer 4 fichiers :
+\begin{itemize}
+\item \textit{res/values-de/strings.xml}
+\item \textit{res/values-en/strings.xml}
+\item \textit{res/values-es/strings.xml}
+\item \textit{res/values-fr/strings.xml}
+\end{itemize}
+contenant respectivement la traduction des chaines de caracteres en fonction des
+langues citées ci-dessus.
+\begin{figure}[H]
+\centering
+  \label{langue}
+   \includegraphics[scale=0.4]{Images/en.eps}
+   \includegraphics[scale=0.4]{Images/de.eps}
+  \caption{English - Deutsch Translation}
+\end{figure}  
+
+
+\subsubsection{Interface}
+Nous avons defini les couleures, police, et taille des differents textes a
+l'aide de feuille de style (equivalent \textit{css} pour Android) dans le
+fichier : \textit{res/values/attrs}. L'idée est de surcharger le style par
+defaut de chacun des composants graphique afin d'y apporter quelques
+modifications (comme la couleure par exemple) créant ainsi notre propre theme
+independant des themes implémentés par les constructeurs (\textit{HTC Sens},
+\textit{Samsung TouchWiz}, \textit{Motorola Motoblur}, \ldots).
+\begin{lstlisting}[language=XML, format=XML]
+<style name="CustomTheme" parent="android:Theme.NoTitleBar">
+		<item name="android:colorBackground">
+		@color/black
+		</item>
+		<item name="android:buttonStyle">
+		@style/StandardButton
+		</item>
+		<item name="android:textViewStyle">
+		@style/StandardTextView
+		</item>
+		<item name="android:editTextStyle">
+		@style/StandardEditText
+		</item>
+		<item name="android:listViewStyle">
+		@style/StandardListView
+		</item>
+</style>
+
+<style name="StandardTextView" parent="@android:style/Widget.TextView">
+		<item name="android:textColorHint">
+		@color/greenyellow
+		</item>
+		<item name="android:textColor">
+		@color/silver
+		</item>
+		<item name="android:typeface">
+		monospace
+		</item>
+</style>
+\end{lstlisting}
+
+\subsubsection{Partage}
+Enfin pour finir sur le chapitre concernant l'implémentation, nous avons fourni
+a l'utilisateur une fonction permettant le partage de l'application via un
+message pouvant etre diffuser par de nombreuses application (mail, sms,
+``facebook'', \ldots).
+Dans un premier temps, il faut definir l'action de l'intent (dans notre cas
+nous souhaitons partager des données, nous utilisons donc le flag
+\textit{ACTION\_SEND}). Puis il faut spécifier le type des données a partager
+(ici il s'agit simplement d'une chaine de caracteres).
+Enfin nous pouvons demarrer l'activitée choisis lors de l'affichage de
+l'\textit{AlertDialog}.
+\begin{lstlisting}
+    final Intent messIntent = new Intent(Intent.ACTION_SEND);
+	    messIntent.setType("text/plain");
+	    messIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.messageShare));
+	    startActivity(Intent.createChooser(messIntent, getString(R.string.shareTitle)));
+\end{lstlisting}
+\begin{figure}[H]
+\centering
+  \label{partage}
+   \includegraphics[scale=0.4]{Images/partage.eps}
+  \caption{Share with \ldots}
+\end{figure}  
+
+
 
 \section{Tests}
 

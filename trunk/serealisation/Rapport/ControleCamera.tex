@@ -39,9 +39,8 @@ terminé) et l'événement contient les coordonnées du dernier pointeur
 \end{itemize}
 A partir de ces types d'actions, nous pouvons définir le déplacement de la
 caméra par la suite \textit{ACTION\_DOWN - ACTION\_UP} et la gestion du zoom par
-la suite
-\textit{ACTION\_DOWN - ACTION\_POINTER\_DOWN - ACTION\_DOWN\_UP - ACTION\_UP}
-(nous considérons cependant que le zoom n'est réalisé qu'à partir de l'événement
+la suite : \\ \textit{ACTION\_DOWN - ACTION\_POINTER\_DOWN - ACTION\_DOWN\_UP -
+ACTION\_UP} (nous considérons cependant que le zoom n'est réalisé qu'à partir de l'événement
 \textit{ACTION\_POINTER\_DOWN}).
 
 Le champ \textit{mode} contient l'état actuel du geste, soit une des constantes \textit{NONE}, \textit{DRAG} ou \textit{ZOOM}.
@@ -66,8 +65,9 @@ Afin de rendre moins "agressif" le déplacement sur le téléphone, nous avons m
 modifiable dans les préférences.
 Le tableau ci-dessous montre le traitement réalisé par la méthode
 \textit{onTouch} dont le code est présenté après.\newline
-\begin{table}[!h]
-\begin{tabular}{|p{0.3\linewidth}|p{0.4\linewidth}| p{0.4\linewidth}|}
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{0.2\linewidth}|p{0.3\linewidth}| p{0.3\linewidth}|}
 \hline
 Type d'action & Geste du déplacement & Geste du zoom \\
 \hline

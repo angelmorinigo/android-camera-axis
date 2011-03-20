@@ -110,6 +110,7 @@
 	<string name="boutonArreter">Stoppen</string><string name="oui">Ja</string>
 	<string name="non">Nein</string>
 
+<string name="shareTitle">Aktie mit...</string>
 	<string name="protocol_prompt">Wählen Sie ein Protokoll</string>
 
 

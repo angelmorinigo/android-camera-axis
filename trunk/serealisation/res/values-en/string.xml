@@ -103,6 +103,7 @@
 
 	<string name="oui">Yes</string>
 	<string name="non">No</string>
+	<string name="shareTitle">Share with...</string>
 	<string name="protocol_prompt">Choose a protocol</string>
 
 

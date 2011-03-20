@@ -37,7 +37,7 @@ import android.util.Xml;
  * 		<adresse>http://82.---.---.---/</adresse> 
  * 		<channel>1</channel> 
  * 	</camera> 
- * <camList>
+ * </camList>
  * 
  */
 public class xmlIO {
@@ -112,7 +112,6 @@ public class xmlIO {
 	NodeList nodeList = doc.getElementsByTagName("camera");
 
 	for (int i = 0; i < nodeList.getLength(); i++) {
-
 	    Node node = nodeList.item(i);
 	    Element fstElmnt = (Element) node;
 
