@@ -51,7 +51,7 @@ Si la bibliothèque n'est pas disponible sur l'appareil, nous faisons appel a
 implémente l'ensemble des fonctions proposées par la bibliothèque).
 \newpage
 \begin{lstlisting}[caption={Lancement de l'activité zxing ou de l'android
-market.},  framexleftmargin=7mm, numbers=left] 
+market.}] 
     public void onClick(View v) { try {
             Intent intent = new Intent(
                 "com.google.zxing.client.android.SCAN");
@@ -79,7 +79,7 @@ activité permettant d'afficher l'ensemble des caméras ajouter par l'utilisateu
 Cette activité s'appele \textit{Home} et est contenue dans la classe
 \textit{Home.java}.\newline
 Android defini une cycle de vie pour chaque activitée selon le diagramme
-decrit par la \textit{figure 3.1}.
+decrit par la \textit{figure 3.2}.
 \newline
 \indent Ce cycle de vie nous permet d'initialiser, d'interrompre, ou de detruire
 les differentes vues et fonctionnalitées de notre activitée. Dans le cas de
@@ -122,14 +122,15 @@ l'activité \textit{Home} (qui est l'activité d'acceuil de notre application), 
   l'application, nous avons choisis de serealiser puis de sauvegarder la liste
   des caméras dans un fichier pour les ajouter automatiquement à chaque
   demarrage. Cette sauvegarde s'effectue juste avant de liberer les ressources
-  en surchargant la fonction \textit{onDestroy}.  \newline
+  en surchargant la fonction \textit{onDestroy}. 
   \end{itemize}
+  
 \begin{center}
-\begin{figure}
+\begin{figure}[H]
   \label{activityLifeCycle}
   \centering
   \fbox{
-   \includegraphics[scale=0.9]{Images/activityLifecycle.eps}
+   \includegraphics[scale=0.8]{Images/activityLifecycle.eps}
   }
   \caption{Android Activity Life Cycle\protect\footnotemark}
   \end{figure}
@@ -168,7 +169,7 @@ annuler ses changements sur le meme principe que l'ajout d'une caméra.
 \newpage
 \begin{changemargin}{-1cm}{-1.5cm}
 \begin{lstlisting}[caption={Gestion d'un appui long sur un élément de la
-liste.}, framexleftmargin=7mm, numbers=left]
+liste.}]
 public boolean onItemLongClick(AdapterView<?> arg0, 
 			View arg1, final int position, long arg3) { 
 	AlertDialog alert; 
@@ -252,8 +253,7 @@ Nous avons choisi d'utiliser un verrou \textit{SCREEN\_DIM\_WAKE\_LOCK} afin de
 garder simplement allumé avec une luminosité au minimum pour ne pas consomer
 exessivement la batterie du téléphone.
 \newpage
- \begin{lstlisting}[caption={Video
-life-cycle},  framexleftmargin=7mm, numbers=left] 
+ \begin{lstlisting}[caption={Video life-cycle}] 
 /**
  * Called when Activity start
  */
@@ -325,7 +325,7 @@ fonction :
 ConnectivityManager mConnectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 \end{lstlisting}
 Puis en récupérant une instance du réseau actif :
-\begin{lstlisting}[ framexleftmargin=7mm, numbers=left]
+\begin{lstlisting}
 NetworkInfo info = mConnectivity.getActiveNetworkInfo();
 if (info != null && info.isConnected()) {
   int netType = info.getType();
@@ -380,8 +380,7 @@ defini directement dans une vue au format \textit{xml}.\newline
 \end{lstlisting}
 \end{center}
 \begin{center}
-\begin{lstlisting}[caption={mjpegViewer.java},  framexleftmargin=7mm,
-numbers=left] 
+\begin{lstlisting}[caption={mjpegViewer.java}] 
 public void onCreate(Bundle icicle) {
 	super.onCreate(icicle);
 	MjpegView mv = new MjpegView(this);
@@ -467,8 +466,7 @@ cette notification.\newline
   \item La premiere methode est d'enfiler un obtjet de type
   Runnable, dans la file d'exectution de l'UI a l'aide de la
   fonction : \newline
-  \begin{lstlisting}[caption={Example of use runOnUiThread}, 
-  framexleftmargin=7mm, numbers=left]
+  \begin{lstlisting}[caption={Example of use runOnUiThread}]
  runOnUiThread(new Runnable() {
  @Override
  public void run() {
@@ -480,7 +478,7 @@ cette notification.\newline
 \item Une autre methode consiste a notifier l'UI a l'aide de
 \textit{Message} grace a la mise en place d'un \textit{handler} qui
 execute une action pour chaque message recu.\newline
-\begin{lstlisting}[caption={Example of message handler}, framexleftmargin=7mm, numbers=left] 
+\begin{lstlisting}[caption={Example of message handler}] 
 /* Performed by the UI thread */
 public static Handler myViewUpdateHandler = new Handler() {
   public void handleMessage(Message msg) {
@@ -521,8 +519,7 @@ la liste, nous lancerons l'activitée \textit{MultiVideo} en y ajoutant un
 parametre supplémentaire appelé \textit{nbViewTag} qui definie le nombre de vue
 ainsi récupéré.
 \begin{changemargin}{0cm}{-2cm}
-\begin{lstlisting}[caption={Multi-Video launcher}, framexleftmargin=7mm,
-numbers=left] 
+\begin{lstlisting}[caption={Multi-Video launcher}] 
 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 builder.setTitle(getString(R.string.cameraAlertTitle));
 builder.setSingleChoiceItems(nb_view, -1, new DialogInterface.OnClickListener(){ 
@@ -567,8 +564,7 @@ l'image0 plus un, etc \ldots. Nous somme donc en mesure de recuperer chacune des
 images mais aussi de definir les \textit{listener} pour capturer les
 interactions.
 \begin{changemargin}{0cm}{-2cm}
-\begin{lstlisting}[caption={ImageView address resolver},
-framexleftmargin=7mm, numbers=left] 
+\begin{lstlisting}[caption={ImageView address resolver}] 
 /*
  * get R.id.image0 address and inc it to find R.id.image1,
  * R.id.image2, ... , R.id.image.n
@@ -656,8 +652,7 @@ la barre de status du telephone.\newline
 En plus de notifier l'utilisateur, nous lui offrons la possibilitée de visionner
 la photo en cliquant sur la notification.
 \begin{changemargin}{0cm}{-2cm}
-\begin{lstlisting}[caption={ImageView address resolver},
-framexleftmargin=7mm, numbers=left] 
+\begin{lstlisting}[caption={ImageView address resolver}] 
  public static void statusBarNotificationImage(Activity activity, Bitmap bmp, String text, String path, int id, String tag) {
 	NotificationManager notificationManager;
 	notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -721,11 +716,213 @@ réglages automatique de la caméra toujours a partir du menu de l'activitée
   \caption{Advance Controls}
 \end{figure}  
 
-
 \section{Détection de mouvements}
 \subsection{Présentation}
-
+La détéction de mouvement est une mécanisme utiliser pour detecter les
+changements de position, et les mouvement d'objets ou d'indicidu dans une
+zone couverte par un dispositif de video-surveillance.\newline
+Selon une traduction de la definition de wikipedia\footnote{\label{MotionDetection}
+http://en.wikipedia.org/wiki/Motion\_detection} : \newline
+\begin{quotation}
+`` Ceci peut être réalisé soit par des dispositifs mécaniques qui interagissent
+physiquement avec la zone ou par des dispositifs électroniques qui permettent de
+quantifier et mesurer les changements dans l'environnement donné.
+Le mouvement peut être détecté par: son (capteurs acoustiques), l'opacité
+(capteurs optiques et infrarouges et des processeurs d'images vidéo), le
+géomagnétisme (capteurs magnétiques, magnétomètres), la réflexion de l'énergie
+transmise (radar laser infrarouges, capteurs ultrasoniques, capteurs et radars
+micro-ondes), induction électromagnétique (détecteurs à boucle inductive), et
+les vibrations (triboélectrique, sismiques, et des capteurs d'inertie-switch). ``
+\end{quotation}
+\indent La caméra mise a notre disposition contient un service capable de
+detecter les mouvements couvert par l'objectif ou limité a une zone
+particuliere.\newline Nous avons souhaiter offrir a l'utilisateur la possibilité
+de detecter les mouvements et d'en etre avertie en temps réel sur son telephone.
+C'est pourquoi nous avons implémenté un service a l'écoute de chacune des
+cameras afin de detecter les mouvements sans que l'application soit active.
 \subsection{Utilisation de service Android}
+Sous Android, les services sont des composants qui permettent l'execution de
+fonctionnalités en arriere plan pendant une durée indeterminée meme lorsque les
+activitées de l'application ne sont pas lancée.
+Pour créer un service il faut dans un premier temps le declarer dans le fichier
+\textit{AndroidManifest.xml} :\newline
+\begin{lstlisting}
+<application android:icon="@drawable/camera" android:label="@string/app_name">
+	<activity <!-- activities list --> />
+	<service android:name="MotionDetectionService" />
+</application>
+\end{lstlisting}
+Puis en implémentant le service dans le fichier
+\textit{MotionDetectionService.java}.
+ Tout comme les activitées, les services ont
+un cycle de vie :
+\newpage
+\begin{center}
+\begin{figure}
+   \label{serviceLifecycle}
+  \centering
+  \fbox{
+  \includegraphics[scale=0.7]{Images/serviceLifecycle.eps}
+  }
+   \caption{Service Life Cycle \protect\footnotemark}
+  \end{figure}
+  \end{center}
+\footnotetext{http://www.linuxtopia.org/online\_books/android/devguide/guide/topics/fundamentals.html}
+\newpage
+
+Ce shcema illustre la possibilité de contacter un service de deux manieres
+differentes. La premiere (cycle de gauche) se limite a envoyer des insctuctions 
+au service pour y declancher un traitement definit dans la fonction :
+\begin{lstlisting}
+@Override
+public int onStartCommand(Intent intent, int flags, int startId){
+/* work to do */
+}
+\end{lstlisting}
+La seconde (cycle de droite) permet a une activitée de se lier a
+un service afin de pouvoir utiliser toutes les méthodes public du
+service.\newline
+N'ayant pas besoin de communiquer autrement avec les services que pour leurs
+demander d'effectuer un traitement, la premiere methode nous avons choisi
+d'implémenter le 1er cycle.
+
+\subsection{Activation du service}
+Les caméras Axis peuvent gerer jusqu'a dix fenetre de detection de mouvement par
+caméra simutanement. Pour ajouter une fenetre (avec les valeurs par defaut) il
+suffit d'envoyer une requette \textit{HTTP GET} a l'adresse : 
+\begin{lstlisting}
+http://myserver/axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion
+\end{lstlisting}
+Pour ajouter une fenetre defini par sa position sur l'ecran, il faut spécifier
+explicitement la position de la fenetre :
+\begin{lstlisting}
+http://myserver/axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion
+&Motion.M.Top=500
+&Motion.M.Bottom=7000
+&Motion.M.Left=5000
+&Motion.M.Right=8500
+\end{lstlisting}
+Chacune de ces requettes nous fournira le numero du groupe (de 0 a 9) associer a
+la requete, nous permettant plus tard de recuperer le niveau de la detection.
+La reponse est de la forme : 
+\begin{lstlisting}
+HTTP/1.0 200 OK\r\n
+Content-Type: text/plain\r\n
+\r\n
+M<group number> OK\r\n
+\end{lstlisting}
+Pour selectionner la fenetre a detecter, nous avons implementer un nouveau
+composant graphique appelé \textit{drawRectOnTouchView} dont la fonction est de
+dessiner un rectangle et de recuperer la position de la fenetre a partir d'un
+clique de l'utilisateur.
+\subsubsection{drawRectOnTouchView}
+Comme pour le lecteur \textit{mjpeg}, l'implémentation d'un nouveau composant
+graphique se fait en etendant la classe \textit{View}. Dans une premier temps il
+faut definir les constructeurs (Création de la surface sur laquel dessiner,
+definition des couleures, \ldots). Puis il est necessaire de surcharger la
+methode :
+\begin{lstlisting}
+@Override
+protected void onDraw(Canvas canvas)
+\end{lstlisting}
+afin de dessiner le composant. Dans notre utilisation, nous souhaitons dessiner
+dynamiquent un dessin en fonction des interactions fournient par l'utilisateur.
+Android nous propose de surcharger une fonction qui est appeler lors de chaque
+interaction avec le composant appelé : 
+\begin{lstlisting}
+@Override
+public boolean onTouchEvent(MotionEvent event)
+\end{lstlisting}
+Grace a cette fonction, nous allons dessiner un rectangle qui suivra le doigt de
+l'utilisateur jusqu'a ce qu'il relache la pression de l'écran.
+Précédement nous avons présenté les actions definie par les
+\textit{MotionEvent}. Nous allons egalement a nouveau utiliser ces interactions
+pour definir le comportement de notre composants :
+\begin{lstlisting}[caption={Draw Rectangle Component}] 
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+	float x = event.getX();
+	float y = event.getY();
+	switch (event.getAction()) {
+	case MotionEvent.ACTION_DOWN:
+	    start.set(x, y);
+	    isDraw = false;
+	    break;
+	case MotionEvent.ACTION_MOVE:
+	    end.set(x, y);
+	    isDraw = false;
+	    invalidate();
+	    break;
+	case MotionEvent.ACTION_UP:
+	    end.set(x, y);
+	    isDraw = true;
+	    invalidate();
+	    break;
+	}
+	return true;
+    }
+    
+@Override
+    protected void onDraw(Canvas canvas) {
+	canvas.drawColor(Color.TRANSPARENT);
+	canvas.drawLine(start.x, end.y, end.x, end.y, mPaint);
+	canvas.drawLine(end.x, start.y, end.x, end.y, mPaint);
+	canvas.drawLine(start.x, start.y, start.x, end.y, mPaint);
+	canvas.drawLine(start.x, start.y, end.x, start.y, mPaint);
+    }
+\end{lstlisting}
+Lors de l'appuie sur l'ecran, nous sauvegardons les coordonnées du point, puis
+dès le deplacement du doigt de l'utilisateur, on commence a tracer le rectangle.
+Enfin lorsque l'utilisateur releve son doigt, on sauvegarde la position du
+point, puis on signal que le dessin est dessiné a l'aide du flag
+\textit{isDraw}. La fonction \textit{onDraw} nous permet de dessiner les aretes
+du rectangle a partir des coordonnées sauvegardées.\newline
+\indent Enfin en affectant la couleur ``transparente'' au fond du composant, on
+peut le superposer au dessus d'une vue \textit{mjpeg} pour dessiner un rectangle
+sur notre video.\newline
+\newline\indent Une fois la detection activée aupres de la caméra, nous pouvons
+demarrer notre service en lui indiquant le groupe fournis par la caméra.
+
+\subsection{Detection et Signalisation}
+Dans cette partie nous allons etudier le comportement du service.
+La detection de mouvement aupres des caméra \textit{Axis} se fait au travers de
+la requete GET: 
+\begin{lstlisting}
+http://myserver/axis-cgi/motion/motiondata.cgi?group=<group number>
+\end{lstlisting}
+Dans le resultat de cette requete, nous nous interessons a la valeure du niveau
+de detection. Si celui ci depasse le seuil defini dans les parametre
+utilisateur, le service declanche une notification sous forme de vibration du
+telephone.\newline
+\begin{lstlisting}
+HTTP/1.0 200 OK\r\n
+Content-Type: multipart/x-mixed-replace;boundary=axismdb\r\n\r\n
+--axismdb\r\n
+Content-Type:text/plain\r\n\r\n
+group=0;level=28;threshold=45;\r\n
+group=1;level=43;threshold=25;\r\n
+--axismdb\r\n
+Content-Type:text/plain\r\n\r\n
+group=0;level=54;threshold=45;\r\n
+group=1;level=38;threshold=25;\r\n
+--axismdb\r\n
+Content-Type:text/plain\r\n\r\n
+group=0;level=49;threshold=45;\r\n
+group=1;level=19;threshold=25;\r\n
+--axismdb\r\n
+ .
+ .
+ . 
+\end{lstlisting}
+Exemple tiré de la documentation de la caméra dans la partie
+\textit{5.4.5 Get the Motion Detection
+level\footnote{\label{MotionDetectionDoc}
+http://www.axis.com/techsup/cam\_servers/dev/cam\_http\_api\_2.php\#api\_blocks\_motion\_get\_md\_level}.}
+\newline\indent
+Chaque demande de detection de mouvement aupres d'une caméra cré une
+notification ``en cours'' dans la barre de status du telephone.
+Ainsi l'utilisateur peut acceder facilement et rapidement a la caméra dont il
+surveille les mouvement.
 
 
 \section{Gestion des préférences}
