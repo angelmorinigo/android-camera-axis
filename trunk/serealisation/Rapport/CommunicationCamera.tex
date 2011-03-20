@@ -1,3 +1,19 @@
 \section{Communication avec la caméra}
 \subsection{Envoi de requêtes HTTP}
-Afin de communiquer avec la caméra, Axis met à disposition des développeurs une API nommée \textit{VAPIX}.
+Afin de communiquer avec la caméra, Axis met à disposition des développeurs une API nommée \textit{VAPIX\footnote{\label{vapix}
+http://www.axis.com/techsup/cam_servers/dev/cam\_http\_api\_index.php}}. Cette interface est basée sur le protocole \textit{HTTP}, permettant un accès aux fonctionnalités de la caméra par de simples URLs.
+Par exemple, pour lister les paramètres réseau de la caméra nous utilisons l'URL suivante :
+\begin{lstlisting}
+http://myserver/axis-cgi/admin/param.cgi?action=list&group=Network
+\end{lstlisting}
+En cas de réussite de cette requête, nous recevons la réponse suivante :
+\begin{lstlisting}
+HTTP/1.0 200 OK\r\n
+Content-Type: text/plain\n
+\n
+root.Network.IPAddress=<adresse ip>\n
+root.Network.SubnetMask=<masque reseau>\n
+\end{lstlisting}
+
+Certaines requêtes comme le contrôle PTZ de la caméra ne provoquent pas de réponse (code HTTP 200) mais indiquent simplement que la caméra a bien reçu la requête (code HTTP 204), cepedant nous ne sommes pas informés de la réalisation de l'action demandée.
+Nous avons implémenté le mécanisme de requêtes \textit{HTTP} vers la caméra à l'aide de l'objet \textit{HttpURLConnection} dans la méthode sendCommand de la classe CameraControl.
