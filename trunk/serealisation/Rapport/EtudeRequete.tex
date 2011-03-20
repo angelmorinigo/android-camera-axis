@@ -1,0 +1,30 @@
+\chapter{Etude De l'existant}
+	\section{Les protocoles de transfert}
+		\subsection{HTTP GET}
+		Les requétes HTTP permettent d'intéragir de multiples faéon avec la caméra.
+		Celles-ci permettent d'utiliser le mécanisme PTZ de la caméra (Pan Tilt
+		Zoom), de faire une capture d'écran, d'activer la détection de mouvements,
+		etc. 
+		En effet, la méthode get transmet les données via l'url, ce qui permet
+		d'utiliser toutes les fonctionnalités de la caméra. 
+		Exemple d'url:
+		http://<nom-serveur>/axis-cgi/jpg/image.cgi?resolution=320*240&camera=1
+		Permet de récuperer un capture au format jpg, de résolution 320*240 pixels.
+		
+		http://<nom-serveur>/axis-cgi/ptz/ptzupdate.cgi?pan=15&tilt=25
+		Fait bouger la caméra de 15 unités vers la droite et de 25 vers le haut.
+
+		\subsection{RTSP}
+		Real Time Streaming Protocol (protocole de streaming en temps-réel) est un
+		protocole de communication destiné aux systémes de streaming. Il permet
+		de contréler un serveur de média é distance, offrant des fonctionnalités
+		typiques d'un lecteur vidéo telles que lecture et pause.
+		Exemple de requéte:
+		PLAY rtsp://myserver/axis-media/media.amp?videocodec=h264&resolution=640x480
+		RTSP/1.0 CSeq: 4
+		User-Agent: Axis AMC
+		Session: 12345678
+		Authorization: Basic cm9vdDpwYXNz
+		
+		Cette requéte permet de mettre en marche la lecture de la caméra, ou de
+		reprendre la lecture en cas de mise en pause.
