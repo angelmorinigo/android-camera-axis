@@ -49,7 +49,8 @@ public class Home extends Activity {
     public static ArrayList<Camera> camList;
     private String[] nb_view;
 
-    private String exportPath = "/sdcard/com.myapps.camera/export.xml";
+    private String exportPath = "/sdcard/com.myapps.camera/";
+    private String exportName = "export.xml";
     public static SharedPreferences preferences;
 
     private final static int EDIT_CODE = 2;
@@ -64,13 +65,13 @@ public class Home extends Activity {
     }
 
     private void updateListView(boolean init) {
-
 	List<Map<String, ?>> printCamList = new LinkedList<Map<String, ?>>();
 	for (int i = 0; i < camList.size(); i++) {
 	    camList.get(i).setUniqueID(i);
 	    camList.get(i).groupeID = -1;
-	    printCamList.add(createItem((camList.get(i).uniqueID+"-"+camList.get(i).id), camList.get(i)
-		    .getURI()));
+	    printCamList.add(createItem(
+		    (camList.get(i).uniqueID + "-" + camList.get(i).id),
+		    camList.get(i).getURI()));
 	}
 
 	/* Print cameras list */
@@ -92,18 +93,18 @@ public class Home extends Activity {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.main_view);
 	activity = this;
-	
+
 	/* Resolve preferences */
 	preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-	/* Start motion detection service manager */ 
-	  Intent intent = new Intent(this,
-		    MotionDetectionService.class);
+	/* Start motion detection service manager */
+	Intent intent = new Intent(this, MotionDetectionService.class);
 	startService(intent);
-	
+
 	/* Print tricky */
 	if (preferences.getBoolean(getString(R.string.isWelcome), true) == false) {
-	    Dialog_welcome myDialog = new Dialog_welcome(this,R.style.theme_dialog);
+	    Dialog_welcome myDialog = new Dialog_welcome(this,
+		    R.style.theme_dialog);
 	    myDialog.show();
 	}
 
@@ -264,9 +265,9 @@ public class Home extends Activity {
 		position = extras.getInt(getString(R.string.camPosition));
 		camList.remove(position);
 	    }
-	    
-	    camList.add(position, tmp);
 	    tmp.setUniqueID(position);
+	    camList.add(position, tmp);
+
 	    updateListView(false);
 	}
     }
@@ -292,7 +293,7 @@ public class Home extends Activity {
 	final View alertDialogView = factory.inflate(R.layout.imp_exp, null);
 	switch (item.getItemId()) {
 	case R.id.menu_option_about:
-	    dialog_about = new Dialog(activity,R.style.theme_dialog);
+	    dialog_about = new Dialog(activity, R.style.theme_dialog);
 	    dialog_about.setContentView(R.layout.dialog_about);
 	    dialog_about.setTitle(getString(R.string.aboutTitle));
 
@@ -359,7 +360,7 @@ public class Home extends Activity {
 		    new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			    exportPath = editImportExport.getText().toString();
-			    xmlIO.xmlWrite(camList, exportPath);
+			    xmlIO.xmlWrite(camList, exportPath, exportName);
 			    dialog.dismiss();
 			}
 		    });
@@ -387,8 +388,13 @@ public class Home extends Activity {
 		    new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			    exportPath = editImportExport.getText().toString();
-			    camList = xmlIO.xmlRead(exportPath);
-			    updateListView(true);
+
+			    ArrayList<Camera> camListTmp;
+			    camListTmp = xmlIO.xmlRead(exportPath + exportName);
+			    if (camListTmp != null) {
+				camList = camListTmp;
+				updateListView(true);
+			    }
 			    dialog.dismiss();
 			}
 		    });
@@ -408,8 +414,10 @@ public class Home extends Activity {
 	case R.id.partager:
 	    final Intent messIntent = new Intent(Intent.ACTION_SEND);
 	    messIntent.setType("text/plain");
-	    messIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.messageShare));
-	    startActivity(Intent.createChooser(messIntent, getString(R.string.shareTitle)));
+	    messIntent.putExtra(Intent.EXTRA_TEXT,
+		    getString(R.string.messageShare));
+	    startActivity(Intent.createChooser(messIntent,
+		    getString(R.string.shareTitle)));
 	    return true;
 	}
 	return false;

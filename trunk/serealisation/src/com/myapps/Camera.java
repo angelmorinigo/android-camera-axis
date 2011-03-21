@@ -5,8 +5,11 @@ package com.myapps;
  */
 public class Camera implements java.io.Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
-	protected String id, login, pass, ip, protocol, uri;
-	protected int port, channel, uniqueID = -1, groupeID = -1;
+	protected String id, login, pass;
+	public String ip;
+	protected String protocol, uri;
+	public int port;
+	protected int channel, uniqueID = -1, groupeID = -1;
 
 	/**
 	 * Public constructor for a camera with information
@@ -89,7 +92,7 @@ public class Camera implements java.io.Serializable, Cloneable {
 	 *            Only "http" at the moment
 	 * @return The camera URL
 	 */
-	private String makeURL(String ip, int port, String protocol) {
+	public String makeURL(String ip, int port, String protocol) {
 		return "" + protocol + "://" + ip + ":" + port + "/";
 	}
 

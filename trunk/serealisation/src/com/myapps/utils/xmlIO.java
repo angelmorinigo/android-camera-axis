@@ -1,5 +1,6 @@
 package com.myapps.utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -46,12 +47,17 @@ public class xmlIO {
  * @param camList Your data
  * @param url File name
  */
-    public static void xmlWrite(ArrayList<Camera> camList, String url) {
-	FileOutputStream out = null;
+    public static boolean xmlWrite(ArrayList<Camera> camList, String url, String name) {
+	FileOutputStream out = null;	
 	try {
-	    out = new FileOutputStream(url);
+	    File f = new File(url);
+	    if (!f.exists()) {
+		f.mkdir();
+	    }
+	    out = new FileOutputStream(url+name);
 	} catch (FileNotFoundException e) {
 	    e.printStackTrace();
+	    return false;
 	}
 	XmlSerializer serializer = Xml.newSerializer();
 	try {
@@ -77,11 +83,15 @@ public class xmlIO {
 	    out.close();
 	} catch (IllegalArgumentException e) {
 	    e.printStackTrace();
+	    return false;
 	} catch (IllegalStateException e) {
 	    e.printStackTrace();
+	    return false;
 	} catch (IOException e) {
 	    e.printStackTrace();
+	    return false;
 	}
+	return true;
     }
 
     /**

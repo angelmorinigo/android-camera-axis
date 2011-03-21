@@ -33,7 +33,7 @@ public class notificationLauncher {
      *            The snapshot url to start gallery activity on touch
      *            notification
      */
-    public static void statusBarNotificationImage(Activity activity, Bitmap bmp,
+    public static boolean statusBarNotificationImage(Activity activity, Bitmap bmp,
 	    String text, String path, int id, String tag) {
 	NotificationManager notificationManager;
 	notificationManager = (NotificationManager) activity
@@ -55,6 +55,7 @@ public class notificationLauncher {
 	notification.contentView.setImageViewBitmap(R.id.Nimage, bmp);
 	notification.contentView.setTextViewText(R.id.Ntext, text);
 	notificationManager.notify(tag, id, notification);
+	return true;
     }
 
     public static void statusBarNotificationRunning(Application application, PendingIntent contentIntent,

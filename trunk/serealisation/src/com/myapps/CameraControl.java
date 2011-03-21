@@ -405,14 +405,16 @@ public class CameraControl {
 
 
 
-    public void removeMotionD() throws IOException {
+    public int removeMotionD() throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M"
 		+ cam.groupeID);
 	Log.i("AppLog", con.getResponseCode()
 		+ "MotionDetection free groupe = " + cam.groupeID);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 	    cam.groupeID = -1;
+	    return -1;
 	}
+	return cam.groupeID;
     }
 
     public boolean updateMotionDParam(String param, String value)
