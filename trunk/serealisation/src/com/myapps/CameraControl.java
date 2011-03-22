@@ -155,7 +155,6 @@ public class CameraControl {
 					currentConfig[i] = ENABLED;
 			
 			con.disconnect();
-			Thread.sleep(500);
 			con = sendCommand("axis-cgi/admin/param.cgi?action=list&group=" +
 					"Properties.Motion.Motion,Properties.Audio.Audio," +
 					"Properties.Image");
@@ -184,10 +183,9 @@ public class CameraControl {
 					Log.i(activity.getString(R.string.logTag), "func" + i + ": "
 							+ currentConfig[i]);
 			}
+			con.disconnect();
 		} catch (IOException e) {
 		    e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
     }
 
@@ -241,7 +239,7 @@ public class CameraControl {
      * 
      * @return address's camera
      */
-    private String createURL() {
+    public String createURL() {
 	return cam.getURI();
     }
 
@@ -273,7 +271,7 @@ public class CameraControl {
     /**
      * Change the value of PTZ/Focus/Iris used by the camera (perform an action)
      */
-    public int changeValFunc(int function, float value1, float value2) {
+    public boolean changeValFunc(int function, float value1, float value2) {
 	// if (function < 0 || function >= NB_BASIC_FUNC)
 	// return 0;
 	// if (!isSupported(function))
@@ -304,12 +302,13 @@ public class CameraControl {
 	    Log.i("TouchLog",
 		    ("axis-cgi/com/ptz.cgi?" + query + "&camera=" + String
 			    .valueOf(cam.channel)));
-	    return (con.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT) ? 1
-		    : 0;
+	    boolean res = con.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT;
+	    con.disconnect();
+	    return res;
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
-	return 0;
+	return false;
     }
 
     /** Switch on/off the autofocus or the autoiris on the camera */

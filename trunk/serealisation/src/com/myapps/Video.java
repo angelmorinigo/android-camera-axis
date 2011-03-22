@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import com.myapps.utils.CouldNotCreateGroupException;
 import com.myapps.utils.drawRectOnTouchView;
 import com.myapps.utils.notificationLauncher;
+import com.myapps.utils.snapShotManager;
 
 import de.mjpegsample.MjpegView.MjpegInputStream;
 import de.mjpegsample.MjpegView.MjpegView;
@@ -177,33 +178,19 @@ public class Video extends Activity {
 				    public void onClick(DialogInterface dialog,
 					    int item) {
 					try {
-
-					    File f = new File(fileNameURL);
-					    if (!f.exists()) {
-						f.mkdir();
-					    }
-					    String fileName = fileNameURL
+					    String fileName = "Snap-"
 						    + System.currentTimeMillis()
 						    + ".jpeg";
-					    Log.i(getString(R.string.logTag),
-						    fileName);
 					    Bitmap bmp = camC
 						    .takeSnapshot(resolutions[item]);
-					    Log.i(getString(R.string.logTag),
-						    "Snap ok !!");
-					    FileOutputStream fichier = new FileOutputStream(
-						    fileName);
-					    bmp.compress(
-						    Bitmap.CompressFormat.JPEG,
-						    80, fichier);
-					    fichier.flush();
-					    fichier.close();
+					    snapShotManager.saveSnap(bmp,
+						    fileNameURL, fileName);
 					    notificationLauncher
 						    .statusBarNotificationImage(
 							    activity,
 							    bmp,
 							    ("Snap save : " + fileName),
-							    fileName, id,
+							    fileNameURL+fileName, id,
 							    "" + cam.uniqueID);
 					    id++;
 					} catch (IOException e) {
@@ -219,7 +206,7 @@ public class Video extends Activity {
 		    }
 		});
 		buttonSnap.setEnabled(camC.getResolutions() != null);
-		
+
 		Button buttonIrisP = (Button) findViewById(R.id.IrisP);
 		buttonIrisP.setOnClickListener(new MyOnClickListenerControl(
 			CameraControl.IRIS, 250, 0));

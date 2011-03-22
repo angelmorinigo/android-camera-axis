@@ -2,21 +2,17 @@ package com.myapps.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-
 import com.myapps.Camera;
 import com.myapps.CameraControl;
 import com.myapps.MultiVideo;
-
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * PlayerThread simulate mjpeg video by downloading jpeg
@@ -25,10 +21,8 @@ public class PlayerThread implements Runnable {
 
     private String logTag = "AppLog";
 
-    private URLConnection con;
-    private Camera cam;
+    private HttpURLConnection con;
     private int delay, index;
-    private Activity activity;
     private CameraControl camC;
 
     /**
@@ -44,7 +38,6 @@ public class PlayerThread implements Runnable {
      */
     public PlayerThread(Camera cam, Activity activity, int index, int delay)
 	    throws IOException {
-	this.cam = cam;
 	this.delay = delay;
 	this.index = index;
 	this.camC = new CameraControl(cam, activity);
@@ -57,19 +50,31 @@ public class PlayerThread implements Runnable {
 	Log.i(logTag, "go");
 	Bitmap bmp = null;
 	String command;
+	command = "axis-cgi/jpg/image.cgi?resolution=160x120";
+
+	/*
+	 * HttpClient httpclient = new DefaultHttpClient();
+	 * 
+	 * HttpGet httpget = new HttpGet(
+	 * "http://192.168.1.20/axis-cgi/jpg/image.cgi?resolution=160x120");
+	 * httpget.setHeader("Authorization",
+	 * base64Encoder.userNamePasswordBase64("root", "root")); HttpResponse
+	 * response;
+	 */
+
 	while (!Thread.currentThread().isInterrupted()) {
 	    Message m = new Message();
 	    m.what = MultiVideo.GUIUPDATEIDENTIFIER;
 	    m.arg1 = index;
 	    try {
-		/* Open HTTP connection */
-		command = "axis-cgi/jpg/image.cgi?resolution=160x120";
+
 		con = camC.sendCommand(command);
 		Log.i(logTag, ("" + index + " connected"));
 		/* Get image result */
 		InputStream stream = con.getInputStream();
 		bmp = BitmapFactory.decodeStream(stream);
 		stream.close();
+		con.disconnect();
 		/* Set the new image to print */
 		MultiVideo.newBMP[index] = bmp;
 		/* Send message to UI to refresh View */

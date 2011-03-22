@@ -2,6 +2,7 @@ package com.myapps;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -34,7 +36,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.myapps.utils.PlayerThread;
 import com.myapps.utils.xmlIO;
 
 /**
@@ -72,6 +76,7 @@ public class Home extends Activity {
 	    printCamList.add(createItem(
 		    (camList.get(i).uniqueID + "-" + camList.get(i).id),
 		    camList.get(i).getURI()));
+
 	}
 
 	/* Print cameras list */
@@ -355,11 +360,19 @@ public class Home extends Activity {
 	    imp_exp.setText(getString(R.string.messageExport));
 	    editImportExport = (EditText) alertDialogView
 		    .findViewById(R.id.imp_exp_url);
-	    editImportExport.setText(exportPath);
+	    editImportExport.setText(exportPath + exportName);
 	    build_exp.setPositiveButton("OK",
 		    new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-			    exportPath = editImportExport.getText().toString();
+			    String location = editImportExport.getText()
+				    .toString();
+			    exportPath = location;
+			    exportPath = exportPath.substring(0,
+				    exportPath.lastIndexOf("/") + 1);
+			    exportName = location.substring(location
+				    .lastIndexOf("/") + 1);
+			    Log.i("AppLog", "dir : " + exportPath + " file : "
+				    + exportName);
 			    xmlIO.xmlWrite(camList, exportPath, exportName);
 			    dialog.dismiss();
 			}
@@ -380,22 +393,27 @@ public class Home extends Activity {
 	    build_imp.setIcon(R.drawable.light);
 	    editImportExport = (EditText) alertDialogView
 		    .findViewById(R.id.imp_exp_url);
-	    editImportExport.setText(exportPath);
+	    editImportExport.setText(exportPath + exportName);
 	    imp_exp = (TextView) alertDialogView
 		    .findViewById(R.id.importExport);
 	    imp_exp.setText(getString(R.string.messageImport));
 	    build_imp.setPositiveButton("OK",
 		    new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-			    exportPath = editImportExport.getText().toString();
-
-			    ArrayList<Camera> camListTmp;
-			    camListTmp = xmlIO.xmlRead(exportPath + exportName);
-			    if (camListTmp != null) {
-				camList = camListTmp;
-				updateListView(true);
-			    }
 			    dialog.dismiss();
+			    String location = editImportExport.getText()
+				    .toString();
+			    ArrayList<Camera> camListTmp = null;
+			    camListTmp = xmlIO.xmlRead(location);
+			    if (camListTmp != null) {
+				camList.addAll(camListTmp);
+				updateListView(true);
+			    } else {
+				Toast.makeText(
+					activity.getApplicationContext(),
+					"File not found", Toast.LENGTH_LONG)
+					.show();
+			    }
 			}
 		    });
 	    build_imp.setNegativeButton("Annuler",
@@ -412,12 +430,37 @@ public class Home extends Activity {
 	    return true;
 
 	case R.id.partager:
-	    final Intent messIntent = new Intent(Intent.ACTION_SEND);
-	    messIntent.setType("text/plain");
-	    messIntent.putExtra(Intent.EXTRA_TEXT,
-		    getString(R.string.messageShare));
-	    startActivity(Intent.createChooser(messIntent,
-		    getString(R.string.shareTitle)));
+	    String[] stringCamList = new String[camList.size() + 1];
+	    stringCamList[0] = "Application";
+	    for (int i = 1; i < camList.size() + 1; i++) {
+		stringCamList[i] = camList.get(i - 1).id;
+	    }
+	    AlertDialog.Builder builderList = new AlertDialog.Builder(activity);
+	    builderList.setTitle(getString(R.string.share));
+	    builderList.setSingleChoiceItems(stringCamList, -1,
+		    new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+			    dialog.dismiss();
+			    final Intent messIntent = new Intent(
+				    Intent.ACTION_SEND);
+			    messIntent.setType("text/plain");
+			    messIntent.putExtra(Intent.EXTRA_TEXT,
+				    getString(R.string.messageShare));
+			    if (item != 0) {
+				String fileName = camList.get(item-1).id +".xml";
+				xmlIO.xmlCreateCamera(camList.get(item-1), "/sdcard/com.myapps.camera/",
+					fileName);
+				messIntent.putExtra(Intent.EXTRA_STREAM,
+					Uri.parse("file://" + "/sdcard/com.myapps.camera/"+fileName));
+			    }
+			    startActivity(Intent.createChooser(messIntent,
+				    getString(R.string.shareTitle)));
+			}
+		    });
+	    AlertDialog alertList = builderList.create();
+	    Log.i("AppLog", "alertList show");
+	    alertList.show();
+
 	    return true;
 	}
 	return false;
