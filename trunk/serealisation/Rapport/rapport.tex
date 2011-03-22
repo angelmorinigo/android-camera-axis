@@ -1,10 +1,28 @@
 \documentclass[a4paper,10pt]{report}
+
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+   \pdffalse
+\else
+   \pdfoutput=1
+   \pdftrue
+\fi
+\ifpdf
+   \usepackage{graphicx}
+   \usepackage{epstopdf}
+   \DeclareGraphicsRule{.eps}{pdf}{.pdf}{`epstopdf #1}
+   \pdfcompresslevel=9
+\else
+   \usepackage{graphicx}
+\fi
+
 \usepackage[utf8]{inputenc}
 \usepackage{ulem}
 \usepackage[frenchb]{babel}
 \usepackage{tabularx} 
 \usepackage{multirow} 
 \usepackage{graphicx} 
+\usepackage{graphics}
 \usepackage[final]{pdfpages}
 \usepackage{url}
 \usepackage{xcolor}
@@ -49,11 +67,11 @@ frameround=fttt, captionpos=b, format=JAVA}
 
 
 % PAGE DE GARDE ------------------------------------------------------------------------------------
-\title{\bf Projet de programmation \Large\textit{INF466} \\~\\ \Huge
+\title{\bf Projet de fin d'Etude \Large\textit{INF592} \\~\\ \Huge
  Vidéo surveillance, Streaming vidéo et contrôle de caméra via
 Android \\~\\
   \Large - MEMOIRE -}
-  \author{Jerome NAHELOU \and Quentin NEBOUT \and Romain SOLVE \and Fabien
+  \author{Jerome NAHELOU - Quentin NEBOUT - Romain SOLVE - Fabien
   QUINTARD}
   
 \date{}
@@ -69,11 +87,11 @@ Android \\~\\
   \vfill
   \begin{minipage}[t]{\linewidth}
     \maketitle
-    \center\includegraphics{camera.png}
+    \center\includegraphics[scale=0.8]{camera.png}
   \end{minipage}
     \vfill
   \begin{tabular}{ r c l }
-    Enseignant encadrant & : & Yérom-David BROMBERG\\
+     \Large{Enseignant encadrant} &  \Large{:} &  \Large{Yérom-David BROMBERG}\\
   \end{tabular}
 
   \setcounter{page}{0}

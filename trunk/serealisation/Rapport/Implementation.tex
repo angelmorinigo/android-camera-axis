@@ -96,7 +96,7 @@ Lors d'un clic sur ce bouton, nous appelons l'activité
 Si la bibliothèque n'est pas disponible sur l'appareil, nous faisons appel a
 \textit{l'Android market} afin de telecharger l'application \textit{zxing} (qui
 implémente l'ensemble des fonctions proposées par la bibliothèque).
-\newpage
+\newline
 \begin{lstlisting}[caption={Lancement de l'activité zxing ou de l'Android
 market.}] 
     public void onClick(View v) { try {
@@ -802,9 +802,9 @@ Puis en implémentant le service dans le fichier
 \textit{MotionDetectionService.java}.
  Tout comme les activités, les services ont
 un cycle de vie :
-\newpage
+\newline
 \begin{center}
-\begin{figure}
+\begin{figure}[H]
    \label{serviceLifecycle}
   \centering
   \fbox{
