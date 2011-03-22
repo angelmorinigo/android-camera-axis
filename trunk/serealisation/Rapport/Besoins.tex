@@ -6,7 +6,8 @@ performante, fiable et ergonomique.
 \section{Besoins fonctionnels}
 Les besoins suivants sont nécessaires au fonctionnement de l'application, cependant certains sont plus importants que d'autres et donc prioritaires pour arriver à la finalité du projet.
 \begin{itemize}
-  \item Flux vidéo : l'application doit retransmettre le flux vidéo de la caméra d'une manière fluide et sans interruption.
+  \item Flux vidéo : l'application doit retransmettre le flux vidéo et audio de
+  la caméra d'une manière fluide et sans interruption.
   \item Multivue : elle doit proposer le choix d'afficher une seule vue en plein écran ou plusieurs vues simultanément sur le même écran.
   \item Liste de caméras : il doit pouvoir gérer une liste de caméras avec différentes actions d'ajout, de modification et de suppression d'entités.
   \item Import/Export : la liste de caméras doit pouvoir être importée ou exportée pour afin de la rendre portable.
@@ -31,4 +32,8 @@ L'application ne serait pas vraiment performante si certains aspects non liés a
   \item Réactivité de détection : le temps entre le mouvement détecté et la notification d'alerte résultante doit être le plus court possible.
   \item Compatibilité : l'application doit être compatible avec les différents modèles de caméras Axis et s'adapter aux fonctionnalités variables.
 \end{itemize}
+L'ensemble de ces besoins ont été implémenté, à l'eception de la retransmission
+du son. En effet les codec utilisé par notre caméra (G.711 ,G.726, AAC) ne sont
+pas implémentés dans les versions d'android que nous disposons. Seul le codec AAC fait son
+apparition à partir de la version 3.0 d'android.
 \clearpage

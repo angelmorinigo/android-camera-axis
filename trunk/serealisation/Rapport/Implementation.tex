@@ -3,8 +3,8 @@
 Un projet Android est découpé selon une arborescence précise.
 Lors de la création d'un projet, sous Eclipse, il faut choisir le nom du projet.
 Ce projet appartient à un package qui se présente de la forme suivante :
-<extension_domaine>.<nom_de_domaine>.android.<nom_du_projet>. Il faut ensuite
-choisir le nom de l'activity, celle qui sera lancée au démarage. Pour finir, il
+"extension\_domaine"."nom\_de\_domaine".android."nom\_du\_projet". Il faut
+ensuite choisir le nom de l'activity, celle qui sera lancée au démarage. Pour finir, il
 faut choisir le nom de l'application, qui sera affiché dans le menu principal.
 Aprés la création du projet, on obtient une architecture prédéfinie, qui
 conntient plusieurs dossiers et fichiers:
@@ -22,11 +22,16 @@ conntient plusieurs dossiers et fichiers:
     l'application
     \item Le dossier layout contient les fichiers .xml qui décrivent les
     interface de l'application
-    \item Le dossier values contient des fichiers qui décrivent les valeurs
+    \item Le dossier values contient des fichiers qui décrivent les constantes
     utilisées par l'application
+    \item Le dossier menu contient les differents menus utilisés
+    \item Notre dossier xml contient le ficher de mise en forme du
+    \textit{SharedPreference} utilisé
+    \item Les dossiser values-[CodeLangue] contiennent la traductions des
+    chaines utilisées dans le projet.
    \end{itemize}
-   \item Pour conclure, on trouve un fichier AndroidManifest	.xml, qui qui
-   défini le comportement de l'application. On y trouve par exemple le nom,
+   \item Pour conclure, on trouve un fichier \textit{AndroidManifest.xml}, qui
+   qui défini le comportement de l'application. On y trouve par exemple le nom,
    l'icone par defaut, le thème, la version minimale,les activités, les services
    de l'application, etc.
 \end{itemize}
@@ -59,28 +64,37 @@ lancer plusieurs fenêtres de détection de mouvement pour une même caméra
 La création d'une caméra se fait via l'interface graphique défini par le
 fichier \textit{add\_cam.xml}.\newline
 
- \begin{center}
- \begin{figure}[H] 
-  \label{addCamScreenShot}
-  \centering
-  \includegraphics[scale=0.3]{Images/addCamScreenShot.eps}
-  \caption{AddCam View SnapShot}
-\end{figure}  
-\end{center}
-
-
 On y retrouve des champs de texte éditable pour chacune
-des caractéristiques de la caméra ainsi qu'un bouton permettant l'ajout de caméra via \textit{QrCode}.\newline
-
-
+des caractéristiques de la caméra ainsi qu'un bouton permettant l'ajout de caméra via \textit{QRCode}.\newline
+Un \textbf{QRCode} est un code-barres à deux dimensions. Selon
+\textit{Wikipedia}\footnote{\label{zxing}http://fr.wikipedia.org/wiki/Code\_QR}
+un QrCode peut contenir plus de 4296 caractères alphanumériques contre 10 à 13 pour
+un code-barre classique.\newline
+L'exemple suivant illustre l'équivalence \textit{caméra-représentation
+xml-QRCode}\newline
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4]{Images/addCam.eps}
+  \includegraphics{Images/chart.eps}
+  \begin{lstlisting}[format=XML]
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<camList>
+<camera>
+<id>Jardin</id>
+<adresse>http://192.168.1.20:80</adresse>
+<channel>1</channel>
+</camera>
+</camList>
+\end{lstlisting}
+\end{figure}
 
 \indent Le lecteur de code Qr est implémenté par la bibliothèque
-\textit{zxing}\footnote{\label{zxing} http://code.google.com/p/zxing/}. \newline
+\textit{zxing}\footnote{\label{zxing} http://code.google.com/p/zxing/}. 
 Lors d'un clic sur ce bouton, nous appelons l'activité 
 \textit{SCAN} de la bibliothèque zxing avec comme argument
-\textit{QR\_CODE\_MODE}.\newline
+\textit{QR\_CODE\_MODE}.
 Si la bibliothèque n'est pas disponible sur l'appareil, nous faisons appel a
-\textit{l'Android market} afin de telecharger   l'application \textit{zxing} (qui
+\textit{l'Android market} afin de telecharger l'application \textit{zxing} (qui
 implémente l'ensemble des fonctions proposées par la bibliothèque).
 \newpage
 \begin{lstlisting}[caption={Lancement de l'activité zxing ou de l'Android
@@ -99,9 +113,11 @@ market.}]
 \end{lstlisting}
 
 \indent \newline
-\indent Lorsque l'\textit{Activity} \textit{zxing} se termine, l'activité
-\textit{addCam} récupère l'adresse de la caméra contenu dans le code Qr puis verrouille les
-champs de texte éditable adresse et port.\\
+\indent Il éxiste de générateur de code QR disponible sur internet dont celui
+implémenté par la biblioteque
+\textit{zxing}\footnote{\label{zxingGenerator}
+http://zxing.appspot.com/generator/}.
+
 \indent Pour ajouter la nouvelle
 caméra, il ne reste à l'utilisateur qu'à cliquer sur le bouton
 \textit{ajouter} pour revenir sur l'écran d'accueil et constater l'ajout de la caméra. Cependant il reste possible de revenir à l'écran d'accueil sans sauvegarder les changements en cliquant sur \textit{fermer}.
@@ -930,9 +946,11 @@ http://myserver/axis-cgi/motion/motiondata.cgi?group=<group number>
 Dans le résultat de cette requête, nous nous intéressons à la valeur du niveau
 de detection. Si celui-ci dépasse le seuil défini dans les paramètres
 utilisateur, le service déclenche une notification sous forme de vibration du
-téléphone.\newline Afin de ne pas ``spammer'' l'utilisateur de notification,
-nous avons décider d'établir un délai minimum entre deux notifications réglable
-dans les paramètres.
+téléphone ainsi que la prise d'une photo instantannée. La photo sera
+alors sauvegardé dans le dossier \textit{"/sdcard/com.myapps.camera/"} sous la
+forme : "MD-time-<heure en ns>.jpeg".
+\newline Afin de ne pas ``spammer''
+l'utilisateur de notification, nous avons décider d'établir un délai minimum entre deux notifications réglable dans les paramètres.
 \begin{lstlisting}
 HTTP/1.0 200 OK\r\n
 Content-Type: multipart/x-mixed-replace;boundary=axismdb\r\n\r\n
@@ -1176,11 +1194,11 @@ indépendant des thèmes implémentés par les constructeurs (\textit{HTC Sens},
 
 \subsubsection{Partage}
 Enfin pour finir sur le chapitre concernant l'implémentation, nous avons fourni
-à l'utilisateur une fonction permettant le partage de l'application via un
-message pouvant être diffusé par de nombreuses applications (mail, sms,
-``facebook'', \ldots).
-Dans un premier temps, il faut définir l'action de l'intent (dans notre cas
-nous souhaitons partager des données, nous utilisons donc le flag
+à l'utilisateur une fonction permettant le partage de l'application
+(respectivement d'une caméra) via un message (resp. un fichier join) pouvant
+être diffusé par de nombreuses applications (mail, sms, ``facebook'', \ldots).
+Pour ce faire il faut dans un premier temps, définir l'action de
+l'intent (dans notre cas nous souhaitons partager des données, nous utilisons donc le flag
 \textit{ACTION\_SEND}). Puis il faut spécifier le type des données à partager
 (ici il s'agit simplement d'une chaîne de caractères).
 Enfin nous pouvons démarrer l'activité choisi lors de l'affichage de
@@ -1196,7 +1214,8 @@ l'\textit{AlertDialog}.
   \label{partage}
    \includegraphics[scale=0.4]{Images/partage.eps}
   \caption{Share with\ldots}
-\end{figure}  
+\end{figure} 
+
 
 
 

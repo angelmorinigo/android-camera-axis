@@ -188,7 +188,8 @@ public class xmlIO {
     public static String xmlCameraToString(Camera c) {
 	String res = null;
 	String fileName = "tmp";
-	xmlCreateCamera(c, ".", fileName);
+	String filePath = "/sdcard/com.myapps.camera/";
+	xmlCreateCamera(c, filePath, fileName);
 
 	InputStream ips;
 	try {
