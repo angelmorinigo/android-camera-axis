@@ -2,7 +2,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{ulem}
 \usepackage[frenchb]{babel}
-\usepackage{graphicx}
+\usepackage{tabularx} 
+\usepackage{multirow} 
+\usepackage{graphicx} 
 \usepackage[final]{pdfpages}
 \usepackage{url}
 \usepackage{xcolor}
@@ -11,6 +13,8 @@
 \usepackage{chngpage}
 \usepackage{float}
 \usepackage{fullpage}
+\usepackage[francais]{layout} %affiche le modèle de page par \layout
+\usepackage[final]{pdfpages}
 
 
 
@@ -41,16 +45,47 @@
 \lstset{language=java, frame=single, tabsize=2, breaklines=true,
 frameround=fttt, captionpos=b, format=JAVA}
 
-\title{Vidéo surveillance, Streaming vidéo et contrôle de caméra via
-Android}
-\author{Jerome NAHELOU, Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD}
+
+
+
+% PAGE DE GARDE ------------------------------------------------------------------------------------
+\title{\bf Projet de programmation \Large\textit{INF466} \\~\\ \Huge
+ Vidéo surveillance, Streaming vidéo et contrôle de caméra via
+Android \\~\\
+  \Large - MEMOIRE -}
+  \author{Jerome NAHELOU \and Quentin NEBOUT \and Romain SOLVE \and Fabien
+  QUINTARD}
+  
+\date{}
 
 \begin{document}
-\title{Vidéo surveillance, Streaming vidéo et contrôle de caméra via
-Android}
-\author{Jerome NAHELOU, Quentin NEBOUT,\\ Romain SOLVE, Fabien QUINTARD}
-\renewcommand{\today}{Universitée Bordeaux 1, Talence}
-\maketitle
+
+\begin{titlepage}
+  \begin{tabularx}{\linewidth}{lXr}
+    \multirow{2}{*}{\includegraphics[width=4cm]{logo-bdx1.pdf}} & &
+    \bf\Large\today\\ & & \\
+    & & \bf MCSB0\\
+  \end{tabularx}
+  \vfill
+  \begin{minipage}[t]{\linewidth}
+    \maketitle
+    \center\includegraphics{camera.png}
+  \end{minipage}
+    \vfill
+  \begin{tabular}{ r c l }
+    Enseignant encadrant & : & Yérom-David BROMBERG\\
+  \end{tabular}
+
+  \setcounter{page}{0}
+  \thispagestyle{empty}
+
+\end{titlepage}
+
+
+
+
+
+
 \tableofcontents \clearpage
 \input{EtudeAndroid}\clearpage
 \input{etudeCam}\clearpage
