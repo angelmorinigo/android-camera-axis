@@ -1,34 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Cámara</string>
-	
 	<string name="cameraAlertTitle">Número de cámaras que se muestra :</string>
-	<string name="aboutTitle">A Propos</string>
+	<string name="aboutTitle">Acerca de</string>
+
+	<!-- AddCam -->
+	<string name="addCam">Añadir càmara</string>
+	<string name="addCamQR">Añadir a partir de un Qrcode</string>
+	<string name="description">Descripción</string>
+	<string name="descriptionHint">Introduzca un descriptivo</string>
+	<string name="login">Identificación :</string>
+	<string name="loginHint">Entrada </string>
+	<string name="pass">Contraseña :</string>
+	<string name="passHint">Escriba una contraseña</string>
+	<string name="ip">Ip :</string>
+	<string name="ipHint">Escriba una ip</string>
+	<string name="port">Puerto :</string>
+	<string name="portHint">Escriba un puerto</string>
+	<string name="chan">Canal :</string>
+	<string name="chanHint">Escriba un canal </string>
+	<string name="add">Añadir</string>
+	<string name="cancel">Cancelar</string>
+
+	<!-- AdvVideo -->
+
+	<!-- dialog About -->
+	<string name="close">Cerrar</string>
+	
+	<!-- dialog Welcome -->
+	<string name="ok">OK</string>
+
+	<!-- edit Cam -->
+	<string name="edit">Edición</string>
+	<string name="editCam">Cambiar la cámara</string>
+	<string name="addr">Ip :</string>
+	<string name="addrHint">Ip</string>
+
+	<!-- imp exp -->
+	<string name="enterUrl">Introducir URL</string>
+
+	<!-- mds video -->
+	<string name="run">Inicio</string>
+
+	<!-- main view -->
+	<string name="selectCam">Elegir una cámara</string>
+
+	<!-- main menu -->
+	<string name="multiView"></string>
+	<string name="more">Más</string>
+	<string name="params">Configuración</string>
+	<string name="exportConfig">Exportar configuración</string>
+	<string name="importConfig">Importación Configuration</string>
+	<string name="share">Compartir</string>
+
+	<!-- video menu -->
+	<string name="enableMD">Activar detección de movimiento</string>
+	<string name="enableAC">Activar controles avanzados</string>
+
+	<!-- preferences -->
+	<string name="disableAC">Desactivar los controles avanzados</string><string name="Delai">Tiempo de espera</string>
+	<string name="DelaiFPS">Tiempo de espera FPS</string>
+	<string name="DelaiFPSHint">Un retraso (en ms) entre cada actualización reduce FPS
+pero permite la reducción de los datos! (Multi-vista sólo)</string>
+	<string name="DelaiTO">Tiempo de espera de conexión HTTP</string>
+	<string name="DelaiTOHint">Definir el tiempo de espera para la conexión HTTP (ms)</string>
+	<string name="DelaiNMD">Notificación de retardo de detección de movimiento</string>
+	<string name="DelaiNMDHint">Define un intervalo mínimo entre dos notificación personalizada de detección de movimiento (en ms)</string>
+
+	<string name="other">Otros</string>
+	<string name="disableTricky">Deshabilitar consejos</string>
+	<string name="disableTrickyHint">Deshabilitar consejos en el inicio</string>
+
+	<string name="sens">Sensibilidad</string>
+	<string name="sensCam">Control de la cámara</string>
+	<string name="sensCamHint">Puede aumentar o disminuir la sensibilidad de la PTZ</string>
+	<string name="sensMD">Detección de movimiento</string>
+	<string name="sensMDHint">Define el umbral de detección de movimiento
+	</string>
 
 
-	<string name="messageRemove">¿Está seguro que desea eliminar esta cámara?
- </string>
+	<!-- Messages -->
+	<string name="messageRemove">¿Desea eliminar esta cámara?
+	</string>
 	<string name="messageChoose">¿Qué hacer?</string>
-	<string name="messageBienvenue">Bienvenido !</string>
-	<string name="messageAbout">Version 1.0\nDesarrikkado por :\nJerome NAHELOU,
-	Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npara Samsung Galaxy S
-		android 2.1\n</string>
-	<string name="messageExport">Archivo de salida :</string>
-	<string name="messageImport">Archivo para importar :</string>
-	<string name="messageShare">Buscar libre Camera-Axis en su depósito
-		svn http://code.google.com/p/android-camera-axis/</string>
+	<string name="messageBienvenue">Bienvenido!</string>
+	<string name="messageAbout">Versión 1.0\nDesarrollado por :\nJerome NAHELOU,
+		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npara Samsung Galaxy S
+		con android 2.2\n</string>
+	<string name="messageExport">Archivo de salida:</string>
+	<string name="messageImport">Archivo de entrada:</string>
+	<string name="messageShare">Encuentra la cámara libre del Eje en su depósito svn
+		http://code.google.com/p/android-camera-axis/</string>
 
-
-	<string name="boutonModifier">Editar</string>
-	<string name="boutonSupprimer">Suprimir</string>
+	<!-- Buttons -->
+	<string name="boutonModifier">Modificar</string>
+	<string name="boutonSupprimer">Eliminar</string>
 	<string name="boutonExporter">Exportar</string>
-	<string name="boutonImporter">Importar</string>
+	<string name="boutonImporter">Importar</string><string name="boutonArreter">Dejar</string>
 
 
-	<string name="boutonArreter">Parar</string><string name="oui">Si</string>
+	<string name="oui">Sí</string>
 	<string name="non">No</string>
+	<string name="shareTitle">Compartir con...</string>
+	<string name="protocol_prompt">Elegir un protocolo de</string>
 
-	<string name="protocol_prompt">Elegir un protocolo</string>
 
-<string name="disableAC">Desactivar los controles avanzados</string>
 </resources>
