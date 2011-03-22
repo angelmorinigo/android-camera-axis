@@ -1,6 +1,35 @@
 \chapter{Implémentation}
 \section{Projet Android}
-Un projet 
+Un projet Android est découpé selon une arborescence précise.
+Lors de la création d'un projet, sous Eclipse, il faut choisir le nom du projet.
+Ce projet appartient à un package qui se présente de la forme suivante :
+<extension_domaine>.<nom_de_domaine>.android.<nom_du_projet>. Il faut ensuite
+choisir le nom de l'activity, celle qui sera lancée au démarage. Pour finir, il
+faut choisir le nom de l'application, qui sera affiché dans le menu principal.
+Aprés la création du projet, on obtient une architecture prédéfinie, qui
+conntient plusieurs dossiers et fichiers:
+\begin{itemize}
+  \item Un dossier src qui devra contenir l'ensemble des fichiers sources d'un
+  même package (on peut créer plusieurs package dans le dossier src)
+  \item Un fichier R.java, généré par l'ADT, qui contient l'ensemble des
+  références aux ressources du projet
+  \item Un dossier assets, qui contient l'ensemble des données qui seront
+  chargées sur le mobile (ou tablette) lors de la compilation
+  \item Un dossier res, qui contient l'ensemble des ressources relatives aux
+  projet. Ce dossier contient plusieurs sous-dossiers:
+  \begin{itemize}
+    \item Le dossier drawable contient l'ensemble des images utilisées par
+    l'application
+    \item Le dossier layout contient les fichiers .xml qui décrivent les
+    interface de l'application
+    \item Le dossier values contient des fichiers qui décrivent les valeurs
+    utilisées par l'application
+   \end{itemize}
+   \item Pour conclure, on trouve un fichier AndroidManifest	.xml, qui qui
+   défini le comportement de l'application. On y trouve par exemple le nom,
+   l'icone par defaut, le thème, la version minimale,les activités, les services
+   de l'application, etc.
+\end{itemize}
 \section{L'objet Caméra}
 \subsection{Description}
 L'objet Caméra est implémenté dans la classe \textit{Camera.java}.\newline
