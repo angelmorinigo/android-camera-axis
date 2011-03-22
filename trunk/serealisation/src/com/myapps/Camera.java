@@ -1,5 +1,10 @@
 package com.myapps;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import android.net.Uri;
+
 /**
  * Camera class describe information's camera
  */
@@ -7,7 +12,8 @@ public class Camera implements java.io.Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 	protected String id, login, pass;
 	public String ip;
-	protected String protocol, uri;
+	protected String protocol;
+	URI uri;
 	public int port;
 	protected int channel, uniqueID = -1, groupeID = -1;
 
@@ -38,7 +44,12 @@ public class Camera implements java.io.Serializable, Cloneable {
 		this.port = port;
 		this.protocol = protocol;
 		this.channel = channel;
-		this.uri = makeURL(ip, port, protocol);
+		try {
+		    this.uri = new URI("http", null, ip , port, null, null, null);
+		} catch (URISyntaxException e) {
+		    uri = null;
+		    e.printStackTrace();
+		}
 	}
 
 	/**
@@ -59,7 +70,11 @@ public class Camera implements java.io.Serializable, Cloneable {
 		this.id = id;
 		this.login = login;
 		this.pass = pass;
-		this.uri = uri;
+		try {
+		    this.uri = new URI(uri);
+		} catch (URISyntaxException e) {
+		    e.printStackTrace();
+		}
 		this.channel = channel;
 	}
 
@@ -75,25 +90,14 @@ public class Camera implements java.io.Serializable, Cloneable {
 	 */
 	public Camera(String id, String uri, int channel) {
 		this.id = id;
-		this.uri = uri;
+		try {
+		    this.uri = new URI(uri);
+		} catch (URISyntaxException e) {
+		    e.printStackTrace();
+		}
 		this.channel = channel;
 		this.login = "";
 		this.pass = "";
-	}
-
-	/**
-	 * Create the address from camera's information
-	 * 
-	 * @param ip
-	 *            Ip's camera
-	 * @param port
-	 *            Port's camera
-	 * @param protocol
-	 *            Only "http" at the moment
-	 * @return The camera URL
-	 */
-	public String makeURL(String ip, int port, String protocol) {
-		return "" + protocol + "://" + ip + ":" + port + "/";
 	}
 
 	/**
@@ -101,8 +105,17 @@ public class Camera implements java.io.Serializable, Cloneable {
 	 * 
 	 * @return address's camera
 	 */
-	public String getURI() {
+	public URI getAddress() {
 		return uri;
+	}
+	
+	/**
+	 * Get the address's camera
+	 * 
+	 * @return address's camera
+	 */
+	public String getURI() {
+		return uri.toString()+"/";
 	}
 
 	/**

@@ -1,10 +1,12 @@
 package com.myapps.utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,34 +42,7 @@ public class xmlIO {
 	ArrayList<Camera> camList = new ArrayList<Camera>();
 	camList.add(c);
 	xmlWrite(camList, url, name);
-	
-    }
 
-    public static String xmlCameraToString(Camera c) {
-	String res = null;
-	String fileName = "tmp";
-	xmlCreateCamera(c, ".", fileName);
-
-	InputStream ips;
-	try {
-	    ips = new FileInputStream(fileName);
-
-	    InputStreamReader ipsr = new InputStreamReader(ips);
-	    BufferedReader br = new BufferedReader(ipsr);
-	    String ligne;
-	    while ((ligne = br.readLine()) != null) {
-		System.out.println(ligne);
-		res += ligne + "\n";
-	    }
-	    br.close();
-	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
-	    return null;
-	} catch (IOException e) {
-	    e.printStackTrace();
-	    return null;
-	}
-	return res;
     }
 
     /**
@@ -102,7 +77,7 @@ public class xmlIO {
 		serializer.text(camList.get(i).getId());
 		serializer.endTag(null, "id");
 		serializer.startTag(null, "adresse");
-		serializer.text(camList.get(i).getURI());
+		serializer.text(camList.get(i).getAddress().toString());
 		serializer.endTag(null, "adresse");
 		serializer.startTag(null, "channel");
 		serializer.text("" + camList.get(i).getChannel());
@@ -180,5 +155,60 @@ public class xmlIO {
 	    e.printStackTrace();
 	    return null;
 	}
+    }
+
+    public static Camera xmlReadString(String c) {
+	FileOutputStream out = null;
+	String filePath = "/sdcard/com.myapps.camera/";
+	String fileName = "addCam.xml";
+	try {
+	    File fdir = new File(filePath);
+	    if (!fdir.exists()) {
+		fdir.mkdir();
+	    }
+	    
+	    File f = new File(filePath+fileName);
+	    FileWriter fw = new FileWriter(f, false);
+	    BufferedWriter output = new BufferedWriter(fw);
+	    output.write(c);
+	    output.flush();
+	    output.close();
+	    Log.e("Exception", "file wrote");
+	    ArrayList<Camera> camList = xmlRead(filePath+fileName);
+	    f.delete();
+	    return camList.get(0);
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	return null;
+    }
+
+    public static String xmlCameraToString(Camera c) {
+	String res = null;
+	String fileName = "tmp";
+	xmlCreateCamera(c, ".", fileName);
+
+	InputStream ips;
+	try {
+	    ips = new FileInputStream(fileName);
+
+	    InputStreamReader ipsr = new InputStreamReader(ips);
+	    BufferedReader br = new BufferedReader(ipsr);
+	    String ligne;
+	    while ((ligne = br.readLine()) != null) {
+		System.out.println(ligne);
+		res += ligne + "\n";
+	    }
+	    br.close();
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	    return null;
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    return null;
+	}
+	return res;
     }
 }

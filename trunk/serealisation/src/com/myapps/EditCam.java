@@ -34,7 +34,7 @@ public class EditCam extends Activity {
 	login.setText(cam.login);
 	pass.setText(cam.pass);
 	channel.setText("" + cam.channel);
-	address.setText(cam.uri);
+	address.setText(cam.uri.toString());
 
 	Button modify = (Button) findViewById(R.id.modify);
 	modify.setOnClickListener(new View.OnClickListener() {

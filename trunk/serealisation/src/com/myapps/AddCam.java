@@ -1,5 +1,8 @@
 package com.myapps;
 
+import com.myapps.utils.xmlIO;
+
+import android.R.xml;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -21,12 +24,10 @@ import android.widget.Spinner;
 public class AddCam extends Activity {
     private EditText id, login, pass, ip, port, channel;
  // private Spinner s;
-    private String url = null;
     private Camera tmp;
     private boolean resultFromQr = false;
 
-    private String ipText = "Ip found with Qr";
-    private String portText = "Port found with Qr";
+    
 
     
 /**
@@ -73,23 +74,24 @@ public class AddCam extends Activity {
 		String vProtocol = "http"; // s.getSelectedItem().toString();
 		String vChan = channel.getText().toString();
 
-		if (vId.equalsIgnoreCase("") | vLogin.equalsIgnoreCase("")
-			| vPass.equalsIgnoreCase(""))
+		if (vId.equalsIgnoreCase(""))
 		    return;
+		 if(vLogin.equalsIgnoreCase(""))
+		     vLogin = "";
+		 
+		if(vPass.equalsIgnoreCase(""))
+		    vPass = "";
+		
 		if (vChan.equalsIgnoreCase(""))
 		    vChan = "1";
 
-		if (!resultFromQr) {
 		    if (vIp.equalsIgnoreCase("") | vPort.equalsIgnoreCase("")
 			    | vProtocol.equalsIgnoreCase(""))
 			return;
 		    tmp = new Camera(vId, vLogin, vPass, vIp, Integer
 			    .parseInt(vPort), vProtocol, Integer
 			    .parseInt(vChan));
-		} else {
-		    tmp = new Camera(vId, vLogin, vPass, url, Integer
-			    .parseInt(vChan));
-		}
+
 		Log.i(getString(R.string.logTag), ("Camera : " + tmp.getURI()));
 
 		/*
@@ -162,12 +164,12 @@ public class AddCam extends Activity {
 		resultFromQr = true;
 		String contents = intent.getStringExtra("SCAN_RESULT");
 		String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-		url = contents;
-
-		port.setHint(portText);
-		ip.setHint(ipText);
-		ip.setFocusable(false);
-		port.setFocusable(false);
+		
+		Camera tmp = xmlIO.xmlReadString(contents);
+		id.setText(tmp.id);
+		ip.setText(tmp.uri.getHost());
+		port.setText(""+tmp.uri.getPort());
+		channel.setText(""+tmp.channel);
 		Log.i("AppLog",
 			("content :" + contents + " format : " + format));
 	    } else if (resultCode == RESULT_CANCELED) {
