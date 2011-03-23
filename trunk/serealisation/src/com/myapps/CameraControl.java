@@ -149,12 +149,12 @@ public class CameraControl {
 						}
 					}
 				}
+				con.disconnect();
 			}
 			for (int i = 0; i < NB_BASIC_FUNC; i++)
 				if (functionProperties[i] > 0)
 					currentConfig[i] = ENABLED;
 			
-			con.disconnect();
 			con = sendCommand("axis-cgi/admin/param.cgi?action=list&group=" +
 					"Properties.Motion.Motion,Properties.Audio.Audio," +
 					"Properties.Image");
@@ -345,8 +345,10 @@ public class CameraControl {
 		    this.enableFunction(function);
 		else
 		    this.disableFunction(function);
+		con.disconnect();
 		return 1;
 	    } else {
+		con.disconnect();
 		return 0;
 	    }
 	} catch (IOException e) {
@@ -370,12 +372,13 @@ public class CameraControl {
      *             If camera can't take snapshot or if the camera is unreachable
      */
     public Bitmap takeSnapshot(String resolution) throws IOException {
-	URLConnection con = sendCommand("axis-cgi/jpg/image.cgi"
+	HttpURLConnection con = sendCommand("axis-cgi/jpg/image.cgi"
 		+ "?resolution=" + resolution);
 	Log.i(activity.getString(R.string.logTag), "Snapshot");
 	InputStream stream = con.getInputStream();
 	Bitmap bmp = BitmapFactory.decodeStream(stream);
 	stream.close();
+	con.disconnect();
 	return bmp;
     }
 

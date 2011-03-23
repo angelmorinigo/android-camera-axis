@@ -50,7 +50,8 @@ public class Video extends Activity {
     private boolean MDWindowSelector = false;
     private Thread t;
     private int id;
-
+    HttpURLConnection videoCon;
+    InputStream stream;
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private PowerManager.WakeLock wl;
     private TouchListener customTouchListener;
@@ -91,16 +92,16 @@ public class Video extends Activity {
 	    }
 
 	    camC = new CameraControl(cam, this);
-
+	
 	    mv = (MjpegView) findViewById(R.id.surfaceView1);
 	    start_connection(mv, url);
-
+	    Log.i("AppLog", "new TouchListener");
 	    customTouchListener = new TouchListener(camC);
 	    mv.setOnTouchListener(customTouchListener);
 	} else {
 	    Log.i(getString(R.string.logTag), "Aucun réseau");
 	    Toast.makeText(activity.getApplicationContext(),
-	    		getString(R.string.messageConnexion), Toast.LENGTH_LONG)
+		    getString(R.string.messageConnexion), Toast.LENGTH_LONG)
 		    .show();
 	    finish();
 	}
@@ -148,7 +149,6 @@ public class Video extends Activity {
 		    screen.removeView(findViewById(R.id.mds_video));
 		}
 		advanceCtrl = true;
-		item.setTitle(R.string.disableAC);
 		inflater.inflate(R.layout.adv_video, screen, true);
 
 		/* Buttons Listener */
@@ -180,7 +180,9 @@ public class Video extends Activity {
 							    activity,
 							    bmp,
 							    (getString(R.string.snapshotSaved) + fileName),
-							    fileNameURL+fileName, id,
+							    fileNameURL
+								    + fileName,
+							    id,
 							    "" + cam.uniqueID);
 					    id++;
 					} catch (IOException e) {
@@ -272,7 +274,6 @@ public class Video extends Activity {
 			.isSupported(CameraControl.BACKLIGHT));
 	    } else {
 		advanceCtrl = false;
-		item.setTitle(R.string.enableAC);
 		screen.removeView(findViewById(R.id.englobe));
 	    }
 	    screen.invalidate();
@@ -340,10 +341,14 @@ public class Video extends Activity {
 						.getRight());
 					int absoluteLeft = (int) (start.x * 10000 / drawRect
 						.getRight());
-					Log.i(getString(R.string.logTag), "top : " + absoluteTop
-						+ " bottom : " + absoluteBottom
-						+ " right : " + absoluteRight
-						+ " left : " + absoluteLeft);
+					Log.i(getString(R.string.logTag),
+						"top : " + absoluteTop
+							+ " bottom : "
+							+ absoluteBottom
+							+ " right : "
+							+ absoluteRight
+							+ " left : "
+							+ absoluteLeft);
 
 					camC.updateMotionDParam("Top", ""
 						+ absoluteTop);
@@ -399,8 +404,8 @@ public class Video extends Activity {
 		screen.invalidate();
 	    } else {
 		Toast.makeText(activity.getApplicationContext(),
-			getString(R.string.messageMDError),
-			Toast.LENGTH_LONG).show();
+			getString(R.string.messageMDError), Toast.LENGTH_LONG)
+			.show();
 
 	    }
 	    return true;
@@ -418,8 +423,8 @@ public class Video extends Activity {
      */
     private void start_connection(MjpegView mv, String url) {
 	try {
-	    HttpURLConnection con = camC.sendCommand(url);
-	    InputStream stream = con.getInputStream();
+	    videoCon = camC.sendCommand(url);
+	    stream = videoCon.getInputStream();
 	    mv.setSource(new MjpegInputStream(stream));
 	    mv.setDisplayMode(MjpegView.SIZE_FULLSCREEN);
 	    mv.showFps(true);
@@ -428,7 +433,8 @@ public class Video extends Activity {
 	} catch (IOException e) {
 	    Log.i(getString(R.string.logTag), "StartConnect IOException");
 	    Toast.makeText(activity.getApplicationContext(),
-		    getString(R.string.messageCamError), Toast.LENGTH_LONG).show();
+		    getString(R.string.messageCamError), Toast.LENGTH_LONG)
+		    .show();
 	    e.printStackTrace();
 	    finish();
 	}
@@ -464,6 +470,13 @@ public class Video extends Activity {
     public void onDestroy() {
 	if (mv != null)
 	    mv.stopPlayback();
+	try {
+	    stream.close();
+	    videoCon.disconnect();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+
 	super.onDestroy();
     }
 }

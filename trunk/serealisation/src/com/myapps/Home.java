@@ -105,7 +105,7 @@ public class Home extends Activity {
 	startService(intent);
 
 	/* Print tricky */
-	if (preferences.getBoolean(getString(R.string.isWelcome), true) == false) {
+	if (preferences.getBoolean(getString(R.string.isWelcome), false) == false) {
 	    Dialog_welcome myDialog = new Dialog_welcome(this,
 		    R.style.theme_dialog);
 	    myDialog.show();

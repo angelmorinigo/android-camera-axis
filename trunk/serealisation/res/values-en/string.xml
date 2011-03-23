@@ -53,8 +53,8 @@
 	<string name="share">Share</string>
 
 	<!-- video menu -->
-	<string name="enableMD">Enable Motion Detection</string>
-	<string name="enableAC">Enable advanced controls</string>
+	<string name="enableMD">Enable/Disable Motion Detection</string>
+	<string name="enableAC">Enable/Disable advanced controls</string>
 
 	<!-- preferences -->
 	<string name="disableAC">Disable advanced controls</string><string name="Delai">Timeout</string>

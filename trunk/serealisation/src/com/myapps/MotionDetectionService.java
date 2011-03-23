@@ -46,7 +46,7 @@ public class MotionDetectionService extends Service {
 		Log.i(TAG, "Mouvement !");
 		/* detected require for Junit test */
 		detected = true;
-		URLConnection con;
+		HttpURLConnection con;
 		try {
 		    con = sendCommand(currentMDCam.get(msg.arg1),
 			    "axis-cgi/jpg/image.cgi");
@@ -55,6 +55,7 @@ public class MotionDetectionService extends Service {
 		    snapShotManager.saveSnap(bmp, fileNameURL, ("MD-time-"
 			    + System.currentTimeMillis() + ".jpeg"));
 		    stream.close();
+		    con.disconnect();
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
@@ -158,7 +159,7 @@ public class MotionDetectionService extends Service {
 			+ cam.groupeID);
 	Log.i(TAG,
 		"Motion Detection notif" + cam.getMotionDetectionID(START_ID));
-	t = new Thread(new serviceWork(cam,currentMDCam.size()));
+	t = new Thread(new serviceWork(cam, currentMDCam.size()));
 	currentMDCam.add(cam);
 	currentMD.add(t);
 	t.start();
@@ -233,6 +234,7 @@ public class MotionDetectionService extends Service {
 			}
 		    }
 		}
+		con.disconnect();
 	    } catch (IOException e) {
 		Log.i(TAG, "MDService IOException");
 		e.printStackTrace();

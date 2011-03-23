@@ -51,17 +51,6 @@ public class PlayerThread implements Runnable {
 	Bitmap bmp = null;
 	String command;
 	command = "axis-cgi/jpg/image.cgi?resolution=160x120";
-
-	/*
-	 * HttpClient httpclient = new DefaultHttpClient();
-	 * 
-	 * HttpGet httpget = new HttpGet(
-	 * "http://192.168.1.20/axis-cgi/jpg/image.cgi?resolution=160x120");
-	 * httpget.setHeader("Authorization",
-	 * base64Encoder.userNamePasswordBase64("root", "root")); HttpResponse
-	 * response;
-	 */
-
 	while (!Thread.currentThread().isInterrupted()) {
 	    Message m = new Message();
 	    m.what = MultiVideo.GUIUPDATEIDENTIFIER;

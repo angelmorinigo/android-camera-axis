@@ -190,6 +190,51 @@ Nous allons maintenant passer aux fonctions de contrôle ainsi qu'aux services f
 
 
 \section{Analyse des connections via WireShark}
+Grace au périphérique virtuel fournit dans le sdk d'Android, nous sommes en
+mesure d'analyser le trafic entre la caméra et le périphérique (téléphone ou
+tablette). Pour ce faire nous avons utilisé le logiciel
+\textit{Wireshark}\footnote{\label{Wireshark}http://www.wireshark.org/}.\newline
+Grace au trafic enregistré par Wireshark nous avons pu constater que :
+\begin{itemize}
+  \item L'ensemble des connections ouverte sont correctement fermées grace
+  l'utilisation de la fonction \textit{disconnect()} definie par la classe \textit{HttpURLConnection}.
+  L'exemple ci-dessus represente le demarrage d'une simple vue pour la caméra d'adresse
+  \textit{192.168.1.20}. Pour effectuer ce test nous avons ralenti l'execution
+  de l'application afin d'éviter l'entrelassement des paquets. On retrouve les
+  deux connections permettant la récupération des informations relative à la
+  caméra (connections 51576 et 51577), ainsi que la demande du flux vidéo
+  (connection 51578). La présence du second paquet 
+  fin ainsi que son acquitement n'apparaissent pas sur la capture dut à la
+  latence engendré par la fermeture et la liberation des sockets/ressources.
+\begin{center}
+ \begin{figure}[H] 
+  \label{finConnection}
+  \centering
+  \includegraphics[scale=0.7]{Images/finConnection.png}
+  \caption{disconnect Problem}
+\end{figure}  
+\end{center}
 
+  \item Notre PlayerThread reduit considerablement la consomation de la bande
+  passante au detriment des fps. Exemple : la comparaison de deux capture sur un
+  même interval de temps nous a permi d'effectuer une comparaison du nombre de
+  paquet echangé ainsi que leurs taille.
+  \item En supplément du test numéro 7,  nous observons que le service mi en
+  place pour la détéction de mouvement continue à echanger des informations avec
+  la caméra malgres la fermeture de l'application. 
+\end{itemize}
 \section{Manipulation avec la caméra}
+La derniere phase de test consiste à verifier la totalité des services fourni
+par l'application en observant les effets sur la caméra.\newline
+Nous avons grace à cela verifier que :
+\begin{itemize}
+  \item La totalité des controles (PTZ) implémentés correspondent aux mouvements
+  de la caméra.
+  \item Les fonctions de controle avancé sur la vidéo s'activent correctement.
+  \item La détéction de mouvements se declanche correctement (en adéquation
+  avec les test precedents)
+  \item La vidéo observée sur le téléphone correspond à la zone pointée par la
+  caméra (en fonction de la vue et des parametres
+  utilisées ainsi que de la couverture réseaux).
+\end{itemize}
 

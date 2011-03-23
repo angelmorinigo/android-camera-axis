@@ -63,30 +63,14 @@ public class TouchListener implements OnTouchListener {
 			+ "sensibilite / " + sens);
 		camC.changeValFunc(CameraControl.PAN, -1 * moveX / sens, -1
 			* moveY / sens);
-		/*
-		 * Thread t = new Thread(new Runnable() {
-		 * 
-		 * @Override public void run() { // TODO Auto-generated method
-		 * stub camC.changeValFunc(CameraControl.PAN, -1 * moveX / sens,
-		 * -1 * moveY / sens); } }); t.start();
-		 */
 	    } else if (mode == ZOOM) {
 		Log.i(TAG, "startDist=" + startDist);
 		Log.i(TAG, "currentDist=" + currentDist);
 		if (Math.abs(startDist - currentDist) > 10) {
 		    float ratio = (currentDist / startDist > 1) ? currentDist
-			    / startDist
-			    : -1 * (startDist / currentDist);
+			    / startDist : -1 * (startDist / currentDist);
 		    Log.i(TAG, "ratio=" + ratio);
 		    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
-		    /*
-		     * Thread t = new Thread(new Runnable() {
-		     * 
-		     * @Override public void run() {
-		     * camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio),
-		     * 0); } }); t.start();
-		     */
-
 		}
 	    }
 	    mode = NONE;
