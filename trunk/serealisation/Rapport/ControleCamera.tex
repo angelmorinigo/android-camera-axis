@@ -96,7 +96,6 @@ public boolean onTouch(View v, MotionEvent event) {
 	case MotionEvent.ACTION_DOWN:
 	    current.set(event.getX(), event.getY());
 	    mode = DRAG;
-	    Log.i(TAG, "mode=DRAG");
 	    break;
 
 	case MotionEvent.ACTION_POINTER_DOWN:
@@ -104,7 +103,6 @@ public boolean onTouch(View v, MotionEvent event) {
 		    new PointF(event.getX(0), event.getY(0)),
 		    new PointF(event.getX(1), event.getY(1)));
 	    mode = ZOOM;
-	    Log.i(TAG, "mode=ZOOM");
 	    break;
 
 	case MotionEvent.ACTION_POINTER_UP:
@@ -112,7 +110,6 @@ public boolean onTouch(View v, MotionEvent event) {
 	    currentDist = calculateDistance(
 		    new PointF(event.getX(0), event.getY(0)),
 		    new PointF(event.getX(1), event.getY(1)));
-	    Log.i(TAG, "mode=ZOOM(P_UP)");
 	    break;
 
 	case MotionEvent.ACTION_UP:
@@ -121,7 +118,6 @@ public boolean onTouch(View v, MotionEvent event) {
 		current.set(event.getX(), event.getY());
 		float moveX = scaleMoveX(calculateMoveX(start, current));
 		float moveY = scaleMoveY(calculateMoveY(start, current));
-		Log.i(TAG, "move(X,Y):" + moveX + "," + moveY+ "sensibilite / " + sens);
 		camC.changeValFunc(CameraControl.PAN, -1* moveX / sens, -1 * moveY
 			/ sens);
 	    } else if (mode == ZOOM) {
@@ -130,13 +126,11 @@ public boolean onTouch(View v, MotionEvent event) {
 		if (Math.abs(startDist - currentDist) > 10) {
 		    float ratio = (currentDist / startDist > 1) ? currentDist
 			    / startDist : -1 * (startDist / currentDist);
-		    Log.i(TAG, "ratio=" + ratio);
 		    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
 
 		}
 	    }
 	    mode = NONE;
-	    Log.i(TAG, "mode=NONE");
 	    try {
 		/* Bloc UI thread to not spam request */
 		Thread.sleep(200);
