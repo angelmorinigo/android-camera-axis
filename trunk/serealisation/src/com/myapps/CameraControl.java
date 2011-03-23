@@ -12,6 +12,7 @@ import com.myapps.utils.CouldNotCreateGroupException;
 import com.myapps.utils.base64Encoder;
 
 import android.app.Activity;
+import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -52,7 +53,7 @@ public class CameraControl {
     public static final int AUTO = 8;
     public static final int CONTINUOUS = 16;
 
-    protected Camera cam;
+    public Camera cam;
     private int[] currentConfig = new int[NB_FUNC];
     private int[] functionProperties = new int[NB_BASIC_FUNC];
     private String[] resolutions, rotations, formats;
@@ -60,6 +61,7 @@ public class CameraControl {
 
     public CameraControl(Camera cam, Activity activity) {
 		this.cam = cam;
+		Application a;
 		this.activity = activity;
 		this.initConfig();
 		this.loadConfig();

@@ -1,7 +1,13 @@
 package com.myapps;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import com.myapps.utils.CouldNotCreateGroupException;
 
 /**
  * Camera class describe information's camera
@@ -13,7 +19,8 @@ public class Camera implements java.io.Serializable, Cloneable {
 	protected String protocol;
 	URI uri;
 	public int port;
-	protected int channel, uniqueID = -1, groupeID = -1;
+	protected int channel, uniqueID = -1;
+	public int groupeID = -1;
 
 	/**
 	 * Public constructor for a camera with information
@@ -161,4 +168,5 @@ public class Camera implements java.io.Serializable, Cloneable {
 		clone = (Camera) super.clone();
 		return clone;
 	}
+	
 }

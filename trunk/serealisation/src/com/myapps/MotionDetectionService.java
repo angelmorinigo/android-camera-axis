@@ -29,14 +29,14 @@ import com.myapps.utils.notificationLauncher;
 import com.myapps.utils.snapShotManager;
 
 public class MotionDetectionService extends Service {
-	private static final String TAG = "AppLog";
+    private static final String TAG = "AppLog";
     private int limit;
     private long delay;
     private Thread t;
     static int START_ID = 10;
-   static String fileNameURL  = "/sdcard/com.myapps.camera/";
+    static String fileNameURL = "/sdcard/com.myapps.camera/";
+    public static boolean detected = false;
 
-    
     public final static int MVTMSG = 5;
     private static Vibrator vibreur;
 
@@ -44,13 +44,16 @@ public class MotionDetectionService extends Service {
 	public void handleMessage(Message msg) {
 	    if (msg.what == MVTMSG) {
 		Log.i(TAG, "Mouvement !");
+		/* detected require for Junit test */
+		detected = true;
 		URLConnection con;
 		try {
 		    con = sendCommand(currentMDCam.get(msg.arg1),
 			    "axis-cgi/jpg/image.cgi");
 		    InputStream stream = con.getInputStream();
 		    Bitmap bmp = BitmapFactory.decodeStream(stream);
-		    snapShotManager.saveSnap(bmp, fileNameURL,  ("MD-time-" + System.currentTimeMillis()+ ".jpeg"));
+		    snapShotManager.saveSnap(bmp, fileNameURL, ("MD-time-"
+			    + System.currentTimeMillis() + ".jpeg"));
 		    stream.close();
 		} catch (IOException e) {
 		    e.printStackTrace();
@@ -155,7 +158,7 @@ public class MotionDetectionService extends Service {
 			+ cam.groupeID);
 	Log.i(TAG,
 		"Motion Detection notif" + cam.getMotionDetectionID(START_ID));
-	t = new Thread(new serviceWork(cam));
+	t = new Thread(new serviceWork(cam,currentMDCam.size()));
 	currentMDCam.add(cam);
 	currentMD.add(t);
 	t.start();
@@ -187,9 +190,9 @@ public class MotionDetectionService extends Service {
 	Camera cam;
 	int index;
 
-	public serviceWork(Camera cam) {
+	public serviceWork(Camera cam, int index) {
 	    this.cam = cam;
-	    this.index = cam.uniqueID;
+	    this.index = index;
 	}
 
 	@Override
