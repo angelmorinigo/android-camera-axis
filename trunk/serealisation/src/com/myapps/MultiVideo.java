@@ -49,12 +49,12 @@ public class MultiVideo extends Activity {
 	    if (msg.what == GUIUPDATEIDENTIFIER) {
 		img[index].setImageBitmap(newBMP[index]);
 		img[index].invalidate();
-		Log.i("AppLog", "handleMessage");
+		Log.i(activity.getString(R.string.logTag), "MultiVideo handleMessage");
 	    }
 	    if (msg.what == URLERRORIDENTIFIER) {
 		start[index] = false;
 		Toast.makeText(activity.getApplicationContext(),
-			"Cam�ra introuvable", Toast.LENGTH_LONG).show();
+			activity.getString(R.string.messageCamError), Toast.LENGTH_LONG).show();
 	    }
 	    super.handleMessage(msg);
 	}
@@ -70,7 +70,7 @@ public class MultiVideo extends Activity {
 	activity = this;
 	
 	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-	wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tags");
+	wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, activity.getString(R.string.logTag));
 
 	/* Init */
 	/* recover the argument (camera list) */
@@ -81,7 +81,7 @@ public class MultiVideo extends Activity {
 	stringCamList = new String[camList.size()];
 	for (int i = 0; i < camList.size(); i++)
 	    stringCamList[i] = camList.get(i).id;
-	Log.i(getString(R.string.logTag), "camera list found ");
+	Log.i(getString(R.string.logTag), "Camera list found ");
 
 	camView = new Camera[nbView];
 	t = new Thread[nbView];
@@ -119,7 +119,7 @@ public class MultiVideo extends Activity {
 	for (int i = 0; i < nbView; i++) {
 	    img[i] = (ImageView) findViewById(dep + i);
 	}
-	Log.i(getString(R.string.logTag), "img ok");
+	Log.i(getString(R.string.logTag), "Img ok");
 
 	/* Set Image and Listener for each view */
 	for (int i = 0; i < nbView; i++) {
@@ -129,7 +129,7 @@ public class MultiVideo extends Activity {
 	    img[i].setOnLongClickListener(new myOnLongClickListener(i));
 	}
 
-	Log.i(getString(R.string.logTag), "listner ok");
+	Log.i(getString(R.string.logTag), "Listener ok");
 
     }
 
@@ -224,7 +224,7 @@ public class MultiVideo extends Activity {
 					    "MultiVideo IOException");
 				    Toast.makeText(
 					    activity.getApplicationContext(),
-					    "Camera introuvable",
+					    activity.getString(R.string.logTag),
 					    Toast.LENGTH_LONG).show();
 				    e.printStackTrace();
 				}
@@ -235,7 +235,7 @@ public class MultiVideo extends Activity {
 		alert.show();
 	    } else {
 		/* Stop video */
-		Log.i(getString(R.string.logTag), "Interupt !!!");
+		Log.i(getString(R.string.logTag), "Interrupt !!!");
 		t[index].interrupt();
 		start[index] = false;
 	    }

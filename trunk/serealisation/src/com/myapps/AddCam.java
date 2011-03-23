@@ -2,10 +2,8 @@ package com.myapps;
 
 import com.myapps.utils.xmlIO;
 
-import android.R.xml;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 /**
  * Activity used to add camera
@@ -170,7 +167,7 @@ public class AddCam extends Activity {
 		ip.setText(tmp.uri.getHost());
 		port.setText(""+tmp.uri.getPort());
 		channel.setText(""+tmp.channel);
-		Log.i("AppLog",
+		Log.i(getString(R.string.logTag),
 			("content :" + contents + " format : " + format));
 	    } else if (resultCode == RESULT_CANCELED) {
 		//Do nothing

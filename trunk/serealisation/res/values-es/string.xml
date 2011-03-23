@@ -83,7 +83,7 @@ pero permite la reducción de los datos! (Multi-vista sólo)</string>
 	</string>
 	<string name="messageChoose">¿Qué hacer?</string>
 	<string name="messageBienvenue">Bienvenido!</string>
-	<string name="messageAbout">Versión 1.0\nDesarrollado por :\nJerome NAHELOU,
+	<string name="messageAstuce">Truco : </string><string name="messageAbout">Versión 1.0\nDesarrollado por :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npara Samsung Galaxy S
 		con android 2.2\n</string>
 	<string name="messageExport">Archivo de salida:</string>
@@ -104,4 +104,6 @@ pero permite la reducción de los datos! (Multi-vista sólo)</string>
 	<string name="protocol_prompt">Elegir un protocolo de</string>
 
 
+
+<string name="messageConnexion">Por favor, compruebe su conexión</string>
 </resources>

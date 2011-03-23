@@ -9,12 +9,12 @@ indique la réussite de la requête, cependant nous ne savons pas si l'action a 
 La fonction \textit{takeSnapshot} réalise la requête de capture d'écran avec comme résolution la valeur passée en paramètre.
 Elle retourne les données renvoyées par la caméra sous forme d'un objet \textit{Bitmap}.
 
-Cette classe s'occupe également des activation/désactivation de la détection de mouvements.
+Cette classe s'occupe également des activation/désactivation de la détection :
 \begin{itemize}
-	\item \textit{addMotionD} : 
-	\item \textit{removeMotionD} : 
-	\item textit{getMotionDGroup} : 
-	\item textit{updateMotionDParam} : 
+	\item \textit{addMotionD} ajoute une fenêtre de détection.
+	\item \textit{removeMotionD} supprime une fenêtre de détection existante.
+	\item \textit{updateMotionDParam} met à jour certains paramètres de la fenêtre
+	de détection comme les coordonnées ou la sensibilité de détection.
 \end{itemize}
 
 Lors du chargement du menu et du layout des contrôles avancés de la caméra, nous vérifions si les fonctionnalités correspondantes sont supportées et/ou activées à l'aide des fonctions
@@ -49,27 +49,31 @@ Pour représenter les coordonnées des pointeurs, nous avons utilisé le type \t
 
 Nous avons implémenté dans cette classe des méthodes de calcul géométrique entre deux objets \textit{PointF} :
 \begin{itemize}
-	\item \textit{calculateMoveX}
-	\item \textit{calculateMoveY}
-	\item \textit{calculateDistance}
+	\item \textit{calculateMoveX} pour la différence en abscisse.
+	\item \textit{calculateMoveY} pour la différence en ordonnée.
+	\item \textit{calculateDistance} pour la distance géométrique.
 \end{itemize}
 
 Nous avons également développé des méthodes pour mettre à l'échelle le déplacement des pointeurs sur l'écran par rapport au déplacement réel réalisé par la caméra :
 \begin{itemize}
-	\item \textit{scaleMoveX}
-	\item \textit{scaleMoveY}
-	\item \textit{scaleZoom}
+	\item \textit{scaleMoveX} pour le déplacement en abscisse, en utilisant la
+	largeur de l'écran \textit{getHeight}.
+	\item \textit{scaleMoveY} pour l'échelle en ordonnée, en utilisant la hauteur
+	de l'écran \textit{getWidth}.
+	\item \textit{scaleZoom} pour le zoom/dézoom, en utilisant \textit{zoomStep}.
 \end{itemize}
 
-Afin de rendre moins "agressif" le déplacement sur le téléphone, nous avons mis en place un paramètre de sensibilité, celui-ci étant
-modifiable dans les préférences.
-Le tableau ci-dessous montre le traitement réalisé par la méthode
-\textit{onTouch} dont le code est présenté après.\newline
+Afin de rendre moins ``agressif'' le déplacement sur le téléphone, nous avons
+mis en place un paramètre de sensibilité, celui-ci étant modifiable dans les préférences.
+Le thread est également endormi quelques millisecondes afin d'éviter la
+surcharge d'événements à traiter.
+Le tableau ci-dessous montre le traitement
+réalisé par la méthode \textit{onTouch} dont le code est présenté après.\newline
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{0.2\linewidth}|p{0.3\linewidth}| p{0.3\linewidth}|}
+\begin{tabular}{|p{0.2\linewidth}|p{0.4\linewidth}| p{0.4\linewidth}|}
 \hline
-Type d'action & Geste du déplacement & Geste du zoom \\
+Type ACTION & Geste du déplacement & Geste du zoom \\
 \hline
 DOWN & Mise en mémoire des coordonnées du point de départ &  \\
  & \textit{mode = DRAG} & \\
@@ -83,3 +87,62 @@ UP & Calcul des déplacements horizontaux et verticaux & Calcul du ratio entre l
 \end{tabular}
 \caption{Algorithme de traitement onTouch}
 \end{table}
+
+\begin{lstlisting}
+public boolean onTouch(View v, MotionEvent event) {
+	width = v.getWidth();
+	height = v.getHeight();
+	switch (event.getAction() & MotionEvent.ACTION_MASK) {
+	case MotionEvent.ACTION_DOWN:
+	    current.set(event.getX(), event.getY());
+	    mode = DRAG;
+	    Log.i(TAG, "mode=DRAG");
+	    break;
+
+	case MotionEvent.ACTION_POINTER_DOWN:
+	    currentDist = calculateDistance(
+		    new PointF(event.getX(0), event.getY(0)),
+		    new PointF(event.getX(1), event.getY(1)));
+	    mode = ZOOM;
+	    Log.i(TAG, "mode=ZOOM");
+	    break;
+
+	case MotionEvent.ACTION_POINTER_UP:
+	    startDist = currentDist;
+	    currentDist = calculateDistance(
+		    new PointF(event.getX(0), event.getY(0)),
+		    new PointF(event.getX(1), event.getY(1)));
+	    Log.i(TAG, "mode=ZOOM(P_UP)");
+	    break;
+
+	case MotionEvent.ACTION_UP:
+	    if (mode == DRAG) {
+		PointF start = new PointF(current.x, current.y);
+		current.set(event.getX(), event.getY());
+		float moveX = scaleMoveX(calculateMoveX(start, current));
+		float moveY = scaleMoveY(calculateMoveY(start, current));
+		Log.i(TAG, "move(X,Y):" + moveX + "," + moveY+ "sensibilite / " + sens);
+		camC.changeValFunc(CameraControl.PAN, -1* moveX / sens, -1 * moveY
+			/ sens);
+	    } else if (mode == ZOOM) {
+		Log.i(TAG, "startDist=" + startDist);
+		Log.i(TAG, "currentDist=" + currentDist);
+		if (Math.abs(startDist - currentDist) > 10) {
+		    float ratio = (currentDist / startDist > 1) ? currentDist
+			    / startDist : -1 * (startDist / currentDist);
+		    Log.i(TAG, "ratio=" + ratio);
+		    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
+
+		}
+	    }
+	    mode = NONE;
+	    Log.i(TAG, "mode=NONE");
+	    try {
+		/* Bloc UI thread to not spam request */
+		Thread.sleep(200);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	    break;
+	}
+\end{lstlisting}

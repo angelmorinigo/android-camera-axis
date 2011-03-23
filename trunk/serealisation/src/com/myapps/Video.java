@@ -1,7 +1,5 @@
 package com.myapps;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -53,14 +51,6 @@ public class Video extends Activity {
     private Thread t;
     private int id;
 
-    /* TODO : deplacer dans le value/stringd.xml */
-    /*
-     * static final String[] SIZE = new String[] { "1280x1024", "1280x960",
-     * "1280x720", "768x576", "4CIF", "704x576", "704x480", "VGA", "640x480",
-     * "640x360", "2CIFEXP", "2CIF", "704x288", "704x240", "480x360", "CIF",
-     * "384x288", "352x288", "352x240", "320x240", "240x180", "QCIF", "192x144",
-     * "176x144", "176x120", "160x120" }; protected static Bitmap newBMP;
-     */
     private String fileNameURL = "/sdcard/com.myapps.camera/";
     private PowerManager.WakeLock wl;
     private TouchListener customTouchListener;
@@ -93,10 +83,10 @@ public class Video extends Activity {
 	if (info != null && info.isConnected()) {
 	    int netType = info.getType();
 	    if (netType == ConnectivityManager.TYPE_WIFI) {
-		Log.i("AppLog", "Wifi detecte");
+		Log.i(getString(R.string.logTag), "Wifi detecte");
 		url = "axis-cgi/mjpg/video.cgi?resolution=320x240";
 	    } else {
-		Log.i("AppLog", "Reseau detecte");
+		Log.i(getString(R.string.logTag), "Reseau detecte");
 		url = "axis-cgi/mjpg/video.cgi?resolution=160x120";
 	    }
 
@@ -108,9 +98,9 @@ public class Video extends Activity {
 	    customTouchListener = new TouchListener(camC);
 	    mv.setOnTouchListener(customTouchListener);
 	} else {
-	    Log.i("AppLog", "No network");
+	    Log.i(getString(R.string.logTag), "Aucun réseau");
 	    Toast.makeText(activity.getApplicationContext(),
-		    "Veuillez vérifier votre connexion", Toast.LENGTH_LONG)
+	    		getString(R.string.messageConnexion), Toast.LENGTH_LONG)
 		    .show();
 	    finish();
 	}
@@ -171,7 +161,7 @@ public class Video extends Activity {
 		    public void onClick(View v) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(
 				activity);
-			builder.setTitle("SnapShot Format");
+			builder.setTitle(getString(R.string.snapshotFormat));
 			final String[] resolutions = camC.getResolutions();
 			builder.setSingleChoiceItems(resolutions, -1,
 				new DialogInterface.OnClickListener() {
@@ -189,7 +179,7 @@ public class Video extends Activity {
 						    .statusBarNotificationImage(
 							    activity,
 							    bmp,
-							    ("Snap save : " + fileName),
+							    (getString(R.string.snapshotSaved) + fileName),
 							    fileNameURL+fileName, id,
 							    "" + cam.uniqueID);
 					    id++;
@@ -337,7 +327,7 @@ public class Video extends Activity {
 				    // BARRE POUR LA SENSIBILITE
 				    int group = camC.addMotionD();
 				    if (drawRect.isDraw()) {
-					Log.i("AppLog",
+					Log.i(getString(R.string.logTag),
 						"Point : "
 							+ drawRect.toString());
 					PointF start = drawRect.getStart();
@@ -350,7 +340,7 @@ public class Video extends Activity {
 						.getRight());
 					int absoluteLeft = (int) (start.x * 10000 / drawRect
 						.getRight());
-					Log.i("AppLog", "top : " + absoluteTop
+					Log.i(getString(R.string.logTag), "top : " + absoluteTop
 						+ " bottom : " + absoluteBottom
 						+ " right : " + absoluteRight
 						+ " left : " + absoluteLeft);
@@ -409,7 +399,7 @@ public class Video extends Activity {
 		screen.invalidate();
 	    } else {
 		Toast.makeText(activity.getApplicationContext(),
-			"La camera ne gere pas la detection de mouvement",
+			getString(R.string.messageMDError),
 			Toast.LENGTH_LONG).show();
 
 	    }
@@ -438,7 +428,7 @@ public class Video extends Activity {
 	} catch (IOException e) {
 	    Log.i(getString(R.string.logTag), "StartConnect IOException");
 	    Toast.makeText(activity.getApplicationContext(),
-		    "Camera introuvable", Toast.LENGTH_LONG).show();
+		    getString(R.string.messageCamError), Toast.LENGTH_LONG).show();
 	    e.printStackTrace();
 	    finish();
 	}

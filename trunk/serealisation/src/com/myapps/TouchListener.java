@@ -1,10 +1,5 @@
 package com.myapps;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import android.graphics.PointF;
 import android.util.FloatMath;
 import android.util.Log;
@@ -13,7 +8,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 public class TouchListener implements OnTouchListener {
-    private static final String TAG = "TouchLog";
+    private static final String TAG = "AppLog";
     static final int NONE = 0;
     static final int DRAG = 1;
     static final int ZOOM = 2;

@@ -4,9 +4,7 @@ import java.util.Random;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,8 +14,8 @@ public class Dialog_welcome extends Dialog{
         public void ready(String name);
     }
 	
-    private String cheats ;
-    private TextView text ;
+    private String cheats;
+    private TextView text;
 
     
     public Dialog_welcome(Context context , int theme) {
@@ -28,21 +26,21 @@ public class Dialog_welcome extends Dialog{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_welcome);
-        setTitle("Bienvenue !") ;
+        setTitle(R.string.messageBienvenue);
         text = (TextView) findViewById(R.id.text);
         
-        Random randomGenerator = new Random() ;
-        Astuces a = new Astuces() ;
+        Random randomGenerator = new Random();
+        Astuces a = new Astuces();
         int randomInt = randomGenerator.nextInt(100)%a.getMax();
 
-        text.setText("Astuce : ") ;
-        cheats = a.getLabel(randomInt) ;
-        text.append(cheats) ;
+        text.setText(R.string.messageAstuce);
+        cheats = a.getLabel(randomInt);
+        text.append(cheats);
    
         Button buttonOK = (Button) findViewById(R.id.ok);
         buttonOK.setOnClickListener(new OKListener());
         
-        Button right = (Button) findViewById(R.id.arrow_right) ;
+        Button right = (Button) findViewById(R.id.arrow_right);
         right.setOnClickListener(new RightListener());
     }
 
@@ -56,12 +54,12 @@ public class Dialog_welcome extends Dialog{
     private class RightListener implements android.view.View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Random randomGenerator = new Random() ;
-            Astuces a = new Astuces() ;
+            Random randomGenerator = new Random();
+            Astuces a = new Astuces();
             int randomInt = randomGenerator.nextInt(100)%a.getMax();
-            text.setText("Astuce : ") ;
-            cheats = a.getLabel(randomInt) ;
-            text.append(cheats) ;
+            text.setText(R.string.messageAstuce);
+            cheats = a.getLabel(randomInt);
+            text.append(cheats);
         }
     }
 

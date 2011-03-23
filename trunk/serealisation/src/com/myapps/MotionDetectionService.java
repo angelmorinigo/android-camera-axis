@@ -1,20 +1,15 @@
 package com.myapps;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.Character.UnicodeBlock;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
 import android.app.Application;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -22,7 +17,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -35,6 +29,7 @@ import com.myapps.utils.notificationLauncher;
 import com.myapps.utils.snapShotManager;
 
 public class MotionDetectionService extends Service {
+	private static final String TAG = "AppLog";
     private int limit;
     private long delay;
     private Thread t;
@@ -48,7 +43,7 @@ public class MotionDetectionService extends Service {
     public static Handler myViewUpdateHandler = new Handler() {
 	public void handleMessage(Message msg) {
 	    if (msg.what == MVTMSG) {
-		Log.i("AppLog", "Mouvement !");
+		Log.i(TAG, "Mouvement !");
 		URLConnection con;
 		try {
 		    con = sendCommand(currentMDCam.get(msg.arg1),
@@ -71,7 +66,7 @@ public class MotionDetectionService extends Service {
 
     public void onCreate() {
 	super.onCreate();
-	Log.i("AppLog", "onCreate");
+	Log.i(TAG, "onCreate");
 	currentMD = new ArrayList<Thread>();
 	currentMDCam = new ArrayList<Camera>();
 
@@ -110,7 +105,7 @@ public class MotionDetectionService extends Service {
 	    currentMD.remove(indice);
 	    notificationLauncher.removeStatusBarNotificationRunning(app,
 		    c.getMotionDetectionID(START_ID));
-	    Log.i("AppLog",
+	    Log.i(TAG,
 		    "Motion Detection remove notif"
 			    + c.getMotionDetectionID(START_ID));
 	    return true;
@@ -131,7 +126,7 @@ public class MotionDetectionService extends Service {
 	cam = (Camera) extras.getSerializable(getString(R.string.camTag));
 	limit = extras.getInt("limit");
 	delay = extras.getLong("delay");
-	Log.i("AppLog", "onStart " + cam.uniqueID + "-" + cam.getId() + "-"
+	Log.i(TAG, "onStart " + cam.uniqueID + "-" + cam.getId() + "-"
 		+ cam.groupeID);
 
 	Intent notificationIntent = new Intent(getApplicationContext(),
@@ -158,7 +153,7 @@ public class MotionDetectionService extends Service {
 			+ (cam.uniqueID * 10) + cam.groupeID,
 		"Motion Detection " + cam.uniqueID + "-" + cam.getId() + "-"
 			+ cam.groupeID);
-	Log.i("AppLog",
+	Log.i(TAG,
 		"Motion Detection notif" + cam.getMotionDetectionID(START_ID));
 	t = new Thread(new serviceWork(cam));
 	currentMDCam.add(cam);
@@ -184,7 +179,7 @@ public class MotionDetectionService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-	Log.i("AppLog", "onBind");
+	Log.i(TAG, "onBind");
 	return null;
     }
 
@@ -200,7 +195,7 @@ public class MotionDetectionService extends Service {
 	@Override
 	public void run() {
 	    HttpURLConnection con;
-	    Log.i("AppLog", "thread run");
+	    Log.i(TAG, "Thread run");
 	    try {
 		con = sendCommand(cam, "axis-cgi/motion/motiondata.cgi?group="
 			+ cam.groupeID);
@@ -212,12 +207,12 @@ public class MotionDetectionService extends Service {
 		long last = System.currentTimeMillis();
 		while (!Thread.currentThread().isInterrupted()) {
 		    while ((s = br.readLine()) == null) {
-			Log.i("AppLog", "no data sleep");
+			Log.i(TAG, "No data => sleep");
 			Thread.sleep(100);
 		    }
-		    Log.i("AppLog", s);
+		    Log.i(TAG, s);
 		    if (s.contains("level=") == true) {
-			Log.i("AppLog", s);
+			Log.i(TAG, s);
 			lvlc = s.indexOf("level=");
 			s = s.substring(lvlc);
 			lvlb = s.indexOf("=");
@@ -236,7 +231,7 @@ public class MotionDetectionService extends Service {
 		    }
 		}
 	    } catch (IOException e) {
-		Log.i("AppLog", "IOE");
+		Log.i(TAG, "MDService IOException");
 		e.printStackTrace();
 	    } catch (InterruptedException e) {
 		e.printStackTrace();

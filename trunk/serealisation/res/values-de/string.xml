@@ -92,7 +92,7 @@
 		löschen ?
 	</string>
 	<string name="messageChoose">Was tun Sie ?</string>
-	<string name="messageBienvenue">Willkommen !</string>
+	<string name="messageBienvenue">Willkommen !</string><string name="messageAstuce">Trick : </string>
 	<string name="messageAbout">Version 1.0\nEntwicklung von :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\nfür Samsung Galaxy S
 		mit android 2.1\n</string>
@@ -115,4 +115,6 @@
 
 
 
+
+<string name="messageConnexion">Bitte überprüfen Sie Ihre Verbindung</string>
 </resources>

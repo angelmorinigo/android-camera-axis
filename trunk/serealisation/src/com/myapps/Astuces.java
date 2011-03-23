@@ -2,18 +2,18 @@ package com.myapps;
 public class Astuces {
 	
 	private String s[] = {
-			"Appuyez sur Menu pour accéder aux options",
-			"Vous pouvez visualiser jusqu'à 6 caméras simultanément",
-			"En touchant l'écran vous pouvez stopper ou changer les cameras", 
-			"De prochaines astuces bientôt disponibles",
-			"Vos caméra se sauvegardent automatiquement",
-			"Vous pouvre activer jusqu'a 9 détéction de mouvement par camera",
+			"Appuyez sur Menu pour accï¿½der aux options",
+			"Vous pouvez visualiser jusqu'ï¿½ 6 camï¿½ras simultanï¿½ment",
+			"En touchant l'ï¿½cran vous pouvez stopper ou changer les cameras", 
+			"De prochaines astuces bientï¿½t disponibles",
+			"Vos camï¿½ras sont sauvegardÃ©es automatiquement",
+			"Vous pouvez activer jusqu'Ã  9 fenÃªtres de dÃ©tï¿½ction de mouvements par camera",
 			"Selectionner un cadre dans lequel surveiller les mouvements",
-			"Regler les parametres avancé de la camera en activant les controles avances dans le menu durant la visualisation de la video",
-			"Diriger la camera avec vote doigt",
+			"Regler les parametres avancï¿½s de la camera en activant les controles avances dans le menu durant la visualisation de la video",
+			"Diriger la camera tactilement",
 			"Une notification vous informe que vous avez bien recu votre snapshot",
-			"Vous pouvez desactiver cette astuces dans les paramètres",
-			"N'esitez pas à partager cette application"} ;
+			"Vous pouvez desactiver cette astuce dans les paramÃ¨tres",
+			"N'hÃ©sitez pas ï¿½ partager cette application"} ;
 		
 	private int max = 5 ;
 	Astuces(){

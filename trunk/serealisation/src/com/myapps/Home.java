@@ -2,7 +2,6 @@ package com.myapps;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -38,7 +37,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.myapps.utils.PlayerThread;
 import com.myapps.utils.xmlIO;
 
 /**

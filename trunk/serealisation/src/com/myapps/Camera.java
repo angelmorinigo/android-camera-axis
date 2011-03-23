@@ -3,8 +3,6 @@ package com.myapps;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import android.net.Uri;
-
 /**
  * Camera class describe information's camera
  */
@@ -21,11 +19,11 @@ public class Camera implements java.io.Serializable, Cloneable {
 	 * Public constructor for a camera with information
 	 * 
 	 * @param id
-	 *            The camera name
+	 *            The camera's name
 	 * @param login
-	 *            Your login for private acces
+	 *            Your login for private access
 	 * @param pass
-	 *            Your pass for private acces
+	 *            Your pass for private access
 	 * @param ip
 	 *            Ip's Camera
 	 * @param port
@@ -56,11 +54,11 @@ public class Camera implements java.io.Serializable, Cloneable {
 	 * Public constructor for a camera with a URI form QrCode
 	 * 
 	 * @param id
-	 *            The name of th camera
+	 *            The camera's name
 	 * @param login
-	 *            Your login for private acces
+	 *            Your login for private access
 	 * @param pass
-	 *            Your pass for private acces
+	 *            Your pass for private access
 	 * @param uri
 	 *            The address's camera
 	 * @param channel
@@ -82,7 +80,7 @@ public class Camera implements java.io.Serializable, Cloneable {
 	 * Public constructor for a camera with a URI without username/password
 	 * 
 	 * @param id
-	 *            The name of th camera
+	 *            The camera's name
 	 * @param uri
 	 *            The address's camera
 	 * @param channel

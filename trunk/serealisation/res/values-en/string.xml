@@ -86,7 +86,7 @@
 	</string>
 	<string name="messageChoose">What do you do?</string>
 	<string name="messageBienvenue">Welcome !</string>
-	<string name="messageAbout">Version 1.0\nDeveloped by :\nJerome NAHELOU,
+	<string name="messageAstuce">Trick : </string><string name="messageAbout">Version 1.0\nDeveloped by :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\nfor Samsung Galaxy S
 		with android 2.2\n</string>
 	<string name="messageExport">Output file:</string>
@@ -106,5 +106,8 @@
 	<string name="shareTitle">Share with...</string>
 	<string name="protocol_prompt">Choose a protocol</string>
 
+
+
+<string name="messageConnexion">Please check your connection</string>
 
 </resources>

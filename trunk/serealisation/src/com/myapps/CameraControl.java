@@ -15,7 +15,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * 
@@ -90,7 +89,6 @@ public class CameraControl {
 					if (line.indexOf("=") > -1) {
 						property = line.substring(0, line.indexOf("=")).trim();
 						value = line.substring(line.indexOf("=") + 1);
-						System.out.println(property + "=" + value);
 						if (property.contains("pan")) {
 							if (property.contentEquals("pan"))
 								functionProperties[PAN] += ABSOLUTE;
@@ -299,7 +297,7 @@ public class CameraControl {
 	try {
 	    HttpURLConnection con = sendCommand("axis-cgi/com/ptz.cgi?" + query
 		    + "&camera=" + String.valueOf(cam.channel));
-	    Log.i("TouchLog",
+	    Log.i(activity.getString(R.string.logTag),
 		    ("axis-cgi/com/ptz.cgi?" + query + "&camera=" + String
 			    .valueOf(cam.channel)));
 	    boolean res = con.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT;
@@ -340,8 +338,6 @@ public class CameraControl {
 	try {
 	    HttpURLConnection con = sendCommand("axis-cgi/com/ptz.cgi?" + param
 		    + "=" + value + "&camera=" + String.valueOf(cam.channel));
-	    Log.i("TouchLog", ("axis-cgi/com/ptz.cgi?" + param + "=" + value
-		    + "&camera=" + String.valueOf(cam.channel)));
 	    if (con.getResponseCode() != HttpURLConnection.HTTP_NO_CONTENT) {
 		if (value.equals("on"))
 		    this.enableFunction(function);
@@ -374,7 +370,7 @@ public class CameraControl {
     public Bitmap takeSnapshot(String resolution) throws IOException {
 	URLConnection con = sendCommand("axis-cgi/jpg/image.cgi"
 		+ "?resolution=" + resolution);
-	Log.i("AppLog", "connected");
+	Log.i(activity.getString(R.string.logTag), "Snapshot");
 	InputStream stream = con.getInputStream();
 	Bitmap bmp = BitmapFactory.decodeStream(stream);
 	stream.close();
@@ -394,7 +390,7 @@ public class CameraControl {
 		    throw new CouldNotCreateGroupException();
 		if (line.contains("M")) {
 		    cam.groupeID = Integer.parseInt(line.substring(1, 2));
-		    Log.i("AppLog", "MotionDetection groupe = " + cam.groupeID);
+		    Log.i(activity.getString(R.string.logTag), "MotionDetection groupe = " + cam.groupeID);
 		    return cam.groupeID;
 		}
 	    }
@@ -407,7 +403,7 @@ public class CameraControl {
     public int removeMotionD() throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M"
 		+ cam.groupeID);
-	Log.i("AppLog", con.getResponseCode()
+	Log.i(activity.getString(R.string.logTag), con.getResponseCode()
 		+ "MotionDetection free groupe = " + cam.groupeID);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 	    cam.groupeID = -1;
@@ -427,7 +423,7 @@ public class CameraControl {
     }
 
     /* NEVER USE FOR THE MOMENT */
-    public void getMotionDValues(int sensitivity, int limit, long delay)
+    /*public void getMotionDValues(int sensitivity, int limit, long delay)
 	    throws IOException {
 	if (!isEnabled(MOTION_D)) {
 	    HttpURLConnection con = sendCommand("axis-cgi/"
@@ -443,12 +439,12 @@ public class CameraControl {
 		    int end = line.indexOf("OK") - 1;
 		    String id = line.substring(1, end);
 		} catch (IOException e) {
-		    Log.i("AppLog", "MotionDetection IOException");
+		    Log.i(activity.getString(R.string.logTag), "MotionDetection IOException");
 		    e.printStackTrace();
 		}
 		enableFunction(MOTION_D);
-		Log.i("AppLog", "Detection activee");
+		Log.i(activity.getString(R.string.logTag), "Detection activee");
 	    }
 	}
-    }
+    }*/
 }

@@ -74,7 +74,7 @@
 		pour la detection de mouvements (en ms)</string>
 
 	<string name="other">Autre</string>
-	<string name="disableTricky">Desactiver les astuces</string>
+	<string name="disableTricky">Désactiver les astuces</string>
 	<string name="disableTrickyHint">Ne lance plus les astuces au demarrage</string>
 
 	<string name="sens">Sensibilité</string>
@@ -94,7 +94,7 @@
 	</string>
 	<string name="messageChoose">Que voulez-vous faire ?</string>
 	<string name="messageBienvenue">Bienvenue !</string>
-	<string name="messageAbout">Version 1.0\nDéveloppé par :\nJerome NAHELOU,
+	<string name="messageAstuce">Astuce : </string><string name="messageAbout">Version 1.0\nDéveloppé par :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S
 		sous android 2.1\n</string>
 	<string name="messageExport">Fichier de sortie :</string>
@@ -118,4 +118,11 @@
 
 
 
+
+
+<string name="messageConnexion">Veuillez vérifier votre connexion</string>
+<string name="snapshotFormat">Format de capture</string>
+<string name="snapshotSaved">Capture enregistrée : </string>
+<string name="messageMDError">La caméra ne gère pas la détection de mouvements</string>
+<string name="messageCamError">Caméra introuvable</string>
 </resources>

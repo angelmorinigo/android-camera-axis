@@ -19,7 +19,7 @@ import android.util.Log;
  */
 public class PlayerThread implements Runnable {
 
-    private String logTag = "AppLog";
+    private String TAG = "AppLog";
 
     private HttpURLConnection con;
     private int delay, index;
@@ -47,7 +47,7 @@ public class PlayerThread implements Runnable {
      * Thread code to run
      */
     public void run() {
-	Log.i(logTag, "go");
+	Log.i(TAG, "PlayerThread go");
 	Bitmap bmp = null;
 	String command;
 	command = "axis-cgi/jpg/image.cgi?resolution=160x120";
@@ -69,7 +69,7 @@ public class PlayerThread implements Runnable {
 	    try {
 
 		con = camC.sendCommand(command);
-		Log.i(logTag, ("" + index + " connected"));
+		Log.i(TAG, ("Cam " + index + " connected"));
 		/* Get image result */
 		InputStream stream = con.getInputStream();
 		bmp = BitmapFactory.decodeStream(stream);
@@ -79,7 +79,7 @@ public class PlayerThread implements Runnable {
 		MultiVideo.newBMP[index] = bmp;
 		/* Send message to UI to refresh View */
 		MultiVideo.myViewUpdateHandler.sendMessage(m);
-		Log.i(logTag, "message send from : " + index);
+		Log.i(TAG, "Message send from : " + index);
 		try {
 		    /*
 		     * Sleep to give hand to UI thread and limit fps to gain
@@ -90,11 +90,11 @@ public class PlayerThread implements Runnable {
 		    Thread.currentThread().interrupt();
 		}
 	    } catch (MalformedURLException e) {
-		Log.i(logTag, "MalformedURLException");
+		Log.i(TAG, "MalformedURLException");
 		e.printStackTrace();
 		break;
 	    } catch (IOException e) {
-		Log.i(logTag, "PlayerThread IOException");
+		Log.i(TAG, "PlayerThread IOException");
 		m.what = MultiVideo.URLERRORIDENTIFIER;
 		MultiVideo.myViewUpdateHandler.sendMessage(m);
 		e.printStackTrace();
