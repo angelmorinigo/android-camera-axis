@@ -655,6 +655,17 @@ choisir la caméra à afficher.
 l'utilisateur de contrôler la caméra. Une fois les réglages effectuer, il peut
 revenir sur la vue précèdente en appuyant sur le bouton retour de son téléphone.
 \end{itemize}
+Le diagramme d'etat suivant illustre les differents changements d'etat des
+videos lorsque l'utilisateur interagi avec l'application. On y retrouve
+principalement l'arret de toutes les vidéos lors du passage en simple vue, ainsi
+que le redemarrage des vidéos lors du retour de celle-ci.
+\begin{figure}[H]
+  \label{DiagrammeSequenceMultiView}
+  \centering
+   \includegraphics[scale=0.4]{Images/DiagrammeSequenceMultiView.png}
+  \caption{Diagramme d'etat pour une 2-vue.}
+\end{figure}  
+
 
 \section{Contrôle de la caméra}
 \input{ControleCamera}
