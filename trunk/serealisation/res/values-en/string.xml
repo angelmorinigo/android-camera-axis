@@ -110,4 +110,8 @@
 
 <string name="messageConnexion">Please check your connection</string>
 
+<string name="snapshotFormat">Snapshot Format</string>
+<string name="snapshotSaved">Snapshot saved : </string>
+<string name="messageMDError">The camera doesn\'t support Motion Detection</string>
+<string name="messageCamError">Unobtainable camera</string>
 </resources>

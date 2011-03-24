@@ -117,4 +117,8 @@
 
 
 <string name="messageConnexion">Bitte überprüfen Sie Ihre Verbindung</string>
+<string name="snapshotFormat">Snapshot Format</string>
+<string name="snapshotSaved">Snapshot gespeichert : </string>
+<string name="messageMDError">Die Kamera nicht unterstützt Motion Detection</string>
+<string name="messageCamError">Kamera Unerreichbar</string>
 </resources>

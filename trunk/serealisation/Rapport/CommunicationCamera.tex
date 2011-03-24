@@ -18,9 +18,16 @@ root.Network.SubnetMask=<masque reseau>\n
 
 Certaines requêtes comme le contrôle PTZ de la caméra ne provoquent pas de réponse (code HTTP 200) mais indiquent simplement que la requête a bien été reçue (code HTTP 204), cependant nous ne sommes pas informés de la réalisation de l'action demandée.
 Nous avons implémenté le mécanisme de requêtes \textit{HTTP} vers la caméra à l'aide de l'objet \textit{HttpURLConnection} dans la méthode \textit{sendCommand} de la classe \textit{CameraControl}. La commande passée en paramètre est concaténée à l'adresse IP de la caméra pour construire l'URL visée.
-Nous initialisons alors une connexion HTTP vers l'URL avant d'ajouter un \textit{timeout} au bout duquel la requête est considérée comme un échec, cette valeur étant paramétrable par l'utilisateur dans les préférences de l'application. Le paquet est également forgé avec le champ \textit{Authorization} qui englobe les identifiants encodés en \textit{base64} pour l'authentification.
-Pour cela, nous avons réutilisé la classe existante \textit{base64Encoder}\footnote{\label{base64}http://www.rgagnon.com/javadetails/java-0084.html} et ajouté une méthode qui renvoie les identifiants en \textit{base64} sous la forme \textit{login:password}. Par conséquent, l'authentification est réalisée à chaque requête, même si toutes les actions ne nécessitent pas de droits spécifiques.
-La méthode retourne enfin l'objet \textit{HttpURLConnection} qui pourra être utilisé pour analyser la réponse et récupérer le contenu avec \textit{getInputStream} dans le cas d'une capture par exemple.
+Nous initialisons alors une connexion HTTP vers l'URL avant d'ajouter un
+\textit{timeout} au bout duquel la requête est considérée comme un échec, cette
+valeur étant paramétrable par l'utilisateur dans les préférences de l'application. Le paquet est également forgé avec le champ \textit{Authorization} qui englobe les identifiants encodés en \textit{base64} pour l'authentification :
+\begin{lstlisting}
+con.setRequestProperty("Authorization",
+		base64Encoder.userNamePasswordBase64(cam.login, cam.pass));
+\end{lstlisting}
+Nous avons pour cela réutilisé la classe existante
+\textit{base64Encoder}\footnote{\label{base64}http://www.rgagnon.com/javadetails/java-0084.html}
+et ajouté une méthode qui renvoie les identifiants en \textit{base64} sous la forme \textit{login:password}. Par conséquent, l'authentification est réalisée à chaque requête, même si toutes les actions ne nécessitent pas de droits spécifiques. La méthode retourne enfin l'objet \textit{HttpURLConnection} qui pourra être utilisé pour analyser la réponse et récupérer le contenu avec \textit{getInputStream} dans le cas d'une capture par exemple.
 
 \subsection{Chargement de la configuration}
 Avant de récupérer le flux vidéo distant, nous utilisons la méthode \textit{loadConfig} dans le constructeur de la classe \textit{CameraControl} afin de récupérer et établir la liste des fonctionnalités supportées par la caméra. Cette méthode permet aussi de récupérer certains paramètres comme les résolutions et formats d'image disponibles.

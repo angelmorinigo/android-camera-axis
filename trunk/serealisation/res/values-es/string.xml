@@ -106,4 +106,8 @@ pero permite la reducción de los datos! (Multi-vista sólo)</string>
 
 
 <string name="messageConnexion">Por favor, compruebe su conexión</string>
+<string name="snapshotFormat">Formato de instantánea</string>
+<string name="snapshotSaved">Instantánea guardada</string>
+<string name="messageMDError">La cámara no soporta la detección de movimientos</string>
+<string name="messageCamError">Cámara inalcanzable</string>
 </resources>
