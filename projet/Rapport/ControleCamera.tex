@@ -1,0 +1,142 @@
+\subsection{CameraControl}
+La communication pour le contrôle du Pan/Tilt/Zoom et des fonctionnalités spécifiques (snapshot, contrôles avancés) de la caméra s'effectuent à travers la classe \textit{CameraControl}.
+Les fonctions \textit{changeValFunc} et \textit{switchAutoFunc} permettent d'envoyer les requêtes HTTP à la caméra pour changer la valeur des différents paramètres de celle-ci :
+- \textit{PAN}, \textit{TILT}, \textit{FOCUS}, \textit{IRIS}, \textit{BRIGHTNESS} identifient des paramètres prenant une valeur flottante
+- \textit{AUTOFOCUS}, \textit{AUTOIRIS}, \textit{AUTO\_IR}, \textit{BACKLIGHT}
+identifient des paramètres dont la valeur est comprise dans { \textit{on}, \textit{off}, \textit{auto} } Une réponse HTTP de code \textit{HttpURLConnection.HTTP\_NO\_CONTENT} (code 204)
+indique la réussite de la requête, cependant nous ne savons pas si l'action a bien été effectuée.
+
+La fonction \textit{takeSnapshot} réalise la requête de capture d'écran avec comme résolution la valeur passée en paramètre.
+Elle retourne les données renvoyées par la caméra sous forme d'un objet \textit{Bitmap}.
+
+Cette classe s'occupe également des activation/désactivation de la détection :
+\begin{itemize}
+	\item \textit{addMotionD} ajoute une fenêtre de détection.
+	\item \textit{removeMotionD} supprime une fenêtre de détection existante.
+	\item \textit{updateMotionDParam} met à jour certains paramètres de la fenêtre
+	de détection comme les coordonnées ou la sensibilité de détection.
+\end{itemize}
+
+Lors du chargement du menu et du layout des contrôles avancés de la caméra, nous vérifions si les fonctionnalités correspondantes sont supportées et/ou activées à l'aide des fonctions
+\textit{isSupported} et \textit{isEnabled}. Un appui sur les boutons du menu (celui-ci apparaissant lors de l'appui sur la touche "Menu") déclenchera une alerte texte si la fonctionnalité n'est pas
+disponible, alors que pour le layout des contrôles avancés nous définissons la disponibilité de la fonctionnalité directement par l'état du bouton (activé/désactivé).
+
+\subsection{TouchListener}
+Le contrôle du PTZ tactile a été implémenté à l'aide de la classe \textit{TouchListener}. Nous avons défini deux gestes possibles avec un ou plusieurs pointeurs (doigt, stylet, ...) pour notre application :
+\begin{itemize}
+\item un déplacement avec un seul pointeur pour faire bouger la caméra (Pan/Tilt)
+\item un écartement/rapprochement de deux pointeurs pour zoomer/dézoomer
+\end{itemize}
+Cette classe implémente l'interface \textit{OnTouchListener} fournissant une fonction \textit{onTouch} dans laquelle nous gérons chaque mouvement du ou des pointeurs à partir d'un objet \textit{MotionEvent}. Un geste sous Android est défini par une suite de mouvements de type \textit{MotionEvent}.
+Il existe une dizaine de types d'actions possibles pour \textit{MotionEvent}, cependant nous utilisons seulement les 4 suivants pour notre application :
+\begin{itemize}
+\item \textit{ACTION\_DOWN} : le premier pointeur a été ajouté (le geste est
+commencé) et l'événement contient les coordonnées du pointeur
+\item \textit{ACTION\_POINTER\_DOWN} : un nouveau pointeur a été ajouté
+\item \textit{ACTION\_POINTER\_UP} : un pointeur a été enlevé
+\item \textit{ACTION\_UP} : le dernier pointeur a été enlevé (le geste est
+terminé) et l'événement contient les coordonnées du dernier pointeur
+\end{itemize}
+A partir de ces types d'actions, nous pouvons définir le déplacement de la
+caméra par la suite \textit{ACTION\_DOWN - ACTION\_UP} et la gestion du zoom par
+la suite : \\ \textit{ACTION\_DOWN - ACTION\_POINTER\_DOWN - ACTION\_DOWN\_UP -
+ACTION\_UP} (nous considérons cependant que le zoom n'est réalisé qu'à partir de l'événement
+\textit{ACTION\_POINTER\_DOWN}).
+
+Le champ \textit{mode} contient l'état actuel du geste, soit une des constantes \textit{NONE}, \textit{DRAG} ou \textit{ZOOM}.
+Nous récupérons également les dimensions de la vue par \textit{getWidth} et \textit{getHeight} pour la mise à l'échelle des distances de déplacements. 
+Pour représenter les coordonnées des pointeurs, nous avons utilisé le type \textit{PointF}.
+
+Nous avons implémenté dans cette classe des méthodes de calcul géométrique entre deux objets \textit{PointF} :
+\begin{itemize}
+	\item \textit{calculateMoveX} pour la différence en abscisse.
+	\item \textit{calculateMoveY} pour la différence en ordonnée.
+	\item \textit{calculateDistance} pour la distance géométrique.
+\end{itemize}
+
+Nous avons également développé des méthodes pour mettre à l'échelle le déplacement des pointeurs sur l'écran par rapport au déplacement réel réalisé par la caméra :
+\begin{itemize}
+	\item \textit{scaleMoveX} pour le déplacement en abscisse, en utilisant la
+	largeur de l'écran \textit{getHeight}.
+	\item \textit{scaleMoveY} pour l'échelle en ordonnée, en utilisant la hauteur
+	de l'écran \textit{getWidth}.
+	\item \textit{scaleZoom} pour le zoom/dézoom, en utilisant \textit{zoomStep}.
+\end{itemize}
+
+Afin de rendre moins ``agressif'' le déplacement sur le téléphone, nous avons
+mis en place un paramètre de sensibilité, celui-ci étant modifiable dans les préférences.
+Le thread est également endormi quelques millisecondes afin d'éviter la
+surcharge d'événements à traiter.
+Le tableau ci-dessous montre le traitement
+réalisé par la méthode \textit{onTouch} dont le code est présenté après.\newline
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{0.2\linewidth}|p{0.4\linewidth}| p{0.4\linewidth}|}
+\hline
+Type ACTION & Geste du déplacement & Geste du zoom \\
+\hline
+DOWN & Mise en mémoire des coordonnées du point de départ &  \\
+ & \textit{mode = DRAG} & \\
+POINTER\_DOWN & & Calcul et mise en mémoire de la distance de départ \\
+ & & \textit{mode = ZOOM} \\
+POINTER\_UP & & Calcul et mise en mémoire de la distance d'arrivée \\
+UP & Calcul des déplacements horizontaux et verticaux & Calcul du ratio entre les deux distances \\
+ & Mise à l'échelle des déplacements & Mise à l'échelle du ratio (avec le champ \textit{zoomStep}) \\
+ & \textit{mode = NONE} & \textit{mode = NONE} \\
+\hline
+\end{tabular}
+\caption{Algorithme de traitement onTouch}
+\end{table}
+
+\begin{lstlisting}
+public boolean onTouch(View v, MotionEvent event) {
+	width = v.getWidth();
+	height = v.getHeight();
+	switch (event.getAction() & MotionEvent.ACTION_MASK) {
+	case MotionEvent.ACTION_DOWN:
+	    current.set(event.getX(), event.getY());
+	    mode = DRAG;
+	    break;
+
+	case MotionEvent.ACTION_POINTER_DOWN:
+	    currentDist = calculateDistance(
+		    new PointF(event.getX(0), event.getY(0)),
+		    new PointF(event.getX(1), event.getY(1)));
+	    mode = ZOOM;
+	    break;
+
+	case MotionEvent.ACTION_POINTER_UP:
+	    startDist = currentDist;
+	    currentDist = calculateDistance(
+		    new PointF(event.getX(0), event.getY(0)),
+		    new PointF(event.getX(1), event.getY(1)));
+	    break;
+
+	case MotionEvent.ACTION_UP:
+	    if (mode == DRAG) {
+		PointF start = new PointF(current.x, current.y);
+		current.set(event.getX(), event.getY());
+		float moveX = scaleMoveX(calculateMoveX(start, current));
+		float moveY = scaleMoveY(calculateMoveY(start, current));
+		camC.changeValFunc(CameraControl.PAN, -1* moveX / sens, -1 * moveY
+			/ sens);
+	    } else if (mode == ZOOM) {
+		Log.i(TAG, "startDist=" + startDist);
+		Log.i(TAG, "currentDist=" + currentDist);
+		if (Math.abs(startDist - currentDist) > 10) {
+		    float ratio = (currentDist / startDist > 1) ? currentDist
+			    / startDist : -1 * (startDist / currentDist);
+		    camC.changeValFunc(CameraControl.ZOOM, scaleZoom(ratio), 0);
+
+		}
+	    }
+	    mode = NONE;
+	    try {
+		/* Bloc UI thread to not spam request */
+		Thread.sleep(200);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	    break;
+	}
+\end{lstlisting}

@@ -1,0 +1,158 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{graphicx}
+\usetheme{Warsaw}
+
+\title{Vidéo surveillance, Streaming vidéo et contrôle de caméra via Android }
+\author{Jérôme NAHELOU, Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD}
+\institute{\large{Chargé de Projet : David BROMBERG}\\ \bigskip{}
+\small{Université Bordeaux 1}}
+\date{29 mars 2010}
+
+\begin{document}
+\frame[plain]{\titlepage}
+
+\AtBeginSection[]{
+\begin{frame}<beamer>
+\frametitle{Plan}
+\tableofcontents[currentsection]
+\end{frame}}
+
+\begin{frame}
+\frametitle{Plan de l'exposé}
+\tableofcontents
+\end{frame}
+
+\section{Introduction}
+  \begin{frame}
+   \frametitle{Description}
+  Introduction
+  % schéma projet : dessin camera + portablets et tablettes android en réseau %
+   \begin{itemize}
+    \item<2-> Android: OS pour appareil mobile, basé sur noyaux linux
+    \item<3-> Choix: M-JPEG, HTTP-GET
+   \end{itemize}
+  \end{frame}
+
+\section{Aspect général de l'application}
+  \subsection{Description}
+  \begin{frame}
+   \frametitle{Description}
+  Aspect général de l'application convivial
+   \begin{itemize}
+    \item<2-> Astuces pour mieux connaître les fonctionnalités
+    \item<3-> Application Multi-langue avec détection automatique
+   \end{itemize}
+  \end{frame}
+
+\section{Simple vue}
+\subsection{Spécifications}
+ \begin{frame}
+   \frametitle{Spécifications}
+   \begin{itemize}
+	\item<2-> Réutilisation d'un lecteur MJPEG existant : MjpegView
+	\item<3-> Interface de contrôle de la caméra
+	% screen simple vue %
+	\end{itemize}
+\end{frame}
+
+\section{Multi-vue}
+\subsection{Spécifications}
+ \begin{frame}
+   \frametitle{Spécifications}
+   \begin{itemize}
+	\item<2-> Implémentation de layouts personnalisés pour 2 à 6 caméras
+	% schéma ou screen multi-vue %
+	\item<3-> Rafraîchissement multi-threadé (un thread par caméra)
+	% schéma UML de folie de Jérôme ;) %
+	\item<4-> Ajout de listeners pour gérer les caméras et passer en simple vue 
+	\end{itemize}
+\end{frame}
+
+\section{Contrôle de la caméra}
+\subsection{Implémentation}
+ \begin{frame}
+   \frametitle{Implémentation}
+   \begin{itemize}
+    \item<2-> Communication avec la caméra par requêtes HTTP
+    \item<3-> Chargement de la configuration à l'initialisation de la vidéo
+    \item<4-> Méthode de construction et d'envoi des requêtes avec
+    authentification et délai variable de connexion
+   \end{itemize}
+\end{frame}
+
+\subsection{Interfaces}
+ \begin{frame}
+\frametitle{Interfaces}
+   Plusieurs interfaces de contrôle direct :
+   \begin{itemize}
+	\item<2-> Flux vidéo en continu pour actions en temps réel
+	\item<3-> Contrôle du Pan/Tilt/Zoom de manière tactile
+	% schéma notion tactile %
+    \item<4-> Interface de commandes avancées adaptée à la caméra
+    \item<5-> Module de gestion de détection de mouvements
+   \end{itemize}
+\end{frame}
+
+\section{Détection de mouvements}
+\subsection{Principe Axis}
+ \begin{frame}
+   \frametitle{Pricipe Axis}
+	Le mécanisme de la détection de mouvements par Axis est le suivant :
+   \begin{itemize}
+	\item<2-> Ajout d'une fenêtre de détection spécifique (coordonnées,
+	sensibilité, \ldots) par l'utilisateur
+	\item<3-> Solution 1 : Ajout d'un événement déclenché automatiquement à la
+	présence d'un mouvement (email, SMS, \ldots)
+    \item<4-> Solution 2 : Demande du flux de niveaux de détection pour un
+    calcul et un traitement personnalisés
+   \end{itemize}
+\end{frame}
+
+\subsection{Implémentation Android}
+ \begin{frame}
+   \frametitle{Implémentation Android}
+	La solution 2 a été retenue pour notre application :
+	\begin{itemize}
+	\item<2-> Définition de la fenêtre directement sur l'écran (composant
+	graphique)
+	\item<4-> Mise en arrière-plan du thread de calcul (utilisation d'un service
+	Android)
+    \item<5-> Alerte par notification : vibration + snapshot
+    % deuxième schéma UML propre de Jérôme %
+   \end{itemize}
+\end{frame}
+
+\section{Tests Unitaires}
+\subsection{Principe}
+ \begin{frame}
+   \frametitle{Principe}
+Le but des tests unitaires est de:
+\begin{itemize}
+    \item<2-> Garantir le bon fonctionnement de l'application
+    \item<3-> Vérifier si les fonctions terminent bien
+    \item<4-> Identifier étape par étape les erreurs éventuelles
+   \end{itemize}
+\end{frame}
+
+\subsection{Tests en réel}
+ \begin{frame}
+   \frametitle{Tests en réel}
+\begin{itemize}
+    \item<2-> Suivi de l'exécution en continu avec le LogCat d'Android
+    \item<3-> Utilisation intensive de 3 téléphones de marques différentes
+    \item<4-> Tests sur une caméra Axis PTZ 214 avec l'ensemble des
+    fonctionnalités implémentées
+   \end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\subsection{Optimisations}
+ \begin{frame}
+   \frametitle{Optimisations}
+
+\end{frame}
+
+\end{document}
