@@ -1,0 +1,1476 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - March 2011 Commit Log</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>March 2011 Commit Log</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+
+<div id="nav" class="section">
+<h2>Commit Logs</h2>
+<ul>
+    <li><span class="here">March 2011</span></li>
+    <li><a href="2011-02.html">February 2011</a></li>
+</ul>
+</div><dl class="attributes">
+    <dt>Number of Commits:</dt>
+    <dd>53</dd>
+    <dt>Number of Active Developers:</dt>
+    <dd>4</dd>
+</dl>
+<dl class="commitlist">
+  <dt><a name="53"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-20 17:45</span>
+    <a class="permalink" title="Permalink to this commit" href="#53">#53</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">100</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+etude de l'existant rapport
+    </p>
+    <p class="commitdetails"><strong>107</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        EtudeAndroid.tex&#160;<span class="new">(new&#160;30)</span>,
+        EtudeFormat.tex&#160;<span class="new">(new&#160;40)</span>,
+        EtudeRequete.tex&#160;<span class="new">(new&#160;30)</span>,
+        etudeCam.tex&#160;<span class="change">(+7&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="52"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-20 17:42</span>
+    <a class="permalink" title="Permalink to this commit" href="#52">#52</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">98</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rapport
+    </p>
+    <p class="commitdetails"><strong>321</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Implementation.tex&#160;<span class="change">(+321&#160;-318)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="51"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-20 15:00</span>
+    <a class="permalink" title="Permalink to this commit" href="#51">#51</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">97</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rapport
+    </p>
+    <p class="commitdetails"><strong>339</strong> lines of code changed in <span class="files">9 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        ControleCamera.tex&#160;<span class="change">(+5&#160;-5)</span>,
+        Implementation.tex&#160;<span class="change">(+247&#160;-16)</span>,
+        rapport.tex&#160;<span class="change">(+7&#160;-3)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-de</strong>:
+        string.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-en</strong>:
+        string.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-fr</strong>:
+        string.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        attrs.xml&#160;<span class="change">(+70&#160;-70)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Home.java&#160;<span class="change">(+6&#160;-6)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps/utils</strong>:
+        xmlIO.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="50"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-20 01:32</span>
+    <a class="permalink" title="Permalink to this commit" href="#50">#50</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">96</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rapport
+    </p>
+    <p class="commitdetails"><strong>219</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Implementation.tex&#160;<span class="change">(+219&#160;-22)</span>,
+        rapport.tex&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="49"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-19 21:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#49">#49</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">95</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rapport
+    </p>
+    <p class="commitdetails"><strong>107</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Implementation.tex&#160;<span class="change">(+106&#160;-7)</span>,
+        rapport.tex&#160;<span class="change">(+1&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="48"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-19 17:18</span>
+    <a class="permalink" title="Permalink to this commit" href="#48">#48</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">94</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rapport
+    </p>
+    <p class="commitdetails"><strong>281</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        ControleCamera.tex&#160;<span class="change">(+25&#160;-22)</span>,
+        Implementation.tex&#160;<span class="change">(+244&#160;-20)</span>,
+        rapport.tex&#160;<span class="change">(+12&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="47"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-19 12:08</span>
+    <a class="permalink" title="Permalink to this commit" href="#47">#47</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">93</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Ajout changement état 'Activer/Désactiver contrôles avancés' + bouton snapshot inactif si aucune résolution dispo
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Video.java&#160;<span class="change">(+4&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="46"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-18 17:47</span>
+    <a class="permalink" title="Permalink to this commit" href="#46">#46</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">92</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Rapport partie ControleCamera + Modifs string.xml
+    </p>
+    <p class="commitdetails"><strong>82</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        ControleCamera.tex&#160;<span class="change">(+70&#160;-40)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-de</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-en</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-es</strong>:
+        string.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-fr</strong>:
+        string.xml&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Video.java&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="45"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-17 22:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#45">#45</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">91</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rapport
+    </p>
+    <p class="commitdetails"><strong>517</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Besoins.tex&#160;<span class="change">(+25&#160;-40)</span>,
+        EtudeExistant.tex&#160;<span class="change">(+14&#160;-30)</span>,
+        Implementation.tex&#160;<span class="change">(+423&#160;-91)</span>,
+        rapport.tex&#160;<span class="new">(new&#160;47)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Home.java&#160;<span class="change">(-1)</span>,
+        MotionDetectionService.java&#160;<span class="change">(+5&#160;-2)</span>,
+        Video.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="44"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-16 18:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#44">#44</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">90</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rapport suite
+    </p>
+    <p class="commitdetails"><strong>247</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Implementation.tex&#160;<span class="new">(new&#160;91)</span>,
+        Plan.tex&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-fr</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Camera.java&#160;<span class="change">(+133&#160;-133)</span>,
+        CameraControl.java&#160;<span class="change">(+8&#160;-10)</span>,
+        Home.java&#160;<span class="change">(+1&#160;-1)</span>,
+        MotionDetectionService.java&#160;<span class="change">(+6&#160;-6)</span>,
+        Video.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="43"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-16 18:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#43">#43</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">89</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Controle caméra (à mettre en forme latex)
+    </p>
+    <p class="commitdetails"><strong>43</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        ControleCamera.tex&#160;<span class="change">(+43&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="42"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-16 16:53</span>
+    <a class="permalink" title="Permalink to this commit" href="#42">#42</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">88</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Rapport
+    </p>
+    <p class="commitdetails"><strong>130</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        etudeCam.tex&#160;<span class="new">(new&#160;130)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="41"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-16 15:23</span>
+    <a class="permalink" title="Permalink to this commit" href="#41">#41</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">86</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Parties rapport : listing besoins + existant à remplir + controle camera
+    </p>
+    <p class="commitdetails"><strong>54</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Besoins.tex&#160;<span class="change">(+20&#160;-100)</span>,
+        ControleCamera.tex&#160;<span class="new">(new&#160;11)</span>,
+        EtudeExistant.tex&#160;<span class="change">(+23&#160;-16)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="40"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-16 14:12</span>
+    <a class="permalink" title="Permalink to this commit" href="#40">#40</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">85</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+diagramme rapport
+    </p>
+    <p class="commitdetails"><strong>104</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Plan.tex&#160;<span class="change">(+104&#160;-11)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Video.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="39"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-15 12:05</span>
+    <a class="permalink" title="Permalink to this commit" href="#39">#39</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">84</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Plan du rapport
+    </p>
+    <p class="commitdetails"><strong>37</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Plan.tex&#160;<span class="new">(new&#160;37)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="38"></a>
+    <a href="user_quintardfabien@gmail.com.html" class="author">quintardfabien@gmail.com</a>
+    <span class="date">2011-03-15 11:51</span>
+    <a class="permalink" title="Permalink to this commit" href="#38">#38</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">83</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Traduction ES
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/values-es</strong>:
+        string.xml&#160;<span class="change">(+17&#160;-17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="37"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-14 17:01</span>
+    <a class="permalink" title="Permalink to this commit" href="#37">#37</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">82</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+correction bug
+    </p>
+    <p class="commitdetails"><strong>54</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/values-fr</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Video.java&#160;<span class="change">(+52&#160;-40)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="36"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-13 23:57</span>
+    <a class="permalink" title="Permalink to this commit" href="#36">#36</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">81</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Ajout état bouton + bouton "Arrêter" sur la MD + vérif état connexion au départ<br />
+(à tester pour la MD car problème de wifi...)
+    </p>
+    <p class="commitdetails"><strong>55</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/values-de</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-en</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-es</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-fr</strong>:
+        string.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Video.java&#160;<span class="change">(+47&#160;-23)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="35"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-13 16:01</span>
+    <a class="permalink" title="Permalink to this commit" href="#35">#35</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">80</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+anglais francais allememant TODO : sortir les chaines du code et les traduires
+    </p>
+    <p class="commitdetails"><strong>554</strong> lines of code changed in <span class="files">19 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+16&#160;-16)</span>,
+        dialog_about.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        dialog_welcome.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        edit_cam.xml&#160;<span class="change">(+13&#160;-13)</span>,
+        imp_exp.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        main_view.xml&#160;<span class="new">(new&#160;13)</span>,
+        mds_video.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        view.xml&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/menu</strong>:
+        menu.xml&#160;<span class="change">(+9&#160;-9)</span>,
+        menu_video.xml&#160;<span class="change">(+6&#160;-6)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-de</strong>:
+        string.xml&#160;<span class="new">(new&#160;115)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-en</strong>:
+        string.xml&#160;<span class="new">(new&#160;107)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-es</strong>:
+        string.xml&#160;<span class="new">(new&#160;32)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values-fr</strong>:
+        string.xml&#160;<span class="new">(new&#160;117)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        attrs.xml&#160;<span class="change">(+110&#160;-68)</span>,
+        strings.xml&#160;<span class="change">(-72)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/xml</strong>:
+        preferences.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Astuces.java&#160;<span class="change">(+10&#160;-3)</span>,
+        Home.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="34"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-13 12:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#34">#34</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">79</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+owned le bug de me************e
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        MotionDetectionService.java&#160;<span class="change">(+4&#160;-1)</span>,
+        Video.java&#160;<span class="change">(-14)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="33"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-13 01:33</span>
+    <a class="permalink" title="Permalink to this commit" href="#33">#33</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">78</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+recommit apres edit conflits
+    </p>
+    <p class="commitdetails"><strong>118</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+7&#160;-8)</span>,
+        Video.java&#160;<span class="change">(+111&#160;-100)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="32"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-13 01:19</span>
+    <a class="permalink" title="Permalink to this commit" href="#32">#32</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">77</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+fin cadre md
+    </p>
+    <p class="commitdetails"><strong>292</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Camera.java&#160;<span class="change">(+4)</span>,
+        CameraControl.java&#160;<span class="change">(+11&#160;-2)</span>,
+        MotionDetectionService.java&#160;<span class="change">(+8&#160;-17)</span>,
+        Video.java&#160;<span class="change">(+257&#160;-258)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps/utils</strong>:
+        drawRectOnTouchView.java&#160;<span class="change">(+12&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="31"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-13 00:56</span>
+    <a class="permalink" title="Permalink to this commit" href="#31">#31</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">76</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Chargement de la config + état des boutons
+    </p>
+    <p class="commitdetails"><strong>386</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+128&#160;-128)</span>,
+        Video.java&#160;<span class="change">(+258&#160;-228)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="30"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-12 21:50</span>
+    <a class="permalink" title="Permalink to this commit" href="#30">#30</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">75</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+gere les 10 groupes de la cam
+    </p>
+    <p class="commitdetails"><strong>59</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Camera.java&#160;<span class="change">(+5&#160;-1)</span>,
+        CameraControl.java&#160;<span class="change">(+7&#160;-14)</span>,
+        Home.java&#160;<span class="change">(+2&#160;-1)</span>,
+        MotionDetectionService.java&#160;<span class="change">(+37&#160;-20)</span>,
+        Video.java&#160;<span class="change">(+8&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="29"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-11 18:31</span>
+    <a class="permalink" title="Permalink to this commit" href="#29">#29</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">74</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+gestion de la vue de la video via inflater + continuation de la fenetre md + nettoyage/factorisation
+    </p>
+    <p class="commitdetails"><strong>523</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        adv_video.xml&#160;<span class="change">(+33&#160;-74)</span>,
+        mds_video.xml&#160;<span class="change">(+4&#160;-8)</span>,
+        video.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+389&#160;-360)</span>,
+        Video.java&#160;<span class="change">(+60&#160;-34)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps/utils</strong>:
+        CouldNotCreateGroupException.java&#160;<span class="new">(new&#160;6)</span>,
+        drawRectOnTouchView.java&#160;<span class="change">(+29&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="28"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-10 19:52</span>
+    <a class="permalink" title="Permalink to this commit" href="#28">#28</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">73</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+debut motion detection windows selector
+    </p>
+    <p class="commitdetails"><strong>121</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        mds_video.xml&#160;<span class="new">(new&#160;17)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Video.java&#160;<span class="change">(+49&#160;-25)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps/utils</strong>:
+        drawRectOnTouchView.java&#160;<span class="new">(new&#160;55)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="27"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-10 15:25</span>
+    <a class="permalink" title="Permalink to this commit" href="#27">#27</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">72</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Notification manager -&gt; service MD multi cam, multi notif, multi listeners
+    </p>
+    <p class="commitdetails"><strong>168</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Camera.java&#160;<span class="change">(+16&#160;-6)</span>,
+        CameraControl.java&#160;<span class="change">(-4)</span>,
+        Home.java&#160;<span class="change">(+11&#160;-4)</span>,
+        MotionDetectionService.java&#160;<span class="change">(+119&#160;-53)</span>,
+        Video.java&#160;<span class="change">(+13&#160;-18)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps/utils</strong>:
+        notificationLauncher.java&#160;<span class="change">(+7&#160;-11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="26"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-09 23:51</span>
+    <a class="permalink" title="Permalink to this commit" href="#26">#26</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">71</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+MDService ok notification par vibreur + factorisation/nettoyage -&gt; A revoir le send command pour le changer de classe (httpConnection par exemple)
+    </p>
+    <p class="commitdetails"><strong>381</strong> lines of code changed in <span class="files">11 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+5&#160;-4)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        strings.xml&#160;<span class="change">(+7&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/xml</strong>:
+        preferences.xml&#160;<span class="change">(+4)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+2&#160;-15)</span>,
+        MesPreferences.java&#160;<span class="change">(+32&#160;-78)</span>,
+        MotionDetection.java&#160;<span class="del">(del)</span>,
+        MotionDetectionService.java&#160;<span class="new">(new&#160;142)</span>,
+        MultiVideo.java&#160;<span class="change">(+20)</span>,
+        Video.java&#160;<span class="change">(+45&#160;-64)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps/utils</strong>:
+        notificationLauncher.java&#160;<span class="new">(new&#160;95)</span>,
+        preferenceManagerUtils.java&#160;<span class="new">(new&#160;29)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="25"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-09 18:02</span>
+    <a class="permalink" title="Permalink to this commit" href="#25">#25</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">70</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+version propre
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Video.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="24"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-09 17:57</span>
+    <a class="permalink" title="Permalink to this commit" href="#24">#24</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">69</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+edit conflit
+    </p>
+    <p class="commitdetails"><strong>384</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+384&#160;-361)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="23"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-09 17:51</span>
+    <a class="permalink" title="Permalink to this commit" href="#23">#23</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">68</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+commit oublie
+    </p>
+    <p class="commitdetails"><strong>426</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/menu</strong>:
+        menu_video.xml&#160;<span class="change">(+2)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        strings.xml&#160;<span class="change">(+3)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/xml</strong>:
+        preferences.xml&#160;<span class="change">(+4)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+361&#160;-384)</span>,
+        MesPreferences.java&#160;<span class="change">(+26&#160;-2)</span>,
+        MotionDetection.java&#160;<span class="change">(+5&#160;-3)</span>,
+        Video.java&#160;<span class="change">(+25&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="22"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-09 16:47</span>
+    <a class="permalink" title="Permalink to this commit" href="#22">#22</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">67</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+refaire le parseur, mettre en place le progressDialog =&gt; verifier le bon utilisation des fonctions // remettre le wakelock // achever detection mvt // 
+    </p>
+    <p class="commitdetails"><strong>384</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+384&#160;-361)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="21"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-07 23:32</span>
+    <a class="permalink" title="Permalink to this commit" href="#21">#21</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">66</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+motion detection ok, reste plus qu a mettre des prefs pour regler les timeout et le cadre de recherche
+    </p>
+    <p class="commitdetails"><strong>80</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+3&#160;-2)</span>,
+        Home.java&#160;<span class="change">(+2&#160;-4)</span>,
+        MotionDetection.java&#160;<span class="change">(+41&#160;-31)</span>,
+        Video.java&#160;<span class="change">(+34&#160;-11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="20"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-07 22:00</span>
+    <a class="permalink" title="Permalink to this commit" href="#20">#20</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">65</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Bribes de MotionDetection... + Correction doublon AUTO_IR/AUTOIR
+    </p>
+    <p class="commitdetails"><strong>93</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+42&#160;-7)</span>,
+        MotionDetection.java&#160;<span class="new">(new&#160;48)</span>,
+        Video.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-07 15:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#19">#19</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">64</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ajout fonctions camera et changement de paquage de certain fichiers
+    </p>
+    <p class="commitdetails"><strong>648</strong> lines of code changed in <span class="files">17 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        adv_video.xml&#160;<span class="new">(new&#160;75)</span>,
+        video.xml&#160;<span class="change">(-6)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/menu</strong>:
+        menu_video.xml&#160;<span class="new">(new&#160;11)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Camera.java&#160;<span class="change">(+18)</span>,
+        CameraControl.java&#160;<span class="change">(+38&#160;-12)</span>,
+        Home.java&#160;<span class="change">(+3)</span>,
+        MultiVideo.java&#160;<span class="change">(+5&#160;-3)</span>,
+        MyAuthenticator.java&#160;<span class="del">(del)</span>,
+        PlayerThread.java&#160;<span class="del">(del)</span>,
+        TouchListener.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Video.java&#160;<span class="change">(+182&#160;-54)</span>,
+        base64Encoder.java&#160;<span class="del">(del)</span>,
+        xmlIO.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps/utils</strong>:
+        PlayerThread.java&#160;<span class="new">(new&#160;100)</span>,
+        base64Encoder.java&#160;<span class="new">(new&#160;75)</span>,
+        xmlIO.java&#160;<span class="new">(new&#160;139)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-05 13:07</span>
+    <a class="permalink" title="Permalink to this commit" href="#18">#18</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">63</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Mise en place des style pour les alert dialog
+    </p>
+    <p class="commitdetails"><strong>38</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+16&#160;-27)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        attrs.xml&#160;<span class="change">(+17&#160;-7)</span>,
+        theme_dialog.xml&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Dialog_welcome.java&#160;<span class="change">(+4&#160;-5)</span>,
+        Home.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-04 21:43</span>
+    <a class="permalink" title="Permalink to this commit" href="#17">#17</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">62</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+mise a jour des style (equivalent css) amusez vous a mettre les couleurs que vous voulez en modifiant uniquement le fichier attrs.xml
+    </p>
+    <p class="commitdetails"><strong>138</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/drawable</strong>:
+        my_button_style.xml&#160;<span class="new">(new&#160;9)</span>,
+        my_edit_text_style.xml&#160;<span class="new">(new&#160;12)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+23&#160;-39)</span>,
+        edit_cam.xml&#160;<span class="change">(+20&#160;-30)</span>,
+        list_item.xml&#160;<span class="change">(+9&#160;-23)</span>,
+        view.xml&#160;<span class="change">(+5&#160;-6)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        attrs.xml&#160;<span class="change">(+57&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 15:40</span>
+    <a class="permalink" title="Permalink to this commit" href="#16">#16</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">61</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+test
+    </p>
+    <p class="commitdetails"><strong>14</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        edit_cam.xml&#160;<span class="change">(+9&#160;-9)</span>,
+        list_item.xml&#160;<span class="change">(+3&#160;-2)</span>,
+        view.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 11:42</span>
+    <a class="permalink" title="Permalink to this commit" href="#15">#15</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">60</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+again
+    </p>
+    <p class="commitdetails"><strong>10</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+8&#160;-5)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        theme_dialog.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 00:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#14">#14</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">59</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+modification bouton add cam fond d 'ecran a choisir
+    </p>
+    <p class="commitdetails"><strong>44</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+12&#160;-10)</span>,
+        edit_cam.xml&#160;<span class="change">(+26&#160;-15)</span>,
+        view.xml&#160;<span class="change">(+5&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Home.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-03 20:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#13">#13</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">58</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+design images et themes
+    </p>
+    <p class="commitdetails"><strong>69</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+33&#160;-19)</span>,
+        dialog_welcome.xml&#160;<span class="change">(+22&#160;-14)</span>,
+        view.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        theme_dialog.xml&#160;<span class="new">(new&#160;7)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Astuces.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Dialog_welcome.java&#160;<span class="change">(+5&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-03 18:28</span>
+    <a class="permalink" title="Permalink to this commit" href="#12">#12</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">57</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+partager par mail, sms, etc .. et modification des alert dialog imp/exp
+    </p>
+    <p class="commitdetails"><strong>72</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        imp_exp.xml&#160;<span class="change">(+8&#160;-17)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/menu</strong>:
+        menu.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        strings.xml&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Home.java&#160;<span class="change">(+59&#160;-46)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-03 17:22</span>
+    <a class="permalink" title="Permalink to this commit" href="#11">#11</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">56</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ajout  shared pref
+    </p>
+    <p class="commitdetails"><strong>406</strong> lines of code changed in <span class="files">15 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_slider.xml&#160;<span class="new">(new&#160;39)</span>,
+        multi_video_3.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/menu</strong>:
+        menu.xml&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        attrs.xml&#160;<span class="new">(new&#160;9)</span>,
+        strings.xml&#160;<span class="change">(+13)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/xml</strong>:
+        preferences.xml&#160;<span class="new">(new&#160;30)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+7&#160;-3)</span>,
+        Home.java&#160;<span class="change">(+19&#160;-7)</span>,
+        MesPreferences.java&#160;<span class="new">(new&#160;83)</span>,
+        MultiVideo.java&#160;<span class="change">(+6&#160;-2)</span>,
+        MySeekBarPreference.java&#160;<span class="new">(new&#160;129)</span>,
+        PlayerThread.java&#160;<span class="change">(+5&#160;-4)</span>,
+        TouchListener.java&#160;<span class="change">(+57&#160;-55)</span>,
+        Video.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-03 14:08</span>
+    <a class="permalink" title="Permalink to this commit" href="#10">#10</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">55</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+correction bug
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+2&#160;-60)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        TouchListener.java&#160;<span class="change">(+3&#160;-2)</span>,
+        Video.java&#160;<span class="change">(+4&#160;-68)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-03 01:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#9">#9</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">54</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Amélioration des fonctions onTouch =&gt; valeurs obtenues en log cohérentes, à tester maintenant sur streaming caméra
+    </p>
+    <p class="commitdetails"><strong>60</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+2&#160;-10)</span>,
+        TouchListener.java&#160;<span class="change">(+58&#160;-62)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-02 23:45</span>
+    <a class="permalink" title="Permalink to this commit" href="#8">#8</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">53</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Extension multi view de 2 a 6 cam simultanées, TODO : ajout d'un shared preference pour :<br />
+-afficher/masquer l'aide<br />
+-regler le delai de non reponse<br />
+-reglet le delai de &lt;fps&gt;
+    </p>
+    <p class="commitdetails"><strong>245</strong> lines of code changed in <span class="files">12 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        multi_video.xml&#160;<span class="del">(del)</span>,
+        multi_video_2.xml&#160;<span class="new">(new&#160;9)</span>,
+        multi_video_3.xml&#160;<span class="new">(new&#160;11)</span>,
+        multi_video_4.xml&#160;<span class="new">(new&#160;21)</span>,
+        multi_video_5.xml&#160;<span class="new">(new&#160;23)</span>,
+        multi_video_6.xml&#160;<span class="new">(new&#160;25)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/menu</strong>:
+        menu.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        strings.xml&#160;<span class="change">(+40&#160;-3)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Home.java&#160;<span class="change">(+62&#160;-40)</span>,
+        MultiVideo.java&#160;<span class="change">(+50&#160;-20)</span>,
+        Video.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-02 23:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#7">#7</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">52</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+astuces aleatoire et defilement + design
+    </p>
+    <p class="commitdetails"><strong>80</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+24&#160;-17)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Astuces.java&#160;<span class="new">(new&#160;23)</span>,
+        Dialog_welcome.java&#160;<span class="change">(+33&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-02 18:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#6">#6</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">51</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>401</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+305&#160;-297)</span>,
+        TouchListener.java&#160;<span class="change">(+95&#160;-115)</span>,
+        Video.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-02 15:26</span>
+    <a class="permalink" title="Permalink to this commit" href="#5">#5</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">49</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+graphique
+    </p>
+    <p class="commitdetails"><strong>72</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="new">(new&#160;23)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Dialog_welcome.java&#160;<span class="new">(new&#160;45)</span>,
+        Home.java&#160;<span class="change">(+4&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-02 15:25</span>
+    <a class="permalink" title="Permalink to this commit" href="#4">#4</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">48</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>366</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+295&#160;-294)</span>,
+        MultiVideo.java&#160;<span class="change">(+4&#160;-4)</span>,
+        TouchListener.java&#160;<span class="change">(+67&#160;-25)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-01 19:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#3">#3</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">47</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Correction null pointer exception
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        TouchListener.java&#160;<span class="change">(+3&#160;-3)</span>,
+        Video.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-01 12:37</span>
+    <a class="permalink" title="Permalink to this commit" href="#2">#2</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">46</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Implémentation TouchListener + Récupération d'informations sur CameraControl (résolutions/rotations/formats)
+    </p>
+    <p class="commitdetails"><strong>187</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        CameraControl.java&#160;<span class="change">(+144&#160;-115)</span>,
+        TouchListener.java&#160;<span class="change">(+40&#160;-15)</span>,
+        Video.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_quentin.nebout.html" class="author">quentin.nebout</a>
+    <span class="date">2011-03-01 00:09</span>
+    <a class="permalink" title="Permalink to this commit" href="#1">#1</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">45</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Début implémentation TouchListener
+    </p>
+    <p class="commitdetails"><strong>82</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        TouchListener.java&#160;<span class="new">(new&#160;80)</span>,
+        Video.java&#160;<span class="change">(+2&#160;-17)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p class="previous"><a href="2011-02.html">February 2011</a> &#187; </p>
+<div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

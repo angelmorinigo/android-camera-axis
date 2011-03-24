@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Cloud Commit</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Cloud Commit</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+  <table  rules="groups" summary="Tag Cloud of Words in Commit Log Messages">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Word</th>
+        <th>Frequency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="odd">
+        <th>rapport</th>
+        <td>56 (8.5%)</td>
+      </tr>
+      <tr  class="even">
+        <th>ajout</th>
+        <td>48 (7.3%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>pour</th>
+        <td>36 (5.5%)</td>
+      </tr>
+      <tr  class="even">
+        <th>mettre</th>
+        <td>20 (3.0%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>correction</th>
+        <td>20 (3.0%)</td>
+      </tr>
+      <tr  class="even">
+        <th>bouton</th>
+        <td>20 (3.0%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>multi</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="even">
+        <th>gestion</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>fonctions</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="even">
+        <th>debut</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>cameracontrol</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="even">
+        <th>camera</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>besoins</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="even">
+        <th>avec</th>
+        <td>16 (2.4%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>video</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="even">
+        <th>notification</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>nettoyage</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="even">
+        <th>modification</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>fichier</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="even">
+        <th>factorisation</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>existant</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="even">
+        <th>etude</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>dispo</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="even">
+        <th>detection</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>changement</th>
+        <td>12 (1.8%)</td>
+      </tr>
+      <tr  class="even">
+        <th>vous</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>touchlistener</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>todo</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>tester</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>style</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>snapshot</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>shared</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>regler</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>recherche</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>pref</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>player</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>place</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>mpeg4</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>motion</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>mise</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>mentation</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>media</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>impl</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>edit</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>dialog</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>design</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>delai</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>controle</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="odd">
+        <th>control</th>
+        <td>8 (1.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th>connexion</th>
+        <td>8 (1.2%)</td>
+      </tr>
+    </tbody>
+  </table>
+
+<div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

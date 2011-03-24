@@ -1,0 +1,370 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: romain.solve</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: romain.solve</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>romain.solve</dd>
+    <dt>Total Commits:</dt>
+    <dd>35 (8,9 %)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>747 (5,1 %)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2011-03-20 17:45</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=romain.solve%20contributed%20747%20(5%2C1%20%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202011-03-20%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_romain.solve.png" alt="Activity by Hour of Day for romain.solve" width="800" height="500" /></p><p class="chart"><img src="activity_day_romain.solve.png" alt="Activity by Day of Week for romain.solve" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>35 (100.0%)</td>
+        <td>747 (100.0%)</td>
+        <td>21.3</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_serealisation_Rapport.html" class="directory">serealisation/Rapport/</a></th>
+        <td>9 (25.7%)</td>
+        <td>445 (59.6%)</td>
+        <td>49.4</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_serealisation_res_layout.html" class="directory">serealisation/res/layout/</a></th>
+        <td>13 (37.1%)</td>
+        <td>168 (22.5%)</td>
+        <td>12.9</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_serealisation_src_com_myapps.html" class="directory">serealisation/src/com/myapps/</a></th>
+        <td>10 (28.6%)</td>
+        <td>124 (16.6%)</td>
+        <td>12.4</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_serealisation_res_values.html" class="directory">serealisation/res/values/</a></th>
+        <td>3 (8.6%)</td>
+        <td>10 (1.3%)</td>
+        <td>3.3</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_romain.solve.png" alt="Activity of romain.solve" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="11"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-20 17:45</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">100</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+etude de l'existant rapport
+    </p>
+    <p class="commitdetails"><strong>107</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        EtudeAndroid.tex&#160;<span class="new">(new&#160;30)</span>,
+        EtudeFormat.tex&#160;<span class="new">(new&#160;40)</span>,
+        EtudeRequete.tex&#160;<span class="new">(new&#160;30)</span>,
+        etudeCam.tex&#160;<span class="change">(+7&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-16 16:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">88</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Rapport
+    </p>
+    <p class="commitdetails"><strong>130</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        etudeCam.tex&#160;<span class="new">(new&#160;130)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 15:40</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">61</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+test
+    </p>
+    <p class="commitdetails"><strong>14</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        edit_cam.xml&#160;<span class="change">(+9&#160;-9)</span>,
+        list_item.xml&#160;<span class="change">(+3&#160;-2)</span>,
+        view.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 11:42</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">60</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+again
+    </p>
+    <p class="commitdetails"><strong>10</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+8&#160;-5)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        theme_dialog.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 00:13</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">59</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+modification bouton add cam fond d 'ecran a choisir
+    </p>
+    <p class="commitdetails"><strong>44</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+12&#160;-10)</span>,
+        edit_cam.xml&#160;<span class="change">(+26&#160;-15)</span>,
+        view.xml&#160;<span class="change">(+5&#160;-2)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Home.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-03 20:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">58</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+design images et themes
+    </p>
+    <p class="commitdetails"><strong>69</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+33&#160;-19)</span>,
+        dialog_welcome.xml&#160;<span class="change">(+22&#160;-14)</span>,
+        view.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        theme_dialog.xml&#160;<span class="new">(new&#160;7)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Astuces.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Dialog_welcome.java&#160;<span class="change">(+5&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-02 23:13</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">52</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+astuces aleatoire et defilement + design
+    </p>
+    <p class="commitdetails"><strong>80</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+24&#160;-17)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Astuces.java&#160;<span class="new">(new&#160;23)</span>,
+        Dialog_welcome.java&#160;<span class="change">(+33&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-02 15:26</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">49</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+graphique
+    </p>
+    <p class="commitdetails"><strong>72</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="new">(new&#160;23)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        Dialog_welcome.java&#160;<span class="new">(new&#160;45)</span>,
+        Home.java&#160;<span class="change">(+4&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-02-16 11:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">27</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+besoins etude
+    </p>
+    <p class="commitdetails"><strong>183</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Besoins.tex&#160;<span class="change">(+106&#160;-23)</span>,
+        EtudeExistant.tex&#160;<span class="change">(+77&#160;-74)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-02-16 11:32</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">25</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+besoins
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Besoins.tex&#160;<span class="change">(+11&#160;-13)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-02-16 11:27</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">24</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Besoins, tag
+    </p>
+    <p class="commitdetails"><strong>27</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/Rapport</strong>:
+        Besoins.tex&#160;<span class="change">(+14&#160;-11)</span>
+      </li>
+      <li>
+        <strong>serealisation/res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>serealisation/src/com/myapps</strong>:
+        AddCam.java&#160;<span class="change">(+2&#160;-4)</span>,
+        Home.java&#160;<span class="change">(+9&#160;-11)</span>,
+        Video.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>
