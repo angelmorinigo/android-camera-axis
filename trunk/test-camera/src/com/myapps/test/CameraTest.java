@@ -26,6 +26,7 @@ import com.myapps.utils.xmlIO;
 
 public class CameraTest extends
 	android.test.ActivityInstrumentationTestCase2<Home> {
+    
     Activity mActivity;
     Camera src, tmp;
     public static ArrayList<Camera> camList;
@@ -171,7 +172,7 @@ public class CameraTest extends
 	    
 	    Intent intent = new Intent(mActivity, MotionDetectionService.class);
 	    Bundle objetbunble = new Bundle();
-	    objetbunble.putSerializable(mActivity.getString(R.string.camTag),
+	    objetbunble.putSerializable("Camera",
 		    c.cam);
 	    intent.putExtras(objetbunble);
 	    int lim = 20;
