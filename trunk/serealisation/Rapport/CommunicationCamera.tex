@@ -76,52 +76,53 @@ En effet, plusieurs personnes pouvant agir tour à tour sur les paramètres de l
 
 \subsection{Liste des commandes utilisées}
 Le tableau suivant présente les différentes commandes distantes que nous avons
-utilisées dans notre application Android, associant l'adresse pointée (basée toujours sur l'adresse IP de la caméra) à l'action effectuée par la caméra. \begin{table}[H]
+utilisées dans notre application Android, associant l'adresse pointée (basée toujours sur l'adresse IP de la caméra) à l'action effectuée par la caméra.
+ \begin{table}[H]
 \centering
-\begin{tabular}{|p{0.5\linewidth}|p{0.5\linewidth}|}
+\begin{tabular}{|p{0.6\linewidth}|p{0.4\linewidth}|}
 \hline
-Partie variable URL & Action
+Partie variable URL & Action\\
 \hline
-axis-cgi/com/ptz.cgi?info=1 & Retourne la liste globale des capacités fonctionnelles de la caméra
+axis-cgi/com/ptz.cgi?info=1 & Retourne la liste globale des capacités fonctionnelles de la caméra\\
 \hline
-axis-cgi/admin/param.cgi?action=list\\\&group=Properties... & Retourne l'état
-actuel des paramètres spécifiés (Motion, Audio, Image, \dots)
+axis-cgi/admin/param.cgi?\newline action=list\&group=Properties... & Retourne l'état
+actuel des paramètres spécifiés (Motion, Audio, Image, \dots)\\
 \hline
-axis-cgi/mjpg/video.cgi?resolution=<resolution> & Retourne le flux MJPEG de
-résolution <resolution>
+axis-cgi/mjpg/video.cgi?resolution=\textless resolution\textgreater  & Retourne le flux MJPEG de
+résolution \textless resolution\textgreater \\
 \hline
-axis-cgi/jpg/image.cgi?resolution=<resolution>
-& Retourne une capture d'écran de résolution <resolution>
+axis-cgi/jpg/image.cgi?resolution=\textless resolution\textgreater 
+& Retourne une capture d'écran de résolution \textless resolution\textgreater \\
 \hline
-axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion & Ajoute une
-fenêtre de détection de mouvements
+axis-cgi/operator/param.cgi?\newline action=add\&group=Motion\&template=motion & Ajoute une
+fenêtre de détection de mouvements\\
 \hline
-axis-cgi/operator/param.cgi?action=remove&group=Motion.<groupeID> & Supprime une
-fenêtre de détection de mouvements existante d'identifiant <groupeID>
+axis-cgi/operator/param.cgi?\newline action=remove\&group=Motion.\textless groupeID\textgreater  & Supprime une
+fenêtre de détection de mouvements existante d'identifiant \textless groupeID\textgreater \\
 \hline
-axis-cgi/motion/motiondata.cgi?group=<groupeID> & Retourne à intervalles
-réguliers les niveaux de détection de la fenêtre d'identifiant <groupeID>
+axis-cgi/motion/motiondata.cgi?\newline group=\textless groupeID\textgreater  & Retourne à intervalles
+réguliers les niveaux de détection de la fenêtre d'identifiant \textless groupeID\textgreater \\
 \hline
-axis-cgi/operator/param.cgi?action=update&Motion.M<groupeID>.<param>=<valeur> &
-Met à jour les paramètres de la fenêtre de détection d'identifiant <groupeID>
+axis-cgi/operator/param.cgi?\newline action=update\&Motion.M\textless groupeID\textgreater .\textless param\textgreater =\textless valeur\textgreater  &
+Met à jour les paramètres de la fenêtre de détection d'identifiant \textless groupeID\textgreater \\
 \hline
-axis-cgi/operator/param.cgi?action=update&Motion.M<groupeID>.<param>=<valeur> &
-Met à jour les paramètres de la fenêtre de détection d'identifiant <groupeID>
+axis-cgi/operator/param.cgi?\newline action=update\&Motion.M\textless groupeID\textgreater .\textless param\textgreater =\textless valeur\textgreater  &
+Met à jour les paramètres de la fenêtre de détection d'identifiant \textless groupeID\textgreater \\
 \hline
-axis-cgi/com/ptz.cgi?<param>=<valeur>
+axis-cgi/com/ptz.cgi?\textless param\textgreater =\textless valeur\textgreater 
 \begin{itemize}
-  \item <param> parmi { rpan, rtilt, rzoom, riris, rfocus, rbrightness }
-  \item <valeur> une valeur numérique
+  \item \textless param\textgreater  parmi { rpan, rtilt, rzoom, riris, rfocus, rbrightness }
+  \item \textless valeur\textgreater  une valeur numérique
 \end{itemize} &
-Effectue l'action <param> correspondante (pan, tilt, zoom, iris, focus) en
-appliquant <valeur> de manière relative (calculé à partir de la position actuelle)
+Effectue l'action \textless param\textgreater correspondante (pan, tilt, zoom, iris, focus) en
+appliquant \textless valeur\textgreater  de manière relative (calculé à partir de la position actuelle)\\
 \hline
-axis-cgi/com/ptz.cgi?<param>=<valeur>
+axis-cgi/com/ptz.cgi?\textless param\textgreater =\textless valeur\textgreater 
 \begin{itemize}
-  \item <param> une valeur parmi { autofocus, autoiris, ircutfilter, backlight }
-  \item <valeur> une valeur parmi { on, off, auto}
+  \item \textless param\textgreater  une valeur parmi { autofocus, autoiris, ircutfilter, backlight }
+  \item \textless valeur\textgreater  une valeur parmi { on, off, auto}
 \end{itemize} &
-Active/désactive ou met en mode automatique la fonctionnalité <param>
+Active/désactive ou met en mode automatique la fonctionnalité \textless param\textgreater\\
 \hline
 \end{tabular}
 \caption{Liste des commandes HTTP}
