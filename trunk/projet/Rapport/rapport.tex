@@ -1,0 +1,123 @@
+\documentclass[a4paper,10pt]{report}
+
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+   \pdffalse
+\else
+   \pdfoutput=1
+   \pdftrue
+\fi
+\ifpdf
+   \usepackage{graphicx}
+   \usepackage{epstopdf}
+   \DeclareGraphicsRule{.eps}{pdf}{.pdf}{`epstopdf #1}
+   \pdfcompresslevel=9
+\else
+   \usepackage{graphicx}
+\fi
+
+\usepackage[utf8]{inputenc}
+\usepackage{ulem}
+\usepackage[frenchb]{babel}
+\usepackage{tabularx} 
+\usepackage{multirow} 
+\usepackage{graphicx} 
+\usepackage{graphics}
+\usepackage[final]{pdfpages}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage[formats]{listings}
+\usepackage{listings}
+\usepackage{chngpage}
+\usepackage{float}
+\usepackage{fullpage}
+\usepackage[francais]{layout} %affiche le modèle de page par \layout
+\usepackage[final]{pdfpages}
+
+%%%% debut macro %%%%
+\newenvironment{changemargin}[2]{\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{0pt}%
+\setlength{\rightmargin}{0pt}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{0pt plus 1pt}%
+\addtolength{\leftmargin}{#1}%
+\addtolength{\rightmargin}{#2}%
+}\item }{\end{list}}
+%%%% fin macro %%%%
+
+\lstdefineformat{JAVA}{%
+\{=\string\newline\indent,%
+\}=\noindent\string\newline,%
+;=[\ ]\string\space}
+
+\lstdefineformat{XML}{%
+\<\/=\noindent\string,%
+\<=[/]\string\indent,%
+\/\>=\noindent\string,%
+}
+
+\lstset{language=java, frame=single, tabsize=2, breaklines=true,
+frameround=fttt, captionpos=b, format=JAVA}
+
+
+
+% PAGE DE GARDE ------------------------------------------------------------------------------------
+\title{\bf Projet de fin d'Etude \Large\textit{INF592} \\~\\ \Huge
+ Vidéo surveillance, Streaming vidéo et contrôle de caméra via
+Android \\~\\
+  \Large - MEMOIRE -}
+  \author{Jerome NAHELOU - Quentin NEBOUT - Romain SOLVE - Fabien
+  QUINTARD}
+  
+\date{}
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{tabularx}{\linewidth}{lXr}
+    \multirow{2}{*}{\includegraphics[width=4cm]{logo-bdx1.pdf}} & &
+    \bf\Large\today\\ & & \\
+    & & \bf MCSB0\\
+  \end{tabularx}
+  \vfill
+  \begin{minipage}[t]{\linewidth}
+    \maketitle
+    \center\includegraphics[scale=0.8]{camera.png}
+  \end{minipage}
+    \vfill
+  \begin{tabular}{ r c l }
+     \Large{Enseignant encadrant} &  \Large{:} &  \Large{Yérom-David BROMBERG}\\
+  \end{tabular}
+
+  \setcounter{page}{0}
+  \thispagestyle{empty}
+
+\end{titlepage}
+
+
+
+
+
+
+\tableofcontents \clearpage
+\input{EtudeAndroid}\clearpage
+\input{etudeCam}\clearpage
+\input{EtudeRequete}\clearpage
+\input{EtudeFormat}\clearpage
+\input{EtudeExistant}\clearpage
+\input{Besoins}\clearpage
+\input{Implementation}\clearpage
+\input{test}\clearpage
+
+
+\chapter{Optimisations / Extensions futures}
+\subsubsection{Retransmission du signal audio}
+\subsubsection{Enregistrement vidéo}
+\subsubsection{Édition des fenêtres de détection  de mouvement}
+\subsubsection{Ajout d'évènements suite à la détection (mail / snapshot)}
+\subsubsection{Compte utilisateur}
+
+
+\end{document}
