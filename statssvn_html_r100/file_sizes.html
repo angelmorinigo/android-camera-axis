@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - File Sizes and File Counts</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>File Sizes and File Counts</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Total Files:</dt>
+    <dd>59</dd>
+    <dt>Average File Size:</dt>
+    <dd>101,8 lines</dd>
+    <dt>Average Revisions Per File:</dt>
+    <dd>5,7</dd>
+</dl>
+<p class="chart"><img src="file_count.png" alt="File Count" width="800" height="500" /></p><p class="chart"><img src="file_size.png" alt="Average File Size" width="800" height="500" /></p>
+<div class="section">
+<h2>File Types</h2>
+  <table  rules="groups" summary="File Extensions">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Files</th>
+        <th>LOC</th>
+        <th>LOC per file</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>59 (100.0%)</td>
+        <td>6008 (100.0%)</td>
+        <td>101.8</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th>*.java</th>
+        <td>20 (33.9%)</td>
+        <td>3184 (53.0%)</td>
+        <td>159.2</td>
+      </tr>
+      <tr  class="even">
+        <th>*.tex</th>
+        <td>10 (16.9%)</td>
+        <td>1795 (29.9%)</td>
+        <td>179.5</td>
+      </tr>
+      <tr  class="odd">
+        <th>*.xml</th>
+        <td>29 (49.2%)</td>
+        <td>1029 (17.1%)</td>
+        <td>35.4</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Largest Files</h2>
+  <table  rules="groups" summary="The largest files in the repository">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Lines of Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/Rapport/Implementation.tex</th>
+        <td>1177</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/Video.java</th>
+        <td>492</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/CameraControl.java</th>
+        <td>453</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/Home.java</th>
+        <td>417</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/MultiVideo.java</th>
+        <td>246</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/MotionDetectionService.java</th>
+        <td>222</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/AddCam.java</th>
+        <td>178</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/Camera.java</th>
+        <td>150</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/utils/xmlIO.java</th>
+        <td>138</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/Rapport/Plan.tex</th>
+        <td>132</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/Rapport/etudeCam.tex</th>
+        <td>130</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/MySeekBarPreference.java</th>
+        <td>129</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/TouchListener.java</th>
+        <td>126</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/values-fr/string.xml</th>
+        <td>121</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/values-de/string.xml</th>
+        <td>118</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/values/attrs.xml</th>
+        <td>117</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/values-en/string.xml</th>
+        <td>110</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/utils/PlayerThread.java</th>
+        <td>100</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/utils/notificationLauncher.java</th>
+        <td>91</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/Rapport/EtudeExistant.tex</th>
+        <td>87</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Files With Most Revisions</h2>
+  <table  rules="groups" summary="The files with most revisions">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Revisions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/Video.java</th>
+        <td>50</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/Home.java</th>
+        <td>28</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/CameraControl.java</th>
+        <td>27</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/values/strings.xml</th>
+        <td>14</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/AndroidManifest.xml</th>
+        <td>14</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/MultiVideo.java</th>
+        <td>13</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/layout/video.xml</th>
+        <td>13</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/Camera.java</th>
+        <td>12</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> serealisation/src/com/myapps/PlayerThread.java</th>
+        <td>10</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/TouchListener.java</th>
+        <td>9</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/AddCam.java</th>
+        <td>9</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/menu/menu.xml</th>
+        <td>8</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> serealisation/res/layout/view.xml</th>
+        <td>8</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/Rapport/Implementation.tex</th>
+        <td>7</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/src/com/myapps/MotionDetectionService.java</th>
+        <td>7</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/Rapport/Besoins.tex</th>
+        <td>7</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/layout/add_cam.xml</th>
+        <td>7</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/values-fr/string.xml</th>
+        <td>6</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> serealisation/res/layout/main.xml</th>
+        <td>6</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> serealisation/res/layout/dialog_welcome.xml</th>
+        <td>6</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

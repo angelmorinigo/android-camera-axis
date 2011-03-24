@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<root>
+  <label>[root]</label>
+    <branch>
+        <label>serealisation</label>
+      <branch>
+          <label>Rapport</label>
+          <leaf><label>Besoins.tex</label><weight>26</weight><value>-365.38461538461536</value></leaf>
+          <leaf><label>ControleCamera.tex</label><weight>85</weight><value>100.0</value></leaf>
+          <leaf><label>EtudeAndroid.tex</label><weight>30</weight><value>100.0</value></leaf>
+          <leaf><label>EtudeExistant.tex</label><weight>87</weight><value>-10.344827586206897</value></leaf>
+          <leaf><label>EtudeFormat.tex</label><weight>40</weight><value>100.0</value></leaf>
+          <leaf><label>EtudeRequete.tex</label><weight>30</weight><value>100.0</value></leaf>
+          <leaf><label>Implementation.tex</label><weight>1177</weight><value>100.0</value></leaf>
+          <leaf><label>Plan.tex</label><weight>132</weight><value>100.0</value></leaf>
+          <leaf><label>etudeCam.tex</label><weight>130</weight><value>100.0</value></leaf>
+          <leaf><label>rapport.tex</label><weight>58</weight><value>100.0</value></leaf>
+      </branch>
+
+      <branch>
+          <label>res</label>
+        <branch>
+            <label>drawable</label>
+            <leaf><label>my_button_style.xml</label><weight>9</weight><value>100.0</value></leaf>
+            <leaf><label>my_edit_text_style.xml</label><weight>12</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>layout</label>
+            <leaf><label>add_cam.xml</label><weight>59</weight><value>100.0</value></leaf>
+            <leaf><label>adv_video.xml</label><weight>34</weight><value>100.0</value></leaf>
+            <leaf><label>dialog_about.xml</label><weight>20</weight><value>0.0</value></leaf>
+            <leaf><label>dialog_slider.xml</label><weight>39</weight><value>100.0</value></leaf>
+            <leaf><label>dialog_welcome.xml</label><weight>30</weight><value>100.0</value></leaf>
+            <leaf><label>edit_cam.xml</label><weight>49</weight><value>100.0</value></leaf>
+            <leaf><label>imp_exp.xml</label><weight>14</weight><value>100.0</value></leaf>
+            <leaf><label>list_item.xml</label><weight>10</weight><value>-120.0</value></leaf>
+            <leaf><label>main.xml</label><weight>5</weight><value>100.0</value></leaf>
+            <leaf><label>main_view.xml</label><weight>13</weight><value>100.0</value></leaf>
+            <leaf><label>mds_video.xml</label><weight>13</weight><value>100.0</value></leaf>
+            <leaf><label>multi_video.xml</label><weight>21</weight><value>100.0</value></leaf>
+            <leaf><label>multi_video_2.xml</label><weight>9</weight><value>100.0</value></leaf>
+            <leaf><label>multi_video_3.xml</label><weight>11</weight><value>100.0</value></leaf>
+            <leaf><label>multi_video_4.xml</label><weight>21</weight><value>100.0</value></leaf>
+            <leaf><label>multi_video_5.xml</label><weight>23</weight><value>100.0</value></leaf>
+            <leaf><label>multi_video_6.xml</label><weight>25</weight><value>100.0</value></leaf>
+            <leaf><label>multi_view.xml</label><weight>21</weight><value>100.0</value></leaf>
+            <leaf><label>notification.xml</label><weight>21</weight><value>100.0</value></leaf>
+            <leaf><label>video.xml</label><weight>9</weight><value>-666.6666666666667</value></leaf>
+            <leaf><label>view.xml</label><weight>2</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>menu</label>
+            <leaf><label>menu.xml</label><weight>20</weight><value>65.0</value></leaf>
+            <leaf><label>menu_video.xml</label><weight>13</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>values-de</label>
+            <leaf><label>string.xml</label><weight>118</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>values-en</label>
+            <leaf><label>string.xml</label><weight>110</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>values-es</label>
+            <leaf><label>string.xml</label><weight>34</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>values-fr</label>
+            <leaf><label>string.xml</label><weight>121</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>values</label>
+            <leaf><label>attrs.xml</label><weight>117</weight><value>100.0</value></leaf>
+            <leaf><label>strings.xml</label><weight>4</weight><value>-250.0</value></leaf>
+            <leaf><label>theme_dialog.xml</label><weight>7</weight><value>100.0</value></leaf>
+        </branch>
+
+        <branch>
+            <label>xml</label>
+            <leaf><label>preferences.xml</label><weight>38</weight><value>100.0</value></leaf>
+        </branch>
+      </branch>
+
+      <branch>
+          <label>src</label>
+        <branch>
+            <label>com</label>
+          <branch>
+              <label>myapps</label>
+            <branch>
+                <label>utils</label>
+                <leaf><label>CouldNotCreateGroupException.java</label><weight>6</weight><value>100.0</value></leaf>
+                <leaf><label>PlayerThread.java</label><weight>100</weight><value>100.0</value></leaf>
+                <leaf><label>base64Encoder.java</label><weight>75</weight><value>100.0</value></leaf>
+                <leaf><label>drawRectOnTouchView.java</label><weight>87</weight><value>100.0</value></leaf>
+                <leaf><label>notificationLauncher.java</label><weight>91</weight><value>100.0</value></leaf>
+                <leaf><label>preferenceManagerUtils.java</label><weight>29</weight><value>100.0</value></leaf>
+                <leaf><label>xmlIO.java</label><weight>138</weight><value>100.0</value></leaf>
+            </branch>
+              <leaf><label>AddCam.java</label><weight>178</weight><value>50.56179775280899</value></leaf>
+              <leaf><label>Astuces.java</label><weight>30</weight><value>100.0</value></leaf>
+              <leaf><label>Camera.java</label><weight>150</weight><value>76.66666666666667</value></leaf>
+              <leaf><label>CameraControl.java</label><weight>453</weight><value>77.48344370860927</value></leaf>
+              <leaf><label>Dialog_welcome.java</label><weight>68</weight><value>100.0</value></leaf>
+              <leaf><label>EditCam.java</label><weight>86</weight><value>100.0</value></leaf>
+              <leaf><label>Home.java</label><weight>417</weight><value>47.961630695443645</value></leaf>
+              <leaf><label>MesPreferences.java</label><weight>61</weight><value>100.0</value></leaf>
+              <leaf><label>MotionDetection.java</label><weight>60</weight><value>100.0</value></leaf>
+              <leaf><label>MotionDetectionService.java</label><weight>222</weight><value>100.0</value></leaf>
+              <leaf><label>MultiVideo.java</label><weight>246</weight><value>100.0</value></leaf>
+              <leaf><label>MyAuthenticator.java</label><weight>6</weight><value>100.0</value></leaf>
+              <leaf><label>MySeekBarPreference.java</label><weight>129</weight><value>100.0</value></leaf>
+              <leaf><label>PlayerThread.java</label><weight>33</weight><value>100.0</value></leaf>
+              <leaf><label>TouchListener.java</label><weight>126</weight><value>100.0</value></leaf>
+              <leaf><label>Video.java</label><weight>492</weight><value>63.82113821138211</value></leaf>
+              <leaf><label>base64Encoder.java</label><weight>16</weight><value>100.0</value></leaf>
+              <leaf><label>xmlIO.java</label><weight>137</weight><value>100.0</value></leaf>
+          </branch>
+        </branch>
+      </branch>
+        <leaf><label>AndroidManifest.xml</label><weight>33</weight><value>33.33333333333333</value></leaf>
+    </branch>
+</root>

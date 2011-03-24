@@ -1,0 +1,770 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory serealisation/res/layout/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory serealisation/res/layout/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Created:</dt>
+    <dd><span class="date">2011-02-09 23:12</span></dd>
+    <dt>Total Files:</dt>
+    <dd>17</dd>
+    <dt>Deleted Files:</dt>
+    <dd>4</dd>
+    <dt>Lines of Code:</dt>
+    <dd>400</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_serealisation.html">serealisation</a>/<a href="dir_serealisation_res.html">res</a>/<strong>layout</strong><br/>
+</p>
+
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><img src="loc_module_serealisation_res_layout.png" alt="serealisation/res/layout/ Lines of Code" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>76 (100.0%)</td>
+        <td>1111 (100.0%)</td>
+        <td>14.6</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a></th>
+        <td>63 (82.9%)</td>
+        <td>943 (84.9%)</td>
+        <td>14.9</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_romain.solve.html" class="author">romain.solve</a></th>
+        <td>13 (17.1%)</td>
+        <td>168 (15.1%)</td>
+        <td>12.9</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="34"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-13 16:01</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">80</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+anglais francais allememant TODO : sortir les chaines du code et les traduires
+    </p>
+    <p class="commitdetails"><strong>46</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+16&#160;-16)</span>,
+        dialog_about.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        dialog_welcome.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        edit_cam.xml&#160;<span class="change">(+13&#160;-13)</span>,
+        imp_exp.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        main_view.xml&#160;<span class="new">(new&#160;13)</span>,
+        mds_video.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        view.xml&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="33"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-11 18:31</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">74</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+gestion de la vue de la video via inflater + continuation de la fenetre md + nettoyage/factorisation
+    </p>
+    <p class="commitdetails"><strong>39</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        adv_video.xml&#160;<span class="change">(+33&#160;-74)</span>,
+        mds_video.xml&#160;<span class="change">(+4&#160;-8)</span>,
+        video.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="32"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-10 19:52</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">73</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+debut motion detection windows selector
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        mds_video.xml&#160;<span class="new">(new&#160;17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="31"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-10 15:25</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">72</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Notification manager -&gt; service MD multi cam, multi notif, multi listeners
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="30"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-07 15:13</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">64</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ajout fonctions camera et changement de paquage de certain fichiers
+    </p>
+    <p class="commitdetails"><strong>75</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        adv_video.xml&#160;<span class="new">(new&#160;75)</span>,
+        video.xml&#160;<span class="change">(-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="29"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-05 13:07</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">63</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Mise en place des style pour les alert dialog
+    </p>
+    <p class="commitdetails"><strong>16</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+16&#160;-27)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="28"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-04 21:43</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">62</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+mise a jour des style (equivalent css) amusez vous a mettre les couleurs que vous voulez en modifiant uniquement le fichier attrs.xml
+    </p>
+    <p class="commitdetails"><strong>57</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+23&#160;-39)</span>,
+        edit_cam.xml&#160;<span class="change">(+20&#160;-30)</span>,
+        list_item.xml&#160;<span class="change">(+9&#160;-23)</span>,
+        view.xml&#160;<span class="change">(+5&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="27"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 15:40</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">61</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+test
+    </p>
+    <p class="commitdetails"><strong>14</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        edit_cam.xml&#160;<span class="change">(+9&#160;-9)</span>,
+        list_item.xml&#160;<span class="change">(+3&#160;-2)</span>,
+        view.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="26"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 11:42</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">60</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+again
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+8&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="25"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-04 00:13</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">59</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+modification bouton add cam fond d 'ecran a choisir
+    </p>
+    <p class="commitdetails"><strong>43</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+12&#160;-10)</span>,
+        edit_cam.xml&#160;<span class="change">(+26&#160;-15)</span>,
+        view.xml&#160;<span class="change">(+5&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="24"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-03 20:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">58</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+design images et themes
+    </p>
+    <p class="commitdetails"><strong>56</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+33&#160;-19)</span>,
+        dialog_welcome.xml&#160;<span class="change">(+22&#160;-14)</span>,
+        view.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="23"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-03 18:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">57</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+partager par mail, sms, etc .. et modification des alert dialog imp/exp
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        imp_exp.xml&#160;<span class="change">(+8&#160;-17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="22"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-03 17:22</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">56</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ajout  shared pref
+    </p>
+    <p class="commitdetails"><strong>40</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_slider.xml&#160;<span class="new">(new&#160;39)</span>,
+        multi_video_3.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="21"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-03 14:08</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">55</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+correction bug
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+2&#160;-60)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="20"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-03-02 23:45</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">53</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Extension multi view de 2 a 6 cam simultanées, TODO : ajout d'un shared preference pour :<br />
+-afficher/masquer l'aide<br />
+-regler le delai de non reponse<br />
+-reglet le delai de &lt;fps&gt;
+    </p>
+    <p class="commitdetails"><strong>89</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        multi_video.xml&#160;<span class="del">(del)</span>,
+        multi_video_2.xml&#160;<span class="new">(new&#160;9)</span>,
+        multi_video_3.xml&#160;<span class="new">(new&#160;11)</span>,
+        multi_video_4.xml&#160;<span class="new">(new&#160;21)</span>,
+        multi_video_5.xml&#160;<span class="new">(new&#160;23)</span>,
+        multi_video_6.xml&#160;<span class="new">(new&#160;25)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-02 23:13</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">52</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+astuces aleatoire et defilement + design
+    </p>
+    <p class="commitdetails"><strong>24</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="change">(+24&#160;-17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_romain.solve.html" class="author">romain.solve</a>
+    <span class="date">2011-03-02 15:26</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">49</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+graphique
+    </p>
+    <p class="commitdetails"><strong>23</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_welcome.xml&#160;<span class="new">(new&#160;23)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-28 17:54</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">43</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+modification des camera possible, import/export sur sd en fichier xml 
+    </p>
+    <p class="commitdetails"><strong>71</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        edit_cam.xml&#160;<span class="new">(new&#160;48)</span>,
+        imp_exp.xml&#160;<span class="new">(new&#160;23)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-24 23:01</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">39</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Ajout lecteur Qr + formatage des url
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-23 21:23</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">37</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+notification lors d'un snapshot
+    </p>
+    <p class="commitdetails"><strong>99</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        add_cam.xml&#160;<span class="new">(new&#160;57)</span>,
+        main.xml&#160;<span class="del">(del)</span>,
+        multi_video.xml&#160;<span class="new">(new&#160;21)</span>,
+        multi_view.xml&#160;<span class="del">(del)</span>,
+        notification.xml&#160;<span class="new">(new&#160;21)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-23 19:35</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">36</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>64</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        list_item.xml&#160;<span class="change">(+2&#160;-1)</span>,
+        main.xml&#160;<span class="change">(+54&#160;-50)</span>,
+        multi_view.xml&#160;<span class="change">(+5&#160;-5)</span>,
+        view.xml&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-22 17:48</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">35</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ajout control simple + recherche d'optimisation pour 3g
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_about.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-22 16:04</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">34</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>29</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        main.xml&#160;<span class="change">(+17&#160;-16)</span>,
+        multi_view.xml&#160;<span class="change">(+4&#160;-4)</span>,
+        video.xml&#160;<span class="change">(+8&#160;-8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-22 14:25</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">33</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>28</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        multi_view.xml&#160;<span class="new">(new&#160;21)</span>,
+        video.xml&#160;<span class="change">(+7&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-18 23:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">30</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-18 11:12</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">29</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+2&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-16 11:09</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">23</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        main.xml&#160;<span class="change">(+6&#160;-1)</span>,
+        view.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-16 10:33</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">22</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+seb
+    </p>
+    <p class="commitdetails"><strong>70</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+70&#160;-36)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-15 18:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">21</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>39</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        main.xml&#160;<span class="change">(+10)</span>,
+        video.xml&#160;<span class="change">(+29&#160;-18)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-14 15:16</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">13</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+useless
+    </p>
+    <p class="commitdetails"><strong>22</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+22&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-12 21:25</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">12</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+nouvel affichage de la liste
+    </p>
+    <p class="commitdetails"><strong>21</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        list_item.xml&#160;<span class="change">(+21&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-12 16:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">10</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="change">(+9&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-11 19:51</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">7</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        video.xml&#160;<span class="new">(new&#160;7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a>
+    <span class="date">2011-02-09 23:12</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">4</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>76</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>serealisation/res/layout</strong>:
+        dialog_about.xml&#160;<span class="new">(new&#160;20)</span>,
+        list_item.xml&#160;<span class="new">(new&#160;8)</span>,
+        main.xml&#160;<span class="new">(new&#160;37)</span>,
+        view.xml&#160;<span class="new">(new&#160;11)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Development Statistics for /trunk</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Development Statistics for /trunk</h1>
+<dl class="attributes">
+    <dt>Generated:</dt>
+    <dd><span class="date">2011-03-20 18:33</span></dd>
+    <dt>Head revision:</dt>
+    <dd>100</dd>
+    <dt>Report Period:</dt>
+    <dd><span class="date">2011-02-09</span> to <span class="date">2011-03-20</span></dd>
+    <dt>Total Files:</dt>
+    <dd>59</dd>
+    <dt>Total Lines of Code:</dt>
+    <dd>6008</dd>
+    <dt>Developers:</dt>
+    <dd>4</dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=Project%20%2Ftrunk%20%7B0}%20on%202011-03-20%20has%206 008%20Lines%20of%20Code%20and%204%20Developers%3A%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+<ul class="linklist">
+    <li><a href="developers.html">Developers</a></li>
+    <li><a href="commitlog.html">Commit Logs</a></li>
+    <li><a href="loc.html">Lines of Code</a></li>
+    <li><a href="file_sizes.html">File Statistics</a></li>
+    <li><a href="dir_sizes.html">Directory Sizes</a></li>
+    <li><a href="repomap.html">Repo Heatmap</a></li>
+    <li><a href="churn.html">LOC and Churn</a></li>
+    <li><a href="cloud.html">Cloud Commit</a></li>
+</ul>
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><a href="loc.html"><img src="loc_small.png" alt="Lines of Code" width="512" height="320" /></a></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of code lines they wrote or changed">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Lines of Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_nahelou.jerome@gmail.com.html" class="author">nahelou.jerome@gmail.com</a></th>
+        <td>12285 (84.2%)</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_quentin.nebout.html" class="author">quentin.nebout</a></th>
+        <td>1539 (10.5%)</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_romain.solve.html" class="author">romain.solve</a></th>
+        <td>747 (5.1%)</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_quintardfabien@gmail.com.html" class="author">quintardfabien@gmail.com</a></th>
+        <td>17 (0.1%)</td>
+      </tr>
+    </tbody>
+  </table>
+
+<a href="developers.html">more...</a></div>
+<div class="section">
+<h2>Tag Cloud of Words in Commit Log Messages</h2>
+<p><font size="8">ajout </font> <font size="3">alert </font> <font size="5">avec </font> <font size="5">besoins </font> <font size="5">bouton </font> <font size="3">cadre </font> <font size="5">camera </font> <font size="5">cameracontrol </font> <font size="4">changement </font> <font size="3">conflit </font> <font size="3">connexion </font> <font size="3">control </font> <font size="3">controle </font> <font size="5">correction </font> <font size="5">debut </font> <font size="3">delai </font> <font size="3">design </font> <font size="4">detection </font> <font size="3">dialog </font> <font size="4">dispo </font> <font size="3">edit </font> <font size="4">etude </font> <font size="4">existant </font> <font size="4">factorisation </font> <font size="4">fichier </font> <font size="5">fonctions </font> <font size="5">gestion </font> <font size="3">impl </font> <font size="3">media </font> <font size="3">mentation </font> <font size="5">mettre </font> <font size="3">mise </font> <font size="4">modification </font> <font size="3">motion </font> <font size="3">mpeg4 </font> <font size="5">multi </font> <font size="4">nettoyage </font> <font size="4">notification </font> <font size="3">place </font> <font size="3">player </font> <font size="7">pour </font> <font size="3">pref </font> <font size="8">rapport </font> <font size="3">recherche </font> <font size="3">regler </font> <font size="3">shared </font> <font size="3">snapshot </font> <font size="3">style </font> <font size="3">tester </font> <font size="3">todo </font> <font size="3">touchlistener </font> <font size="4">video </font> <font size="3">vous </font> </p><a href="cloud.html">more...</a></div>
+<div class="section">
+<h2>Directories</h2>
+<p class="dirtree">
+<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir.html">[root]</a> 
+(0 files, 0 lines)<br />
+&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation.html">serealisation</a> 
+(1 files, 33 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_Rapport.html">Rapport</a> 
+(10 files, 1795 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res.html">res</a> 
+(0 files, 0 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_drawable.html">drawable</a> 
+(2 files, 21 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_layout.html">layout</a> 
+(17 files, 400 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_menu.html">menu</a> 
+(2 files, 33 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_values-de.html">values-de</a> 
+(1 files, 118 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_values-en.html">values-en</a> 
+(1 files, 110 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_values-es.html">values-es</a> 
+(1 files, 34 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_values-fr.html">values-fr</a> 
+(1 files, 121 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_values.html">values</a> 
+(2 files, 121 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_res_xml.html">xml</a> 
+(1 files, 38 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_src.html">src</a> 
+(0 files, 0 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_src_com.html">com</a> 
+(0 files, 0 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_src_com_myapps.html">myapps</a> 
+(13 files, 2658 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_serealisation_src_com_myapps_utils.html">utils</a> 
+(7 files, 526 lines)<br />
+</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>
