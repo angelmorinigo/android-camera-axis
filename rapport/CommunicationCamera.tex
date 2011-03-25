@@ -30,8 +30,8 @@ Nous avons pour cela réutilisé la classe existante
 et ajouté une méthode qui renvoie les identifiants en \textit{base64} sous la forme \textit{login:password}. Par conséquent, l'authentification est réalisée à chaque requête, même si toutes les actions ne nécessitent pas de droits spécifiques. La méthode retourne enfin l'objet \textit{HttpURLConnection} qui pourra être utilisé pour analyser la réponse et récupérer le contenu avec \textit{getInputStream} dans le cas d'une capture par exemple.
 
 \subsection{Chargement de la configuration}
-Avant de récupérer le flux vidéo distant, nous utilisons la méthode \textit{loadConfig} dans le constructeur de la classe \textit{CameraControl} afin de récupérer et établir la liste des fonctionnalités supportées par la caméra. Cette méthode permet aussi de récupérer certains paramètres comme les résolutions et formats d'image disponibles.
-Le principe est d'envoyer deux requêtes à la caméra puis de parser le contenu des réponse pour remplir les deux tableaux d'entiers suivants :
+Avant de récupérer le flux vidéo distant, nous utilisons la méthode \textit{loadConfig} dans le constructeur de la classe \textit{CameraControl} afin de récupérer et établir la liste des fonctionnalités supportées par la caméra. Cette méthode permet aussi de récupérer certains paramètres comme les résolutions et les formats d'image disponibles.
+Le principe est d'envoyer deux requêtes à la caméra puis de parser le contenu des réponses pour remplir les deux tableaux d'entiers suivants :
 \begin{itemize}
 	\item \textit{functionProperties} qui conserve les différentes propriétés des fonctions \textit{PAN}, \textit{TILT}, \textit{ZOOM}, \textit{FOCUS} et \textit{IRIS}.
 	\item \textit{currentConfig} qui conserve l'état actuel des fonctionnalités
@@ -56,7 +56,7 @@ if (property.contains("pan")) {
 	}
 }
 \end{lstlisting}
-Les constantes identifiant les différentes capacités possibles sont : \textit{ABSOLUTE}, \textit{RELATIVE}, \textit{DIGITAL}, \textit{AUTO}, \textit{CONTINUOUS}.
+Les constantes identifiants les différentes capacités possibles sont : \textit{ABSOLUTE}, \textit{RELATIVE}, \textit{DIGITAL}, \textit{AUTO}, \textit{CONTINUOUS}.
 A la fin du parsage de la première requête, \textit{currentConfig} est mis à jour pour les fonctionnalités concernées par \textit{functionProperties} avec la boucle suivante :
 \begin{lstlisting}
 for (int i = 0; i < NB_BASIC_FUNC; i++)
@@ -72,7 +72,7 @@ Le parsage de la réponse permet de mettre à jour la configuration relative à 
 
 Une fois le chargement de la configuration effectué, il sera possible de savoir si telle fonctionnalité est supportée et/ou activée par l'appel aux méthodes respectives \textit{isSupported} et \textit{isEnabled}.
 De même, \textit{enableFunction} et \textit{disableFunction} permettront de faire varier l'état d'une fonction (\textit{ENABLED}/\textit{DISABLED}). Cependant nous n'avons pas utilisé ces deux dernières méthodes car il n'est pas possible de savoir dans quel état actuel se trouve la caméra pour une certaine fonctionnalité.
-En effet, plusieurs personnes pouvant agir tour à tour sur les paramètres de la caméra.
+En effet, plusieurs personnes peuvent agir tour à tour sur les paramètres de la caméra.
 
 \subsection{Liste des commandes utilisées}
 Le tableau suivant présente les différentes commandes distantes que nous avons
