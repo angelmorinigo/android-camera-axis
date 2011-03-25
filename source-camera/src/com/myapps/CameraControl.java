@@ -82,7 +82,7 @@ public class CameraControl {
 		String line, property, value;
 
 		try {
-			con = sendCommand("axis-cgi/com/ptz.cgi?info=1&camera=1");
+			con = sendCommand("axis-cgi/com/ptz.cgi?info=1&camera=" + String.valueOf(cam.channel));
 			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				result = con.getInputStream();
 				in = new BufferedReader(new InputStreamReader(
@@ -358,7 +358,7 @@ public class CameraControl {
     }
 
     /**
-     * Get SnapShop from Axis Camera
+     * Get SnapShot from Axis Camera
      * 
      * @param resolution
      *            You can choose the snapshot resolution from : "1280x1024",
@@ -366,14 +366,14 @@ public class CameraControl {
      *            "704x480", "VGA", "640x480", "640x360", "2CIFEXP", "2CIF",
      *            "704x288", "704x240", "480x360", "CIF", "384x288", "352x288",
      *            "352x240", "320x240", "240x180", "QCIF", "192x144", "176x144",
-     *            "176x120", "160x120"
+     *            "176x120", "160x120" (dependent on the camera)
      * @return The Bitmap created by the camera
      * @throws IOException
      *             If camera can't take snapshot or if the camera is unreachable
      */
     public Bitmap takeSnapshot(String resolution) throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/jpg/image.cgi"
-		+ "?resolution=" + resolution);
+		+ "?resolution=" + resolution + "&camera=" + String.valueOf(cam.channel));
 	Log.i(activity.getString(R.string.logTag), "Snapshot");
 	InputStream stream = con.getInputStream();
 	Bitmap bmp = BitmapFactory.decodeStream(stream);

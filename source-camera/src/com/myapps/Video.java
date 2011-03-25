@@ -85,10 +85,10 @@ public class Video extends Activity {
 	    int netType = info.getType();
 	    if (netType == ConnectivityManager.TYPE_WIFI) {
 		Log.i(getString(R.string.logTag), "Wifi detecte");
-		url = "axis-cgi/mjpg/video.cgi?resolution=320x240";
+		url = "axis-cgi/mjpg/video.cgi?resolution=320x240&camera=" + String.valueOf(cam.channel);
 	    } else {
 		Log.i(getString(R.string.logTag), "Reseau detecte");
-		url = "axis-cgi/mjpg/video.cgi?resolution=160x120";
+		url = "axis-cgi/mjpg/video.cgi?resolution=160x120&camera=" + String.valueOf(cam.channel);
 	    }
 
 	    camC = new CameraControl(cam, this);

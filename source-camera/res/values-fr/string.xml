@@ -4,15 +4,15 @@
 
 	<!-- AddCam -->
 	<string name="addCam">Ajouter une caméra</string>
-	<string name="addCamQR">Ajouter Depuis un QrCode</string>
+	<string name="addCamQR">Ajouter Depuis un QRCode</string>
 	<string name="description">Description</string>
 	<string name="descriptionHint">Entrez un descriptif</string>
 	<string name="login">Identifiant :</string>
 	<string name="loginHint">Entrez un identifiant </string>
 	<string name="pass">Mot de pass :</string>
 	<string name="passHint">Entrez un mdp</string>
-	<string name="ip">Adresse ip :</string>
-	<string name="ipHint">Entrez une ip</string>
+	<string name="ip">Adresse IP :</string>
+	<string name="ipHint">Entrez une IP</string>
 	<string name="port">Port :</string>
 	<string name="portHint">Entrez un port</string>
 	<string name="chan">Canal :</string>
@@ -33,19 +33,19 @@
 	<string name="edit">Modifier</string>
 	<string name="editCam">Modifier une caméra</string>
 	<string name="addr">Adresse :</string>
-	<string name="addrHint">Entrez une Adresse</string>
+	<string name="addrHint">Entrez une adresse</string>
 
 	<!-- imp exp -->
 	<string name="enterUrl">Entrez une URL</string>
 
 	<!-- mds video -->
-	<string name="run">Demarrer</string>
+	<string name="run">Démarrer</string>
 
 	<!-- main view -->
 	<string name="selectCam">Séléctionner une caméra</string>
 
 	<!-- multi view -->
-	<string name="cameraAlertTitle">Nombre de camera a afficher :</string>
+	<string name="cameraAlertTitle">Nombre de caméras à afficher :</string>
 
 	<!-- main menu -->
 	<string name="multiView">Mode multi-vues</string>
@@ -64,26 +64,26 @@
 	<string name="Delai">Delai</string>
 	<string name="DelaiFPS">Delai FPS</string>
 	<string name="DelaiFPSHint">Un delai (en ms) élevé entre chaque
-		raffraichissement diminue les fps mais permet la reduction de data !
+		raffraichissement diminue les FPS mais permet la réduction de data!
 		(mode multi-vues uniquement)</string>
-	<string name="DelaiTO">Time-out connection HTTP</string>
-	<string name="DelaiTOHint">Definir soit-meme le temps de non reponse des
-		requetes HTTP (en ms)</string>
-	<string name="DelaiNMD">Delai de Notification Motion Detection</string>
-	<string name="DelaiNMDHint">Definir un interval minimum personnalisé entre deux
-		notification
-		pour la detection de mouvements (en ms)</string>
+	<string name="DelaiTO">Time-out connexion HTTP</string>
+	<string name="DelaiTOHint">Définir soit-même le temps de non réponse des
+		requêtes HTTP (en ms)</string>
+	<string name="DelaiNMD">Délai de notification Motion Detection</string>
+	<string name="DelaiNMDHint">Définir un intervalle minimum personnalisé entre deux
+		notifications
+		pour la détection de mouvements (en ms)</string>
 
 	<string name="other">Autre</string>
 	<string name="disableTricky">Désactiver les astuces</string>
-	<string name="disableTrickyHint">Ne lance plus les astuces au demarrage</string>
+	<string name="disableTrickyHint">Ne lance plus les astuces au démarrage</string>
 
 	<string name="sens">Sensibilité</string>
-	<string name="sensCam">Controle de la camera</string>
-	<string name="sensCamHint">Vous pouvez augmenter ou diminuer la sensibilite du
+	<string name="sensCam">Contrôle de la camera</string>
+	<string name="sensCamHint">Vous pouvez augmenter ou diminuer la sensibilité du
 		PTZ</string>
-	<string name="sensMD">Detection des mouvements</string>
-	<string name="sensMDHint">Definie le seuil de la detection des mouvements
+	<string name="sensMD">Détection de mouvements</string>
+	<string name="sensMDHint">Définit le seuil de la détection de mouvements
 	</string>
 
 
@@ -91,16 +91,16 @@
 
 
 	<!-- Messages -->
-	<string name="messageRemove">Etes-vous sur de vouloir supprimer cette camera ?
+	<string name="messageRemove">Etes-vous sur de vouloir supprimer cette caméra?
 	</string>
-	<string name="messageChoose">Que voulez-vous faire ?</string>
-	<string name="messageBienvenue">Bienvenue !</string>
+	<string name="messageChoose">Que voulez-vous faire?</string>
+	<string name="messageBienvenue">Bienvenue!</string>
 	<string name="messageAstuce">Astuce : </string><string name="messageAbout">Version 1.0\nDéveloppé par :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npour Samsung Galaxy S
 		sous android 2.1\n</string>
 	<string name="messageExport">Fichier de sortie :</string>
-	<string name="messageImport">Fichier a importer :</string>
-	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son depot
+	<string name="messageImport">Fichier à importer :</string>
+	<string name="messageShare">Retrouvez gratuitement Camera-Axis sur son dépôt
 		svn http://code.google.com/p/android-camera-axis/</string>
 
 	<!-- bouttons -->
@@ -115,7 +115,7 @@
 	<string name="non">Non</string>
 
 <string name="shareTitle">Partager avec...</string>
-	<string name="protocol_prompt">Choisir un protocol</string>
+	<string name="protocol_prompt">Choisir un protocole</string>
 
 
 
@@ -126,4 +126,17 @@
 <string name="snapshotSaved">Capture enregistrée : </string>
 <string name="messageMDError">La caméra ne gère pas la détection de mouvements</string>
 <string name="messageCamError">Caméra introuvable</string>
+
+<string name="astuce1">Appuyez sur Menu pour accéder aux options.</string>
+<string name="astuce2">Vous pouvez visualiser jusqu\'à 6 caméras simultanément.</string>
+<string name="astuce3">En touchant l\'écran vous pouvez arrêter les caméras ou en choisir d\'autres dans la liste.</string>
+<string name="astuce4">De nouvelles astuces seront bientôt disponibles.</string>
+<string name="astuce5">Vos caméras sont sauvegardées automatiquement.</string>
+<string name="astuce6">Vous pouvez activer jusqu\'à 9 fenêtres de détection de mouvements par camera.</string>
+<string name="astuce7">Sélectionner un cadre dans lequel surveiller les mouvements.</string>
+<string name="astuce8">Régler les paramètres avancés de la caméra en activant les contrôles avancés dans le menu durant la visualisation de la vidéo.</string>
+<string name="astuce9">Diriger la caméra tactilement.</string>
+<string name="astuce10">Une notification vous informe que vous avez bien reçu votre snapshot.</string>
+<string name="astuce11">Vous pouvez désactiver cette astuce dans les paramètres.</string>
+<string name="astuce12">N\'hésitez pas à partager cette application.</string>
 </resources>

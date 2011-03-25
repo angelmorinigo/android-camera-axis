@@ -30,7 +30,7 @@ public class Dialog_welcome extends Dialog{
         text = (TextView) findViewById(R.id.text);
         
         Random randomGenerator = new Random();
-        Astuces a = new Astuces();
+        Astuces a = new Astuces(getContext());
         int randomInt = randomGenerator.nextInt(100)%a.getMax();
 
         text.setText(R.string.messageAstuce);
@@ -55,7 +55,7 @@ public class Dialog_welcome extends Dialog{
         @Override
         public void onClick(View v) {
             Random randomGenerator = new Random();
-            Astuces a = new Astuces();
+            Astuces a = new Astuces(getContext());
             int randomInt = randomGenerator.nextInt(100)%a.getMax();
             text.setText(R.string.messageAstuce);
             cheats = a.getLabel(randomInt);

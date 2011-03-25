@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="cameraAlertTitle">Number of cameras to be displayed :</string>
+	<string name="cameraAlertTitle">Number of cameras to display :</string>
 	<string name="aboutTitle">About</string>
 
 	<!-- AddCam -->
 	<string name="addCam">Add a camera</string>
-	<string name="addCamQR">Add from QrCode</string>
+	<string name="addCamQR">Add from QRCode</string>
 	<string name="description">Description :</string>
 	<string name="descriptionHint">Enter a descriptive</string>
 	<string name="login">Login :</string>
-	<string name="loginHint">Entrer your login </string>
-	<string name="ip">Ip :</string>
-	<string name="ipHint">Entrer a ip</string>
+	<string name="loginHint">Enter your login </string>
+	<string name="ip">IP :</string>
+	<string name="ipHint">Enter an IP</string>
 	<string name="pass">Password :</string>
-	<string name="passHint">Entrer your password</string>
+	<string name="passHint">Enter your password</string>
 	<string name="port">Port :</string>
-	<string name="portHint">Entrer a port</string>
+	<string name="portHint">Enter a port</string>
 	<string name="chan">Channel :</string>
-	<string name="chanHint">Entrer a channel </string>
+	<string name="chanHint">Enter a channel </string>
 	<string name="add">Add</string>
 	<string name="cancel">Cancel</string>
 
@@ -33,10 +33,10 @@
 	<string name="edit">Edit</string>
 	<string name="editCam">Change camera</string>
 	<string name="addr">Address :</string>
-	<string name="addrHint">Entrer an Address</string>
+	<string name="addrHint">Enter an address</string>
 
 	<!-- imp exp -->
-	<string name="enterUrl">Entrer a URL</string>
+	<string name="enterUrl">Enter a URL</string>
 
 	<!-- mds video -->
 	<string name="run">Start</string>
@@ -48,8 +48,8 @@
 	<string name="multiView">Multi-View mode</string>
 	<string name="more">More</string>
 	<string name="params">Settings</string>
-	<string name="exportConfig">Export Configuration</string>
-	<string name="importConfig">Import Configuration</string>
+	<string name="exportConfig">Export configuration</string>
+	<string name="importConfig">Import configuration</string>
 	<string name="share">Share</string>
 
 	<!-- video menu -->
@@ -60,13 +60,13 @@
 	<string name="disableAC">Disable advanced controls</string><string name="Delai">Timeout</string>
 	<string name="DelaiFPS">Timeout FPS</string>
 	<string name="DelaiFPSHint">A delay (in ms) between each refresh reduces FPS
-		but allows the reduction of data! (Multi-view mode only)</string>
+		but allows the reduction of data! (Multi-View mode only)</string>
 	<string name="DelaiTO">Timeout connection HTTP</string>
-	<string name="DelaiTOHint">Define the timeout for HTTP connection (ms)
+	<string name="DelaiTOHint">Define the timeout for HTTP connection (in ms)
 	</string>
 	<string name="DelaiNMD">Delay Notification Motion Detection</string>
 	<string name="DelaiNMDHint">Define a minimum interval between two custom
-		notification for motion detection (in ms)</string>
+		notifications for motion detection (in ms)</string>
 
 	<string name="other">Other</string>
 	<string name="disableTricky">Disable tips</string>
@@ -74,24 +74,23 @@
 
 	<string name="sens">Sensitivity</string>
 	<string name="sensCam">Camera control</string>
-	<string name="sensCamHint">You can increase or decrease the sensitivity of the
-		PTZ</string>
+	<string name="sensCamHint">You can increase or decrease the sensitivity of PTZ</string>
 	<string name="sensMD">Motion Detection</string>
-	<string name="sensMDHint">Defined the threshold of motion detection
-	</string>
+	<string name="sensMDHint">Define the threshold of motion detection</string>
 
 
 	<!-- Messages -->
 	<string name="messageRemove">Do you want to delete this camera?
 	</string>
 	<string name="messageChoose">What do you do?</string>
-	<string name="messageBienvenue">Welcome !</string>
-	<string name="messageAstuce">Trick : </string><string name="messageAbout">Version 1.0\nDeveloped by :\nJerome NAHELOU,
+	<string name="messageBienvenue">Welcome!</string>
+	<string name="messageAstuce">Trick : </string>
+	<string name="messageAbout">Version 1.0\nDeveloped by :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\nfor Samsung Galaxy S
 		with android 2.2\n</string>
 	<string name="messageExport">Output file:</string>
 	<string name="messageImport">Input file:</string>
-	<string name="messageShare">Find free-Axis Camera on its svn deposit
+	<string name="messageShare">Find Camera-Axis for free on its svn deposit
 		http://code.google.com/p/android-camera-axis/</string>
 
 	<!-- Buttons -->
@@ -110,8 +109,21 @@
 
 <string name="messageConnexion">Please check your connection</string>
 
-<string name="snapshotFormat">Snapshot Format</string>
+<string name="snapshotFormat">Snapshot format</string>
 <string name="snapshotSaved">Snapshot saved : </string>
-<string name="messageMDError">The camera doesn\'t support Motion Detection</string>
+<string name="messageMDError">The camera does not support Motion Detection</string>
 <string name="messageCamError">Unobtainable camera</string>
+
+<string name="astuce1">Press Menu to display options</string>
+<string name="astuce2">You can simultaneously visualize until 6 cameras</string>
+<string name="astuce3">By touching the screen you can turn the cameras off or choose other ones available in the list.</string>
+<string name="astuce4">New tricks will be available soon.</string>
+<string name="astuce5">Your cameras are automatically saved.</string>
+<string name="astuce6">You can add until 9 Motion Detection windows per camera.</string>
+<string name="astuce7">Select a frame in which you can monitor movements.</string>
+<string name="astuce8">Settle the camera parameters by activating advanced controls in the menu while the video is displaying.</string>
+<string name="astuce9">Control the camera by touching the screen.</string>
+<string name="astuce10">A notification tells you that you have received your snapshot.</string>
+<string name="astuce11">You can deactivate this trick in the settings.</string>
+<string name="astuce12">Do not hesitate to share this application.</string>
 </resources>

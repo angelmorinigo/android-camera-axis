@@ -7,13 +7,13 @@
 
 	<!-- AddCam -->
 	<string name="addCam">fügen Sie eine Kamera</string>
-	<string name="addCamQR">Hinzufügen von QrCode</string>
+	<string name="addCamQR">Hinzufügen von QRCode</string>
 	<string name="description">Beschreibung :</string>
 	<string name="descriptionHint">Geben Sie einen beschreibenden</string>
 	<string name="login">Login :</string>
 	<string name="loginHint">Geben Sie einen login</string>
-	<string name="ip">ip :</string>
-	<string name="ipHint">Geben Sie einen ip</string>
+	<string name="ip">IP :</string>
+	<string name="ipHint">Geben Sie einen IP</string>
 	<string name="pass">Passwort :</string>
 	<string name="passHint">Geben Sie einen passwort"</string>
 	<string name="port">Port :</string>
@@ -89,16 +89,16 @@
 
 	<!-- Message -->
 	<string name="messageRemove">Sind Sie sicher, dass Sie diese Kamera wirklich
-		löschen ?
+		löschen?
 	</string>
-	<string name="messageChoose">Was tun Sie ?</string>
-	<string name="messageBienvenue">Willkommen !</string><string name="messageAstuce">Trick : </string>
+	<string name="messageChoose">Was tun Sie?</string>
+	<string name="messageBienvenue">Willkommen!</string><string name="messageAstuce">Trick : </string>
 	<string name="messageAbout">Version 1.0\nEntwicklung von :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\nfür Samsung Galaxy S
 		mit android 2.1\n</string>
 	<string name="messageExport">Exportieren :</string>
 	<string name="messageImport">Importieren :</string>
-	<string name="messageShare">Finden Sie kostenlos-Axis-Kamera auf ihre svn
+	<string name="messageShare">Finden Sie Camera-Axis kostenlos auf ihre svn
 		Einlage
 		http://code.google.com/p/android-camera-axis/</string>
 
@@ -121,4 +121,17 @@
 <string name="snapshotSaved">Snapshot gespeichert : </string>
 <string name="messageMDError">Die Kamera nicht unterstützt Motion Detection</string>
 <string name="messageCamError">Kamera Unerreichbar</string>
+
+<string name="astuce1">Appuyez sur Menu pour accéder aux options</string>
+<string name="astuce2">Vous pouvez visualiser jusqu\'à 6 caméras simultanément</string>
+<string name="astuce3">En touchant l\'écran vous pouvez stopper ou changer les cameras</string>
+<string name="astuce4">De prochaines astuces bientôt disponibles</string>
+<string name="astuce5">Vos caméras sont sauvegardées automatiquement</string>
+<string name="astuce6">Vous pouvez activer jusqu\'à 9 fenêtres de détection de mouvements par camera</string>
+<string name="astuce7">Sélectionner un cadre dans lequel surveiller les mouvements</string>
+<string name="astuce8">Régler les paramètres avancés de la caméra en activant les contrôles avancés dans le menu durant la visualisation de la vidéo</string>
+<string name="astuce9">Diriger la caméra tactilement</string>
+<string name="astuce10">Une notification vous informe que vous avez bien reçu votre snapshot</string>
+<string name="astuce11">Vous pouvez désactiver cette astuce dans les paramètres</string>
+<string name="astuce12">N\'hésitez pas à partager cette application</string>
 </resources>

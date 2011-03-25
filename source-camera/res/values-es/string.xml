@@ -5,15 +5,15 @@
 
 	<!-- AddCam -->
 	<string name="addCam">Añadir càmara</string>
-	<string name="addCamQR">Añadir a partir de un Qrcode</string>
+	<string name="addCamQR">Añadir a partir de un QRcode</string>
 	<string name="description">Descripción</string>
 	<string name="descriptionHint">Introduzca un descriptivo</string>
 	<string name="login">Identificación :</string>
 	<string name="loginHint">Entrada </string>
 	<string name="pass">Contraseña :</string>
 	<string name="passHint">Escriba una contraseña</string>
-	<string name="ip">Ip :</string>
-	<string name="ipHint">Escriba una ip</string>
+	<string name="ip">IP :</string>
+	<string name="ipHint">Escriba una IP</string>
 	<string name="port">Puerto :</string>
 	<string name="portHint">Escriba un puerto</string>
 	<string name="chan">Canal :</string>
@@ -32,8 +32,8 @@
 	<!-- edit Cam -->
 	<string name="edit">Edición</string>
 	<string name="editCam">Cambiar la cámara</string>
-	<string name="addr">Ip :</string>
-	<string name="addrHint">Ip</string>
+	<string name="addr">Dirección :</string>
+	<string name="addrHint">Dirección</string>
 
 	<!-- imp exp -->
 	<string name="enterUrl">Introducir URL</string>
@@ -49,7 +49,7 @@
 	<string name="more">Más</string>
 	<string name="params">Configuración</string>
 	<string name="exportConfig">Exportar configuración</string>
-	<string name="importConfig">Importación Configuration</string>
+	<string name="importConfig">Importación configuration</string>
 	<string name="share">Compartir</string>
 
 	<!-- video menu -->
@@ -64,7 +64,7 @@ pero permite la reducción de los datos! (Multi-vista sólo)</string>
 	<string name="DelaiTO">Tiempo de espera de conexión HTTP</string>
 	<string name="DelaiTOHint">Definir el tiempo de espera para la conexión HTTP (ms)</string>
 	<string name="DelaiNMD">Notificación de retardo de detección de movimiento</string>
-	<string name="DelaiNMDHint">Define un intervalo mínimo entre dos notificación personalizada de detección de movimiento (en ms)</string>
+	<string name="DelaiNMDHint">Define un intervalo mínimo entre dos notificaciones personalizadas de detección de movimiento (en ms)</string>
 
 	<string name="other">Otros</string>
 	<string name="disableTricky">Deshabilitar consejos</string>
@@ -82,13 +82,13 @@ pero permite la reducción de los datos! (Multi-vista sólo)</string>
 	<string name="messageRemove">¿Desea eliminar esta cámara?
 	</string>
 	<string name="messageChoose">¿Qué hacer?</string>
-	<string name="messageBienvenue">Bienvenido!</string>
+	<string name="messageBienvenue">¡Bienvenido!</string>
 	<string name="messageAstuce">Truco : </string><string name="messageAbout">Versión 1.0\nDesarrollado por :\nJerome NAHELOU,
 		Quentin NEBOUT, Romain SOLVE, Fabien QUINTARD\npara Samsung Galaxy S
 		con android 2.2\n</string>
 	<string name="messageExport">Archivo de salida:</string>
 	<string name="messageImport">Archivo de entrada:</string>
-	<string name="messageShare">Encuentra la cámara libre del Eje en su depósito svn
+	<string name="messageShare">Encuentra libramente Camera-Axis en su depósito svn
 		http://code.google.com/p/android-camera-axis/</string>
 
 	<!-- Buttons -->
@@ -108,6 +108,19 @@ pero permite la reducción de los datos! (Multi-vista sólo)</string>
 <string name="messageConnexion">Por favor, compruebe su conexión</string>
 <string name="snapshotFormat">Formato de instantánea</string>
 <string name="snapshotSaved">Instantánea guardada</string>
-<string name="messageMDError">La cámara no soporta la detección de movimientos</string>
+<string name="messageMDError">La cámara no soporta la detección de movimiento</string>
 <string name="messageCamError">Cámara inalcanzable</string>
+
+<string name="astuce1">Appuyez sur Menu pour accéder aux options</string>
+<string name="astuce2">Vous pouvez visualiser jusqu\'à 6 caméras simultanément</string>
+<string name="astuce3">En touchant l\'écran vous pouvez stopper ou changer les cameras</string>
+<string name="astuce4">De prochaines astuces bientôt disponibles</string>
+<string name="astuce5">Vos caméras sont sauvegardées automatiquement</string>
+<string name="astuce6">Vous pouvez activer jusqu\'à 9 fenêtres de détection de mouvements par camera</string>
+<string name="astuce7">Sélectionner un cadre dans lequel surveiller les mouvements</string>
+<string name="astuce8">Régler les paramètres avancés de la caméra en activant les contrôles avancés dans le menu durant la visualisation de la vidéo</string>
+<string name="astuce9">Diriger la caméra tactilement</string>
+<string name="astuce10">Une notification vous informe que vous avez bien reçu votre snapshot</string>
+<string name="astuce11">Vous pouvez désactiver cette astuce dans les paramètres</string>
+<string name="astuce12">N\'hésitez pas à partager cette application</string>
 </resources>

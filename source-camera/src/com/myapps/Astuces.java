@@ -1,29 +1,34 @@
 package com.myapps;
+
+import android.content.Context;
+
 public class Astuces {
 	
-	private String s[] = {
-			"Appuyez sur Menu pour accéder aux options",
-			"Vous pouvez visualiser jusqu'à 6 caméras simultanément",
-			"En touchant l'�cran vous pouvez stopper ou changer les cameras", 
-			"De prochaines astuces bient�t disponibles",
-			"Vos cam�ras sont sauvegardées automatiquement",
-			"Vous pouvez activer jusqu'à 9 fenêtres de dét�ction de mouvements par camera",
-			"Selectionner un cadre dans lequel surveiller les mouvements",
-			"Regler les parametres avanc�s de la camera en activant les controles avances dans le menu durant la visualisation de la video",
-			"Diriger la camera tactilement",
-			"Une notification vous informe que vous avez bien recu votre snapshot",
-			"Vous pouvez desactiver cette astuce dans les paramètres",
-			"N'hésitez pas � partager cette application"} ;
-		
+	private String[] s;	
 	private int max = 5 ;
-	Astuces(){
+	private Context context;
+	
+	public Astuces(Context mContext) {
+		context = mContext;
+		s[0] = context.getString(R.string.astuce1);
+		s[1] = context.getString(R.string.astuce2);
+		s[2] = context.getString(R.string.astuce3);
+		s[3] = context.getString(R.string.astuce4);
+		s[4] = context.getString(R.string.astuce5);
+		s[5] = context.getString(R.string.astuce6);
+		s[6] = context.getString(R.string.astuce7);
+		s[7] = context.getString(R.string.astuce8);
+		s[8] = context.getString(R.string.astuce9);
+		s[9] = context.getString(R.string.astuce10);
+		s[10] = context.getString(R.string.astuce11);
+		s[11] = context.getString(R.string.astuce12);
 	}
 	
 	public String getLabel(int i) {
-	      return s[i] ;
-	   }
+		return s[i];
+	}
 	
-	public int getMax(){
+	public int getMax() {
 		return max;
 	}
 	
