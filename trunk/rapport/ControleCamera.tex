@@ -9,7 +9,7 @@ indique la réussite de la requête, cependant nous ne savons pas si l'action a 
 La fonction \textit{takeSnapshot} réalise la requête de capture d'écran avec comme résolution la valeur passée en paramètre.
 Elle retourne les données renvoyées par la caméra sous forme d'un objet \textit{Bitmap}.
 
-Cette classe s'occupe également des activation/désactivation de la détection :
+Cette classe s'occupe également de l'activations/désactivation de la détection :
 \begin{itemize}
 	\item \textit{addMotionD} ajoute une fenêtre de détection.
 	\item \textit{removeMotionD} supprime une fenêtre de détection existante.
@@ -18,7 +18,7 @@ Cette classe s'occupe également des activation/désactivation de la détection 
 \end{itemize}
 
 Lors du chargement du menu et du layout des contrôles avancés de la caméra, nous vérifions si les fonctionnalités correspondantes sont supportées et/ou activées à l'aide des fonctions
-\textit{isSupported} et \textit{isEnabled}. Un appui sur les boutons du menu (celui-ci apparaissant lors de l'appui sur la touche "Menu") déclenchera une alerte texte si la fonctionnalité n'est pas
+\textit{isSupported} et \textit{isEnabled}. Un appui sur le bouton du menu (celui-ci apparaissant lors de l'appui sur la touche "Menu") déclenchera une alerte texte si la fonctionnalité n'est pas
 disponible, alors que pour le layout des contrôles avancés nous définissons la disponibilité de la fonctionnalité directement par l'état du bouton (activé/désactivé).
 
 \subsection{TouchListener}
