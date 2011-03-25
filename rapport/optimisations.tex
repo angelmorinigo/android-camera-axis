@@ -1,0 +1,111 @@
+\chapter{Optimisations / Extensions futures}
+Malgrès que le projet semble fonctionnel, il reste tout de même de nombreuses
+améliorations et optimisations à apporter. 
+
+\subsubsection{Enregistrement vidéo et retransmission du signal audio}
+Actuelement notre projet ne permet pas l'enregistrement de vidéo dut
+principalement à l'utilisation du format \textit{MJPEG}. En effet, le seul moyen
+pour nous d'enregistrer la vidéo serai la sauvegarde successive des images recu.
+Un solution plus performente serait de surcharger un partie ou l'ensemble des
+classes permettant l'utilisation du protocole \textit{rtsp} afin d'y integrer un
+mécanisme d'authentification pour permettre l'utilisation de la vidéo
+\textit{mpeg4}. Ainsi nous pourrions remplacer le player \textit{mjpegView} par
+le media player proposé par android, afin de bénéficier de ses nombreux
+avantages (lecture, pause, enregistrement grace au \textit{mediaRecorder},
+retransmission du son grace au format \textit{mpeg4} \ldots).
+
+\subsubsection{Édition des fenêtres de détection  de mouvement}
+Nous offrons a l'utilisateur la possibilité de détécter les mouvement sur une
+fenetre au prealablement dessinée sur la vidéo. Cependant actuelement, le seul
+moyen d'editer cette fenetre est d'arreter la détéction puis de relancer
+celle-ci avec la nouvelle fenetre. En effet, meme si l'utilisateur modifie la
+fenetre durant la detection, nous n'avons pas eu le temps d'implémenter la mise
+à jour de sa position aupres de la caméra.\newline
+Pour ce faire, l'idée serait d'implementer une extension de notre classe
+\textit{drawRectOnTouchView} plus adapté à notre utilisation. Par exemple, la
+surcharge de la fonction \textit{onTouchEvent()} nous permetterait d'ajouter une
+mise a jour de la caméra (passé en parametre lors de sa construction) comme le
+montre l'esquisse de code suivante : 
+\begin{lstlisting}[format=java]
+public class drawRectOnTouchViewForCamera extends drawRectOnTouchView {
+private CameraControl cam;
+private boolean isDetectionRunning;
+public drawRectOnTouchView(Context context, AttributeSet attrs, camera c,
+boolean etat) { super(context,attrs);
+this.cam= new CameraControl(context,c);
+this.isDetectionRunning = stat;
+}
+
+
+public void updateWindow(drawRectOnTouchView d){
+  int absoluteTop = (int) (getStart().y * 10000 / d.getBottom());
+  int absoluteBottom = (int) (getEnd().y * 10000 / d.getBottom());
+  int absoluteRight = (int) (getEnd().x * 10000 / d.getRight());
+  int absoluteLeft = (int) (getStart().x * 10000 / d.getRight());
+  camC.updateMotionDParam("Top", ""
+                        + absoluteTop);
+  camC.updateMotionDParam("Bottom", ""
+                        + absoluteBottom);
+  camC.updateMotionDParam("Right", ""
+                        + absoluteRight);
+  camC.updateMotionDParam("Left", ""
+                        + absoluteLeft);
+               }         
+                        
+
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+/* Recuperer et trace le rectangle comme le defini la classe drawRectOnTouchView
+actuelement utilisee */
+ super(event);
+ switch (event.getAction()) {
+    case MotionEvent.ACTION_DOWN:
+        break;
+    case MotionEvent.ACTION_MOVE:
+        break;
+    case MotionEvent.ACTION_UP:
+        if(isDetectionRunning){
+updateWindow(this);
+        }
+        break;
+    }
+    return true;
+    }
+}
+\end{lstlisting}
+Ainsi grace à la classe \textit{drawRectOnTouchViewForCamera}, à chaque fois que
+l'utilisateur mettre a jours la fenetre, celle-ci sera directement (à plus ou
+moins la latence réseau) mise a jour sur la caméra.
+
+\subsubsection{Ajout d'évènements suite à la détection (mail / snapshot)}
+Lorsque qu'un mouvement est détecté par la caméra, notre notification consiste a
+prendre un cliché instantanné, puis d'emettre une vibration de l'appareil. Il
+sera pertinant d'ajouter à l'utilisateur la possibilité de regler le type de
+notification. Ceci pourrait etre effectuer simplement par l'activation ou la
+desactivation de ces traitements dans le \textit{SharedPreference} deja
+implémenté. \newline
+Nous pourrions utiliser la meme methode que celle utilisé pour l'activation ou
+la desactivation de la fenetre d'astuce. Il suffirait ensuite, dans le handler
+du service de detection de mouvement, de verifier l'etat (activer ou desactiver)
+des actions implémentées.
+
+\subsubsection{Compte utilisateur}
+La Caméra propose de nombreuses fonctions permettant de l'administrer a
+distance. Par exemple l'envoie d'une requete \textit{GET} à l'adresse 
+\begin{lstlisting}
+http://myserver/axis-cgi/admin/pwdgrp.cgi?
+action=add&user=joe&pwd=foo&grp=axuser&sgrp=axadmin:axoper:axview&comment=Joe
+\end{lstlisting}
+ajoute l'utilisateur joe avec le mot de pass foo. (Exemple tiré de la
+documentation officiel).\newline
+Parmis les principales fonctions d'adninistration disponible, on retrouve : 
+\begin{itemize}
+  \item Ajout-Suppression d'utilisateurs/groupes
+  \item Reset factory
+  \item Backup-Restore
+  \item Redemarrage du serveur
+  \item \ldots
+\end{itemize}
+On peut conclure qu'il existe encore un grand nombre de service fourni par la
+caméra à implémenter, même si la pluspart d'entre eux ne necessite aucunes
+modification majeur.
