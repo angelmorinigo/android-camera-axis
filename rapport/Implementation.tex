@@ -2,47 +2,48 @@
 \section{Projet Android}
 Un projet Android est découpé selon une arborescence précise.
 Lors de la création d'un projet, sous Eclipse, il faut choisir le nom du projet.
-Ce projet appartient à un package qui se présente de la forme suivante :
+Ce projet appartient à un package qui se présente sous la forme suivante :
 "extension\_domaine"."nom\_de\_domaine".android."nom\_du\_projet". Il faut
-ensuite choisir le nom de l'activity, celle qui sera lancée au démarage. Pour finir, il
-faut choisir le nom de l'application, qui sera affiché dans le menu principal.
-Aprés la création du projet, on obtient une architecture prédéfinie, qui
-conntient plusieurs dossiers et fichiers:
+ensuite choisir le nom de l'Activity qui sera lancée au démarrage. Pour
+finir, il faut choisir le nom de l'application qui sera affiché dans le menu principal.
+Aprés la création du projet, nous obtenons une architecture prédéfinie, qui
+contient plusieurs dossiers et fichiers:
 \begin{itemize}
-  \item Un dossier src qui devra contenir l'ensemble des fichiers sources d'un
-  même package (on peut créer plusieurs package dans le dossier src)
-  \item Un fichier R.java, généré par l'ADT, qui contient l'ensemble des
-  références aux ressources du projet
-  \item Un dossier assets, qui contient l'ensemble des données qui seront
-  chargées sur le mobile (ou tablette) lors de la compilation
-  \item Un dossier res, qui contient l'ensemble des ressources relatives aux
-  projet. Ce dossier contient plusieurs sous-dossiers:
+  \item Un dossier \textit{src} qui devra contenir l'ensemble des fichiers
+  sources d'un même package (plusieurs packages peuvent être créés dans le
+  dossier \textit{src})
+  \item Un fichier \textit{R.java}, généré par l'ADT, qui contient l'ensemble
+  des références aux ressources du projet
+  \item Un dossier \textit{assets}, qui contient l'ensemble des données qui
+  seront chargées sur le mobile (ou tablette) lors de la compilation
+  \item Un dossier \textit{res}, qui contient l'ensemble des ressources
+  relatives aux projet. Ce dossier contient plusieurs sous-dossiers:
   \begin{itemize}
-    \item Le dossier drawable contient l'ensemble des images utilisées par
-    l'application
-    \item Le dossier layout contient les fichiers .xml qui décrivent les
-    interface de l'application
-    \item Le dossier values contient des fichiers qui décrivent les constantes
-    utilisées par l'application
-    \item Le dossier menu contient les differents menus utilisés
-    \item Notre dossier xml contient le ficher de mise en forme du
-    \textit{SharedPreference} utilisé
-    \item Les dossiser values-[CodeLangue] contiennent la traductions des
-    chaines utilisées dans le projet.
+    \item Le dossier \textit{drawable} contient l'ensemble des images utilisées
+    par l'application
+    \item Le dossier \textit{layout} contient les fichiers \textit{.xml} qui
+    décrivent les interface de l'application
+    \item Le dossier \textit{values} contient des fichiers qui décrivent les
+    constantes utilisées par l'application
+    \item Le dossier \textit{menu} contient les differents menus utilisés
+    \item Le dossier \textit{xml} contient le ficher de mise en forme du
+    \textit{SharedPreferences} utilisé
+    \item Les dossiers \textit{values-[CodeLangue]} contiennent les traductions
+    des chaînes utilisées dans le projet.
    \end{itemize}
-   \item Pour conclure, on trouve un fichier \textit{AndroidManifest.xml}, qui
-   qui défini le comportement de l'application. On y trouve par exemple le nom,
-   l'icone par defaut, le thème, la version minimale,les activités, les services
-   de l'application, etc.
+   \item Pour conclure, nous trouvons un fichier
+   \textit{AndroidManifest.xml} qui définit le comportement de l'application.
+   Nous y trouvons par exemple le nom, l'icône par défaut, le thème, la version
+   minimale, les activités, les services de l'application, etc\ldots
 \end{itemize}
 \section{L'objet Caméra}
 \subsection{Description}
 L'objet Caméra est implémenté dans la classe \textit{Camera.java}.\newline
-Celle-ci y regroupe les informations suivante : 
+Celle-ci regroupe les informations suivantes : 
 \begin{itemize} 
 \item un descriptif de la caméra. Exemple : ``Caméra du Jardin''
-\item le protocole de communication à utiliser (http ou rtsp).
-\item l'url d'accès. Exemple : ``http://192.168.1.20''
+\item le protocole de communication à utiliser (HTTP ou RTSP).
+\item l'URL d'accès. Exemple : ``http://192.168.1.20''
 \item le port (par défaut le port 80 est utilisé).
 \item le nom d'utilisateur (login).
 \item le mot de passe.
@@ -50,26 +51,26 @@ Celle-ci y regroupe les informations suivante :
 même adresse).
 \item un identifiant unique appelé \textit{uniqueID} défini par la position de
 la caméra dans la liste sur la page d'accueil.
-\item le groupe assigné lors de la mise en route de la détection de mouvement
+\item le groupe assigné lors de la mise en route de la détection de mouvements
 (compris entre 0 et 9) appelé \textit{groupeID}.\\
 \end{itemize}
 \indent Afin de pouvoir communiquer une caméra entre plusieurs \textit{activités
 (activity)} nous avons choisi de rendre cette classe \textit{serializable} pour
-ne pas devoir passer une a une chacune des caractéristiques.\\
+ne pas devoir passer une à une chacune des caractéristiques.\\
 Cette classe contient également une primitive capable de générer un entier
-unique pour le couple \textit{uniqueID} et \textit{groupID} afin de pouvoir
-lancer plusieurs fenêtres de détection de mouvement pour une même caméra
+unique pour le couple \textit{uniqueID} et \textit{groupID}, afin de pouvoir
+lancer plusieurs fenêtres de détection de mouvements pour une même caméra
 (\textit{getMotionDetectionID}).
 \subsection{Construction de l'objet}
-La création d'une caméra se fait via l'interface graphique défini par le
+La création d'une caméra se fait via l'interface graphique définie par le
 fichier \textit{add\_cam.xml}.\newline
 
-On y retrouve des champs de texte éditable pour chacune
+Nous y retrouvons des champs de texte éditables pour chacune
 des caractéristiques de la caméra ainsi qu'un bouton permettant l'ajout de caméra via \textit{QRCode}.\newline
 Un \textbf{QRCode} est un code-barres à deux dimensions. Selon
 \textit{Wikipedia}\footnote{\label{zxing}http://fr.wikipedia.org/wiki/Code\_QR}
-un QrCode peut contenir plus de 4296 caractères alphanumériques contre 10 à 13 pour
-un code-barre classique.\newline
+un QRCode peut contenir plus de 4296 caractères alphanumériques contre 10 à 13
+pour un code-barre classique.\newline
 L'exemple suivant illustre l'équivalence \textit{caméra-représentation
 xml-QRCode}\newline
 \begin{figure}[H]
@@ -88,13 +89,13 @@ xml-QRCode}\newline
 \end{lstlisting}
 \end{figure}
 
-\indent Le lecteur de code Qr est implémenté par la bibliothèque
+\indent Le lecteur de codes QR est implémenté par la bibliothèque
 \textit{zxing}\footnote{\label{zxing} http://code.google.com/p/zxing/}. 
 Lors d'un clic sur ce bouton, nous appelons l'activité 
 \textit{SCAN} de la bibliothèque zxing avec comme argument
 \textit{QR\_CODE\_MODE}.
-Si la bibliothèque n'est pas disponible sur l'appareil, nous faisons appel a
-\textit{l'Android market} afin de telecharger l'application \textit{zxing} (qui
+Si la bibliothèque n'est pas disponible sur l'appareil, nous faisons appel à
+\textit{l'Android market} afin de télecharger l'application \textit{zxing} (qui
 implémente l'ensemble des fonctions proposées par la bibliothèque).
 \newline
 \begin{lstlisting}[caption={Lancement de l'activité zxing ou de l'Android
@@ -113,65 +114,67 @@ market.}]
 \end{lstlisting}
 
 \indent \newline
-\indent Il éxiste de générateur de code QR disponible sur internet dont celui
-implémenté par la biblioteque
+\indent Il existe plusieurs générateurs de codes QR disponibles sur internet
+dont celui implémenté par la bibliothèque
 \textit{zxing}\footnote{\label{zxingGenerator}
 http://zxing.appspot.com/generator/}.
 
 \indent Pour ajouter la nouvelle
 caméra, il ne reste à l'utilisateur qu'à cliquer sur le bouton
-\textit{ajouter} pour revenir sur l'écran d'accueil et constater l'ajout de la caméra. Cependant il reste possible de revenir à l'écran d'accueil sans sauvegarder les changements en cliquant sur \textit{fermer}.
+\textit{Ajouter} pour revenir sur l'écran d'accueil et constater l'ajout de la
+caméra. Cependant il reste possible de revenir à l'écran d'accueil sans
+sauvegarder les changements en cliquant sur \textit{Fermer}.
 
-\subsection{Affichage des Caméras}
+\subsection{Affichage des caméras}
 Une fois la phase de création réussie, nous avons implémenté une nouvelle
-activité permettant d'afficher l'ensemble des caméras ajouté par l'utilisateur.
-Cette activité s'appelle \textit{Home} et est contenue dans la classe
+activité permettant d'afficher l'ensemble des caméras ajoutées par
+l'utilisateur. Cette activité s'appelle \textit{Home} et est contenue dans la classe
 \textit{Home.java}.\newline \newline
-\indent Android défini une cycle de vie pour chaque activité selon le diagramme
+\indent Android définit un cycle de vie pour chaque activité selon le diagramme
 décrit par la \textit{figure 3.2}.
 \newline
 \indent Ce cycle de vie nous permet d'initialiser, d'interrompre, ou de détruire
 les différentes vues et fonctionnalités de notre activité. Dans le cas de
 l'activité \textit{Home} (qui est l'activité d'accueil de notre application), ce cycle se traduit par : 
 \begin{itemize}
-  \item   \underline{onCreate :} \begin{enumerate}
-    \item Allouer les ressources a l'aide du constructeur de la classe parent
-    (\textit{super.onCreate(savedInstanceState});)
+  \item   \textbf{onCreate} :\begin{enumerate}
+    \item Allocation les ressources à l'aide du constructeur de la classe
+    parente (\textit{super.onCreate(savedInstanceState});)
     \item Récupération des préférences de l'utilisateur via un
     \textit{SharedPreferences} décrit ultérieurement.
-    \item Démarrage du service de détection de mouvement.
+    \item Démarrage du service de détection de mouvements.
     \item Affichage d'un pop-up d'aide et astuces (si l'utilisateur n'a pas
     choisi de le désactiver).
     \item Lecture de la liste des caméras déjà enregistrées si disponible.
-    \item Mise a jour et implémentation des \textit{listeners} de la liste
+    \item Mise à jour et implémentation des \textit{listeners} de la liste
     affichant les caméras.\newline
   \end{enumerate} 
-  \item \underline{ onActivityResult :}\newline Lorsqu'un activité démarre une
+  \item \textbf{onActivityResult} :\newline Lorsqu'une activité démarre une
   autre activité via les \textit{startActivity(intent)} ou
-  \textit{startActivityForResult(intent, 1)} celle-ci passe en arrière plan pour
-  exécuter l'activité décrite par l'\textit{intent}. Durant cette état elle peut
-  être ``tuée'' par le gestionnaire de taches, ou en attente d'un résultat. C'est pourquoi l'état
-  onResume de la \textit{figure 3.1} englobe également l'état
-  \textit{onActivityResult}.\newline
+  \textit{startActivityForResult(intent, 1)} celle-ci passe en arrière-plan
+  pour exécuter l'activité décrite par l'\textit{intent}. Durant cet état elle peut
+  être soit ``tuée'' par le gestionnaire de tâches, soit en attente d'un
+  résultat. C'est pourquoi l'état \textit{onResume} de la \textit{figure 3.1} englobe
+  également l'état \textit{onActivityResult}.\newline
   Pour faire appel à l'activité permettant d'ajouter une caméra, l'utilisateur
-  doit utiliser le \textit{Menu} (défini dans la classe \textit{Home.java}) puis
-  cliquer sur ``Ajouter une caméra''. Cette action lancera l'activité
+  doit utiliser le \textit{Menu} (défini dans la classe \textit{Home.java}),
+  puis cliquer sur ``Ajouter une caméra''. Cette action lancera l'activité
   \textit{addCam} et attendra le résultat (la nouvelle caméra).
   \newline Quand l'utilisateur aura cliqué sur le bouton ``Ajouter'' de
-  l'activité \textit{addCam}, celle-ci ce terminera en ayant défini comme
-  résultat le code \textit{OK}, et comme valeur \textit{extra} associé au tag
-  défini par la variable\textit{ camTag} la caméra
-  précédemment \textit{sérialisée}.\newline Il ne reste plus qu'a la fonction
-  \textit{onActivityResult} de déserialisér la caméra, de l'ajouter dans la
-  liste de caméras déjà ajoutées (appelé \textit{camList}), et pour finir de
-  mettre a jour l'affichage.\newline
+  l'activité \textit{addCam}, celle-ci se terminera en ayant défini comme
+  résultat le code \textit{OK}, et comme valeur \textit{extra}, associée au tag
+  défini par la variable\textit{camTag}, la caméra
+  précédemment \textit{sérialisée}.\newline Dans la
+  fonction \textit{onActivityResult}, il ne reste plus qu'à désérialiser
+  la caméra, à l'ajouter dans la liste de caméras déjà ajoutées (appelé \textit{camList}), et pour finir, à
+  mettre à jour l'affichage.\newline
   
-  \item \underline{onDestroy :}\newline
+  \item \textbf{onDestroy} :\newline
   Afin de ne pas devoir entrer les caméras à chaque démarrage de
-  l'application, nous avons choisis de sérialiser puis de sauvegarder la liste
+  l'application, nous avons choisi de sérialiser puis de sauvegarder la liste
   des caméras dans un fichier pour les ajouter automatiquement à chaque
   démarrage. Cette sauvegarde s'effectue juste avant de libérer les ressources
-  en surchargent la fonction \textit{onDestroy}. 
+  en surchargeant la fonction \textit{onDestroy}. 
   \end{itemize}
   
 \begin{center}
@@ -186,15 +189,15 @@ l'activité \textit{Home} (qui est l'activité d'accueil de notre application), 
   \end{center}
 \footnotetext{http://developer.android.com/reference/android/app/Activity.html}
 \newpage
- L'affichage de l'activité \textit{Home} est décrit ci-dessous, on peut y
- retrouver une liste personnalisée contenant :
+ L'affichage de l'activité \textit{Home} est décrit ci-dessous, nous pouvons
+ y retrouver une liste personnalisée contenant :
  \begin{itemize}
-   \item L'identifiant unique de la caméra.
-   \item Suivi de son descriptif.
-   \item Puis en indication son l'url.
+   \item L'identifiant unique de la caméra,
+   \item Suivi de son descriptif,
+   \item Puis en indication son URL.
  \end{itemize}
- On peut également voir en bas de l'image, le menu qui apparaît lors de l'appui
- sur la touche menu du téléphone.\newline
+ Nous pouvons également voir en bas de l'image le menu qui apparaît lors de
+ l'appui sur la touche menu du téléphone.\newline
  \begin{center}
  \begin{figure}[H] 
   \label{homeScreenShot}
@@ -205,13 +208,13 @@ l'activité \textit{Home} (qui est l'activité d'accueil de notre application), 
 \end{center}
 
 \subsection{Modification et Suppression de l'objet}
-Lors d'un appuis long sur une élément de la liste
-(\textit{setOnItemLongClickListener}) une alerte apparaît pour demander à
-l'utilisateur si il souhaite modifier, ou supprimer l'élément (la caméra).
+Lors d'un appui long sur un élément de la liste
+(\textit{setOnItemLongClickListener}), une alerte apparaît pour demander à
+l'utilisateur s'il souhaite modifier ou supprimer l'élément (la caméra).
 \begin{itemize}
-  \item Si il choisit de supprimer l'élément, une seconde alerte apparaît pour confirmer
-ou annuler son choix. 
-\item Si il choisit de modifier la caméra, l'application lance une nouvelle
+  \item S'il choisit de supprimer l'élément, une seconde alerte apparaît pour
+  confirmer ou annuler son choix. 
+\item S'il choisit de modifier la caméra, l'application lance une nouvelle
 activité adaptée à la modification de la caméra. Il peut alors appliquer ou
 annuler ses changements sur le même principe que l'ajout d'une caméra.
 \end{itemize}
@@ -256,31 +259,31 @@ public boolean onItemLongClick(AdapterView<?> arg0,
 \section{Gestion du flux vidéo}
 \subsection{Vue Simple}
 Cette partie consiste a décrire l'implémentation de la retransmission de la
-vidéo d'une seule caméra sur le téléphone. On trouve cette l'implémentation dans la classe
-\textit{Video.java} qui implémente l'activité \textit{Video}.
+vidéo d'une seule caméra sur le téléphone. Cette implémentation se trouve dans
+la classe \textit{Video.java} qui définit l'activité \textit{Video}.
 \subsubsection{Cycle de vie}
-Précédemment nous avons décrit le cycle de vie de l'activité \textit{Home}.
+Précédemment, nous avons décrit le cycle de vie de l'activité \textit{Home}.
 Ici nous avons également ajouté des fonctionnalitées aux différents états afin de
 ne pas consommer de ressources inutilement. En effet, lorsque l'activité n'est
 plus au premier plan, il est inutile de continuer à retransmettre le flux
-Video.\newline
+vidéo.\newline
 C'est également le cas pour l'utilisation du verrou nous permettant d'empêcher
 le téléphone de se mettre en veille lors de la retransmission de la vidéo. Le
 code suivant illustre l'arrêt de la vidéo et la libération du verrou
-(wl)lorsque l'activité n'est pas active.\newline
-Il existe plusieurs type de verrou, pour les utiliser il faut récupérer une
+(wl) lorsque l'activité n'est pas active.\newline
+Il existe plusieurs types de verrous. Pour les utiliser, il faut récupérer une
 instance du gestionnaire d'énergie \textit{PowerManager} à l'aide de la
 fonction : 
 \begin{lstlisting}
  PowerManager pm = Context.getSystemService(Context.POWER_SERVICE).
 \end{lstlisting}
-Puis demander explicitement la création d'un nouveau verrou
-(\textit{PowerManager.WakeLock}) a l'aide de la fonction :
+Puis il faut demander explicitement la création d'un nouveau verrou
+(\textit{PowerManager.WakeLock}) à l'aide de la fonction :
 \begin{lstlisting}
  pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,"Tag");
 \end{lstlisting}
-Ces différents verrou sont défini par le premier argument. Il existe quatre
-type de verrou dont les caractéristiques sont définies ci-dessous :\newline
+Ces différents verrous sont définis par le premier argument. Il existe quatre
+types de verrous dont les caractéristiques sont définies ci-dessous :\newline
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -298,8 +301,8 @@ http://developer.android.com/reference/android/os/PowerManager.html}}
 \newline
 \end{center}
 Nous avons choisi d'utiliser un verrou \textit{SCREEN\_DIM\_WAKE\_LOCK} afin de
-garder l'écran simplement allumé avec une luminosité au minimum pour ne pas consommer
-excessivement la batterie du téléphone.
+garder l'écran simplement allumé avec une luminosité au minimum et ne pas
+consommer excessivement la batterie du téléphone.
 \newpage
  \begin{lstlisting}[caption={Video life-cycle}] 
 /**
@@ -347,27 +350,29 @@ public void onDestroy() {
 \end{lstlisting}
 \subsubsection{ConnectivityManager}
 L'accès à internet pour un téléphone disposant d'un système d'exploitation
-comme Android se fait par des couches physique de nature différente . Le débit
+comme Android se fait par des couches physiques de nature différente. Le débit
 est donc fortement dépendant du support utilisé, c'est pourquoi nous faisons
-appel à la classe \textit{ConnectivityManager} afin de récupérer la nature du
-support pour définir la résolution (de la vidéo à envoyer) auprès de la caméra.
-Nous avons principalement distingué deux types de réseaux : \textit{WiFi} et les
-autres réseaux mobile (\textit{3G}, \textit{3G+}, \textit{EDGE}, \ldots), afin de définir la correspondance suivante qui nous permet d'obtenir un
-taux de rafraîchissement correct en \textit{WiFi} (moyenne de 25fps pour une
-couverture total) et utilisant la résolution minimal pour les autres réseaux:
+appel à la classe \textit{ConnectivityManager}. Celle-ci permet de
+récupérer la nature du support et ansi de définir la résolution de la vidéo à
+demander auprès de la caméra. Nous avons principalement distingué deux types de
+réseaux : \textit{WiFi} et les autres réseaux mobiles (\textit{3G},
+\textit{3G+}, \textit{EDGE}, \ldots). Nous avons alors défini la correspondance
+suivante qui nous permet d'obtenir un taux de rafraîchissement correct en \textit{WiFi}
+(moyenne de 25 FPS pour une couverture totale), la
+résolution minimale étant utilisée pour les autres réseaux:
 \begin{center}
 \begin{tabular}{|c|c|}
 \hline
-Network & Resolution \\
+Réseau & Résolution \\
 \hline
 WiFi &320x240\\
-Other &168x120\\
+Autres &168x120\\
 \hline
 \end{tabular}
 \newline\newline
 \end{center}
-Pour récupérer le type de réseau on fait une nouvelle fois appel à la
-fonction :
+Pour récupérer le type de réseau, nous faisons une nouvelle fois appel à
+la fonction :
 \begin{lstlisting}
 ConnectivityManager mConnectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 \end{lstlisting}
