@@ -3,6 +3,7 @@
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{picins}
 \usetheme[secheader]{Boadilla}
 \definecolor{coultitre}{rgb}{0.2,0.55,0}
 \setbeamercolor{structure}{fg=coultitre, bg=coultitre!40} 
@@ -24,12 +25,12 @@
 \AtBeginSection[]{
 \begin{frame}<beamer>
 \frametitle{Plan}
-\tableofcontents[currentsection]
+\tableofcontents[hideallsubsections,sections={2-7},currentsection]
 \end{frame}}
 
 \begin{frame}
 \frametitle{Plan de l'exposé}
-\tableofcontents
+\tableofcontents[hideallsubsections,sections={2-7}]
 \end{frame}
 
 \section{Introduction}
@@ -140,18 +141,24 @@
 
 \section{Tests Unitaires}
 \subsection{Principe}
- \begin{frame}
-   \frametitle{Principe}
-Le but des tests unitaires est de:
-\begin{itemize}
-    \item<2-> Garantir le bon fonctionnement de l'application
+  \begin{frame}
+\begin{minipage}{0.59\textwidth}
+\frametitle{Tests Unitaires}
+Rôle des tests unitaires
+  \begin{itemize}
+ \item<2-> Garantir le bon fonctionnement de l'application
     \item<3-> Vérifier si les fonctions terminent bien
     \item<4-> Identifier étape par étape les erreurs éventuelles
-   \end{itemize}
+\end{itemize} 
+\end{minipage}
+\begin{minipage}{0.39\textwidth}
+ \includegraphics[width=4cm, height=3.2cm]{test.png}
+\end{minipage}
 \end{frame}
 
 \subsection{Tests en réel}
  \begin{frame}
+\begin{minipage}{0.59\textwidth}
    \frametitle{Tests en réel}
 \begin{itemize}
     \item<2-> Suivi de l'exécution en continu avec le LogCat d'Android
@@ -159,6 +166,10 @@ Le but des tests unitaires est de:
     \item<4-> Tests sur une caméra Axis PTZ 214 avec l'ensemble des
     fonctionnalités implémentées
    \end{itemize}
+\end{minipage}
+\begin{minipage}{0.39\textwidth}
+ \includegraphics[width=4cm, height=3cm]{Wire.png}
+\end{minipage}
 \end{frame}
 
 \section{Conclusion}
