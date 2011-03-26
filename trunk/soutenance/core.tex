@@ -95,47 +95,6 @@
 %   \end{itemize}
 %\end{frame}
 
-%\subsection{Interfaces}
-% \begin{frame}
-%\frametitle{Interfaces}
-%   Plusieurs interfaces de contrôle direct :
-%   \begin{itemize}
-%    \item Flux vidéo en continu pour actions en temps réel
-%    \item Contrôle du Pan/Tilt/Zoom de manière tactile
-%    % schéma notion tactile %
-%    \item Interface de commandes avancées adaptée à la caméra
-%    \item Module de gestion de détection de mouvements
-%   \end{itemize}
-%\end{frame}
-
-%\section{Détection de mouvements}
-%\subsection{Principe Axis}
-% \begin{frame}
-%   \frametitle{Pricipe Axis}
-%    Le mécanisme de la détection de mouvements par Axis est le suivant :
-%   \begin{itemize}
-%    \item Ajout d'une fenêtre de détection spécifique (coordonnées,
-%    sensibilité, \ldots) par l'utilisateur
-%    \item Solution 1 : Ajout d'un événement déclenché automatiquement à la
-%    présence d'un mouvement (email, SMS, \ldots)
-%    \item Solution 2 : Demande du flux de niveaux de détection pour un
-%    calcul et un traitement personnalisés
-%   \end{itemize}
-%\end{frame}
-
-\subsection{Implémentation Android}
- \begin{frame}
-   \frametitle{Implémentation Android}
-    La solution 2 a été retenue pour notre application :
-    \begin{itemize}
-    \item Définition de la fenêtre directement sur l'écran (composant
-    graphique)
-    \item Mise en arrière-plan du thread de calcul (utilisation d'un service
-    Android)
-    \item Alerte par notification : vibration + snapshot
-    % deuxième schéma UML de Jérôme %
-   \end{itemize}
-\end{frame}
 
 
 \input{slide5.tex}

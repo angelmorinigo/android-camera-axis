@@ -10,7 +10,7 @@
   	\item Choix de l'emplacement
   	\item Choix de la caméra
   	\item Visualisation de la caméra
-  	\item un clic long permet la visualisation et le controle de la caméra dans
+  	\item Un clic long permet la visualisation et le controle de la caméra dans
   	la vue simple
 \end{enumerate}
 \end{column}
@@ -28,9 +28,13 @@
  
   \begin{frame}
    \frametitle{Implémentation}
+\centering \includegraphics[scale=0.2]{Images/DiagrammeSequenceMultiView.png}
 
-
-
-
-  \end{frame}
+\begin{itemize}
+    \item Chaques Threads notifient l'UI lorsqu'une nouvelle image est
+    disponible
+  	\item Delai réglable entre chaque début de téléchargement
+  	\item Redessine uniquement la zone mise à jour
+\end{itemize}
+ \end{frame}
   
