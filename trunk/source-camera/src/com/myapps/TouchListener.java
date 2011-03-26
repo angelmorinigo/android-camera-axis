@@ -7,6 +7,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+/**
+ * 
+ * Implements a listener on touch events for PTZ camera control 
+ *
+ */
 public class TouchListener implements OnTouchListener {
     private static final String TAG = "AppLog";
     static final int NONE = 0;
@@ -87,34 +92,61 @@ public class TouchListener implements OnTouchListener {
 	return true;
     }
 
-    /** Calculate the horizontal distance between 2 points */
+    /**
+     * Calculate the horizontal distance between 2 points
+     * @param a The first point
+     * @param b The second point 
+     * @return The difference between a and b on x-axis
+     */
     private float calculateMoveX(PointF a, PointF b) {
 	return b.x - a.x;
     }
 
-    /** Calculate the vertical distance between 2 points */
+    /**
+     * Calculate the vertical distance between 2 points
+     * @param a The first point
+     * @param b The second point
+     * @return The difference between a and b on y-axis
+     */
     private float calculateMoveY(PointF a, PointF b) {
 	return b.y - a.y;
     }
 
-    /** Calculate the distance between 2 points */
+    /**
+     * Calculate the distance between 2 points
+     * @param a The first point
+     * @param b The second point
+     * @return The difference between a and b
+     */
     private float calculateDistance(PointF a, PointF b) {
 	float x = b.x - a.x;
 	float y = b.y - a.y;
 	return FloatMath.sqrt(x * x + y * y);
     }
 
-    /** Scale screen move to real pan move performed by the camera */
+    /**
+     * Scale screen horizontal move to real pan move performed by the camera
+     * @param distance The value to scale to width
+     * @return The scaled distance
+     */
     private float scaleMoveX(float distance) {
 	return width / 180 * distance;
     }
 
-    /** Scale screen move to real tilt move performed by the camera */
+    /**
+     * Scale screen vertical move to real tilt move performed by the camera
+     * @param distance The value to scale to height
+     * @return The scaled distance
+     */
     private float scaleMoveY(float distance) {
 	return -1 * (height / 180 * distance);
     }
 
-    /** Scale screen zoom to real zoom performed by the camera */
+    /**
+     * Scale screen zoom to real zoom performed by the camera
+     * @param ratio The zoom ratio to scale
+     * @return The scaled ratio
+     */
     private float scaleZoom(float ratio) {
 	return ratio * zoomStep;
     }

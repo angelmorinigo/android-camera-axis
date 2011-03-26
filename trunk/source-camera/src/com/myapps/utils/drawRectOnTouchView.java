@@ -8,6 +8,11 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * 
+ * Implement the drawing of rectangles by touching screen
+ *
+ */
 public class drawRectOnTouchView extends View {
     public drawRectOnTouchView(Context context, AttributeSet attrs) {
 	super(context, attrs);
@@ -20,6 +25,10 @@ public class drawRectOnTouchView extends View {
 	mPaint.setStrokeWidth(4);
     }
 
+    /**
+     * Constructor
+     * @param context The context to use
+     */
     public drawRectOnTouchView(Context context) {
 	super(context);
 	mPaint = new Paint(Paint.DITHER_FLAG);
@@ -64,14 +73,26 @@ public class drawRectOnTouchView extends View {
 	return true;
     }
 
+    /**
+     * Get start point
+     * @return The start point
+     */
     public PointF getStart() {
 	return start;
     }
 
+    /**
+     * Get end point
+     * @return The end point
+     */
     public PointF getEnd() {
 	return end;
     }
 
+    /**
+     * Check if drawing is in progress
+     * @return true if drawing is in progress, false otherwise 
+     */
     public boolean isDraw() {
 	if(start.equals(end.x, end.y))
 	    return false;

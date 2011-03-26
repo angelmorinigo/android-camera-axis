@@ -1,6 +1,10 @@
 package com.myapps.utils;
 
-public class CouldNotCreateGroupException extends Exception{
+/**
+ * 
+ * Exception for failure on adding a Motion Detection window
+ *
+ */
+public class CouldNotCreateGroupException extends Exception {
     private static final long serialVersionUID = 1L;
-
 }

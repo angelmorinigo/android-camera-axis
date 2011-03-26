@@ -36,7 +36,7 @@ import android.widget.Toast;
 
 /**
  * 
- * Implements the main Video Viewer Interface
+ * Implements the main video viewer interface
  * 
  */
 public class Video extends Activity {
@@ -57,7 +57,7 @@ public class Video extends Activity {
     private TouchListener customTouchListener;
 
     /**
-     * Called when Activity start or resume
+     * Called when activity starts or resumes
      */
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -306,7 +306,7 @@ public class Video extends Activity {
 			    int indice;
 			    Button ok = (Button) findViewById(R.id.okRectView);
 			    Log.i(getString(R.string.logTag), "Camera : "
-				    + camC.cam.id + camC.cam.groupeID);
+				    + camC.cam.id + camC.cam.groupID);
 			    if ((indice = MotionDetectionService
 				    .isAlreadyRunning(camC.cam)) != -1) {
 				Log.i(getString(R.string.logTag), "Remove cam "
@@ -363,7 +363,7 @@ public class Video extends Activity {
 				    camC.cam.setGroup(group);
 				    Log.i(getString(R.string.logTag),
 					    "Camera : " + camC.cam.id
-						    + camC.cam.groupeID);
+						    + camC.cam.groupID);
 				    Intent intent = new Intent(v.getContext(),
 					    MotionDetectionService.class);
 				    Bundle objetbunble = new Bundle();

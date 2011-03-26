@@ -28,7 +28,7 @@ public class AddCam extends Activity {
 
     
 /**
- * Called when Activity start or resume
+ * Called when activity starts or resumes
  */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,8 +121,8 @@ public class AddCam extends Activity {
 	Button b = (Button) findViewById(R.id.bqr);
 	b.setOnClickListener(new OnClickListener() {
 	    /*
-	     * Read QrCode to create a Camera zxing project is required, if
-	     * zxing isn't install go to market for download it
+	     * To read QrCode to create a Camera, zxing project is required. If
+	     * zxing isn't installed go to market to download it
 	     */
 	    public void onClick(View v) {
 		try {
@@ -142,18 +142,15 @@ public class AddCam extends Activity {
     }
 
     /**
-     * Called when activity result from zxing project (param detail copied from
-     * official android doc)
-     * 
+     * Called when activity results from zxing project (param detail copied from
+     * official Android doc)
      * @param requestCode The integer request code originally supplied to
      *                   startActivityForResult(), allowing you to identify who
      *                   this result came from.
-     * @param resultCode
-     *            The integer result code returned by the child activity through
-     *            its setResult().
-     * @param data
-     *            An Intent, which can return result data to the caller (various
-     *            data can be attached to Intent "extras").
+     * @param resultCode The integer result code returned by the child activity through
+     *            		its setResult().
+     * @param intent An Intent, which can return result data to the caller (various
+     *  			data can be attached to Intent "extras").
      */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 	if (requestCode == 0) {

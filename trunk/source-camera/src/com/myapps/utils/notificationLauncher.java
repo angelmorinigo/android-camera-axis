@@ -11,27 +11,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.widget.RemoteViews;
 
-import com.myapps.Camera;
 import com.myapps.R;
-import com.myapps.Video;
 
+/**
+ * 
+ * Manages the different notifications launched in the StatusBar
+ *
+ */
 public class notificationLauncher {
     /**
-     * 
-     * Create a StatusBar Notification for Snapshop
-     * 
-     * @param activity
-     *            The current activity
-     * @param bmp
-     *            The Snapshot recorded
-     * @param text
-     *            A message (like url)
-     * @param path
-     *            The snapshot url to start gallery activity on touch
+     * Create a StatusBar notification for Snapshot
+     * @param activity The current activity
+     * @param bmp The Snapshot recorded
+     * @param text A message (like URL)
+     * @param path The snapshot URL used to start gallery activity by touching
      *            notification
+     * @param id A unique id for the notification
+     * @param tag A tag for the notification
      */
     public static boolean statusBarNotificationImage(Activity activity, Bitmap bmp,
 	    String text, String path, int id, String tag) {
@@ -42,7 +40,7 @@ public class notificationLauncher {
 		"Camera-Axis", System.currentTimeMillis());
 	notification.contentView = new RemoteViews(activity.getPackageName(),
 		R.layout.notification);
-	/* Action lors d'un clic sur la notification */
+	/* Action performed on click on notification */
 	Intent intentNotification = new Intent();
 	intentNotification.setAction(android.content.Intent.ACTION_VIEW);
 	intentNotification.setDataAndType(Uri.fromFile(new File(path)),
@@ -58,6 +56,13 @@ public class notificationLauncher {
 	return true;
     }
 
+    /**
+     * Create a StatusBar notification for Motion Detection instance
+     * @param application The current application
+     * @param contentIntent The intent to launch on click
+     * @param id A unique id for the notification
+     * @param tag A text for the notification
+     */
     public static void statusBarNotificationRunning(Application application, PendingIntent contentIntent,
 	    int id, String text) {
 	/* Notification Running */
@@ -69,17 +74,17 @@ public class notificationLauncher {
 		"Camera-Axis Motion Detection", System.currentTimeMillis());
 	notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
-	//launcher.setAction(Intent.ACTION_MAIN);
-	//launcher.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
 	notification.setLatestEventInfo(application.getApplicationContext(),
-		"Camera-Axis",  text,
-		contentIntent);
+		"Camera-Axis", text, contentIntent);
 	mNotificationManager.notify(id, notification);
 
     }
 
+    /**
+     * Remove an existing notification in the StatusBar
+     * @param application The current application
+     * @param id The notification ID to remove
+     */
     public static void removeStatusBarNotificationRunning(
 	    Application application, int id) {
 	NotificationManager mNotificationManager;

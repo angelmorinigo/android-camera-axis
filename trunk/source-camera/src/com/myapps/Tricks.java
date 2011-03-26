@@ -2,13 +2,15 @@ package com.myapps;
 
 import android.content.Context;
 
-public class Astuces {
-
+/**
+ * Implement a set of tricks
+ */
+public class Tricks {
 	private String[] s;
 	private int max = 12;
 	private Context context;
 
-	public Astuces(Context mContext) {
+	public Tricks(Context mContext) {
 		context = mContext;
 		s = new String[max];
 		for (int i = 0; i < max; i++)
@@ -22,5 +24,4 @@ public class Astuces {
 	public int getMax() {
 		return max;
 	}
-
 }
