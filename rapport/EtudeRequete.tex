@@ -1,25 +1,26 @@
 	\section{Les protocoles de transfert}
 		\subsection{HTTP}
-		Les requétes HTTP permettent d'intéragir de multiples façon avec la caméra.
-		Celles-ci permettent d'utiliser le mécanisme PTZ de la caméra (Pan Tilt
-		Zoom), de faire une capture d'écran, d'activer la détection de mouvements,
-		etc. 
-		En effet, la méthode GET transmet les données via l'url, ce qui permet
-		d'utiliser toutes les fonctionnalités de la caméra. 
-		Exemple d'url:
+		Le protocole \textit{HTTP} (HyperText Transfer Protocol) permet d'intéragir
+		aisément avec la caméra et donne la possiblité d'utiliser le mécanisme PTZ de la
+		caméra (Pan Tilt Zoom), de faire une capture d'écran ou encore d'activer la
+		détection de mouvements, tout cela par de simples requêtes. En effet, la
+		méthode GET transmet les données via l'URL, ce qui permet d'utiliser toutes les fonctionnalités de la caméra par simple appels à des
+		adresses définies. Exemple d'URL:
 		\begin{lstlisting}
 		http://<nom-serveur>/axis-cgi/jpg/image.cgi?resolution=320*240&camera=1
 		\end{lstlisting}
-		Permet de récuperer un capture au format jpg, de résolution 320*240 pixels.
+		Permet de récuperer une capture au format JPG, de résolution
+		320*240 pixels.
 		\begin{lstlisting}
-		http://<nom-serveur>/axis-cgi/ptz/ptzupdate.cgi?pan=15&tilt=25
+		http://<nom-serveur>/axis-cgi/com/ptz.cgi?rpan=15&rtilt=25
 		\end{lstlisting}
-		Fait bouger la caméra de 15 unités vers la droite et de 25 vers le haut.
+		Fait bouger la caméra de 15 unités vers la droite et de 25
+		unités vers le haut.
 		
-		Si la requette necessite de recevoir des données, celle-ci seront contenue
-		dans la reponse. Par exemple, dans le cas où nous envoyons la requete 
-		permettant de récupéré une capture (decrite ci-dessus). L'image sera contenu
-		dans la reponse sous la forme : 
+		Si la requête nécessite le retour de données, celles-ci seront contenues
+		dans le corps de la réponse. Par exemple, dans le cas où nous envoyons la
+		requête pour récupérer une capture (décrite ci-dessus). L'image sera
+		contenue dans la reponse sous la forme : 
 		\begin{lstlisting}
 HTTP/1.0 200 OK\r\n
 Content-Type: image/jpeg\r\n
@@ -28,11 +29,10 @@ Content-Length: 15656\r\n
 <JPEG image data>\r\n
 \end{lstlisting}
 		\subsection{RTSP}
-		Real Time Streaming Protocol (protocole de streaming en temps-réel) est un
-		protocole de communication destiné aux systémes de streaming. Il permet
-		de contréler un serveur de média à distance, offrant des fonctionnalités
-		typiques d'un lecteur vidéo telles que lecture et pause.
-		Exemple de requéte:
+		Le protocole \textit{RTSP} (Real Time Streaming Protocol) est un protocole de
+		communication destiné aux systèmes de streaming. Il permet de contrôler un serveur de média à distance, offrant des fonctionnalités
+		classiques d'un lecteur vidéo telles que lecture et pause.
+		Exemple de requête:
 		\begin{lstlisting}
 		PLAY rtsp://myserver/axis-media/media.amp?videocodec=h264&resolution=640x480
 		RTSP/1.0 CSeq: 4
@@ -40,5 +40,6 @@ Content-Length: 15656\r\n
 		Session: 12345678
 		Authorization: Basic cm9vdDpwYXNz
 		\end{lstlisting}
-		Cette requéte permet de mettre en marche la lecture de la caméra, ou de
+		Cette requête permet de mettre en marche la lecture de la caméra, ou de
 		reprendre la lecture en cas de mise en pause.
+		\newline

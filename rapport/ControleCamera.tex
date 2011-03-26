@@ -27,8 +27,9 @@ Le contrôle du PTZ tactile a été implémenté à l'aide de la classe \textit{
 \item un déplacement avec un seul pointeur pour faire bouger la caméra (Pan/Tilt)
 \item un écartement/rapprochement de deux pointeurs pour zoomer/dézoomer
 \end{itemize}
-Cette classe implémente l'interface \textit{OnTouchListener} fournissant une fonction \textit{onTouch} dans laquelle nous gérons chaque mouvement du ou des pointeurs à partir d'un objet \textit{MotionEvent}. Un geste sous Android est défini par une suite de mouvements de type \textit{MotionEvent}.
-Il existe une dizaine de types d'actions possibles pour \textit{MotionEvent}, cependant nous utilisons seulement les 4 suivants pour notre application :
+Cette classe implémente l'interface \textit{OnTouchListener} fournissant une
+méthode \textit{onTouch} dans laquelle nous gérons chaque mouvement du ou des
+pointeurs à partir d'un objet \textit{MotionEvent}. Un geste sous Android est défini par une suite de mouvements de type \textit{MotionEvent}. Il existe une dizaine de types d'actions possibles pour \textit{MotionEvent}, cependant nous utilisons seulement les 4 suivants pour notre application :
 \begin{itemize}
 \item \textit{ACTION\_DOWN} : le premier pointeur a été ajouté (le geste est
 commencé) et l'événement contient les coordonnées du pointeur
@@ -56,19 +57,19 @@ Nous avons implémenté dans cette classe des méthodes de calcul géométrique 
 
 Nous avons également développé des méthodes pour mettre à l'échelle le déplacement des pointeurs sur l'écran par rapport au déplacement réel réalisé par la caméra :
 \begin{itemize}
-	\item \textit{scaleMoveX} pour le déplacement en abscisse, en utilisant la
-	largeur de l'écran \textit{getHeight}.
-	\item \textit{scaleMoveY} pour l'échelle en ordonnée, en utilisant la hauteur
-	de l'écran \textit{getWidth}.
+	\item \textit{scaleMoveX} pour le déplacement en abscisse, en utilisant comme
+	référence la largeur de l'écran \textit{getWidth}.
+	\item \textit{scaleMoveY} pour l'échelle en ordonnée, en utilisant comme
+	référence la hauteur de l'écran \textit{getHeight}.
 	\item \textit{scaleZoom} pour le zoom/dézoom, en utilisant \textit{zoomStep}.
 \end{itemize}
 
 Afin de rendre moins ``agressif'' le déplacement sur le téléphone, nous avons
 mis en place un paramètre de sensibilité, celui-ci étant modifiable dans les préférences.
-Le thread est également endormi quelques millisecondes afin d'éviter la
-surcharge d'événements à traiter.
-Le tableau ci-dessous montre le traitement
-réalisé par la méthode \textit{onTouch} dont le code est présenté après.\newline
+Le thread est endormi quelques
+millisecondes à la fin du traitement afin d'éviter la surcharge
+d'événements à traiter. Le tableau ci-dessous montre synthétiquement le
+traitement réalisé par la méthode \textit{onTouch} dont le code est présenté après.\newline
 \begin{table}[H]
 \centering
 \begin{tabular}{|p{0.2\linewidth}|p{0.4\linewidth}| p{0.4\linewidth}|}
@@ -77,11 +78,11 @@ Type ACTION & Geste du déplacement & Geste du zoom \\
 \hline
 DOWN & Mise en mémoire des coordonnées du point de départ &  \\
  & \textit{mode = DRAG} & \\
-POINTER\_DOWN & & Calcul et mise en mémoire de la distance de départ \\
- & & \textit{mode = ZOOM} \\
-POINTER\_UP & & Calcul et mise en mémoire de la distance d'arrivée \\
-UP & Calcul des déplacements horizontaux et verticaux & Calcul du ratio entre les deux distances \\
- & Mise à l'échelle des déplacements & Mise à l'échelle du ratio (avec le champ \textit{zoomStep}) \\
+POINTER\_DOWN & & Calcul et mise en mémoire de la distance de départ entre les 2
+points \\ & & \textit{mode = ZOOM} \\
+POINTER\_UP & & Calcul et mise en mémoire de la distance d'arrivée entre les 2
+points \\ UP & Calcul des déplacements horizontaux et verticaux & Calcul du
+ratio entre les deux distances \\ & Mise à l'échelle des déplacements & Mise à l'échelle du ratio (avec le champ \textit{zoomStep}) \\
  & \textit{mode = NONE} & \textit{mode = NONE} \\
 \hline
 \end{tabular}
