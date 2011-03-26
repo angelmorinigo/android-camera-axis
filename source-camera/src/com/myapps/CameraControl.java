@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import com.myapps.utils.CouldNotCreateGroupException;
 import com.myapps.utils.base64Encoder;
@@ -18,8 +17,8 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 /**
- * 
- * CameraControl class implements remote camera control like PTZ
+ *
+ * Implements remote camera control like PTZ
  * (Pan/Tilt/Zoom), Snapshot, iris, focus, etc...
  * 
  */
@@ -59,6 +58,11 @@ public class CameraControl {
     private String[] resolutions, rotations, formats;
     private Activity activity;
 
+    /**
+     * Constructor
+     * @param cam The camera to control
+     * @param activity The current activity 
+     */
     public CameraControl(Camera cam, Activity activity) {
 		this.cam = cam;
 		Application a;
@@ -67,14 +71,18 @@ public class CameraControl {
 		this.loadConfig();
     }
 
-    /** Initialize all the camera's functions to the NOT_SUPPORTED state */
+    /**
+     *  Initialize all the camera's functions to the NOT_SUPPORTED state
+     */
     private void initConfig() {
 	for (int i = 0; i < NB_FUNC; i++) {
 	    this.currentConfig[i] = NOT_SUPPORTED;
 	}
     }
 
-	/** Request camera's possibilities from server and mark off them */
+	/** 
+	 * Request camera's possibilities from server and mark off them
+	 */
 	private void loadConfig() {
 		HttpURLConnection con;
 		InputStream result;
@@ -189,55 +197,79 @@ public class CameraControl {
 		}
     }
 
-    /** Return the array containing the different resolutions used for snapshot */
+    /**
+     * Get the different resolutions used for snapshot
+     * @return The array of resolutions
+     */
     public String[] getResolutions() {
 	return resolutions;
     }
 
-    /** Return the array containing the different rotation angles of image */
+    /**
+     * Get the different rotation angles of image
+     * @return The array of rotation angles
+     */
     public String[] getRotations() {
 	return rotations;
     }
 
-    /** Return the array containing the different streaming file formats */
+    /**
+     * Get the different streaming file formats
+     * @return The array of file formats
+     */
     public String[] getFormats() {
 	return formats;
     }
 
+    /**
+     * Check if a functionality is enabled
+     * @param function The functionality
+     * @return true if the functionality is enabled, false otherwise
+     */
     public boolean isEnabled(int function) {
 	if (function < 0 || function >= NB_FUNC)
 	    return false;
 	return currentConfig[function] == ENABLED;
     }
 
+    /**
+     * Check if a functionality is supported by the camera
+     * @param function The functionality
+     * @return true if the functionality is supported, false otherwise
+     */
     public boolean isSupported(int function) {
 	if (function < 0 || function >= NB_FUNC)
 	    return false;
 	return currentConfig[function] != NOT_SUPPORTED;
     }
 
-    public int enableFunction(int function) {
-	if (function < 0 || function >= NB_BASIC_FUNC)
-	    return 0;
-	if (!isSupported(function))
-	    return -1;
+    /**
+     * Enable a functionality on the camera
+     * @param function The functionality
+     * @return true if the functionality has been enabled, false otherwise
+     */
+    public boolean enableFunction(int function) {
+	if (function < 0 || function >= NB_BASIC_FUNC || !isSupported(function))
+	    return false;
 	this.currentConfig[function] = ENABLED;
-	return 1;
-    }
-
-    public int disableFunction(int function) {
-	if (function < 0 || function >= NB_BASIC_FUNC)
-	    return 0;
-	if (!isSupported(function))
-	    return -1;
-	this.currentConfig[function] = DISABLED;
-	return 1;
+	return true;
     }
 
     /**
-     * Get address's camera
-     * 
-     * @return address's camera
+     * Disable a functionality on the camera
+     * @param function The functionality
+     * @return true if the functionality has been disabled, false otherwise
+     */
+    public boolean disableFunction(int function) {
+	if (function < 0 || function >= NB_BASIC_FUNC || !isSupported(function))
+		return false;
+	this.currentConfig[function] = DISABLED;
+	return true;
+    }
+
+    /**
+     * Get the address of the camera
+     * @return The address of the camera
      */
     public String createURL() {
 	return cam.getURI();
@@ -245,11 +277,11 @@ public class CameraControl {
 
     /**
      * Open a HttpURLConnection to (camera.getUri+command) with authorization
-     * Exemple : camera.getUri = http://192.168.1.2/ command =
-     * axis-cgi/com/ptz.cgi?info=1&camera=1
-     * 
-     * @param command
-     * @return The HttpURLConnection
+     * Example : camera.getUri = http://192.168.1.2/
+     * 			 command = axis-cgi/com/ptz.cgi?info=1&camera=1
+     * @param command The URL part used for the connection
+     * @return The HttpURLConnection object
+     * @throws IOException
      */
     public HttpURLConnection sendCommand(String command) throws IOException {
 	URL url = null;
@@ -269,7 +301,11 @@ public class CameraControl {
     }
 
     /**
-     * Change the value of PTZ/Focus/Iris used by the camera (perform an action)
+     * Change the value of PTZ/Focus/Iris/Brightness used by the camera (perform an action)
+     * @param function The functionality to perform
+     * @param value1 The value to apply
+     * @param value2 The second value used only in case of Pan/Tilt
+     * @return true if request succeeded, false otherwise
      */
     public boolean changeValFunc(int function, float value1, float value2) {
 	// if (function < 0 || function >= NB_BASIC_FUNC)
@@ -311,17 +347,22 @@ public class CameraControl {
 	return false;
     }
 
-    /** Switch on/off the autofocus or the autoiris on the camera */
-    public int switchAutoFunc(int function, String value) {
+    /**
+     * Switch on/off the "auto" mode of certain functionalities on the camera
+     * @param function The functionality to perform
+     * @param The value to apply among {on, off, auto}
+     * @return true if request succeeded, false otherwise
+     */
+    public boolean switchAutoFunc(int function, String value) {
 	if (function != AUTOFOCUS && function != AUTOIRIS
 		&& function != AUTO_IR && function != BACKLIGHT)
-	    return 0;
+	    return false;
 	/*
 	 * if (!isSupported(function)) return -1;
 	 */
 	if (!value.equals("on") && !value.equals("off")
 		&& !value.equals("auto"))
-	    return 0;
+	    return false;
 	String param = "";
 	switch (function) {
 	case AUTOFOCUS:
@@ -346,20 +387,19 @@ public class CameraControl {
 		else
 		    this.disableFunction(function);
 		con.disconnect();
-		return 1;
+		return true;
 	    } else {
 		con.disconnect();
-		return 0;
+		return false;
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
-	return 0;
+	return false;
     }
 
     /**
-     * Get SnapShot from Axis Camera
-     * 
+     * Get SnapShot from the camera
      * @param resolution
      *            You can choose the snapshot resolution from : "1280x1024",
      *            "1280x960", "1280x720", "768x576", "4CIF", "704x576",
@@ -382,6 +422,12 @@ public class CameraControl {
 	return bmp;
     }
 
+    /**
+     * Add a new Motion Detection window on the camera
+     * @return The groupID given to the window by the camera
+     * @throws IOException
+     * @throws CouldNotCreateGroupException The creation of a MD window is impossible
+     */
     public int addMotionD() throws IOException, CouldNotCreateGroupException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=add&group=Motion&template=motion");
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -394,33 +440,43 @@ public class CameraControl {
 		if (line.contains("# Request failed: Couldn't create group"))
 		    throw new CouldNotCreateGroupException();
 		if (line.contains("M")) {
-		    cam.groupeID = Integer.parseInt(line.substring(1, 2));
-		    Log.i(activity.getString(R.string.logTag), "MotionDetection groupe = " + cam.groupeID);
-		    return cam.groupeID;
+		    cam.groupID = Integer.parseInt(line.substring(1, 2));
+		    Log.i(activity.getString(R.string.logTag), "MotionDetection groupe = " + cam.groupID);
+		    return cam.groupID;
 		}
 	    }
 	}
 	throw new CouldNotCreateGroupException();
     }
 
-
-
+    /**
+     * Remove an existent Motion Detection window on the camera
+     * @return -1 if the removal succeeded, the current groupID otherwise 
+     * @throws IOException
+     */
     public int removeMotionD() throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=remove&group=Motion.M"
-		+ cam.groupeID);
+		+ cam.groupID);
 	Log.i(activity.getString(R.string.logTag), con.getResponseCode()
-		+ "MotionDetection free groupe = " + cam.groupeID);
+		+ "MotionDetection free groupe = " + cam.groupID);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-	    cam.groupeID = -1;
+	    cam.groupID = -1;
 	    return -1;
 	}
-	return cam.groupeID;
+	return cam.groupID;
     }
 
+    /**
+     * Update parameters of an existent Motion Detection window on the camera
+     * @param param
+     * @param value
+     * @return
+     * @throws IOException
+     */
     public boolean updateMotionDParam(String param, String value)
 	    throws IOException {
 	HttpURLConnection con = sendCommand("axis-cgi/operator/param.cgi?action=update&Motion.M"
-		+ cam.groupeID + "." + param + "=" + value);
+		+ cam.groupID + "." + param + "=" + value);
 	if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 	    return true;
 	}

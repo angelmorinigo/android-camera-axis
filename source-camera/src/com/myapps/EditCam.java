@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * 
+ * Describe activity for edition of camera information
+ *
+ */
 public class EditCam extends Activity {
     private EditText id, login, pass, address, channel;
     private Camera cam;

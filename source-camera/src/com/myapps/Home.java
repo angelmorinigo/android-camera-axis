@@ -41,7 +41,7 @@ import com.myapps.utils.xmlIO;
 
 /**
  * 
- * First Activity called. Describe home interface.
+ * First activity called. Describe home interface.
  * 
  */
 public class Home extends Activity {
@@ -59,6 +59,12 @@ public class Home extends Activity {
     private final static String ITEM_TITLE = "title";
     private final static String ITEM_CAPTION = "caption";
 
+    /**
+     * 
+     * @param title The title of item
+     * @param caption The caption of item
+     * @return The created item
+     */
     private Map<String, ?> createItem(String title, String caption) {
 	Map<String, String> item = new HashMap<String, String>();
 	item.put(ITEM_TITLE, title);
@@ -66,29 +72,33 @@ public class Home extends Activity {
 	return item;
     }
 
+    /**
+     * Update the view used for displaying the list of cameras
+     * @param init The state of update
+     */
     private void updateListView(boolean init) {
 	List<Map<String, ?>> printCamList = new LinkedList<Map<String, ?>>();
 	for (int i = 0; i < camList.size(); i++) {
 	    camList.get(i).setUniqueID(i);
-	    camList.get(i).groupeID = -1;
+	    camList.get(i).groupID = -1;
 	    printCamList.add(createItem(
 		    (camList.get(i).uniqueID + "-" + camList.get(i).id),
 		    camList.get(i).getURI()));
 
 	}
 
-	/* Print cameras list */
+	/* Print list of cameras */
 	L = (ListView) findViewById(R.id.lv);
 	L.setAdapter(new SimpleAdapter(this, printCamList, R.layout.list_item,
 		new String[] { ITEM_TITLE, ITEM_CAPTION }, new int[] {
 			R.id.list_complex_title, R.id.list_complex_caption }));
-	if (init = true)
+	if (init)
 	    L.setTextFilterEnabled(true);
 
     }
 
     /**
-     * Called when Activity start or resume
+     * Called when activity starts or resumes
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -106,12 +116,12 @@ public class Home extends Activity {
 
 	/* Print tricky */
 	if (preferences.getBoolean(getString(R.string.isWelcome), false) == false) {
-	    Dialog_welcome myDialog = new Dialog_welcome(this,
+	    DialogWelcome myDialog = new DialogWelcome(this,
 		    R.style.theme_dialog);
 	    myDialog.show();
 	}
 
-	/* Open custum camera file if it exist */
+	/* Open custom camera file if it exists */
 	try {
 	    FileInputStream fichier = activity.getApplication().openFileInput(
 		    getString(R.string.fileName));
@@ -129,7 +139,7 @@ public class Home extends Activity {
 	}
 	L.setOnItemLongClickListener(new OnItemLongClickListener() {
 	    @Override
-	    /* Print dialog to modifie or delete camera */
+	    /* Print dialog to modify or delete camera */
 	    public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 		    final int position, long arg3) {
 		AlertDialog alert;
@@ -191,10 +201,11 @@ public class Home extends Activity {
     }
 
     /**
-     * Show alert to remove the "position" camera
+     * Show alert to remove a camera
+     * @param position The position of the camera on the list
      */
     private void removeCam(final int position) {
-	AlertDialog alert_reset;
+	AlertDialog alertReset;
 	AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 	builder.setMessage(getString(R.string.messageRemove))
 		.setCancelable(false)
@@ -214,26 +225,26 @@ public class Home extends Activity {
 				dialog.cancel();
 			    }
 			});
-	alert_reset = builder.create();
-	alert_reset.show();
+	alertReset = builder.create();
+	alertReset.show();
     }
 
     /**
-     * Called when Activity stop. Override to record preferences
+     * Called when activity stops. Override to record preferences
      */
     protected void onDestroy() {
 	try {
-	    FileOutputStream fichier = activity.getApplicationContext()
+	    FileOutputStream file = activity.getApplicationContext()
 		    .openFileOutput(getString(R.string.fileName),
 			    Context.MODE_PRIVATE);
-	    ObjectOutputStream oos = new ObjectOutputStream(fichier);
+	    ObjectOutputStream oos = new ObjectOutputStream(file);
 	    oos.writeObject(camList);
 	    oos.flush();
 	    oos.close();
-	    fichier.close();
-	    Log.i(getString(R.string.logTag), "camera save");
+	    file.close();
+	    Log.i(getString(R.string.logTag), "Camera saved");
 	} catch (java.io.IOException e) {
-	    Log.i(getString(R.string.logTag), "file not save");
+	    Log.i(getString(R.string.logTag), "File not saved");
 	    e.printStackTrace();
 	}
 	super.onDestroy();
@@ -241,17 +252,13 @@ public class Home extends Activity {
 
     /**
      * Called when Activity result from AddCam activity. Add the new camera and
-     * refresh the listView. (param detail copied from official android doc)
-     * 
-     * @param requestCode
-     *            The integer request code originally supplied to
+     * refresh the listView. (param detail copied from official Android doc)
+     * @param requestCode The integer request code originally supplied to
      *            startActivityForResult(), allowing you to identify who this
      *            result came from.
-     * @param resultCode
-     *            The integer result code returned by the child activity through
+     * @param resultCode The integer result code returned by the child activity through
      *            its setResult().
-     * @param data
-     *            An Intent, which can return result data to the caller (various
+     * @param intent An Intent, which can return result data to the caller (various
      *            data can be attached to Intent "extras").
      */
     @Override
@@ -286,7 +293,7 @@ public class Home extends Activity {
     }
 
     /**
-     * Implements Menu Items Listener
+     * Implementation of menu items listener
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -424,7 +431,7 @@ public class Home extends Activity {
 	    return true;
 	case R.id.parametres:
 	    activity.startActivityForResult(new Intent(activity,
-		    MesPreferences.class), 1);
+		    MyPreferences.class), 1);
 	    return true;
 
 	case R.id.partager:
@@ -456,7 +463,7 @@ public class Home extends Activity {
 			}
 		    });
 	    AlertDialog alertList = builderList.create();
-	    Log.i("AppLog", "alertList show");
+	    Log.i("AppLog", "alertList shown");
 	    alertList.show();
 
 	    return true;

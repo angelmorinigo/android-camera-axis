@@ -1,16 +1,10 @@
 package com.myapps;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.myapps.utils.CouldNotCreateGroupException;
-
 /**
- * Camera class describe information's camera
+ * Describes information of a camera
  */
 public class Camera implements java.io.Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
@@ -20,25 +14,17 @@ public class Camera implements java.io.Serializable, Cloneable {
 	URI uri;
 	public int port;
 	protected int channel, uniqueID = -1;
-	public int groupeID = -1;
+	public int groupID = -1;
 
 	/**
 	 * Public constructor for a camera with information
-	 * 
-	 * @param id
-	 *            The camera's name
-	 * @param login
-	 *            Your login for private access
-	 * @param pass
-	 *            Your pass for private access
-	 * @param ip
-	 *            Ip's Camera
-	 * @param port
-	 *            Port's Camera
-	 * @param protocol
-	 *            Only "http" at the moment
-	 * @param channel
-	 *            The channel's camera (no channel = 1)
+	 * @param id The name of the camera
+	 * @param login The login for private access
+	 * @param pass The pass for private access
+	 * @param ip The IP of the camera
+	 * @param port The port of the camera
+	 * @param protocol Only "http" at the moment
+	 * @param channel The channel of the camera (no channel = 1)
 	 */
 	public Camera(String id, String login, String pass, String ip, int port,
 			String protocol, int channel) {
@@ -59,17 +45,11 @@ public class Camera implements java.io.Serializable, Cloneable {
 
 	/**
 	 * Public constructor for a camera with a URI form QrCode
-	 * 
-	 * @param id
-	 *            The camera's name
-	 * @param login
-	 *            Your login for private access
-	 * @param pass
-	 *            Your pass for private access
-	 * @param uri
-	 *            The address's camera
-	 * @param channel
-	 *            The channel's camera (no channel = 1)
+	 * @param id The name of the camera
+	 * @param login The login for private access
+	 * @param pass The pass for private access
+	 * @param uri The address of the camera
+	 * @param channel The channel of the camera (no channel = 1)
 	 */
 	public Camera(String id, String login, String pass, String uri, int channel) {
 		this.id = id;
@@ -84,14 +64,10 @@ public class Camera implements java.io.Serializable, Cloneable {
 	}
 
 	/**
-	 * Public constructor for a camera with a URI without username/password
-	 * 
-	 * @param id
-	 *            The camera's name
-	 * @param uri
-	 *            The address's camera
-	 * @param channel
-	 *            The channel's camera (no channel = 1)
+	 * Public constructor for a camera with a URI but without username/password
+	 * @param id The name of the camera
+	 * @param uri The address of the camera
+	 * @param channel The channel of the camera (no channel = 1)
 	 */
 	public Camera(String id, String uri, int channel) {
 		this.id = id;
@@ -106,18 +82,16 @@ public class Camera implements java.io.Serializable, Cloneable {
 	}
 
 	/**
-	 * Get the address's camera
-	 * 
-	 * @return address's camera
+	 * Get the address of the camera
+	 * @return The address of the camera
 	 */
 	public URI getAddress() {
 		return uri;
 	}
 	
 	/**
-	 * Get the address's camera
-	 * 
-	 * @return address's camera
+	 * Get the address of the camera
+	 * @return The string representation of the address of the camera
 	 */
 	public String getURI() {
 		return uri.toString()+"/";
@@ -125,7 +99,6 @@ public class Camera implements java.io.Serializable, Cloneable {
 
 	/**
 	 * Get the camera ID
-	 * 
 	 * @return camera ID
 	 */
 	public String getId() {
@@ -133,9 +106,8 @@ public class Camera implements java.io.Serializable, Cloneable {
 	}
 
 	/**
-	 * Get the camera channel
-	 * 
-	 * @return camera channel
+	 * Get the channel of the camera
+	 * @return The channel of the camera
 	 */
 	public int getChannel() {
 		return channel;
@@ -143,7 +115,6 @@ public class Camera implements java.io.Serializable, Cloneable {
 
 	/**
 	 * toString with camera name
-	 * 
 	 * @return camera.id
 	 */
 	@Override
@@ -151,18 +122,36 @@ public class Camera implements java.io.Serializable, Cloneable {
 		return id;
 	}
 
+	/**
+	 * Set the camera channel
+	 * @return The channel of the camera
+	 */
 	public void setUniqueID(int id) {
 		uniqueID = id;
 	}
 
+	/**
+	 * Set the groupID used for Motion Detection
+	 * @param group for Motion Detection
+	 */
 	public void setGroup(int group) {
-		groupeID = group;
+		groupID = group;
 	}
 
+	/**
+	 * Get Motion Detection ID
+	 * @param startID base ID to get a unique Motion Detection ID
+	 * @return unique Motion Detection ID
+	 */
 	public int getMotionDetectionID(int startID) {
-		return groupeID + (uniqueID * 10) + startID;
+		return groupID + (uniqueID * 10) + startID;
 	}
 
+	/**
+	 * Clone the Camera object
+	 * @return A clone of Camera object
+	 * @throws CloneNotSupportedException
+	 */
 	protected Object clone() throws CloneNotSupportedException {
 		Camera clone;
 		clone = (Camera) super.clone();

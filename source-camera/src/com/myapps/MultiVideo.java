@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 /**
  * 
- * MultiVideo class implements the 4 videos Viewer
+ * Implements the multiple videos viewer interface
  * 
  */
 public class MultiVideo extends Activity {
@@ -61,7 +61,7 @@ public class MultiVideo extends Activity {
     };
 
     /**
-     * Called when Activity start or resume
+     * Called when activity starts or resumes
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -160,7 +160,7 @@ public class MultiVideo extends Activity {
 
     /**
      * 
-     * LongClickListener run video activity when LongClick on a view
+     * LongClickListener runs video activity when LongClick on a view
      * 
      */
     private class myOnLongClickListener implements OnLongClickListener {
@@ -189,7 +189,7 @@ public class MultiVideo extends Activity {
 
     /**
      * 
-     * onClickListener show dialog to select video or stop video
+     * onClickListener shows dialog to select video or stop video
      * 
      */
     private class myOnClickListener implements OnClickListener {

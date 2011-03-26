@@ -8,7 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Dialog_welcome extends Dialog{
+/**
+ * 
+ * Describes welcome dialog displayed at the start of application
+ *
+ */
+public class DialogWelcome extends Dialog {
 
 	public interface ReadyListener {
         public void ready(String name);
@@ -17,8 +22,12 @@ public class Dialog_welcome extends Dialog{
     private String cheats;
     private TextView text;
 
-    
-    public Dialog_welcome(Context context , int theme) {
+    /**
+     * Constructor
+     * @param context The context
+     * @param theme The theme used
+     */
+    public DialogWelcome(Context context , int theme) {
         super(context,theme);
     }
 
@@ -30,7 +39,7 @@ public class Dialog_welcome extends Dialog{
         text = (TextView) findViewById(R.id.text);
         
         Random randomGenerator = new Random();
-        Astuces a = new Astuces(getContext());
+        Tricks a = new Tricks(getContext());
         int randomInt = randomGenerator.nextInt(100)%a.getMax();
 
         text.setText(R.string.messageAstuce);
@@ -44,18 +53,28 @@ public class Dialog_welcome extends Dialog{
         right.setOnClickListener(new RightListener());
     }
 
+    /**
+     * 
+     * Listener for "OK" button
+     *
+     */
     private class OKListener implements android.view.View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Dialog_welcome.this.dismiss();
+            DialogWelcome.this.dismiss();
         }
     }
     
+    /**
+     * 
+     * Listener for "Next" button
+     *
+     */
     private class RightListener implements android.view.View.OnClickListener {
         @Override
         public void onClick(View v) {
             Random randomGenerator = new Random();
-            Astuces a = new Astuces(getContext());
+            Tricks a = new Tricks(getContext());
             int randomInt = randomGenerator.nextInt(100)%a.getMax();
             text.setText(R.string.messageAstuce);
             cheats = a.getLabel(randomInt);

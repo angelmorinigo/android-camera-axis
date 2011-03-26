@@ -29,8 +29,8 @@ import android.util.Xml;
 
 /**
  * 
- * xmlIO offer two input/output function able to convert ArrayList<Camera> to
- * xml file and vice versa, like : <?xml version='1.0' encoding='UTF-8'
+ * xmlIO offers two input/output functions to convert ArrayList<Camera> to
+ * xml file and vice versa, for example : <?xml version='1.0' encoding='UTF-8'
  * standalone='yes' ?> <camList> <camera> <id>home</id>
  * <adresse>http://192.168.1.20/</adresse> <channel>1</channel> </camera>
  * <camera> <id>home ext</id> <adresse>http://82.---.---.---/</adresse>
@@ -38,6 +38,12 @@ import android.util.Xml;
  * 
  */
 public class xmlIO {
+	/**
+	 * Write camera data into the file named {@code url}/{@code name}
+	 * @param c The camera data to write
+	 * @param url The directory in which create the file
+	 * @param name The filename in which write
+	 */
     public static void xmlCreateCamera(Camera c, String url, String name) {
 	ArrayList<Camera> camList = new ArrayList<Camera>();
 	camList.add(c);
@@ -46,12 +52,10 @@ public class xmlIO {
     }
 
     /**
-     * Write the ArrayList<Camera> into file named url
-     * 
-     * @param camList
-     *            Your data
-     * @param url
-     *            File name
+     * Write a list of cameras into the file named {@code url}/{@code name}
+     * @param camList The data to write
+     * @param url The directory in which create the file
+     * @param name The filename in which write
      */
     public static boolean xmlWrite(ArrayList<Camera> camList, String url,
 	    String name) {
@@ -102,11 +106,9 @@ public class xmlIO {
     }
 
     /**
-     * Read the xml file named url and return the ArrayList<Camera> completed
-     * 
-     * @param url
-     *            The file url
-     * @return The camera's list
+     * Read the xml file named {@code url} and store data to an ArrayList
+     * @param url The URL of the file
+     * @return The created list of cameras
      */
     public static ArrayList<Camera> xmlRead(String url) {
 	Document doc = null;
@@ -144,19 +146,24 @@ public class xmlIO {
 	    }
 	    return camList;
 	} catch (IOException e) {
-	    Log.e("Exception", "error occurred while reading xml file");
+	    Log.e("Exception", "Error occurred while reading xml file");
 	    return null;
 	} catch (ParserConfigurationException e) {
-	    Log.e("Exception", "error occurred while configure xml file");
+	    Log.e("Exception", "Error occurred while configuring xml file");
 	    e.printStackTrace();
 	    return null;
 	} catch (SAXException e) {
-	    Log.e("Exception", "error occurred while parsing xml file");
+	    Log.e("Exception", "Error occurred while parsing xml file");
 	    e.printStackTrace();
 	    return null;
 	}
     }
 
+    /**
+     * Read data from string and write it to file "addCam.xml"
+     * @param c The string to write 
+     * @return The first camera of the list if success, null otherwise
+     */
     public static Camera xmlReadString(String c) {
 	FileOutputStream out = null;
 	String filePath = "/sdcard/com.myapps.camera/";
@@ -173,7 +180,7 @@ public class xmlIO {
 	    output.write(c);
 	    output.flush();
 	    output.close();
-	    Log.e("Exception", "file wrote");
+	    Log.e("Exception", "File writen");
 	    ArrayList<Camera> camList = xmlRead(filePath+fileName);
 	    f.delete();
 	    return camList.get(0);
@@ -184,7 +191,12 @@ public class xmlIO {
 	}
 	return null;
     }
-
+    
+    /**
+     * Convert data from xml file to string
+     * @param c The camera to convert
+     * @return The creating string if success, null otherwise
+     */
     public static String xmlCameraToString(Camera c) {
 	String res = null;
 	String fileName = "tmp";

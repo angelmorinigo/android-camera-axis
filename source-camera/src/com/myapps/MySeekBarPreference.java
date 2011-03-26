@@ -15,6 +15,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
+/**
+ * 
+ * Implements a seek bar in preferences
+ *
+ */
 public final class MySeekBarPreference extends DialogPreference implements OnSeekBarChangeListener {
 
     // Namespaces to read attributes
@@ -52,12 +57,6 @@ public final class MySeekBarPreference extends DialogPreference implements OnSee
 	mMinValue = attrs.getAttributeIntValue(PREFERENCE_NS, ATTR_MIN_VALUE, DEFAULT_MIN_VALUE);
 	mMaxValue = attrs.getAttributeIntValue(PREFERENCE_NS, ATTR_MAX_VALUE, DEFAULT_MAX_VALUE);
 	mDefaultValue = attrs.getAttributeIntValue(ANDROID_NS, ATTR_DEFAULT_VALUE, DEFAULT_CURRENT_VALUE);
-	/*
-	// Read parameters from attributes
-	mMinValue = 1;
-	mMaxValue = 20;
-	mDefaultValue = 10;
-	*/
     }
 
     @Override
@@ -90,7 +89,7 @@ public final class MySeekBarPreference extends DialogPreference implements OnSee
     protected void onDialogClosed(boolean positiveResult) {
 	super.onDialogClosed(positiveResult);
 
-	// Return if change was cancelled
+	// Return if change was canceled
 	if (!positiveResult) {
 	    return;
 	}

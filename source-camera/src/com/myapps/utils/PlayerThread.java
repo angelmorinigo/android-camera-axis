@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import com.myapps.Camera;
 import com.myapps.CameraControl;
 import com.myapps.MultiVideo;
@@ -15,7 +14,7 @@ import android.os.Message;
 import android.util.Log;
 
 /**
- * PlayerThread simulate mjpeg video by downloading jpeg
+ * Simulate MJPEG video by downloading successive JPEG photos
  */
 public class PlayerThread implements Runnable {
 
@@ -26,14 +25,10 @@ public class PlayerThread implements Runnable {
     private CameraControl camC;
 
     /**
-     * Create a PlayerThread
-     * 
-     * @param cam
-     *            camera to print
-     * @param index
-     *            index of video frame (0,1,2,3)
-     * @param delay
-     *            delay in milliseconds to limit fps
+     * Constructor
+     * @param cam The camera to use
+     * @param index The index of video frame on multi-view
+     * @param delay The delay in milliseconds to limit FPS
      * @throws IOException
      */
     public PlayerThread(Camera cam, Activity activity, int index, int delay)
@@ -47,7 +42,7 @@ public class PlayerThread implements Runnable {
      * Thread code to run
      */
     public void run() {
-	Log.i(TAG, "PlayerThread go");
+	Log.i(TAG, "PlayerThread starts");
 	Bitmap bmp = null;
 	String command;
 	command = "axis-cgi/jpg/image.cgi?resolution=160x120";
@@ -64,14 +59,14 @@ public class PlayerThread implements Runnable {
 		bmp = BitmapFactory.decodeStream(stream);
 		stream.close();
 		con.disconnect();
-		/* Set the new image to print */
+		/* Set the new image to display */
 		MultiVideo.newBMP[index] = bmp;
 		/* Send message to UI to refresh View */
 		MultiVideo.myViewUpdateHandler.sendMessage(m);
-		Log.i(TAG, "Message send from : " + index);
+		Log.i(TAG, "Message sent from : " + index);
 		try {
 		    /*
-		     * Sleep to give hand to UI thread and limit fps to gain
+		     * Sleep to give hand to UI thread and limit FPS and gain
 		     * bandwidth
 		     */
 		    Thread.sleep(delay);

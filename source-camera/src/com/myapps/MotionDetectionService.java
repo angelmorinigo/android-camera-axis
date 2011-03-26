@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 import android.app.Application;
@@ -28,6 +27,12 @@ import com.myapps.utils.base64Encoder;
 import com.myapps.utils.notificationLauncher;
 import com.myapps.utils.snapShotManager;
 
+/**
+ * 
+ * Service used to leave Motion Detection run in the background
+ * and alert the user by notification
+ *
+ */
 public class MotionDetectionService extends Service {
     private static final String TAG = "AppLog";
     private int limit;
@@ -40,11 +45,14 @@ public class MotionDetectionService extends Service {
     public final static int MVTMSG = 5;
     private static Vibrator vibreur;
 
+    /**
+     * Handler to process detected movements
+     */
     public static Handler myViewUpdateHandler = new Handler() {
 	public void handleMessage(Message msg) {
 	    if (msg.what == MVTMSG) {
 		Log.i(TAG, "Mouvement !");
-		/* detected require for Junit test */
+		/* detected required for Junit test */
 		detected = true;
 		HttpURLConnection con;
 		try {
@@ -77,6 +85,13 @@ public class MotionDetectionService extends Service {
 	vibreur = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     }
 
+    /**
+     * Open a HttpURLConnection to (camera.getUri+command) with authorization
+     * @param cam The camera to which to connect
+     * @param command The URL part used for the connection
+     * @return The HttpURLConnection object
+     * @throws IOException
+     */
     public static HttpURLConnection sendCommand(Camera cam, String command)
 	    throws IOException {
 	URL url = null;
@@ -90,10 +105,16 @@ public class MotionDetectionService extends Service {
 	return con;
     }
 
+    /**
+     * Check whether a instance of MotionDetectionService is running
+     * @param c The Camera object used for Motion Detection
+     * @return -1 if the Motion Detection is not running, the position in
+     * 		the list of Motion Detection instances otherwise
+     */
     public static int isAlreadyRunning(Camera c) {
 	for (int i = 0; i < currentMDCam.size(); i++) {
 	    if (currentMDCam.get(i).uniqueID == c.uniqueID) {
-		if (currentMDCam.get(i).groupeID == c.groupeID) {
+		if (currentMDCam.get(i).groupID == c.groupID) {
 		    return i;
 		}
 	    }
@@ -101,6 +122,14 @@ public class MotionDetectionService extends Service {
 	return -1;
     }
 
+    /**
+     * Stop a running instance of MotionDetectionService
+     * @param c The Camera object used for Motion Detection window
+     * @param app The application for which the notification is running
+     * @param indice The position in the list of running Motion Detection units
+     * @return true if the Motion Detection has successful been removed,
+     * 		false otherwise
+     */
     public static boolean stopRunningDetection(Camera c, Application app,
 	    int indice) {
 	if (indice != -1) {
@@ -131,7 +160,7 @@ public class MotionDetectionService extends Service {
 	limit = extras.getInt("limit");
 	delay = extras.getLong("delay");
 	Log.i(TAG, "onStart " + cam.uniqueID + "-" + cam.getId() + "-"
-		+ cam.groupeID);
+		+ cam.groupID);
 
 	Intent notificationIntent = new Intent(getApplicationContext(),
 		Video.class);
@@ -141,22 +170,22 @@ public class MotionDetectionService extends Service {
 	notificationIntent.putExtras(objetbunble);
 	notificationIntent.setAction(Intent.ACTION_MAIN);
 	/*
-	 * Set data because filterEquals() compare intents without extras
+	 * Set data because filterEquals() compares intents without extras
 	 * !!!!!!!!!
 	 */
 	notificationIntent.setDataAndType(
-		Uri.parse("" + cam.uniqueID + cam.groupeID), "Camera");
+		Uri.parse("" + cam.uniqueID + cam.groupID), "Camera");
 	PendingIntent contentIntent = PendingIntent.getActivity(
 		getApplicationContext(), 0, notificationIntent, 0);
 	/*
-	 * Forme de l'id : StartId + 10*UniqueId + 1* GroupId [0-9] pour eviter
-	 * les conflit d'id
+	 * ID format : StartId + 10 * UniqueId + GroupId [0-9]
+	 * It avoids conflicts 
 	 */
 	notificationLauncher.statusBarNotificationRunning(
 		this.getApplication(), contentIntent, START_ID
-			+ (cam.uniqueID * 10) + cam.groupeID,
+			+ (cam.uniqueID * 10) + cam.groupID,
 		"Motion Detection " + cam.uniqueID + "-" + cam.getId() + "-"
-			+ cam.groupeID);
+			+ cam.groupID);
 	Log.i(TAG,
 		"Motion Detection notif" + cam.getMotionDetectionID(START_ID));
 	t = new Thread(new serviceWork(cam, currentMDCam.size()));
@@ -187,6 +216,12 @@ public class MotionDetectionService extends Service {
 	return null;
     }
 
+    /**
+     * 
+     * Runnable analyzing motion data and alerting if movements
+	 * have been detected (level > threshold)
+     *
+     */
     private class serviceWork implements Runnable {
 	Camera cam;
 	int index;
@@ -202,7 +237,7 @@ public class MotionDetectionService extends Service {
 	    Log.i(TAG, "Thread run");
 	    try {
 		con = sendCommand(cam, "axis-cgi/motion/motiondata.cgi?group="
-			+ cam.groupeID);
+			+ cam.groupID);
 		InputStreamReader isr = new InputStreamReader(
 			con.getInputStream());
 		BufferedReader br = new BufferedReader(isr);

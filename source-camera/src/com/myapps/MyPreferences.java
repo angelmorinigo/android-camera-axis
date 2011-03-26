@@ -7,7 +7,12 @@ import android.preference.PreferenceManager;
 
 import com.myapps.utils.preferenceManagerUtils;
 
-public class MesPreferences extends PreferenceActivity {
+/**
+ * 
+ * Describe PreferenceActivity for main settings of the application
+ *
+ */
+public class MyPreferences extends PreferenceActivity {
     SharedPreferences preferences;
 
     @Override
