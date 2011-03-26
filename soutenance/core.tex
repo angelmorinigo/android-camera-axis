@@ -24,12 +24,12 @@
 \AtBeginSection[]{
 \begin{frame}<beamer>
 \frametitle{Plan}
-\tableofcontents[hideallsubsections,currentsection]
+\small{\tableofcontents[currentsection,hideallsubsections]}
 \end{frame}}
 
 \begin{frame}
 \frametitle{Plan de l'exposé}
-\tableofcontents[hideallsubsections]
+\small{\tableofcontents[hideallsubsections]}
 \end{frame}
 
 
@@ -60,69 +60,69 @@
    \end{itemize}
   \end{frame}
 
-\section{Simple vue}
-\subsection{Spécifications}
- \begin{frame}
-   \frametitle{Spécifications}
-   \begin{itemize}
-    \item Réutilisation d'un lecteur MJPEG existant : MjpegView
-    \item Interface de contrôle de la caméra
-    % screen simple vue %
-    \end{itemize}
-\end{frame}
+%\section{Simple vue}
+%\subsection{Spécifications}
+% \begin{frame}
+%   \frametitle{Spécifications}
+%   \begin{itemize}
+%    \item Réutilisation d'un lecteur MJPEG existant : MjpegView
+%    \item Interface de contrôle de la caméra
+%    % screen simple vue %
+%    \end{itemize}
+%\end{frame}
 
-\section{Multi-vue}
-\subsection{Spécifications}
- \begin{frame}
-   \frametitle{Spécifications}
-   \begin{itemize}
-    \item Implémentation de layouts personnalisés pour 2 à 6 caméras
-    % schéma ou screen multi-vue %
-    \item Rafraîchissement multi-threadé (un thread par caméra)
-    % schéma UML de Jérôme ;) %
-    \item Ajout de listeners pour gérer les caméras et passer en simple vue 
-    \end{itemize}
-\end{frame}
+%\section{Multi-vue}
+%\subsection{Spécifications}
+% \begin{frame}
+%   \frametitle{Spécifications}
+%   \begin{itemize}
+%    \item Implémentation de layouts personnalisés pour 2 à 6 caméras
+%    % schéma ou screen multi-vue %
+%    \item Rafraîchissement multi-threadé (un thread par caméra)
+%    % schéma UML de Jérôme ;) %
+%    \item Ajout de listeners pour gérer les caméras et passer en simple vue 
+%    \end{itemize}
+%\end{frame}
 
-\section{Contrôle de la caméra}
-\subsection{Implémentation}
- \begin{frame}
-   \frametitle{Implémentation}
-   \begin{itemize}
-    \item Communication avec la caméra par requêtes HTTP
-    \item Chargement de la configuration à l'initialisation de la vidéo
-    \item Méthode de construction et d'envoi des requêtes avec
-    authentification et délai variable de connexion
-   \end{itemize}
-\end{frame}
+%\section{Contrôle de la caméra}
+%\subsection{Implémentation}
+% \begin{frame}
+%   \frametitle{Implémentation}
+%   \begin{itemize}
+%    \item Communication avec la caméra par requêtes HTTP
+%    \item Chargement de la configuration à l'initialisation de la vidéo
+%    \item Méthode de construction et d'envoi des requêtes avec
+%    authentification et délai variable de connexion
+%   \end{itemize}
+%\end{frame}
 
-\subsection{Interfaces}
- \begin{frame}
-\frametitle{Interfaces}
-   Plusieurs interfaces de contrôle direct :
-   \begin{itemize}
-    \item Flux vidéo en continu pour actions en temps réel
-    \item Contrôle du Pan/Tilt/Zoom de manière tactile
-    % schéma notion tactile %
-    \item Interface de commandes avancées adaptée à la caméra
-    \item Module de gestion de détection de mouvements
-   \end{itemize}
-\end{frame}
+%\subsection{Interfaces}
+% \begin{frame}
+%\frametitle{Interfaces}
+%   Plusieurs interfaces de contrôle direct :
+%   \begin{itemize}
+%    \item Flux vidéo en continu pour actions en temps réel
+%    \item Contrôle du Pan/Tilt/Zoom de manière tactile
+%    % schéma notion tactile %
+%    \item Interface de commandes avancées adaptée à la caméra
+%    \item Module de gestion de détection de mouvements
+%   \end{itemize}
+%\end{frame}
 
-\section{Détection de mouvements}
-\subsection{Principe Axis}
- \begin{frame}
-   \frametitle{Pricipe Axis}
-    Le mécanisme de la détection de mouvements par Axis est le suivant :
-   \begin{itemize}
-    \item Ajout d'une fenêtre de détection spécifique (coordonnées,
-    sensibilité, \ldots) par l'utilisateur
-    \item Solution 1 : Ajout d'un événement déclenché automatiquement à la
-    présence d'un mouvement (email, SMS, \ldots)
-    \item Solution 2 : Demande du flux de niveaux de détection pour un
-    calcul et un traitement personnalisés
-   \end{itemize}
-\end{frame}
+%\section{Détection de mouvements}
+%\subsection{Principe Axis}
+% \begin{frame}
+%   \frametitle{Pricipe Axis}
+%    Le mécanisme de la détection de mouvements par Axis est le suivant :
+%   \begin{itemize}
+%    \item Ajout d'une fenêtre de détection spécifique (coordonnées,
+%    sensibilité, \ldots) par l'utilisateur
+%    \item Solution 1 : Ajout d'un événement déclenché automatiquement à la
+%    présence d'un mouvement (email, SMS, \ldots)
+%    \item Solution 2 : Demande du flux de niveaux de détection pour un
+%    calcul et un traitement personnalisés
+%   \end{itemize}
+%\end{frame}
 
 \subsection{Implémentation Android}
  \begin{frame}
