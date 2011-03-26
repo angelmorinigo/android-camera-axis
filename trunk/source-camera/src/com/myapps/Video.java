@@ -85,14 +85,16 @@ public class Video extends Activity {
 	    int netType = info.getType();
 	    if (netType == ConnectivityManager.TYPE_WIFI) {
 		Log.i(getString(R.string.logTag), "Wifi detecte");
-		url = "axis-cgi/mjpg/video.cgi?resolution=320x240&camera=" + String.valueOf(cam.channel);
+		url = "axis-cgi/mjpg/video.cgi?resolution=320x240&camera="
+			+ String.valueOf(cam.channel);
 	    } else {
 		Log.i(getString(R.string.logTag), "Reseau detecte");
-		url = "axis-cgi/mjpg/video.cgi?resolution=160x120&camera=" + String.valueOf(cam.channel);
+		url = "axis-cgi/mjpg/video.cgi?resolution=160x120&camera="
+			+ String.valueOf(cam.channel);
 	    }
 
 	    camC = new CameraControl(cam, this);
-	
+
 	    mv = (MjpegView) findViewById(R.id.surfaceView1);
 	    start_connection(mv, url);
 	    Log.i("AppLog", "new TouchListener");
@@ -470,13 +472,14 @@ public class Video extends Activity {
     public void onDestroy() {
 	if (mv != null)
 	    mv.stopPlayback();
-	try {
-	    stream.close();
-	    videoCon.disconnect();
-	} catch (IOException e) {
-	    e.printStackTrace();
+	if (videoCon != null) {
+	    try {
+		stream.close();
+		videoCon.disconnect();
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
 	}
-
 	super.onDestroy();
     }
 }
