@@ -1,21 +1,31 @@
-
 \section{Contrôle de la caméra}
+\subsection{Communication avec la caméra}
   \begin{frame}
-   \frametitle{Contrôle de la caméra}
+   \frametitle{Communication et configuration}
 
-
-\begin{figure}[H]
+  \begin{minipage}{0.94\textwidth}
   \centering
      \begin{itemize}
     \item Classe dédiée au traitement des requêtes HTTP envoyées à la caméra
     \begin{itemize}
-      \item Codes réponses différents selon la commande
-      \item Parsage réalisé pour certaines réponses
+      \item Codes réponses divers
+      \item Parsage si nécessaire
+      \newline
     \end{itemize}
     \item Chargement de la configuration et des fonctionnalités supportées
-    \item Adaptation de l'interface aux modèles de caméra Axis
+    \begin{itemize}
+      \item PTZ, focus, iris, luminosité, \ldots
+      \item Mode auto, résolutions d'image
+      \item Audio, détection de mouvements
+      \newline
+    \end{itemize}
+    \item Adaptation de l'interface aux différents modèles de caméra Axis
+    \begin{itemize}
+      \item Etat des boutons
+      \item Choix de la résolution pour la capture
+      \newline
+    \end{itemize}
    	\end{itemize}
-   \includegraphics[scale=0.25]{Images/ImageSlide8.pdf}
-  \end{figure}  
+  \end{minipage}
 
   \end{frame}
