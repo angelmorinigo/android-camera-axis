@@ -17,6 +17,7 @@
 \usepackage{chngpage}
 \usepackage{float}
 \usepackage{fullpage}
+\usepackage{slashbox}
 \usepackage[francais]{layout} %affiche le modèle de page par \layout
 \usepackage[final]{pdfpages}
 
@@ -50,7 +51,7 @@ frameround=fttt, captionpos=b, format=JAVA}
 
 
 % PAGE DE GARDE ------------------------------------------------------------------------------------
-\title{\bf Projet de fin d'Etude \Large\textit{INF592} \\~\\ \Huge
+\title{\bf Projet de Fin d'Etudes \Large\textit{INF592} \\~\\ \Huge
  Vidéo surveillance, Streaming vidéo et contrôle de caméra via
 Android \\~\\
   \Large - MEMOIRE -}
@@ -82,23 +83,35 @@ Android \\~\\
 
 \end{titlepage}
 
-
-
+\abstract{Notre Projet de Fin D'Etudes consiste à développer une application
+Android permettant de visualiser en temps réel l'image transmise par une
+caméra IP distante de type Axis et de pouvoir contrôler directement celle-ci. Après avoir étudié
+les formats vidéo disponibles ainsi que les protocoles de communication avec la
+caméra, puis comparé les applications de ce type existantes, nous avons défini
+les besoins de notre application. Nous avons pris soin d'implémenter les
+différentes fonctionnalités imaginées en restant en accord avec la
+configuration de la caméra Axis mise à notre disposition. Enfin les tests nous
+ont donné satisfaction quant aux résultats obtenus pour des fonctionnalités
+complexes telles que la détection de mouvements, élément que nous tenions
+vraiment à mettre en place.}
 
 
 \tableofcontents \clearpage
-\input{EtudeAndroid}\clearpage
-\input{EtudeCam}\clearpage
-\input{EtudeRequete}\clearpage
-\input{EtudeFormat}\clearpage
+\input{Introduction}\clearpage
+\input{EtudeAndroid}
+\input{EtudeCam}
+\input{EtudeRequete}
+\input{EtudeFormat}
 \input{EtudeExistant}\clearpage
 \input{Besoins}\clearpage
 \input{Implementation}\clearpage
-\input{test}\clearpage
+\input{Tests}\clearpage
 \input{Optimisations}\clearpage
+\input{Conclusion}\clearpage
 
 
 \nocite{*}
 \bibliographystyle{unsrt}
 \bibliography{Bibliographie}
+
 \end{document}
