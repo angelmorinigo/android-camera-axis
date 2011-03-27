@@ -1,20 +1,5 @@
 \documentclass[a4paper,10pt]{report}
 
-\newif\ifpdf
-\ifx\pdfoutput\undefined
-   \pdffalse
-\else
-   \pdfoutput=1
-   \pdftrue
-\fi
-\ifpdf
-   \usepackage{graphicx}
-   \usepackage{epstopdf}
-   \DeclareGraphicsRule{.eps}{pdf}{.pdf}{`epstopdf #1}
-   \pdfcompresslevel=9
-\else
-   \usepackage{graphicx}
-\fi
 
 
 \usepackage[utf8]{inputenc}
@@ -101,19 +86,19 @@ Android \\~\\
 
 
 
-
 \tableofcontents \clearpage
 \input{EtudeAndroid}\clearpage
-\input{etudeCam}\clearpage
+\input{EtudeCam}\clearpage
 \input{EtudeRequete}\clearpage
 \input{EtudeFormat}\clearpage
 \input{EtudeExistant}\clearpage
 \input{Besoins}\clearpage
 \input{Implementation}\clearpage
 \input{test}\clearpage
-\input{optimisations}\clearpage
+\input{Optimisations}\clearpage
 
 
-
-
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{Bibliographie}
 \end{document}
