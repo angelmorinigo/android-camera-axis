@@ -111,16 +111,16 @@ pero permite la reducción de los datos! (Multi-vista sólo)</string>
 <string name="messageMDError">La cámara no soporta la detección de movimiento</string>
 <string name="messageCamError">Cámara inalcanzable</string>
 
-<string name="astuce1">Appuyez sur Menu pour accéder aux options</string>
-<string name="astuce2">Vous pouvez visualiser jusqu\'à 6 caméras simultanément</string>
-<string name="astuce3">En touchant l\'écran vous pouvez stopper ou changer les cameras</string>
-<string name="astuce4">De prochaines astuces bientôt disponibles</string>
-<string name="astuce5">Vos caméras sont sauvegardées automatiquement</string>
-<string name="astuce6">Vous pouvez activer jusqu\'à 9 fenêtres de détection de mouvements par camera</string>
-<string name="astuce7">Sélectionner un cadre dans lequel surveiller les mouvements</string>
-<string name="astuce8">Régler les paramètres avancés de la caméra en activant les contrôles avancés dans le menu durant la visualisation de la vidéo</string>
-<string name="astuce9">Diriger la caméra tactilement</string>
-<string name="astuce10">Une notification vous informe que vous avez bien reçu votre snapshot</string>
-<string name="astuce11">Vous pouvez désactiver cette astuce dans les paramètres</string>
-<string name="astuce12">N\'hésitez pas à partager cette application</string>
+<string name="astuce1">Apretad el menú para visualizar las opciones.</string>
+<string name="astuce2">Poded visualizar simultáneamente hasta 6 cámaras.</string>
+<string name="astuce3">Tocando a la pantalla poded apagar las cámaras o escoger otras disponibles en la lista.</string>
+<string name="astuce4">Nuevas astucias serán disponibles pronto.</string>
+<string name="astuce5">Sus cámaras son automáticamente registradas.</string>
+<string name="astuce6">Poded añadir hasta 9 ventanas de detección de movimiento por cámara.</string>
+<string name="astuce7">Seleccionad un marco en el cual poded controlar movimientos.</string>
+<string name="astuce8">Instala los parámetros de las cámaras accionando los controles avanzados en el menú mientras que el vídeo está andando.</string>
+<string name="astuce9">Controlad las cámaras tocando a la pantalla.</string>
+<string name="astuce10">Una notificación le informa sobre la recepción de su instantánea.</string>
+<string name="astuce11">Poded desactivar esta astucia en los parámetros.</string>
+<string name="astuce12">No vacile en compartir esta aplicación.</string>
 </resources>
