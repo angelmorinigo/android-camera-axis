@@ -122,16 +122,16 @@
 <string name="messageMDError">Die Kamera nicht unterstützt Motion Detection</string>
 <string name="messageCamError">Kamera Unerreichbar</string>
 
-<string name="astuce1">Appuyez sur Menu pour accéder aux options</string>
-<string name="astuce2">Vous pouvez visualiser jusqu\'à 6 caméras simultanément</string>
-<string name="astuce3">En touchant l\'écran vous pouvez stopper ou changer les cameras</string>
-<string name="astuce4">De prochaines astuces bientôt disponibles</string>
-<string name="astuce5">Vos caméras sont sauvegardées automatiquement</string>
-<string name="astuce6">Vous pouvez activer jusqu\'à 9 fenêtres de détection de mouvements par camera</string>
-<string name="astuce7">Sélectionner un cadre dans lequel surveiller les mouvements</string>
-<string name="astuce8">Régler les paramètres avancés de la caméra en activant les contrôles avancés dans le menu durant la visualisation de la vidéo</string>
-<string name="astuce9">Diriger la caméra tactilement</string>
-<string name="astuce10">Une notification vous informe que vous avez bien reçu votre snapshot</string>
-<string name="astuce11">Vous pouvez désactiver cette astuce dans les paramètres</string>
-<string name="astuce12">N\'hésitez pas à partager cette application</string>
+<string name="astuce1">Drücke Menu um die Optionen angezeigt zu bekommen.</string>
+<string name="astuce2">Man kann simultan bis zu 6 Kameras veranschaulichen.</string>
+<string name="astuce3">Bei Berühung mit dem Bildschirm kann man die Kameras ausschalten oder zwischen anderen verfügbaren auf einer Liste auswählen.</string>
+<string name="astuce4">Mehr Kunststücke?(tricks) sind bald erhältlich.</string>
+<string name="astuce5">Ihre Kamera wird automatisch gesichert.</string>
+<string name="astuce6">Sie können bis zu 9 Zeichen in dem Fenster erkennen.</string>
+<string name="astuce7">Sie können sich einen Rahmen aussuchen in dem Bewegungen nachverfolgen kann.</string>
+<string name="astuce8">Steuern Sie den Kamera Parameter indem Sie die fortgeschrittene Steuerung im Menü während dessen das Video läuft.</string>
+<string name="astuce9">Bedienen Sie die Kamera indem Sie den Bildschirm berühren.</string>
+<string name="astuce10">Sie bekommen eine Benachrichtigung über den getätigten Schnapschuss.</string>
+<string name="astuce11">Sie können dies aber auch im Menu deaktivieren.</string>
+<string name="astuce12">Teilen Sie ruhig diese Verwendung.</string>
 </resources>
