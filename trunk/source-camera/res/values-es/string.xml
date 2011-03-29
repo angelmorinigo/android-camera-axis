@@ -45,7 +45,7 @@
 	<string name="selectCam">Elegir una cámara</string>
 
 	<!-- main menu -->
-	<string name="multiView"></string>
+	<string name="multiView">Modo multi-vistas</string>
 	<string name="more">Más</string>
 	<string name="params">Configuración</string>
 	<string name="exportConfig">Exportar configuración</string>
